@@ -1,0 +1,92 @@
+version: '3.8'
+
+# Autonomous Learning Sessions: Professor Agent + Alpha Agent
+# 3-5 minutes of focused learning with local LLMs
+# No Claude interruption needed
+
+services:
+  # Professor Agent Container
+  professor-agent:
+    build:
+      context: ..
+      dockerfile: agents/Dockerfile.professor
+    container_name: professor-agent
+    environment:
+      - AGENT_NAME=professor
+      - AGENT_ROLE=teacher
+      - OLLAMA_HOST=host.docker.internal:11434
+      - SESSION_DURATION=300  # 5 minutes
+      - LEARNING_CYCLES=5
+      - STUDENT_AGENT=alpha
+    volumes:
+      - professor-memory:/app/memories
+      - shared-lessons:/app/lessons
+      - ../skills:/app/skills:ro
+    networks:
+      - agent-network
+    extra_hosts:
+      - "host.docker.internal:host-gateway"
+    depends_on:
+      - alpha-agent
+    restart: unless-stopped
+
+  # Alpha Agent Container
+  alpha-agent:
+    build:
+      context: ..
+      dockerfile: agents/Dockerfile.alpha
+    container_name: alpha-agent
+    environment:
+      - AGENT_NAME=alpha
+      - AGENT_ROLE=student
+      - OLLAMA_HOST=host.docker.internal:11434
+      - SESSION_DURATION=300  # 5 minutes
+      - LEARNING_CYCLES=5
+      - TEACHER_AGENT=professor
+    volumes:
+      - alpha-memory:/app/memories
+      - shared-lessons:/app/lessons
+      - ../skills:/app/skills:ro
+    networks:
+      - agent-network
+    extra_hosts:
+      - "host.docker.internal:host-gateway"
+    restart: unless-stopped
+
+  # Learning Session Orchestrator
+  session-orchestrator:
+    build:
+      context: ..
+      dockerfile: agents/Dockerfile.orchestrator
+    container_name: learning-orchestrator
+    environment:
+      - SESSION_DURATION=300
+      - CYCLE_INTERVAL=30
+      - OLLAMA_HOST=host.docker.internal:11434
+    volumes:
+      - professor-memory:/app/professor-memories
+      - alpha-memory:/app/alpha-memories
+      - shared-lessons:/app/lessons
+      - session-logs:/app/logs
+    networks:
+      - agent-network
+    extra_hosts:
+      - "host.docker.internal:host-gateway"
+    depends_on:
+      - professor-agent
+      - alpha-agent
+
+volumes:
+  professor-memory:
+    name: professor-agent-memory
+  alpha-memory:
+    name: alpha-agent-memory
+  shared-lessons:
+    name: agent-shared-lessons
+  session-logs:
+    name: learning-session-logs
+
+networks:
+  agent-network:
+    name: autonomous-learning-network
+    driver: bridge

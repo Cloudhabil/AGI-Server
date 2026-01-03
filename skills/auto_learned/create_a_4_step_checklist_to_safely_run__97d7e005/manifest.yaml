@@ -1,0 +1,14 @@
+id: auto_learned/create_a_4_step_checklist_to_safely_run__97d7e005
+name: "Auto Learned create_a_4_step_checklist_to_safely_run_"
+description: "Auto-learned skill for: Create a 4-step checklist to safely run a local benchmark on a workstation with CPU/NPU/VRAM guardrails."
+version: "0.1.0"
+category: automation
+level: intermediate
+tags:
+  - auto-learned
+  - drafted
+dependencies: []
+requires_tools: []
+estimated_tokens: 400
+author: GPIA
+license: MIT

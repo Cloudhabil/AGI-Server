@@ -1,0 +1,87 @@
+id: system/task-workflow
+name: Task Workflow
+version: 1.0.0
+description: Autonomous task workflow creation and execution with user control
+category: automation
+level: expert
+
+tags:
+  - workflow
+  - automation
+  - tasks
+  - autonomous
+  - control
+  - orchestration
+
+capabilities:
+  - create       # Create workflow from goal or tasks
+  - execute      # Run workflow (respects controls)
+  - pause        # Pause running workflow
+  - resume       # Resume paused workflow
+  - cancel       # Cancel workflow
+  - adapt        # Modify workflow (add/remove/change tasks)
+  - autocomplete # AI suggests next steps
+  - status       # Get workflow state
+  - list         # List all workflows
+  - delete       # Delete workflow
+  - approve      # Approve task waiting for user
+  - reject       # Reject task waiting for approval
+  - retry        # Retry failed task
+
+user_controls:
+  - pause: "Stop execution, preserve state"
+  - resume: "Continue from where paused"
+  - cancel: "Abort workflow entirely"
+  - adapt: "Modify tasks while running"
+  - approve: "Allow risky task to proceed"
+  - reject: "Deny task execution"
+
+task_states:
+  - pending: "Not yet started"
+  - running: "Currently executing"
+  - completed: "Successfully finished"
+  - failed: "Execution failed (can retry)"
+  - cancelled: "User cancelled"
+  - paused: "Waiting for resume"
+  - waiting_user: "Needs user approval"
+
+workflow_states:
+  - draft: "Being created"
+  - queued: "Ready to execute"
+  - running: "Tasks executing"
+  - paused: "User paused"
+  - completed: "All tasks done"
+  - failed: "One or more tasks failed"
+  - cancelled: "User cancelled"
+
+examples:
+  - input:
+      capability: create
+      goal: "Deploy new version of CLI-AI to production"
+    output:
+      workflow:
+        id: "abc12345"
+        name: "Deploy new version of CLI-AI to production"
+        tasks:
+          - name: "Run tests"
+            status: "pending"
+          - name: "Build Docker image"
+            status: "pending"
+            requires_approval: true
+          - name: "Deploy to staging"
+            status: "pending"
+          - name: "Run smoke tests"
+            status: "pending"
+          - name: "Deploy to production"
+            status: "pending"
+            requires_approval: true
+
+  - input:
+      capability: pause
+      workflow_id: "abc12345"
+    output:
+      workflow:
+        status: "paused"
+      message: "Workflow paused"
+
+author: H-Net Cognitive System

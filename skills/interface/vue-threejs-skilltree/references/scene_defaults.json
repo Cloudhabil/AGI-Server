@@ -1,0 +1,19 @@
+{
+  "camera": {
+    "fov": 60,
+    "near": 0.1,
+    "far": 1000,
+    "position": [0, 0, 55]
+  },
+  "layout": {
+    "radius": 24,
+    "layers": 4,
+    "vertical_spread": 12
+  },
+  "colors": {
+    "background": "#0b0f14",
+    "node": "#8bb4ff",
+    "core": "#f9d66b",
+    "link": "#2f3b4a"
+  }
+}

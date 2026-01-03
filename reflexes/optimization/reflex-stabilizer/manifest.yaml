@@ -1,0 +1,6 @@
+id: "optimization/reflex-stabilizer"
+version: "1.0.0"
+priority: 20
+layer: "L2"
+description: "Deterministic cache-based stabilization."
+entry_point: "execute.py:run"

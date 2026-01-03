@@ -1,0 +1,280 @@
+{
+  "curriculum_id": "riemann_hypothesis_foundations",
+  "title": "Riemann Hypothesis Research Curriculum",
+  "description": "Comprehensive foundation for GPIA's exploration of the Riemann Hypothesis, from complex analysis basics to quantum mechanical interpretations",
+  "version": "1.0.0",
+  "target_model": "deepseek-r1",
+  "total_lessons": 20,
+  "difficulty_progression": ["foundational", "intermediate", "advanced", "frontier"],
+  "modules": [
+    {
+      "module_id": 1,
+      "title": "Complex Analysis Foundations",
+      "duration_hours": 4,
+      "lessons": [
+        {
+          "lesson_id": 1.1,
+          "title": "Analytic Functions and Continuation",
+          "concepts": ["analytic_function", "holomorphic", "analytic_continuation", "laurent_series"],
+          "key_theorems": [
+            "Cauchy-Riemann equations define analyticity",
+            "Analytic continuation is unique",
+            "Laurent series represent functions with poles"
+          ],
+          "critical_insight": "The Riemann zeta function's definition changes depending on domain - analytic continuation allows us to extend beyond Re(s) > 1 to all of C except s=1",
+          "exercise": "Prove that analytic continuation of sum(n^(-s)) from Re(s)>1 gives unique function on C\\{1}",
+          "verification_criteria": ["Uses uniqueness theorem", "Mentions pole at s=1", "Discusses domain extension"]
+        },
+        {
+          "lesson_id": 1.2,
+          "title": "Residues and Poles",
+          "concepts": ["pole", "simple_pole", "residue", "residue_theorem", "argument_principle"],
+          "key_theorems": [
+            "Residue theorem: contour integral = 2πi * sum of residues",
+            "Argument principle relates winding number to poles and zeros",
+            "Residue at simple pole: Res(f,a) = lim_{z->a} (z-a)f(z)"
+          ],
+          "critical_insight": "The zeta function has exactly one simple pole at s=1 with residue 1. This is detectable via contour integration",
+          "exercise": "Compute residue of ζ(s) at s=1 and verify it equals 1",
+          "verification_criteria": ["Correct residue computation", "Uses limit definition or Laurent series"]
+        },
+        {
+          "lesson_id": 1.3,
+          "title": "Functional Equations in Complex Analysis",
+          "concepts": ["functional_equation", "symmetry", "functional_form", "transformation_property"],
+          "key_theorems": [
+            "Functional equations relate function values at different points",
+            "For ζ(s): relates ζ(s) to ζ(1-s) via gamma functions and trigonometric functions",
+            "Functional equation preserves zeros under specific transformations"
+          ],
+          "critical_insight": "The functional equation ζ(s) = 2^s π^(s-1) sin(πs/2) Γ(1-s) ζ(1-s) is KEY to understanding why zeros come in conjugate pairs and why Re(s)=1/2 is special",
+          "exercise": "Verify the functional equation for ζ(s) at s=2 using the explicit definition",
+          "verification_criteria": ["Computes both sides", "Shows equality to high precision", "Explains gamma function role"]
+        }
+      ]
+    },
+    {
+      "module_id": 2,
+      "title": "Riemann Zeta Function: Definition and Properties",
+      "duration_hours": 5,
+      "lessons": [
+        {
+          "lesson_id": 2.1,
+          "title": "Dirichlet Series and Zeta Definition",
+          "concepts": ["dirichlet_series", "convergence", "abscissa_of_convergence", "zeta_definition"],
+          "key_theorems": [
+            "ζ(s) = sum_{n=1}^∞ n^(-s) converges for Re(s) > 1",
+            "Analytic continuation extends to Re(s) > 0 except s=1",
+            "Abscissa of convergence σ_c = 1 for zeta function"
+          ],
+          "critical_insight": "The Dirichlet series definition only works in half-plane. Critical line Re(s)=1/2 is where zeta is most interesting and least understood",
+          "exercise": "Prove that sum_{n=1}^∞ n^(-s) diverges for Re(s) <= 1 (on critical line, behavior unknown!)",
+          "verification_criteria": ["Uses comparison tests or Dirichlet convergence", "Acknowledges critical line special status"]
+        },
+        {
+          "lesson_id": 2.2,
+          "title": "Euler Product Formula",
+          "concepts": ["euler_product", "prime_factorization", "infinite_product", "multiplicativity"],
+          "key_theorems": [
+            "ζ(s) = prod_p (1 - p^(-s))^(-1) for Re(s) > 1",
+            "Establishes connection between zeta zeros and prime distribution",
+            "Product converges absolutely in half-plane Re(s) > 1"
+          ],
+          "critical_insight": "Euler product is fundamental: zeta function ENCODES ALL INFORMATION about prime distribution. Zeros of ζ(s) directly control prime density",
+          "exercise": "Derive Euler product from Dirichlet series definition for ζ(s)",
+          "verification_criteria": ["Correct infinite product form", "Explains role of primes", "Mentions connection to primes"]
+        },
+        {
+          "lesson_id": 2.3,
+          "title": "Trivial and Non-Trivial Zeros",
+          "concepts": ["trivial_zeros", "non_trivial_zeros", "critical_strip", "critical_line"],
+          "key_theorems": [
+            "Trivial zeros: s = -2, -4, -6, ... (from gamma function poles)",
+            "Non-trivial zeros: all conjectured on critical line Re(s) = 1/2",
+            "Critical strip: 0 < Re(s) < 1 contains all non-trivial zeros"
+          ],
+          "critical_insight": "RH states: ALL non-trivial zeros satisfy Re(s) = 1/2. Not just 'most' or 'on average' - ALL with probability 1 (if true)",
+          "exercise": "Locate 3 trivial zeros using functional equation and explain why they don't matter for RH",
+          "verification_criteria": ["Identifies negative even integers", "Explains gamma function pole origin"]
+        }
+      ]
+    },
+    {
+      "module_id": 3,
+      "title": "From Zeta Function to Prime Distribution",
+      "duration_hours": 4,
+      "lessons": [
+        {
+          "lesson_id": 3.1,
+          "title": "The Explicit Formula",
+          "concepts": ["explicit_formula", "prime_counting_function", "von_mangoldt_function", "zero_location_impact"],
+          "key_theorems": [
+            "psi(x) = x - sum_ρ x^ρ/ρ - (1/2)log(2π) where ρ are zeros",
+            "Riemann's explicit formula relates prime counting to zero locations",
+            "RH implies improved bounds on prime density"
+          ],
+          "critical_insight": "This formula shows explicitly HOW zero locations affect primes: each zero ρ creates oscillation term x^ρ/ρ. If all ρ have Re(ρ)=1/2, error term is minimized",
+          "exercise": "Explain how zero at ρ=1/2+14.134725i affects distribution of primes around x=10^6",
+          "verification_criteria": ["Mentions oscillation from zero term", "Discusses error term size", "Connects to RH implication"]
+        },
+        {
+          "lesson_id": 3.2,
+          "title": "Prime Number Theorem and Zeta Connection",
+          "concepts": ["prime_counting_function", "prime_number_theorem", "asymptotic_density", "von_mangoldt"],
+          "key_theorems": [
+            "π(x) ~ x/ln(x) as x -> ∞ (Prime Number Theorem)",
+            "Equivalent to: ζ(s) ≠ 0 for Re(s) >= 1",
+            "RH implies: π(x) - li(x) = O(x^(1/2) log x)"
+          ],
+          "critical_insight": "No zero on line Re(s)=1 is already proven (PNT). But zeros at Re(s)<1/2 would make primes more irregular. Zeros AT 1/2 give smoothest behavior",
+          "exercise": "Show how zero-free region Re(s) > 1 - C/log|t| leads to prime density bounds",
+          "verification_criteria": ["Uses explicit formula", "Relates zero location to error bounds"]
+        }
+      ]
+    },
+    {
+      "module_id": 4,
+      "title": "Quantum Mechanical Interpretations",
+      "duration_hours": 6,
+      "lessons": [
+        {
+          "lesson_id": 4.1,
+          "title": "Berry-Keating Hamiltonian Conjecture",
+          "concepts": ["hamiltonian", "spectral_problem", "quantum_operator", "eigenvalues", "energy_levels"],
+          "key_theorems": [
+            "Berry-Keating propose Hamiltonian H such that eigenvalues are 1/2 + iρ where ρ are zeta zeros",
+            "Physical interpretation: zeta zeros as quantum energy spectrum",
+            "Berry conjecture: such Hamiltonian exists and is explicitly constructible"
+          ],
+          "critical_insight": "If true, RH becomes a statement about physics: the mysterious spectral operator must have ALL eigenvalues on critical line. This gives RH a PHYSICAL reality",
+          "exercise": "Propose form of Hamiltonian operator that might have zeta zero spectrum",
+          "verification_criteria": ["Understands operator eigenvalue concept", "Attempts explicit Hamiltonian form", "Acknowledges speculative nature"]
+        },
+        {
+          "lesson_id": 4.2,
+          "title": "Random Matrix Theory and GUE Correspondence",
+          "concepts": ["random_matrix", "eigenvalue_distribution", "gue_ensemble", "level_repulsion", "pair_correlation"],
+          "key_theorems": [
+            "Zeros of ζ(s) show pair correlation matching GUE (Gaussian Unitary Ensemble) random matrices",
+            "Level repulsion: zeros spacing statistical distribution matches random matrix predictions",
+            "Montgomery-Odlyzko law: two-point correlation function agrees with GUE"
+          ],
+          "critical_insight": "Zeta zeros DON'T behave like random points - they show level repulsion like eigenvalues of random matrices. This regularity suggests underlying structure",
+          "exercise": "Compare spacing distribution of first 100 zeta zeros to Poisson and GUE predictions",
+          "verification_criteria": ["Computes spacing statistics", "Compares distributions", "Mentions GUE eigenvalue properties"]
+        },
+        {
+          "lesson_id": 4.3,
+          "title": "Quantum Chaos and Trace Formula",
+          "concepts": ["quantum_chaos", "trace_formula", "periodic_orbits", "gutzwiller_trace_formula"],
+          "key_theorems": [
+            "Gutzwiller trace formula connects periodic orbits to quantum spectrum",
+            "Zeta zeros might arise from periodic orbits in some chaotic system",
+            "Berry-Keating uses semiclassical quantization of classical system"
+          ],
+          "critical_insight": "Quantum chaos perspective: if zeta zeros are eigenvalues of a quantum system, there's a classical system generating them. Understanding that classical system might prove RH",
+          "exercise": "Outline how trace formula could connect prime distribution (classical) to zeta zeros (quantum)",
+          "verification_criteria": ["Understands trace formula concept", "Mentions orbit-eigenvalue duality", "Connects to primes"]
+        }
+      ]
+    },
+    {
+      "module_id": 5,
+      "title": "Computational Approaches and Verification",
+      "duration_hours": 5,
+      "lessons": [
+        {
+          "lesson_id": 5.1,
+          "title": "Riemann-Siegel Formula and Computational Methods",
+          "concepts": ["riemann_siegel_formula", "z_function", "theta_function", "computational_efficiency"],
+          "key_theorems": [
+            "Riemann-Siegel formula: efficient computation of ζ(1/2+it) with error terms",
+            "Z(t) = e^(iθ(t)) ζ(1/2+it) real on critical line",
+            "O(t^(1/4)) complexity for computation at height t"
+          ],
+          "critical_insight": "This formula is WHY we can verify 10^13 zeros computationally. Without it, would need arbitrary precision arithmetic on full ζ(s)",
+          "exercise": "Implement Riemann-Siegel for t=14.134725 (first zero) and verify |ζ(1/2+it)| is small",
+          "verification_criteria": ["Correct formula application", "Shows computational advantage", "Computes actual zero location"]
+        },
+        {
+          "lesson_id": 5.2,
+          "title": "Zero Finding and Verification Algorithms",
+          "concepts": ["zero_finding", "root_bracketing", "argument_principle", "contour_integration"],
+          "key_theorems": [
+            "Argument principle: count zeros via contour integral of log derivative",
+            "Bracket zeros using sign changes of Z(t) function",
+            "Verify zeros to arbitrary precision using Newton's method"
+          ],
+          "critical_insight": "Finding 10^13 zeros requires automation. Argument principle scales; Newton refinement achieves arbitrary precision",
+          "exercise": "Use argument principle to count zeros in rectangle 0 < Re(s) < 1, 0 < Im(s) < 100",
+          "verification_criteria": ["Correct contour integral setup", "Counts known zero count", "Explains log derivative role"]
+        },
+        {
+          "lesson_id": 5.3,
+          "title": "Statistical Analysis of Zero Distribution",
+          "concepts": ["zero_spacing", "pair_correlation", "k_tuple_distribution", "statistics_hypothesis_testing"],
+          "key_theorems": [
+            "Average zero spacing ~ 2π/log(height)",
+            "Normalized spacings follow Wigner semicircle law (GUE prediction)",
+            "Higher moments match RMT predictions"
+          ],
+          "critical_insight": "Statistics CONFIRM RH for first 10^13 zeros. Deviations would appear in higher moments first. This guides computational search",
+          "exercise": "Analyze spacing of 20 known zeros - compute mean, variance, max/min ratio",
+          "verification_criteria": ["Correct statistical computation", "Compares to theoretical prediction", "Notes consistency with RH"]
+        }
+      ]
+    },
+    {
+      "module_id": 6,
+      "title": "Advanced Approaches and Open Problems",
+      "duration_hours": 4,
+      "lessons": [
+        {
+          "lesson_id": 6.1,
+          "title": "Zero-Free Regions and Conditional Results",
+          "concepts": ["zero_free_region", "vinogradov_korobov_bound", "absolute_value_bounds", "conditional_theorems"],
+          "key_theorems": [
+            "Known zero-free region: Re(s) > 1 - C/log|t| for critical strip",
+            "Vinogradov-Korobov: C can be taken as c(log|t|)^(-3/5) (log log|t|)^(-1/5)",
+            "RH implies C can be taken arbitrarily large"
+          ],
+          "critical_insight": "Current best unconditional result still assumes no zeros VERY close to Re(s)=1. RH would eliminate this assumption entirely",
+          "exercise": "Sketch zero-free region graphically and explain why it's not contradiction to RH",
+          "verification_criteria": ["Correct region depiction", "Understands conditional vs unconditional", "Discusses why region exists"]
+        },
+        {
+          "lesson_id": 6.2,
+          "title": "Generalized Riemann Hypothesis and L-functions",
+          "concepts": ["l_functions", "dirichlet_l_functions", "generalized_riemann_hypothesis", "artin_l_functions"],
+          "key_theorems": [
+            "Generalized RH (GRH): all zeros of L(s,χ) lie on Re(s)=1/2",
+            "Applies to Dirichlet L-functions, Artin L-functions, etc.",
+            "GRH implies stronger results on prime distribution in arithmetic progressions"
+          ],
+          "critical_insight": "RH is a special case of pattern holding across ENTIRE family of L-functions. Understanding GRH might illuminate RH",
+          "exercise": "Formulate GRH for Dirichlet character χ and discuss verification strategy",
+          "verification_criteria": ["Correct GRH formulation", "Explains character role", "Discusses generalization"]
+        }
+      ]
+    }
+  ],
+  "assessment_criteria": {
+    "conceptual_understanding": "Can explain why zero location matters to prime distribution",
+    "technical_mastery": "Can implement computational verification and statistical analysis",
+    "research_readiness": "Can identify open problems and propose novel approaches",
+    "mathematical_rigor": "Uses precise definitions and acknowledges limitations of evidence"
+  },
+  "learning_path": {
+    "minimum": [1.1, 1.2, 2.1, 2.2, 2.3, 3.1, 5.1],
+    "intermediate": [1.1, 1.2, 1.3, 2.1, 2.2, 2.3, 3.1, 3.2, 4.1, 5.1, 5.2, 5.3],
+    "comprehensive": "All lessons in sequence",
+    "quantum_track": [1.1, 1.2, 1.3, 2.1, 2.3, 4.1, 4.2, 4.3],
+    "computational_track": [2.1, 2.2, 5.1, 5.2, 5.3, 6.1]
+  },
+  "next_milestones": [
+    "Complete foundational module (Lessons 1.1-1.3)",
+    "Implement computational verification (Lesson 5.1-5.3)",
+    "Formalize quantum interpretation (Lesson 4.1-4.3)",
+    "Attempt novel proof approach (based on learned insights)"
+  ]
+}

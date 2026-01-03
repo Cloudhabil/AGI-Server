@@ -1,0 +1,6 @@
+id: "system/reflex-audit-logger"
+version: "1.0.0"
+priority: 95
+layer: "L4"
+description: "Append-only reflex audit logging."
+entry_point: "execute.py:run"

@@ -1,0 +1,313 @@
+# =============================================================================
+# CLI AI Skills Configuration
+# =============================================================================
+#
+# This file configures the skills system for CLI AI. Skills are modular units
+# of domain expertise that agents can invoke on-demand.
+#
+# Structure:
+#   - Global settings for skill loading and discovery
+#   - Role-based skill mappings
+#   - Custom skill paths
+#   - Feature flags
+#
+# =============================================================================
+
+# -----------------------------------------------------------------------------
+# Global Settings
+# -----------------------------------------------------------------------------
+
+settings:
+  # Enable/disable the skills system
+  enabled: true
+
+  # Lazy loading - skills are only fully loaded when first used
+  lazy_loading: true
+
+  # Auto-scan directories for skills on startup
+  auto_scan: true
+
+  # Maximum skills to load concurrently
+  max_concurrent_loads: 5
+
+  # Default timeout for skill execution (seconds)
+  default_timeout: 60
+
+  # Cache skill results (for deterministic skills)
+  enable_caching: false
+  cache_ttl_seconds: 300
+
+# -----------------------------------------------------------------------------
+# Skill Directories
+# -----------------------------------------------------------------------------
+
+directories:
+  # Built-in skills (relative to project root)
+  builtin: skills/
+
+  # Custom user skills (optional)
+  # custom:
+  #   - ~/.cli-ai/skills/
+  #   - /opt/cli-ai/skills/
+
+# -----------------------------------------------------------------------------
+# Role-Based Skill Access
+# -----------------------------------------------------------------------------
+#
+# Maps agent roles to the skill categories and specific skills they can access.
+# This enables progressive disclosure - agents only see relevant skills.
+#
+
+role_mappings:
+  CEO:
+    categories:
+      - writing
+      - reasoning
+    max_level: expert
+    specific_skills:
+      - writing/draft
+      - writing/edit
+
+  CTO:
+    categories:
+      - code
+      - reasoning
+    max_level: expert
+    specific_skills:
+      - code/python
+      - code/review
+      - code/refactor
+
+  CFO:
+    categories:
+      - data
+      - reasoning
+    max_level: advanced
+    specific_skills:
+      - data/analysis
+      - data/transform
+
+  COO:
+    categories:
+      - automation
+      - reasoning
+    max_level: advanced
+
+  CIO:
+    categories:
+      - data
+      - integration
+    max_level: advanced
+    specific_skills:
+      - data/analysis
+      - data/transform
+
+  CMO:
+    categories:
+      - writing
+      - creative
+    max_level: intermediate
+    specific_skills:
+      - writing/draft
+      - writing/edit
+
+  CHRO:
+    categories:
+      - writing
+      - reasoning
+    max_level: intermediate
+
+  CPO:
+    categories:
+      - creative
+      - reasoning
+    max_level: advanced
+
+  CLIENT:
+    categories:
+      - writing
+      - research
+    max_level: basic
+
+# -----------------------------------------------------------------------------
+# Skill Categories
+# -----------------------------------------------------------------------------
+#
+# Define category metadata and defaults.
+#
+
+categories:
+  code:
+    display_name: Code & Development
+    description: Programming, code analysis, and development tasks
+    icon: "💻"
+
+  data:
+    display_name: Data & Analytics
+    description: Data processing, analysis, and transformation
+    icon: "📊"
+
+  writing:
+    display_name: Writing & Content
+    description: Content creation, editing, and documentation
+    icon: "✍️"
+
+  research:
+    display_name: Research & Discovery
+    description: Information gathering and analysis
+    icon: "🔍"
+
+  automation:
+    display_name: Automation & Workflows
+    description: Task automation and workflow management
+    icon: "⚙️"
+
+  integration:
+    display_name: Integrations
+    description: External service connections
+    icon: "🔗"
+
+  reasoning:
+    display_name: Reasoning & Analysis
+    description: Logic, problem-solving, and decision support
+    icon: "🧠"
+
+  creative:
+    display_name: Creative
+    description: Creative and generative tasks
+    icon: "🎨"
+
+# -----------------------------------------------------------------------------
+# Skill Levels
+# -----------------------------------------------------------------------------
+#
+# Define what each skill level means for token budgets and disclosure.
+#
+
+levels:
+  basic:
+    display_name: Basic
+    description: Always available, low complexity
+    estimated_tokens: 200
+    auto_disclose: true
+
+  intermediate:
+    display_name: Intermediate
+    description: Available on relevant tasks
+    estimated_tokens: 500
+    auto_disclose: false
+
+  advanced:
+    display_name: Advanced
+    description: Available when explicitly needed
+    estimated_tokens: 800
+    auto_disclose: false
+
+  expert:
+    display_name: Expert
+    description: Requires confirmation to load
+    estimated_tokens: 1200
+    auto_disclose: false
+    require_confirmation: true
+
+# -----------------------------------------------------------------------------
+# Specific Skill Configurations
+# -----------------------------------------------------------------------------
+#
+# Override default settings for specific skills.
+#
+
+skill_overrides:
+  code/python:
+    timeout: 90
+    # Custom model for code generation
+    # model_override: qwen_coder
+
+  code/review:
+    timeout: 120
+
+  data/analysis:
+    timeout: 60
+    # Enable result caching for analysis
+    cache_results: true
+
+  writing/edit:
+    timeout: 45
+
+# -----------------------------------------------------------------------------
+# Discovery Settings
+# -----------------------------------------------------------------------------
+#
+# Configure skill discovery and recommendation behavior.
+#
+
+discovery:
+  # Enable natural language skill discovery
+  enabled: true
+
+  # Minimum relevance score to suggest a skill (0-1)
+  min_relevance_score: 0.3
+
+  # Maximum skills to suggest
+  max_suggestions: 5
+
+  # Enable context-aware suggestions
+  context_aware: true
+
+  # Keywords that boost specific skills
+  keyword_boosts:
+    python: code/python
+    debug: code/python
+    refactor: code/refactor
+    review: code/review
+    analyze: data/analysis
+    transform: data/transform
+    write: writing/draft
+    edit: writing/edit
+    proofread: writing/edit
+
+# -----------------------------------------------------------------------------
+# Execution Settings
+# -----------------------------------------------------------------------------
+#
+# Configure how skills are executed.
+#
+
+execution:
+  # Maximum nesting depth for composite skills
+  max_nesting_depth: 3
+
+  # Enable parallel execution of independent skills
+  parallel_execution: true
+
+  # Retry failed skill executions
+  retry_on_failure: true
+  max_retries: 2
+  retry_delay_seconds: 1
+
+  # Log skill executions to KB
+  log_to_kb: true
+  kb_entry_kind: skill_execution
+
+# -----------------------------------------------------------------------------
+# Feature Flags
+# -----------------------------------------------------------------------------
+#
+# Enable/disable experimental features.
+#
+
+features:
+  # Enable skill composition (combining multiple skills)
+  skill_composition: true
+
+  # Enable skill versioning
+  versioning: true
+
+  # Enable skill metrics collection
+  metrics: true
+
+  # Enable skill sharing (future)
+  sharing: false
+
+  # Enable custom skill creation UI (future)
+  custom_skill_ui: false

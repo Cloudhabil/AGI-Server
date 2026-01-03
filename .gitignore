@@ -1,0 +1,98 @@
+# Python
+__pycache__/
+*.py[cod]
+*.pyo
+*.so
+.pytest_cache/
+.mypy_cache/
+.venv/
+venv/
+.env
+.env.*.local
+.coverage
+coverage.xml
+htmlcov/
+dist/
+build/
+site/
+logs/
+tmp/
+artifacts/
+uploads/
+
+# Large ML model files
+models/*.gguf
+models/*.bin
+models/*.pt
+models/*.pth
+models/*.onnx
+models/*.safetensors
+*.gguf
+*.safetensors
+
+# Executables and installers
+*.exe
+*.msi
+*.dmg
+*.app
+*.deb
+*.rpm
+
+# Large data files
+*.sqlite
+*.sqlite3
+data/*.db
+!data/.gitkeep
+data/gpia/
+data/capsules/
+data/missions/
+data/self_adaptation/
+data/kb.db
+runs/
+logs/gpia_server_dense_state.jsonl
+logs/messenger_heartbeat.jsonl
+logs/reflex_*.log
+logs/*.log
+core/reflex_*.log
+core/reflexes/logs/
+models/archive_v1/
+
+# Node (frontend only)
+node_modules/
+frontend/node_modules/
+frontend/dist/
+frontend/.vite/
+frontend/.eslintcache
+
+# OS/editor
+.DS_Store
+Thumbs.db
+desktop.ini
+*.swp
+.idea/
+.vscode/*
+!.vscode/extensions.json
+!.vscode/settings.json
+
+# Generated
+openapi.json
+client.gen.*
+security_credentials/
+
+# Project Specific Hygiene
+pytest-cache-files-*/
+*.zip
+*.spec
+bench_test_*.txt
+test_file.task
+AGI_TEST_HARD_PHYSICS_output/
+tests_real_conditions_output/
+
+# CRITICAL: Ignore Large Files
+*.exe
+*.pkg
+*.pyz
+*.gguf
+*.safetensors
+sha256-*
+todo-scan-*.txt

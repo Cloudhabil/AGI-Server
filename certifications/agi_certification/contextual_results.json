@@ -1,0 +1,69 @@
+{
+  "generated_at": "2026-01-01T21:04:47",
+  "duration_seconds": 30.0,
+  "results": [
+    {
+      "profile": "edge_local",
+      "cycles": 50852,
+      "tokens": 203408,
+      "duration": 30.000495300002513,
+      "tokens_per_sec": 6780.154726311567,
+      "cycles_per_sec": 1695.0386815778918,
+      "label": "edge_local"
+    },
+    {
+      "profile": "public_api_stream",
+      "cycles": 39951,
+      "tokens": 239706,
+      "duration": 30.00054110000201,
+      "tokens_per_sec": 7990.0558860248,
+      "cycles_per_sec": 1331.6759810041333,
+      "label": "public_api_stream"
+    },
+    {
+      "profile": "high_reasoning",
+      "cycles": 24442,
+      "tokens": 293304,
+      "duration": 30.000071600006777,
+      "tokens_per_sec": 9776.776666090815,
+      "cycles_per_sec": 814.7313888409012,
+      "label": "high_reasoning"
+    },
+    {
+      "profile": "fast_reasoning",
+      "cycles": 58900,
+      "tokens": 176700,
+      "duration": 30.000437699985923,
+      "tokens_per_sec": 5889.914066156539,
+      "cycles_per_sec": 1963.3046887188461,
+      "label": "fast_reasoning"
+    },
+    {
+      "profile": "balanced_speed",
+      "cycles": 33094,
+      "tokens": 264752,
+      "duration": 30.00015139998868,
+      "tokens_per_sec": 8825.022129724981,
+      "cycles_per_sec": 1103.1277662156226,
+      "label": "balanced_speed"
+    },
+    {
+      "profile": "moe_efficient",
+      "cycles": 44745,
+      "tokens": 223725,
+      "duration": 30.00008759999764,
+      "tokens_per_sec": 7457.4782241641715,
+      "cycles_per_sec": 1491.4956448328344,
+      "label": "moe_efficient"
+    },
+    {
+      "profile": "agi_profile",
+      "cycles": 19354,
+      "tokens": 309664,
+      "duration": 30.000907600013306,
+      "tokens_per_sec": 10321.821063835503,
+      "cycles_per_sec": 645.1138164897189,
+      "label": "AGI Profile"
+    }
+  ]
+}

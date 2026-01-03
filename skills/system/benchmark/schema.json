@@ -1,0 +1,24 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "skill_id": "system/benchmark",
+  "input": {
+    "type": "object",
+    "properties": {
+      "prompt": {"type": "string"},
+      "system_prompt": {"type": "string"},
+      "models": {"type": "array", "items": {"type": "string"}},
+      "runs": {"type": "integer", "minimum": 1, "maximum": 10, "default": 1},
+      "max_tokens": {"type": "integer", "minimum": 64, "maximum": 2048, "default": 256},
+      "temperature": {"type": "number", "minimum": 0, "maximum": 1, "default": 0.3}
+    },
+    "required": ["prompt"],
+    "additionalProperties": false
+  },
+  "output": {
+    "type": "object",
+    "properties": {
+      "results": {"type": "array"},
+      "summary": {"type": "string"}
+    }
+  }
+}

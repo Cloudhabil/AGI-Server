@@ -1,0 +1,28 @@
+{
+  "mode": "vector",
+  "voxel": {
+    "shape": [8, 8, 8],
+    "dtype": "float32",
+    "flatten_order": "C",
+    "stats_mode": "flattened"
+  },
+  "experimental": false,
+  "vnand": {
+    "enabled": false,
+    "root_dir": "data/vnand",
+    "page_bytes": 4096,
+    "block_pages": 256,
+    "compression": "zstd",
+    "checksum": "xxh3",
+    "gc_threshold": 0.35
+  },
+  "bench_mode": {
+    "enabled": false,
+    "offline": true,
+    "routing_max_retries": 0,
+    "routing_timeout_s": 0.15,
+    "memory_lazy_init": true,
+    "skills_lazy_import": true,
+    "cold_wipe": false
+  }
+}

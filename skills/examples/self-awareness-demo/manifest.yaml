@@ -1,0 +1,21 @@
+id: reasoning/self-awareness-demo
+name: Self Awareness Demo
+description: Demonstrates progressive disclosure with protoself, core, and extended layers.
+version: "0.1.0"
+category: reasoning
+level: basic
+tags:
+  - self-awareness
+  - progressive-disclosure
+
+dependencies: []
+examples:
+  - input:
+      level: protoself
+      signal:
+        uptime_s: 120
+        load: 0.2
+        errors: 0
+    output:
+      level: protoself
+      stable: true

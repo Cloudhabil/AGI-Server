@@ -1,0 +1,14 @@
+id: auto_learned/what_is_2_2_d6444f86
+name: "Auto Learned what_is_2_2"
+description: "Auto-learned skill for: What is 2 + 2?"
+version: "0.1.0"
+category: automation
+level: intermediate
+tags:
+  - auto-learned
+  - drafted
+dependencies: []
+requires_tools: []
+estimated_tokens: 400
+author: GPIA
+license: MIT

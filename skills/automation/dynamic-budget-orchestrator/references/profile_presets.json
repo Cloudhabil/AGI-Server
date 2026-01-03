@@ -1,0 +1,22 @@
+{
+  "profiles": {
+    "safe": 0.6,
+    "fast": 0.8,
+    "balanced": 1.0,
+    "quality": 1.25
+  },
+  "env": {
+    "GPIA_DYNAMIC_BUDGET": "1",
+    "GPIA_BUDGET_PROFILE": "balanced",
+    "GPIA_BUDGET_MIN_TOKENS": "128",
+    "GPIA_BUDGET_MAX_TOKENS": "4096",
+    "GPIA_BUDGET_ALLOW_UPSCALE": "0",
+    "GPIA_BUDGET_PROMPT_RATIO": "1.2",
+    "GPIA_BUDGET_TOKENS_PER_GB_RAM": "256",
+    "GPIA_BUDGET_TOKENS_PER_GB_VRAM": "384",
+    "GPIA_BUDGET_RESERVE_RAM_MB": "2048",
+    "GPIA_BUDGET_RESERVE_VRAM_MB": "1024",
+    "GPIA_BUDGET_RESOURCE_TTL": "20",
+    "GPIA_BUDGET_LOG": "0"
+  }
+}

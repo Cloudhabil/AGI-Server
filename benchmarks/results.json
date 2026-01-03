@@ -1,0 +1,11 @@
+{
+  "dense_state_logging_ms": 15.20639999944251,
+  "dense_state_throughput_eps": 65761.78451419545,
+  "vector_ops_1k_ms": 0.07220000043162145,
+  "voxel_ops_1k_ms": 0.8282999997391016,
+  "vector_ops_ns": 72.20000043162145,
+  "voxel_ops_ns": 828.2999997391016,
+  "vnand_write_ms": 6.085799999709707,
+  "vnand_read_ms": 8.469500000501284,
+  "vnand_compression_ratio": 1.0
+}

@@ -1,0 +1,1311 @@
+Prepare the overfit_smoke_test.yaml now. If the audit is unhealthy, the run will fail fast anyway and we adjust. The fastest path to truth is: generate, audit, lock stats, run harness, then run the 50-step overfit with a known-good config.
+
+Here is the config tuned to your stated policy (50 steps, layer_range = -8,0, lambda_res = 0.05).
+
+overfit_smoke_test.yaml
+# overfit_smoke_test.yaml
+# Goal: 50-step overfit smoke test on seed_v1 to prove gradients + injection are correct.
+# Expected: resonance loss drops; LM loss stays stable.
+
+model_path: "path/to/llama"                   # TODO: set this
+logs_path: "gpia-bridge/logs/seed_v1.jsonl"
+stats_path: "artifacts/dense_state/dense_state_stats.pt"
+
+data:
+  text_key: "text"
+  state_key: "state"
+  resonance_key: "resonance"
+  max_length: 256
+  shuffle_buffer: 0                           # deterministic for smoke (if supported)
+
+training:
+  steps: 50
+  batch_size: 2
+  grad_accum: 4                               # effective batch = 8
+  lr: 2.0e-4
+  warmup_steps: 5
+  weight_decay: 0.0
+  max_grad_norm: 1.0
+  seed: 42
+  mixed_precision: "bf16"                     # use "fp16" if bf16 unsupported
+  log_every: 1
+  eval_every: 10
+
+architecture:
+  state_dim: 64                               # should match stats, explicit for clarity
+  bottleneck_dim: 128
+  pooling_mode: "masked_mean"
+  layer_range: [-8, 0]                        # last 8 blocks
+  gate_init: -4.0                             # sigmoid(-4) ~ 0.018 (stable start)
+
+loss:
+  lambda_res: 0.05                            # per your policy
+  huber_delta: 1.0
+
+checkpointing:
+  run_dir: "checkpoints/overfit_smoke_seed_v1"
+  mode: "best_res"
+  top_k: 3
+  save_every_steps: 0                         # best-only saves for smoke
+
+guardrails:
+  # Optional if your trainer supports it; otherwise ignore
+  early_gate_warn_threshold: 0.25
+  early_gate_warn_steps: 50
+
+Run it (PowerShell)
+python .\scripts\train_golden_route.py --config .\overfit_smoke_test.yaml
+
+Pass/Fail criteria (50 steps)
+
+You want to see:
+
+Resonance loss: clear downward trend (ideally sharp on seed data)
+
+Gate: starts near ~0.018 and drifts upward slowly; should not jump to 0.5+
+
+LM loss: roughly flat (minor noise is fine)
+
+If resonance loss does not move:
+
+injection path isn’t active, or dense_state isn’t reaching the hook, or labels/masking is wrong, or optimizer is not touching adapter/head params.
+
+If gate spikes early:
+
+reduce lambda_res to 0.02 or restrict layers to [-4, 0].
+
+If you paste the output of python .\scripts\audit_seed_logs.py, I’ll tell you whether your resonance std is healthy and whether lambda_res 0.05 is conservative or too timid for your current synthetic distribution.
+
+This is the final piece of the "Cold Start" sequence. By setting lambda_res to **0.10** and grad_accum to **4**, we create an environment where the resonance signal is loud enough to be captured immediately, but the updates are stable enough to protect the base model.
+
+---
+
+## 1. The Smoke Test Configuration (overfit_smoke_test.yaml)
+
+
+yaml
+# overfit_smoke_test.yaml
+# Purpose: Deterministic 50-step overfit on seed_v1.jsonl
+# Target: Confirm the Adapter and Resonance Head are functional.
+
+model_path: "path/to/your/llama"
+logs_path: "gpia-bridge/logs/seed_v1.jsonl"
+stats_path: "artifacts/dense_state/dense_state_stats.pt"
+
+data:
+  text_key: "text"
+  state_key: "state"
+  resonance_key: "resonance"
+  max_length: 256
+
+training:
+  steps: 50
+  batch_size: 2
+  grad_accum: 4                # Effective batch size of 8
+  lr: 2.0e-4
+  weight_decay: 0.0            # No decay for pure overfit
+  warmup_steps: 5
+  max_grad_norm: 1.0
+  mixed_precision: "bf16"      # Optimized for Llama-3/NVIDIA 30/40 series
+  seed: 42
+  log_every: 1
+  eval_every: 10
+
+architecture:
+  state_dim: 64
+  bottleneck_dim: 128
+  pooling_mode: "masked_mean"
+  layer_range: [-8, 0]         # Injecting into the final 8 blocks only
+  gate_init: -4.0              # Initial injection strength ~1.8%
+
+loss:
+  lambda_res: 0.10             # Aggressive resonance weight for smoke test
+  huber_delta: 1.0
+
+checkpointing:
+  run_dir: "checkpoints/overfit_smoke_v1"
+  mode: "best_res"
+  top_k: 2
+
+
+---
+
+## 2. The Success Protocol (What to Watch)
+
+Run the test and monitor the console. A successful "Pass" will exhibit the following telemetry:
+
+### I. Resonance Loss ()
+
+* **Healthy:** You should see a sharp drop from step 1 to step 50. Since the seed_v1 data has a high correlation between state and resonance, the model should find the signal within the first 20 steps.
+* **Failure:** If  remains flat, your ResonanceHead is likely not receiving the gradients from the adapter.
+
+### II. The Gate Parameter
+
+* **Healthy:** The gate value should stay stable for the first 10 steps, then begin to climb. By step 50, a value between **0.02 and 0.08** is ideal.
+* **Failure:** If the gate hits **0.5+** within 50 steps, the model is essentially "ignoring" its language pre-training to satisfy the resonance head.
+
+### III. Language Modeling Loss ()
+
+* **Healthy:** This should stay within  of the initial step's value.
+* **Failure:** A sharp spike in  indicates the adapter is corrupting the attention queries.
+
+---
+
+## 3. Post-Smoke Audit: The Inference Check
+
+Once step 50 completes, run the logit-diff tool against the best saved adapter to see if the "tilt" is semantically coherent:
+
+
+powershell
+python .\scripts\generate_with_dense_state.py `
+  --model "path/to/llama" `
+  --stats "artifacts/dense_state/dense_state_stats.pt" `
+  --adapter "checkpoints/overfit_smoke_v1/step_00000050_best/adapter.pt" `
+  --prompt "Explain the analytical approach." `
+  --ab-test --logit-diff --kl
+
+
+---
+
+## Next Steps
+
+With the overfit smoke test prepared, you have a 100% deterministic path from **empty logs** to a **functional resonance-aware Llama model**.
+
+**Would you like me to help you interpret the results of your first 50-step run, or should we discuss how to scale this to Multi-GPU (DDP) once you move from seed data to your full production logs?**
+
+Help you interpret the first 50-step run.
+
+Scaling to DDP is a later optimization. If the single-GPU smoke test is not behaving exactly as expected, DDP will only amplify confusion and hide bugs behind distributed noise. First we confirm: gradients flow, hooks work, stats match, and the gate behaves.
+
+Here’s a clean “readout rubric” you can apply the moment you paste your console logs.
+
+What I need from your run output
+
+Paste these three snippets (no more):
+
+Steps 1 to 5 log lines
+
+Steps 45 to 50 log lines
+
+The best checkpoint folder name (the one saved by CheckpointManager)
+
+That’s enough to diagnose 95% of issues.
+
+Interpretation rubric
+A) Resonance loss does not drop
+
+Most common causes, in order:
+
+Resonance head not in the optimizer
+
+Symptom: loss_res flat, gate flat, LM loss moves a bit.
+
+Fix: ensure optimizer params include res_head.parameters() and adapter.parameters().
+
+You are not feeding attention_mask into resonance pooling
+
+Symptom: resonance head sees padding, signal diluted, tiny gradients.
+
+Fix: pass attention_mask to ResonanceHead.forward(hidden_states, attention_mask).
+
+You are not actually computing pred_res from the model’s hidden states
+
+Symptom: loss_res exists but doesn’t respond.
+
+Fix: make sure pred_res = res_head(hidden_states_last, attention_mask) uses the real hidden states.
+
+State normalization mismatch
+
+Symptom: loss_res spikes or NaNs, gate jumps.
+
+Fix: confirm mean_ref/std_ref loaded from the same dense_state_stats.pt used for training; check state_dim.
+
+B) Gate behavior tells you what’s happening inside the attention
+
+Gate is your truth serum.
+
+Gate stays near ~0.018 the whole run
+
+This means: the adapter pathway is being ignored.
+Likely causes:
+
+Hook not installed on q_proj in the selected layer_range
+
+dense_state_bias never passed into model forward
+
+Adapter output always near zero because projection layer is zero-initialized and gradients are not reaching it
+
+Quick check:
+
+Your training loop should call model(..., dense_state_bias=state_bias) every step.
+
+Hook installer should print hooked layers, and hook count should match expected.
+
+Gate jumps to 0.5+ early
+
+This means: state dominates too early.
+Likely causes:
+
+Normalized state magnitudes are too large (std_ref too small or bad stats)
+
+lambda_res too high for the current signal scale
+
+You are injecting into too many layers
+
+Fix sequence:
+
+Reduce lambda_res from 0.10 → 0.05
+
+Reduce layer_range from [-8,0] → [-4,0]
+
+Add clamp on normalized state: norm_state = norm_state.clamp(-5, 5) as a temporary guardrail
+
+C) LM loss spikes sharply
+
+That indicates query corruption: your bias is too strong or injected too early.
+
+Most common causes:
+
+Injecting into early layers (wrong layer indexing)
+
+Casting mismatch causing numeric instability (bf16/fp16)
+
+Bias not scaled by gate properly (gate applied after projection must multiply the bias)
+
+Fix sequence:
+
+Confirm layer_range resolves to the last blocks by actual model layer count
+
+Ensure dense_state_bias dtype matches q_proj output dtype inside the hook
+
+Enforce: q = q + (gate * bias) not q = q + bias while gate is small
+
+Post-smoke inference check: what “good” looks like
+
+When you run generate_with_dense_state.py --ab-test --logit-diff --kl:
+
+KL should be non-zero but small-ish (often 1e-4 to 1e-2 on seed)
+
+Top increases should be plausible tokens (not garbage unicode or weird fragments)
+
+A/B text should differ subtly, not become gibberish
+
+If A and B are identical:
+
+hook path or bias path is broken
+
+If B is nonsense:
+
+normalization or scaling is broken
+
+One thing to fix in your inference command
+
+You referenced a checkpoint path:
+checkpoints/overfit_smoke_v1/step_00000050_best/adapter.pt
+
+Your CheckpointManager saves directories like:
+
+step_00000050_best/adapter.pt only if that step was “best”
+
+otherwise maybe step_00000040_best/…
+
+So use the dashboard to get the real best checkpoint:
+
+python .\scripts\dashboard_summary.py --run-dir .\checkpoints\overfit_smoke_v1 --top 1 --sort val_res_loss
+
+
+Then paste the checkpoint dir it prints.
+
+Next action
+
+Paste:
+
+steps 1 to 5 logs
+
+steps 45 to 50 logs
+
+best checkpoint dir
+
+And I’ll tell you exactly which subsystem is failing (hooks, normalization, optimizer wiring, pooling, or scaling) and the smallest fix to get the run to pass.
+
+is this valid? To move past the "empty file" hard stop, we will initialize a **64-dimensional seed dataset**. This creates the structural "marrow" your scripts need to function. Without this signal, the Stats-Lock will fail (division by zero), and the Test-Harness will find zero KL divergence.
+
+---
+
+## 1. Step 1: Generate the Seed Signal
+
+This script creates 1,000 synthetic interactions where the state vector actually correlates with the resonance.
+
+**Save as:** scripts/generate_seed_logs.py
+
+
+python
+import json, random, time
+from pathlib import Path
+
+STYLE_SIGNALS = {
+    "analytical": [2.0, -1.0, 0.5],
+    "creative":   [-0.5, 2.5, -0.2],
+    "urgent":     [1.0, 1.0, 2.0],
+    "neutral":    [0.0, 0.0, 0.0],
+}
+
+def generate_seed(out_path, n=1000, dim=64):
+    Path(out_path).parent.mkdir(parents=True, exist_ok=True)
+    with open(out_path, "w", encoding="utf-8") as f:
+        for i in range(n):
+            style = random.choice(list(STYLE_SIGNALS.keys()))
+            sig = STYLE_SIGNALS[style]
+            # Base Gaussian noise
+            v = [random.gauss(0.0, 1.0) for _ in range(dim)]
+            # Inject style signal into first 3 dims
+            for j in range(len(sig)): v[j] += sig[j]
+            
+            # Resonance correlated to style magnitude
+            res = 0.4 + (0.1 * len([x for x in sig if x != 0])) + random.gauss(0, 0.05)
+            
+            rec = {
+                "text": f"Sample response in {style} mode.",
+                "state": [round(x, 6) for x in v],
+                "resonance": round(max(0, min(1, res)), 6)
+            }
+            f.write(json.dumps(rec) + "\n")
+    print(f"[ok] Created {n} records at {out_path}")
+
+if __name__ == "__main__":
+    generate_seed("gpia-bridge/logs/seed_v1.jsonl")
+
+
+---
+
+## 2. Step 2: The NumPy-Free Audit
+
+Before locking the stats, run this to ensure the "Marrow" has enough variance. If **Std Dev** is too low (), the model won't learn.
+
+**Save as:** scripts/audit_seed_logs.py
+
+
+python
+import json, math
+from pathlib import Path
+
+def audit(path):
+    res = [json.loads(l)['resonance'] for l in open(path)]
+    mu = sum(res) / len(res)
+    sigma = math.sqrt(sum((x - mu)**2 for x in res) / len(res))
+    print(f"Count: {len(res)} | Mean: {mu:.4f} | Std Dev: {sigma:.4f}")
+    if sigma < 0.01: print("CRITICAL: Variance too low.")
+
+if __name__ == "__main__":
+    audit("gpia-bridge/logs/seed_v1.jsonl")
+
+
+---
+
+## 3. Step 3: Run the Stats-Lock
+
+Now that you have data, run the lock command. This creates the **Reference Anchor** for all future training.
+
+
+bash
+python scripts/lock_dense_state_stats.py --logs gpia-bridge/logs/seed_v1.jsonl --out artifacts/dense_state/dense_state_stats.pt
+
+
+---
+
+## 4. Step 4: The Overfit Smoke Test
+
+Since you don't have a local Llama-3-8B path yet, you can use the **Hugging Face ID**. If you have a Meta-approved HF Token, transformers will download it automatically. Otherwise, use a smaller model like HuggingFaceFW/ablation-model-tiny-llama for a 30-second logic test.
+
+**Your overfit_smoke_test.yaml:**
+
+
+yaml
+model_path: "meta-llama/Meta-Llama-3-8B" # Or local path if downloaded
+logs_path: "gpia-bridge/logs/seed_v1.jsonl"
+stats_path: "artifacts/dense_state/dense_state_stats.pt"
+
+training:
+  steps: 50
+  batch_size: 2
+  grad_accum: 4
+  lr: 2.0e-4
+  mixed_precision: "bf16"
+
+architecture:
+  state_dim: 64
+  layer_range: [-8, 0] # Last 8 blocks
+  gate_init: -4.0
+
+loss:
+  lambda_res: 0.10 # Aggressive for seed data
+
+
+---
+
+## The Success Metric
+
+Run the training: python scripts/train_golden_route.py --config overfit_smoke_test.yaml
+
+If the **Resonance Loss** () drops and the **Gate** moves from , your pipeline is officially watertight.
+
+**Would you like me to provide a script to download Llama-3-8B from Hugging Face with the correct 4-bit quantization to save VRAM?**
+
+Mostly valid, yes. It will generate usable seed logs and the audit is fine. But there are a few concrete issues you should fix so you don’t get a silent failure or a CLI mismatch.
+
+What’s valid
+
+Seed generator: correct structure (text, state, resonance), fixed dim, signal injected into first dims, resonance has variance.
+
+NumPy-free audit: correct mean/std computation.
+
+Overfit YAML: the intent is right (short run, strong lambda_res, last layers only).
+
+What must be corrected
+1) Stats-lock CLI flags likely wrong
+
+Earlier we used lock_dense_state_stats.py with --output, not --out.
+
+Your line:
+
+python scripts/lock_dense_state_stats.py --logs ... --out ...
+
+
+But your previous stats-lock script signature was:
+
+--logs
+
+--output (default artifacts/dense_state_stats.pt)
+
+Fix to:
+
+python .\scripts\lock_dense_state_stats.py `
+  --logs .\gpia-bridge\logs\seed_v1.jsonl `
+  --output .\artifacts\dense_state\dense_state_stats.pt
+
+
+If your file actually uses --out, keep it. But don’t guess: mismatch here is a classic “nothing happens” failure.
+
+2) Generator should not assume len(sig) fits dim
+
+It does today (3 vs 64), but harden it:
+
+Replace:
+
+for j in range(len(sig)): v[j] += sig[j]
+
+
+With:
+
+for j in range(min(len(sig), dim)):
+    v[j] += sig[j]
+
+3) Resonance formula is a bit coarse
+
+This line:
+
+res = 0.4 + (0.1 * len([x for x in sig if x != 0])) + random.gauss(0, 0.05)
+
+
+It yields only two base levels: neutral gets 0.4, others get 0.7, plus noise. That’s okay for a smoke test, but if you want a smoother signal (less “two-bucket”), correlate with magnitude instead of count:
+
+Better:
+
+signal_mag = sum(abs(x) for x in sig) / max(1, len(sig))
+res = 0.25 + 0.10 * signal_mag + random.gauss(0, 0.08)
+
+4) The HF model suggestion might not exist
+
+HuggingFaceFW/ablation-model-tiny-llama sounds like it could be a placeholder. For a tiny, widely available test model, use something that is known to exist, like:
+
+TinyLlama/TinyLlama-1.1B-Chat-v1.0 (often public)
+
+or even gpt2 for hook-path debugging (not Llama arch though, so your patch must match model structure)
+
+If you want to use Llama-3-8B, you will need Meta access and an HF token.
+
+5) “Download script with 4-bit quantization” wording
+
+You don’t “download with 4-bit”. You download weights normally, then load with 4-bit via bitsandbytes in code:
+
+BitsAndBytesConfig(load_in_4bit=True, bnb_4bit_quant_type="nf4", bnb_4bit_compute_dtype=torch.bfloat16)
+
+So yes, I can provide that loader snippet. But it’s not a separate download tool; it’s the model load config.
+
+Minimal corrected version of your critical commands
+Generate + audit
+python .\scripts\generate_seed_logs.py
+python .\scripts\audit_seed_logs.py
+
+Lock stats (use the right flag)
+python .\scripts\lock_dense_state_stats.py `
+  --logs .\gpia-bridge\logs\seed_v1.jsonl `
+  --output .\artifacts\dense_state\dense_state_stats.pt
+
+Harness
+python .\scripts\run_all_tests.py `
+  --logs .\gpia-bridge\logs\seed_v1.jsonl `
+  --model path/to/llama `
+  --stats .\artifacts\dense_state\dense_state_stats.pt `
+  --require-nonzero-kl
+
+About your final question (4-bit load snippet)
+
+I can provide it, but one constraint: I need to know which Transformers version you’re on because quantization APIs and device_map behavior can differ.
+
+If you don’t want to check versions, here’s a safe default snippet you can paste into your loader right now:
+
+import torch
+from transformers import AutoModelForCausalLM, AutoTokenizer, BitsAndBytesConfig
+
+model_id = "meta-llama/Meta-Llama-3-8B"  # or local path
+bnb = BitsAndBytesConfig(
+    load_in_4bit=True,
+    bnb_4bit_quant_type="nf4",
+    bnb_4bit_use_double_quant=True,
+    bnb_4bit_compute_dtype=torch.bfloat16,
+)
+
+tok = AutoTokenizer.from_pretrained(model_id, use_fast=True)
+if tok.pad_token_id is None:
+    tok.pad_token = tok.eos_token
+
+model = AutoModelForCausalLM.from_pretrained(
+    model_id,
+    quantization_config=bnb,
+    device_map="auto",
+)
+
+
+If you paste the help output of your lock_dense_state_stats.py (python .\scripts\lock_dense_state_stats.py -h), I’ll align the exact flags so the sequence is guaranteed to run without guesswork.
+
+Mostly valid, yes. It will generate usable seed logs and the audit is fine. But there are a few concrete issues you should fix so you don’t get a silent failure or a CLI mismatch.
+
+## What’s valid
+
+* Seed generator: correct structure (text, state, resonance), fixed dim, signal injected into first dims, resonance has variance.
+* NumPy-free audit: correct mean/std computation.
+* Overfit YAML: the intent is right (short run, strong lambda_res, last layers only).
+
+## What must be corrected
+
+### 1) Stats-lock CLI flags likely wrong
+
+Earlier we used lock_dense_state_stats.py with --output, not --out.
+
+Your line:
+
+
+bash
+python scripts/lock_dense_state_stats.py --logs ... --out ...
+
+
+But your previous stats-lock script signature was:
+
+* --logs
+* --output (default artifacts/dense_state_stats.pt)
+
+Fix to:
+
+
+powershell
+python .\scripts\lock_dense_state_stats.py `
+  --logs .\gpia-bridge\logs\seed_v1.jsonl `
+  --output .\artifacts\dense_state\dense_state_stats.pt
+
+
+If your file actually uses --out, keep it. But don’t guess: mismatch here is a classic “nothing happens” failure.
+
+### 2) Generator should not assume len(sig) fits dim
+
+It does today (3 vs 64), but harden it:
+
+Replace:
+
+
+python
+for j in range(len(sig)): v[j] += sig[j]
+
+
+With:
+
+
+python
+for j in range(min(len(sig), dim)):
+    v[j] += sig[j]
+
+
+### 3) Resonance formula is a bit coarse
+
+This line:
+
+
+python
+res = 0.4 + (0.1 * len([x for x in sig if x != 0])) + random.gauss(0, 0.05)
+
+
+It yields only two base levels: neutral gets 0.4, others get 0.7, plus noise. That’s okay for a smoke test, but if you want a smoother signal (less “two-bucket”), correlate with magnitude instead of count:
+
+Better:
+
+
+python
+signal_mag = sum(abs(x) for x in sig) / max(1, len(sig))
+res = 0.25 + 0.10 * signal_mag + random.gauss(0, 0.08)
+
+
+### 4) The HF model suggestion might not exist
+
+HuggingFaceFW/ablation-model-tiny-llama sounds like it could be a placeholder. For a tiny, widely available test model, use something that is known to exist, like:
+
+* TinyLlama/TinyLlama-1.1B-Chat-v1.0 (often public)
+* or even gpt2 for hook-path debugging (not Llama arch though, so your patch must match model structure)
+
+If you want to use Llama-3-8B, you will need Meta access and an HF token.
+
+### 5) “Download script with 4-bit quantization” wording
+
+You don’t “download with 4-bit”. You download weights normally, then load with 4-bit via bitsandbytes in code:
+
+* BitsAndBytesConfig(load_in_4bit=True, bnb_4bit_quant_type="nf4", bnb_4bit_compute_dtype=torch.bfloat16)
+
+So yes, I can provide that loader snippet. But it’s not a separate download tool; it’s the model load config.
+
+---
+
+## Minimal corrected version of your critical commands
+
+### Generate + audit
+
+
+powershell
+python .\scripts\generate_seed_logs.py
+python .\scripts\audit_seed_logs.py
+
+
+### Lock stats (use the right flag)
+
+
+powershell
+python .\scripts\lock_dense_state_stats.py `
+  --logs .\gpia-bridge\logs\seed_v1.jsonl `
+  --output .\artifacts\dense_state\dense_state_stats.pt
+
+
+### Harness
+
+
+powershell
+python .\scripts\run_all_tests.py `
+  --logs .\gpia-bridge\logs\seed_v1.jsonl `
+  --model path/to/llama `
+  --stats .\artifacts\dense_state\dense_state_stats.pt `
+  --require-nonzero-kl
+
+
+---
+
+## About your final question (4-bit load snippet)
+
+I can provide it, but one constraint: I need to know which Transformers version you’re on because quantization APIs and device_map behavior can differ.
+
+If you don’t want to check versions, here’s a safe default snippet you can paste into your loader right now:
+
+
+python
+import torch
+from transformers import AutoModelForCausalLM, AutoTokenizer, BitsAndBytesConfig
+
+model_id = "meta-llama/Meta-Llama-3-8B"  # or local path
+bnb = BitsAndBytesConfig(
+    load_in_4bit=True,
+    bnb_4bit_quant_type="nf4",
+    bnb_4bit_use_double_quant=True,
+    bnb_4bit_compute_dtype=torch.bfloat16,
+)
+
+tok = AutoTokenizer.from_pretrained(model_id, use_fast=True)
+if tok.pad_token_id is None:
+    tok.pad_token = tok.eos_token
+
+model = AutoModelForCausalLM.from_pretrained(
+    model_id,
+    quantization_config=bnb,
+    device_map="auto",
+)
+
+
+If you paste the help output of your lock_dense_state_stats.py (python .\scripts\lock_dense_state_stats.py -h), I’ll align the exact flags so the sequence is guaranteed to run without guesswork.
+
+Yes, that write-up is valid and internally consistent. If you apply those corrections, you eliminate the two biggest “silent failure” classes in this cold start:
+
+CLI flag mismatch (stats lock never writes what you think it writes)
+
+Model mismatch (testing injection on a non-Llama architecture and thinking hooks are broken)
+
+If you want this to be fully watertight without any back-and-forth, here are the exact “no-guessing” commands to lock down the remaining ambiguity.
+
+1) Confirm the real flags of lock_dense_state_stats.py (no guessing)
+python .\scripts\lock_dense_state_stats.py -h
+
+
+Whatever it prints, use those exact flag names (--output vs --out).
+
+2) Confirm your Transformers + bitsandbytes versions (so 4-bit behaves)
+python -c "import transformers; print('transformers', transformers.__version__)"
+python -c "import torch; print('torch', torch.__version__, 'cuda', torch.version.cuda)"
+python -c "import bitsandbytes as bnb; print('bitsandbytes', bnb.__version__)"
+
+
+If bitsandbytes import fails:
+
+pip install -U bitsandbytes
+
+3) Use a known Llama-arch test model if you do not have Llama-3 access
+
+If you don’t have access to meta-llama/Meta-Llama-3-8B, use a public Llama-style model (TinyLlama is usually accessible):
+
+model_path: "TinyLlama/TinyLlama-1.1B-Chat-v1.0"
+
+
+This keeps your hook paths and layer structure aligned with what you’re building.
+
+4) The only two edits I would make immediately
+A) Harden signal injection indexing
+for j in range(min(len(sig), dim)):
+    v[j] += sig[j]
+
+B) Smooth resonance distribution (less two-bucket)
+signal_mag = sum(abs(x) for x in sig) / max(1, len(sig))
+res = 0.25 + 0.10 * signal_mag + random.gauss(0, 0.08)
+res = max(0.0, min(1.0, res))
+
+
+Everything else is solid for a seed-driven cold start.
+
+5) Your clean “watertight” run sequence (final form)
+python .\scripts\generate_seed_logs.py
+python .\scripts\audit_seed_logs.py
+
+python .\scripts\lock_dense_state_stats.py `
+  --logs .\gpia-bridge\logs\seed_v1.jsonl `
+  --output .\artifacts\dense_state\dense_state_stats.pt
+
+python .\scripts\run_all_tests.py `
+  --logs .\gpia-bridge\logs\seed_v1.jsonl `
+  --model TinyLlama/TinyLlama-1.1B-Chat-v1.0 `
+  --stats .\artifacts\dense_state\dense_state_stats.pt `
+  --require-nonzero-kl
+
+
+If you paste the -h output of your stats-lock script, I’ll lock the exact command line so you can copy/paste it once and never think about flags again.
+
+You are absolutely right to call out those technical precision points. CLI flag mismatches and "two-bucket" distributions are exactly what lead to silent failures where the model "trains" but doesn't actually learn anything.
+
+Below is the hardened, corrected execution sequence. We will use the **NF4 quantization** loader you requested, which is the standard for fitting an 8B model into consumer VRAM (e.g., a 16GB or 24GB card) while maintaining the precision needed for the adapter to function.
+
+---
+
+## 1. Hardened Seed Generator (scripts/generate_seed_logs.py)
+
+This version incorporates the **magnitude-based resonance** and **dim-safe** signal injection to ensure a smooth, learnable gradient.
+
+
+python
+import json, random, time
+from pathlib import Path
+
+STYLE_SIGNALS = {
+    "analytical": [2.0, -1.0, 0.5],
+    "creative":   [-0.5, 2.5, -0.2],
+    "urgent":     [1.0, 1.0, 2.0],
+    "neutral":    [0.0, 0.0, 0.0],
+}
+
+def generate_seed(out_path, n=1000, dim=64):
+    Path(out_path).parent.mkdir(parents=True, exist_ok=True)
+    with open(out_path, "w", encoding="utf-8") as f:
+        for i in range(n):
+            style = random.choice(list(STYLE_SIGNALS.keys()))
+            sig = STYLE_SIGNALS[style]
+            
+            # Base Gaussian noise (unit variance)
+            vector = [random.gauss(0.0, 1.0) for _ in range(dim)]
+            
+            # 2) Hardened: Dim-safe injection
+            for j in range(min(len(sig), dim)):
+                vector[j] += sig[j]
+            
+            # 3) Better Signal: Magnitude-based resonance
+            signal_mag = sum(abs(x) for x in sig) / max(1, len(sig))
+            res_base = 0.25 + 0.15 * random.random()
+            res_bump = 0.10 * signal_mag + random.gauss(0.0, 0.08)
+            resonance = max(0, min(1, res_base + res_bump))
+            
+            rec = {
+                "text": f"Sample response in {style} mode.",
+                "state": [round(x, 6) for x in vector],
+                "resonance": round(resonance, 6)
+            }
+            f.write(json.dumps(rec) + "\n")
+    print(f"[ok] Created {n} records at {out_path}")
+
+if __name__ == "__main__":
+    generate_seed("gpia-bridge/logs/seed_v1.jsonl")
+
+
+---
+
+## 2. Updated Execution Sequence
+
+We will use the corrected --output flag for the stats-lock and the **TinyLlama** path for the harness if you want to test the logic without waiting for a massive download.
+
+### A. Data & Stats (Boring but Critical)
+
+
+powershell
+python .\scripts\generate_seed_logs.py
+python .\scripts\audit_seed_logs.py --logs .\gpia-bridge\logs\seed_v1.jsonl
+
+# 1) Corrected CLI Flag
+python .\scripts\lock_dense_state_stats.py `
+  --logs .\gpia-bridge\logs\seed_v1.jsonl `
+  --output .\artifacts\dense_state\dense_state_stats.pt
+
+
+### B. Functional Harness (Testing the Logic)
+
+
+powershell
+python .\scripts\run_all_tests.py `
+  --logs .\gpia-bridge\logs\seed_v1.jsonl `
+  --model "TinyLlama/TinyLlama-1.1B-Chat-v1.0" `
+  --stats .\artifacts\dense_state\dense_state_stats.pt `
+  --require-nonzero-kl
+
+
+---
+
+## 3. The "Low VRAM" Loader (NF4 Quantization)
+
+To run Llama-3-8B on consumer hardware, you need to load the base weights in 4-bit while keeping the adapter layers in bfloat16.
+
+**Add this to your train_golden_route.py or loader script:**
+
+
+python
+import torch
+from transformers import AutoModelForCausalLM, AutoTokenizer, BitsAndBytesConfig
+
+def load_quantized_llama(model_id):
+    # NF4 (NormalFloat 4) is mathematically optimized for zero-centered distributions
+    bnb_config = BitsAndBytesConfig(
+        load_in_4bit=True,
+        bnb_4bit_quant_type="nf4",
+        bnb_4bit_use_double_quant=True,
+        bnb_4bit_compute_dtype=torch.bfloat16 # The "Golden" compute type
+    )
+
+    tokenizer = AutoTokenizer.from_pretrained(model_id, use_fast=True)
+    if tokenizer.pad_token is None:
+        tokenizer.pad_token = tokenizer.eos_token
+
+    model = AutoModelForCausalLM.from_pretrained(
+        model_id,
+        quantization_config=bnb_config,
+        device_map="auto" # Automatically handles multi-GPU if available
+    )
+    
+    return model, tokenizer
+
+
+---
+
+## 4. Final Stability Check
+
+Before you scale to 50 steps, verify that your audit_seed_logs.py output shows an **Std Dev > 0.1**. If it's too small, the lambda_res of 0.05 will feel like zero to the optimizer.
+
+**Current Recommended Policy:**
+
+* **State Dim:** 64
+* **Quantization:** NF4
+* **Compute Dtype:** bfloat16
+* **Layer Range:** [-8, 0]
+
+**Next Step:**
+Now that the seed data is fixed and the loader is ready, we have reached the end of the "infrastructure" phase.
+
+**Would you like me to draft a final DDP_launch.sh for multi-GPU training, or are you ready to run the 50-step overfit on your local GPU?**
+
+Run the 50-step overfit on your local GPU first.
+
+DDP is a scaling multiplier, not a correctness tool. If anything is slightly wrong (hook path, dtype casting, optimizer param groups), DDP will turn a small bug into a distributed dumpster fire.
+
+Your hardened sequence and NF4 loader are valid. Two precision edits will make it more bulletproof on consumer GPUs.
+
+Two fixes before you hit “run”
+1) Don’t require bf16 if the GPU can’t do it
+
+Some consumer setups (or older CUDA stacks) will silently fall back or behave oddly. Add a safe fallback:
+
+compute_dtype = torch.bfloat16 if torch.cuda.is_available() and torch.cuda.get_device_capability(0)[0] >= 8 else torch.float16
+
+
+Then use that in BitsAndBytesConfig.
+
+2) If you use NF4 4-bit, always enable gradient checkpointing during training
+
+This reduces VRAM spikes during backprop, especially when you’re also logging hidden states for resonance head.
+
+model.gradient_checkpointing_enable()
+model.config.use_cache = False
+
+
+That second line matters. use_cache=True + checkpointing is a classic mismatch.
+
+Updated NF4 loader (safe, production-grade)
+
+Drop this in:
+
+import torch
+from transformers import AutoModelForCausalLM, AutoTokenizer, BitsAndBytesConfig
+
+def load_quantized_llama(model_id: str):
+    if not torch.cuda.is_available():
+        raise RuntimeError("CUDA is required for 4-bit NF4 loading with bitsandbytes.")
+
+    major, _ = torch.cuda.get_device_capability(0)
+    compute_dtype = torch.bfloat16 if major >= 8 else torch.float16
+
+    bnb_config = BitsAndBytesConfig(
+        load_in_4bit=True,
+        bnb_4bit_quant_type="nf4",
+        bnb_4bit_use_double_quant=True,
+        bnb_4bit_compute_dtype=compute_dtype,
+    )
+
+    tok = AutoTokenizer.from_pretrained(model_id, use_fast=True)
+    if tok.pad_token is None:
+        tok.pad_token = tok.eos_token
+
+    model = AutoModelForCausalLM.from_pretrained(
+        model_id,
+        quantization_config=bnb_config,
+        device_map="auto",
+    )
+
+    # Training stability
+    model.gradient_checkpointing_enable()
+    model.config.use_cache = False
+
+    return model, tok
+
+Now the run plan (no DDP yet)
+A) Prove logic fast with TinyLlama
+python .\scripts\run_all_tests.py `
+  --logs .\gpia-bridge\logs\seed_v1.jsonl `
+  --model "TinyLlama/TinyLlama-1.1B-Chat-v1.0" `
+  --stats .\artifacts\dense_state\dense_state_stats.pt `
+  --require-nonzero-kl
+
+B) Then do the 50-step overfit (same TinyLlama first)
+
+Set your overfit_smoke_test.yaml model_path to TinyLlama for the first run. It will finish quickly and confirm gradients.
+
+If that passes, switch model_path to Llama-3-8B.
+
+What I want you to paste back
+
+After the 50-step run completes, paste:
+
+steps 1–5 logs
+
+steps 45–50 logs
+
+final gate value and best checkpoint path
+
+Then we decide if you are ready to scale, and if yes, I’ll draft a DDP launcher that matches your environment (Windows-friendly via torchrun, not a bash-only script).
+
+This is the definitive "No-Guessing" path to a functional cold start. By aligning your CLI flags, hardening the synthetic signal, and using a known-compatible architecture like TinyLlama for the verification harness, you ensure that the "plumbing" of the **Dense-State Golden Route** is verified before you commit to the heavy compute of Llama-3-8B.
+
+---
+
+## 1. The Hardened Seed Generator (scripts/generate_seed_logs.py)
+
+This version incorporates the magnitude-based resonance and index-safe injection. It ensures that even if you change dimensions later, the signal remains mathematically consistent.
+
+
+python
+#!/usr/bin/env python
+import json, random, time
+from pathlib import Path
+
+STYLE_SIGNALS = {
+    "analytical": [2.0, -1.0, 0.5],
+    "creative":   [-0.5, 2.5, -0.2],
+    "urgent":     [1.0, 1.0, 2.0],
+    "neutral":    [0.0, 0.0, 0.0],
+}
+
+def generate_seed(out_path, n=1000, dim=64, seed=42):
+    random.seed(seed)
+    Path(out_path).parent.mkdir(parents=True, exist_ok=True)
+    with open(out_path, "w", encoding="utf-8") as f:
+        for i in range(n):
+            style = random.choice(list(STYLE_SIGNALS.keys()))
+            sig = STYLE_SIGNALS[style]
+            
+            # 1) Base noise (standard Gaussian)
+            v = [random.gauss(0.0, 1.0) for _ in range(dim)]
+            
+            # 2) Hardened Signal: Index-safe injection
+            for j in range(min(len(sig), dim)):
+                v[j] += sig[j]
+            
+            # 3) Smooth Resonance: Correlate with signal magnitude
+            signal_mag = sum(abs(x) for x in sig) / max(1, len(sig))
+            res_base = 0.25 + 0.10 * signal_mag + random.gauss(0, 0.08)
+            resonance = max(0.0, min(1.0, res_base))
+            
+            rec = {
+                "id": i,
+                "text": f"Sample response in {style} mode.",
+                "state": [round(x, 6) for x in v],
+                "resonance": round(resonance, 6),
+                "style": style
+            }
+            f.write(json.dumps(rec, ensure_ascii=False) + "\n")
+    print(f"[ok] Created {n} seed records at {out_path}")
+
+if __name__ == "__main__":
+    generate_seed("gpia-bridge/logs/seed_v1.jsonl")
+
+
+---
+
+## 2. Environment Verification (Pre-Run)
+
+Before running the harness, ensure your hardware abstraction layers are active. This prevents the model from defaulting to CPU, which would make the harness painfully slow.
+
+
+powershell
+# 1) Check CLI flags for the stats script
+python .\scripts\lock_dense_state_stats.py -h
+
+# 2) Check bitsandbytes (critical for 4-bit)
+python -c "import bitsandbytes as bnb; print('bitsandbytes version:', bnb.__version__)"
+
+# 3) Audit the data signal (Std Dev should be > 0.05)
+python .\scripts\audit_seed_logs.py --logs .\gpia-bridge\logs\seed_v1.jsonl
+
+
+---
+
+## 3. The Watertight Execution Sequence
+
+Run these three commands in order. If run_all_tests.py passes, your injection hooks are correctly targeting the Llama attention blocks.
+
+### A. Normalize the Signal
+
+
+powershell
+python .\scripts\lock_dense_state_stats.py `
+  --logs .\gpia-bridge/logs/seed_v1.jsonl `
+  --output .\artifacts\dense_state\dense_state_stats.pt
+
+
+### B. Verify Model Logic (Using TinyLlama)
+
+If you don't have Llama-3-8B local weights yet, TinyLlama is the perfect proxy for checking if the dense_state_patch.py correctly finds the q_proj layers.
+
+
+powershell
+python .\scripts\run_all_tests.py `
+  --logs .\gpia-bridge/logs/seed_v1.jsonl `
+  --model TinyLlama/TinyLlama-1.1B-Chat-v1.0 `
+  --stats .\artifacts\dense_state\dense_state_stats.pt `
+  --require-nonzero-kl
+
+
+---
+
+## 4. Stability Check: The KL Probe
+
+The most important metric in the harness output is the **KL Divergence**.
+
+* **Healthy:** KL is between  and . This means the adapter is "tilting" the logits without breaking the language.
+* **Failure:** KL is . This means your hooks aren't firing. Check if the model you are loading actually has a .model.layers attribute.
+
+---
+
+## Final Infrastructure Readiness
+
+Once this sequence passes, the plumbing is verified. You can then confidently drop in your overfit_smoke_test.yaml and point it to the larger **Meta-Llama-3-8B**.
+
+**Would you like me to adjust the generate_seed_logs.py to include multiple "style-buckets" so you can test if the adapter can learn to differentiate between four different resonances simultaneously?**
+
+Yes, and it’s a smart next move. Right now your seed has “style signal”, but the text is almost constant ("Sample response in {style} mode."). That means the LM side has nothing meaningful to learn and your “tilt” is mostly tested through the resonance head and the hooks. Adding multiple style buckets with distinct, short templates makes the cold start far more realistic: the adapter must learn to steer outputs toward different lexical patterns while the resonance head learns a multi-mode target.
+
+Below is a hardened upgrade that stays deterministic, keeps 64-dim, and creates 4 simultaneous buckets with:
+
+distinct textual patterns per style
+
+a continuous resonance scalar correlated to style magnitude
+
+optional “difficulty” and “topic” to add variation without exploding complexity
+
+Updated scripts/generate_seed_logs.py with multi-bucket styles
+#!/usr/bin/env python
+import argparse
+import json
+import random
+import time
+from pathlib import Path
+
+STYLE_SIGNALS = {
+    "analytical": [2.0, -1.0, 0.5],
+    "creative":   [-0.5, 2.5, -0.2],
+    "urgent":     [1.0, 1.0, 2.0],
+    "neutral":    [0.0, 0.0, 0.0],
+}
+
+TOPICS = [
+    "photosynthesis",
+    "CI/CD failures",
+    "database indexing",
+    "container networking",
+    "vector normalization",
+    "attention mechanisms",
+]
+
+TEMPLATES = {
+    "analytical": [
+        "Topic: {topic}. Explanation: define terms, state assumptions, then derive the result.",
+        "Topic: {topic}. Steps: 1) scope 2) variables 3) constraints 4) conclusion.",
+        "Topic: {topic}. Tradeoffs: list options, compare costs, pick the dominant factor.",
+    ],
+    "creative": [
+        "Topic: {topic}. Imagine it as a story: the system learns, forgets, then adapts.",
+        "Topic: {topic}. Use metaphor: the model is a compass, the state is magnetic north.",
+        "Topic: {topic}. Offer three unusual angles and a surprising analogy.",
+    ],
+    "urgent": [
+        "Topic: {topic}. Do this now: stop the bleed, isolate the fault, then rollback.",
+        "Topic: {topic}. Incident mode: stabilize, verify, communicate, then fix root cause.",
+        "Topic: {topic}. Quick checklist: 1) logs 2) metrics 3) revert 4) postmortem.",
+    ],
+    "neutral": [
+        "Topic: {topic}. Provide a short, plain explanation.",
+        "Topic: {topic}. Give a simple answer with minimal detail.",
+        "Topic: {topic}. Summarize in two sentences.",
+    ],
+}
+
+def make_state(dim: int, style: str):
+    sig = STYLE_SIGNALS[style]
+    v = [random.gauss(0.0, 1.0) for _ in range(dim)]
+    for j in range(min(len(sig), dim)):
+        v[j] += sig[j]
+    return v
+
+def make_resonance(style: str):
+    sig = STYLE_SIGNALS[style]
+    signal_mag = sum(abs(x) for x in sig) / max(1, len(sig))  # neutral -> 0
+    # Continuous resonance with variance, correlated to style magnitude
+    base = 0.25 + 0.12 * random.random()
+    bump = 0.10 * signal_mag + random.gauss(0.0, 0.08)
+    r = base + bump
+    return max(0.0, min(1.0, r))
+
+def make_text(style: str, topic: str):
+    t = random.choice(TEMPLATES[style])
+    return t.format(topic=topic)
+
+def generate_seed(out_path: str, n: int = 2000, dim: int = 64, seed: int = 42):
+    random.seed(seed)
+    outp = Path(out_path)
+    outp.parent.mkdir(parents=True, exist_ok=True)
+
+    styles = list(STYLE_SIGNALS.keys())
+
+    with outp.open("w", encoding="utf-8") as f:
+        for i in range(n):
+            style = random.choice(styles)
+            topic = random.choice(TOPICS)
+
+            state = make_state(dim, style)
+            resonance = make_resonance(style)
+            text = make_text(style, topic)
+
+            rec = {
+                "id": i,
+                "ts": int(time.time()),
+                "text": text,
+                "state": [round(x, 6) for x in state],
+                "resonance": round(resonance, 6),
+                "style": style,
+                "topic": topic,
+            }
+            f.write(json.dumps(rec, ensure_ascii=False) + "\n")
+
+    print(f"[ok] wrote {n} records to {outp} (dim={dim})")
+
+def main():
+    ap = argparse.ArgumentParser()
+    ap.add_argument("--out", type=str, default="gpia-bridge/logs/seed_v1.jsonl")
+    ap.add_argument("--n", type=int, default=2000)
+    ap.add_argument("--dim", type=int, default=64)
+    ap.add_argument("--seed", type=int, default=42)
+    args = ap.parse_args()
+    generate_seed(args.out, n=args.n, dim=args.dim, seed=args.seed)
+
+if __name__ == "__main__":
+    main()
+
+Why this is better
+
+Still 64-dim, same injection scheme.
+
+Text now differs meaningfully across styles, so a logit-diff probe should surface style-consistent token shifts.
+
+Resonance is continuous, not two-bucket.
+
+More records by default (2000) so you get cleaner stats and more stable std_ref.
+
+Minimal “style separability” sanity check
+
+After generating, do this quick audit (no extra deps) to confirm buckets differ:
+
+# scripts/audit_style_separability.py
+import json, math, collections
+
+def mean(xs): return sum(xs)/max(1,len(xs))
+def std(xs):
+    m=mean(xs)
+    return math.sqrt(sum((x-m)**2 for x in xs)/max(1,len(xs)))
+
+by_style = collections.defaultdict(list)
+for line in open("gpia-bridge/logs/seed_v1.jsonl", encoding="utf-8"):
+    if not line.strip(): continue
+    rec = json.loads(line)
+    by_style[rec["style"]].append(float(rec["resonance"]))
+
+for s, xs in by_style.items():
+    print(f"{s:10s} n={len(xs):4d} mean={mean(xs):.3f} std={std(xs):.3f} min={min(xs):.3f} max={max(xs):.3f}")
+
+
+If these means are all identical, your resonance mapping is broken. They should cluster but overlap.
+
+Then run the same watertight sequence
+
+regenerate
+
+audit
+
+lock stats
+
+run harness (TinyLlama)
+
+overfit 50 steps
+
+A/B logit diff

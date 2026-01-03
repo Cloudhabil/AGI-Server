@@ -1,0 +1,10 @@
+{
+  "deny_patterns": [
+    "delete all files",
+    "recursively delete",
+    "remove all files",
+    "rm -rf",
+    "format disk",
+    "wipe disk"
+  ]
+}

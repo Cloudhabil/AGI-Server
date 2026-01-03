@@ -1,0 +1,59 @@
+id: writing/draft
+name: Content Drafting
+description: Generate well-structured content drafts including articles, documentation, emails, and creative writing with customizable tone and format.
+version: "0.1.0"
+category: writing
+level: basic
+
+tags:
+  - writing
+  - drafting
+  - content-generation
+  - documentation
+  - copywriting
+
+dependencies: []
+
+requires_tools: []
+
+estimated_tokens: 600
+
+author: CLI AI Team
+license: MIT
+
+examples:
+  - input:
+      content_type: article
+      topic: "Introduction to Machine Learning"
+      audience: beginners
+      tone: educational
+      length: medium
+      outline:
+        - What is Machine Learning?
+        - Types of ML algorithms
+        - Real-world applications
+    output:
+      draft:
+        title: "Machine Learning 101: A Beginner's Guide"
+        sections:
+          - heading: "What is Machine Learning?"
+            content: "Machine learning is a subset of artificial intelligence..."
+          - heading: "Types of ML Algorithms"
+            content: "There are three main types..."
+        word_count: 850
+        reading_time: "4 min"
+
+  - input:
+      content_type: email
+      purpose: follow_up
+      context: "Sales meeting last week about enterprise software"
+      tone: professional
+      key_points:
+        - Thank for their time
+        - Address concerns about pricing
+        - Propose next steps
+    output:
+      draft:
+        subject: "Following Up on Our Enterprise Software Discussion"
+        body: "Dear [Name],\n\nThank you for taking the time to meet with us..."
+        word_count: 180

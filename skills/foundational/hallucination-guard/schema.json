@@ -1,0 +1,19 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "skill_id": "foundational/hallucination-guard",
+  "input": {
+    "type": "object",
+    "properties": {
+      "capability": {"type": "string", "enum": ["constrain", "verify"]},
+      "allowed": {"type": "array", "items": {"type": "string"}}
+    },
+    "required": ["capability"],
+    "additionalProperties": false
+  },
+  "output": {
+    "type": "object",
+    "properties": {
+      "steps": {"type": "array"}
+    }
+  }
+}

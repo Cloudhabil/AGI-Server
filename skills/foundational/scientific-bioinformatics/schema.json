@@ -1,0 +1,20 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "skill_id": "foundational/scientific-bioinformatics",
+  "input": {
+    "type": "object",
+    "properties": {
+      "capability": {"type": "string", "enum": ["ehr_analysis", "workflow"]},
+      "dataset": {"type": "string"},
+      "goal": {"type": "string"}
+    },
+    "required": ["capability"],
+    "additionalProperties": false
+  },
+  "output": {
+    "type": "object",
+    "properties": {
+      "plan": {"type": "array"}
+    }
+  }
+}

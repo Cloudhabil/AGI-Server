@@ -1,0 +1,45 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "skill_id": "_reference/minimal",
+  "input": {
+    "type": "object",
+    "properties": {
+      "text": {
+        "type": "string",
+        "description": "Text to process",
+        "maxLength": 1000
+      },
+      "transform": {
+        "type": "string",
+        "enum": ["upper", "lower", "reverse", "none"],
+        "default": "none",
+        "description": "Transformation to apply"
+      },
+      "capability": {
+        "type": "string",
+        "enum": ["echo", "validate"],
+        "default": "echo",
+        "description": "Which capability to invoke"
+      }
+    },
+    "required": ["text"]
+  },
+  "output": {
+    "type": "object",
+    "properties": {
+      "result": {
+        "type": "string",
+        "description": "Processed text"
+      },
+      "original_length": {
+        "type": "integer",
+        "description": "Length of input text"
+      },
+      "transform_applied": {
+        "type": "string",
+        "description": "Which transform was applied"
+      }
+    },
+    "required": ["result"]
+  }
+}

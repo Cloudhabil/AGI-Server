@@ -1,0 +1,10 @@
+{
+  "id": "20251230_121116",
+  "title": "Pattern Recognition",
+  "content": "**1-Minute Lesson: Pattern Recognition**  \n**Key Concepts**:  \n1. **Detection**: Identify recurring patterns in data (e.g., shapes, sequences).  \n2. **Classification**: Assign labels to patterns (e.g., \"cat,\" \"dog\").  \n3. **Learning**: Improve accuracy by refining models based on feedback.  \n\n**Practical Example**:  \nA camera detects edges in an image, classifies them as \"tree\" or \"building,\" and learns to reduce errors by adjusting its training data.  \n\n**Exercise**:  \nAnalyze a dataset of emails (spam vs. not spam). Detect keywords, classify emails, and refine your model by testing new examples.  \n\n*Actionable: Focus on detecting features, classifying them, then iteratively improving your model.*",
+  "teacher": "professor",
+  "student": "alpha",
+  "created_at": "2025-12-30T12:11:16.314044",
+  "status": "completed",
+  "completed_at": "2025-12-30T12:11:42.626936"
+}

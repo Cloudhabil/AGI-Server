@@ -1,0 +1,8 @@
+profile,label,tokens_per_sec,cycles_per_sec,cycles,tokens,duration
+edge_local,edge_local,6780.155,1695.039,50852,203408,30.000495
+public_api_stream,public_api_stream,7990.056,1331.676,39951,239706,30.000541
+high_reasoning,high_reasoning,9776.777,814.731,24442,293304,30.000072
+fast_reasoning,fast_reasoning,5889.914,1963.305,58900,176700,30.000438
+balanced_speed,balanced_speed,8825.022,1103.128,33094,264752,30.000151
+moe_efficient,moe_efficient,7457.478,1491.496,44745,223725,30.000088
+agi_profile,AGI Profile,10321.821,645.114,19354,309664,30.000908

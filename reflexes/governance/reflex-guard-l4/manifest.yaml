@@ -1,0 +1,6 @@
+id: "governance/reflex-guard-l4"
+version: "1.0.0"
+priority: 90
+layer: "L4"
+description: "Deterministic safety gate and contract enforcement."
+entry_point: "execute.py:run"

@@ -1,0 +1,16 @@
+id: automation/executive-triangle-runner
+name: Executive Triangle Runner
+description: Boot minimal agent servers (Professor, Alpha, Executive, Gemma) with the bus and run the System Architect Executive Triangle benchmark through orchestrator ports to validate the Executive agent breaks analysis paralysis.
+version: "0.1.0"
+category: automation
+level: intermediate
+tags:
+  - orchestrator
+  - benchmark
+  - executive
+  - multi-agent
+examples:
+  - input:
+      scenario: The System Architect
+    output:
+      report_path: runs/benchmark_summary.txt

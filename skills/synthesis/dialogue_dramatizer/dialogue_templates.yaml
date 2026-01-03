@@ -1,0 +1,8 @@
+# Persona templates and prosody hints
+personas:
+  host: "Curious, keeps the flow moving"
+  expert: "Skeptical, precise, explains trade-offs"
+prosody:
+  break_ms: 300
+  emphasis_tag: "<emphasis>"
+  laugh_tag: "<laugh>"

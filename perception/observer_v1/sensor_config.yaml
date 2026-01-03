@@ -1,0 +1,29 @@
+version: 1
+queue_path: perception/observer_v1/queue.json
+warm_memory_path: perception/observer_v1/warm_memory.jsonl
+ledger_path: memory/agent_state_v1/ledger.json
+context_id: env_local_v1
+tiers:
+  ambient:
+    interrupt_priority: 20
+    sample_interval_s: 30
+    max_rate_hz: 0.2
+  event:
+    interrupt_priority: 140
+    max_rate_hz: 2
+  urgent:
+    interrupt_priority: 240
+    max_rate_hz: 10
+sources:
+  - id: system.telemetry
+    kind: telemetry
+    tier: ambient
+    integrity: 0.7
+  - id: filesystem.trigger
+    kind: event
+    tier: event
+    integrity: 0.8
+  - id: safety.violation
+    kind: exception
+    tier: urgent
+    integrity: 0.95

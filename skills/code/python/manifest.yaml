@@ -1,0 +1,73 @@
+id: code/python
+name: Python Development
+description: Comprehensive Python development assistance including code generation, debugging, optimization, and best practices guidance.
+version: "0.1.0"
+category: code
+level: intermediate
+
+tags:
+  - python
+  - programming
+  - development
+  - debugging
+  - optimization
+
+dependencies: []
+
+requires_tools:
+  - python_interpreter
+
+estimated_tokens: 800
+
+author: CLI AI Team
+license: MIT
+
+examples:
+  - input:
+      task: generate
+      description: Create a function to calculate fibonacci numbers
+      requirements:
+        - Use memoization for efficiency
+        - Support negative indices
+    output:
+      code: |
+        from functools import lru_cache
+
+        @lru_cache(maxsize=None)
+        def fibonacci(n: int) -> int:
+            if n < 0:
+                return ((-1) ** (n + 1)) * fibonacci(-n)
+            if n <= 1:
+                return n
+            return fibonacci(n - 1) + fibonacci(n - 2)
+      explanation: Uses LRU cache for memoization and handles negative indices via the negafibonacci formula.
+
+  - input:
+      task: debug
+      code: |
+        def process_items(items):
+            for i in range(len(items)):
+                items[i] = items[i].upper()
+            return items
+      error: "'NoneType' object has no attribute 'upper'"
+    output:
+      diagnosis: The list contains None values which don't have the upper() method.
+      fixed_code: |
+        def process_items(items):
+            return [item.upper() if item is not None else None for item in items]
+      suggestions:
+        - Add input validation
+        - Use list comprehension for clarity
+        - Consider using filter() to skip None values
+
+  - input:
+      task: optimize
+      code: |
+        result = []
+        for item in large_list:
+            if item not in result:
+                result.append(item)
+    output:
+      optimized_code: |
+        result = list(dict.fromkeys(large_list))
+      improvement: O(n) vs O(n²) - dict.fromkeys preserves order while ensuring uniqueness in linear time.

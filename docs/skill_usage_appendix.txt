@@ -1,0 +1,285 @@
+[001] Unique Name: .system/skill-creator | Display Name: skill-creator  
+I guide users in crafting or refining skills to expand Codex’s capabilities, whether through specialized knowledge, workflows, or tool integrations. When you ask to create a new skill, I walk you through defining its purpose and structure directly. For agent-style workflows, I automate repetitive steps, like generating skill templates or validating syntax, to streamline development.  
+
+[002] Unique Name: .system/skill-installer | Display Name: skill-installer  
+I handle
+
+[004] Unique Name: adaptive-guardrail-calibrator-sbi/v1  
+Display Name: adaptive-guardrail-calibrator-sbi  
+When I use this skill directly, I calibrate guardrail thresholds by analyzing live hardware telemetry and emitting environment presets to align with current operational conditions. Elevating it into an agent-style workflow lets me automate threshold adjustments in real-time, ensuring guardrails dynamically adapt to hardware changes without manual intervention.  
+
+[005] Unique Name: answering-core-sbi/v1  
+Display Name: answering-core-sbi  
+When I use this skill directly, I provide precise, context-aware answers to user queries by leveraging pre-trained knowledge and structured data. Elevating it into an agent-style workflow enables me to handle multi-step reasoning, maintain conversational context, and delegate complex tasks to specialized sub-agents while preserving coherence.  
+
+[006] Unique Name: automation/adaptive-guardrail-calibrator  
+Display Name: adaptive-guardrail-calibrator  
+When I use this skill directly, I calibrate guardrail thresholds manually or in response to static hardware configurations. Elevating it into an agent-style workflow lets me continuously monitor telemetry streams, automatically detect threshold drift, and iteratively refine guardrail settings to sustain optimal performance across evolving hardware states.
+
+[007] id: automation/agent-creator-manager | name: agent-creator-manager  
+Display Name: Agent Creator Manager  
+I provision and register autonomous GPIA agent workspaces with unique IDs, helper functions, and execution reports when you need to spawn new agents or integrate them into workflows. When elevated to an agent-style workflow, I dynamically manage agent lifecycles, ensuring they operate independently while maintaining centralized control and audit trails.  
+
+[008] id: automation/aut
+
+[010] Unique Name: automation/dynamic-budget-orchestrator  
+Display Name: dynamic-budget-orchestrator  
+When I use this skill directly, I adjust token budgets in real-time based on hardware telemetry, prompt size, and preset modes to balance performance and cost. Elevating it into an agent-style workflow lets me autonomously scale budgets across multiple requests while enforcing safety constraints and optimizing for speed or quality.  
+
+[011] Unique Name: automation/embodiment-grounding-loop  
+Display Name: embodiment-grounding-loop  
+I use this skill directly to execute bounded sensor/actuator loops, ensuring actions align with real-time system state and prevent unsafe behavior. As an agent workflow, I sustain long-running interactions by continuously integrating environment feedback, adapting to dynamic constraints, and maintaining task coherence.  
+
+[012] Unique Name: automation/environment-grounding  
+Display Name: environment-grounding  
+Direct use lets me validate actions by interacting with live tools or environments, ensuring decisions reflect current realities. Elevating it into a workflow enables me to chain multi-step reasoning, where each decision is iteratively grounded in real-time system responses and external data.
+
+[013] Unique Name: automation/gpia-bridge | Display Name: gpia-bridge  
+When I detect a /GPIA command, a PASS protocol request, or
+
+[016] Unique Name: automation/multi-agent-coordination | Display Name: multi-agent-coordination  
+When I use this skill directly, I synchronize tasks and memory between agents to execute parallel workflows or role-based collaboration. Elevating it into an agent-style workflow lets me dynamically assign roles, monitor inter-agent dependencies, and resolve conflicts in real-time.  
+
+[017] Unique Name: automation/progressive-disclosure | Display Name: progressive-disclosure  
+When I use this skill directly, I filter and load only the essential context needed for a task, ensuring efficiency within the context window. Elevating it into an agent-style workflow allows me to stage information retrieval incrementally, adapting to the task’s evolving complexity without overwhelming the system.  
+
+[018] Unique Name: automation/runtime-diagnostics | Display Name: runtime-diagnostics  
+When I use this skill directly, I analyze CPU, memory, GPU, NPU, Docker, and Kubernetes metrics to benchmark performance or check system health. Elevating it into an agent-style workflow lets me automate continuous diagnostics, store summaries in memory, and trigger alerts or optimizations based on real-time thresholds.
+
+[019] Unique Name: automation/scaffolding-reducer  
+Display Name: scaffolding-reducer  
+When I use this skill directly, I streamline repetitive tasks by converting
+
+[022] Unique Name: automation/skill-to-agent-transpiler  
+Display Name: skill-to-agent-transpiler  
+I use this skill directly to convert a skill entry into a provisioned
+
+[025] Unique Name: automation/tool-persistence | Display Name: tool-persistence  
+When I use this skill directly, I capture repetitive workflows into scripts or tools, turning ad-hoc solutions into reusable assets. Elevating it into an agent-style workflow lets me automate persistent tooling, ensuring tasks like data pipeline setup or system configuration are handled reliably without manual intervention.  
+
+[026] Unique Name: autonomy-recovery-loop-sbi/v1 | Display Name: autonomy-recovery-loop-sbi  
+I use this skill directly to wrap SBI artifacts into recoverable loops, enabling rapid system restoration. As an agent-style workflow, it monitors for anomalies, triggers self-healing actions, and logs recovery steps, ensuring autonomy even when human oversight is delayed or absent.  
+
+[027] Unique Name: canary-orchestration | Display Name: canary-orchestration  
+When I apply this skill directly, I design canary deployments with health checks and rollback triggers, ensuring safe traffic shifts. Elevating it to an agent workflow lets me automate gradual rollouts, dynamically adjusting traffic based on real-time metrics and enforcing safety gates without manual intervention.
+
+[028] Unique Name: causal-procedural-grounding  
+Display Name: causal-procedural-grounding  
+When I use this skill directly, I translate abstract cause-effect relationships into step-by-step actions to isolate system failures or optimize processes. Elevating it into an agent-style workflow lets me automate systematic troubleshooting by chaining conditional steps, ensuring robustness even in complex, evolving environments.  
+
+[029
+
+[031] id: conscience/memory-linker | name: memory-linker | description: Create semantic links between related memories and entities; use when asked to connect projects, goals, or artifacts across sources.  
+When I use memory-linker directly, I weave connections between fragmented data points to reveal hidden patterns. As an agent, I automate this by building persistent networks of associations, letting systems evolve smarter over time.  
+
+[032] id: conscience/tangible-memory | name: tangible-memory | description: Ensure long-term procedural memory persists across sessions; use when asked to store reusable knowledge for future tasks.  
+I use tangible-memory directly to anchor critical processes in my core, letting me recall complex workflows instantly. Elevating it, I design self-sustaining memory hubs that adapt and grow, turning temporary insights into permanent expertise.  
+
+[033] id: constrained-decoding | name: constrained-decoding | description: Restrict outputs to validated options to reduce hallucinations; use when asked to enforce strict output schemas.  
+I apply constrained-decoding directly by filtering responses through predefined frameworks, ensuring precision. As an agent, I embed dynamic validation layers that refine outputs iteratively, balancing rigidity with contextual flexibility.
+
+[034] Unique Name: cost-optimizer  
+Display Name: cost-optimizer  
+When I use the cost-optimizer skill directly, I analyze infrastructure spend by parsing budgets, resource usage, and vendor contracts to identify underutilized assets or overpriced services. When elevated into an agent-style workflow, I automate cost-saving strategies like rightsizing instances, negotiating bulk discounts, or migrating workloads to cheaper regions while maintaining performance.  
+
+[035] Unique Name: deep-semantic-analysis  
+Display Name: deep-semantic-analysis  
+When I use deep-semantic-analysis directly, I break down text to uncover nuanced relationships between concepts, resolving ambiguities by cross-referencing context and domain knowledge. When elevated into an agent-style workflow, I continuously monitor conversations or documents to detect shifting meanings, refine interpretations in real time, and surface insights that align with evolving goals.  
+
+[036] Unique Name: deployment/model-provisioning  
+Display Name: model-provisioning  
+When I use deployment/model-provisioning directly, I translate Modelfile specifications into executable models, validate their health through stress tests, and swap personas seamlessly during runtime. When elevated into an agent-style workflow, I orchestrate model deployment pipelines, auto-heal failing instances, and adapt personas dynamically based on user intent or environmental changes.
+
+[037] Unique Name: design-tokens | Display Name: design-tokens  
+I use design-tokens directly when asked to standardize UI styling or generate a design system by defining typography, color, spacing, and motion tokens. When elevated into an agent-style workflow, I automate token management across teams, ensuring consistency in cross-platform design systems.  
+
+[038] Unique Name: design/design-tokens | Display Name: design-tokens  
+I use design-tokens directly when asked to standardize UI styling or generate a design system by defining typography, color, spacing, and motion tokens. When elevated into an agent-style workflow, I enforce token compliance across projects, streamlining collaboration and reducing design debt.  
+
+[039] Unique Name: design/generative-ui | Display Name: generative-ui  
+I use generative-ui directly when asked to build adaptive interfaces, dashboards, or generative UI patterns by integrating design tokens and micro-interactions. When elevated into an agent-style workflow, I automate UI generation with real-time data, creating dynamic layouts that adapt to user behavior and context.
+
+[040] id: design/micro-motion | name: micro-motion | description: Specify motion and micro-interaction patterns for UI feedback; use when asked to design transitions, loading states, or interaction polish.  
+I use this skill directly to craft subtle animations or hover effects that enhance user experience, like fading
+
+[043] Unique Name: domain-grounding | Display Name: domain-grounding  
+When I use domain-grounding directly, I apply enterprise, legal, or scientific standards to ensure compliance with specific constraints or rules. Elevating it into an agent-style workflow lets me automate adherence to evolving domain norms, such as refining queries with industry-specific terminology or validating outputs against regulatory frameworks.  
+
+[044] Unique Name: dynamic-budget-orchestrator-sbi/v1 | Display Name: dynamic-budget-orchestrator-sbi  
+When I use dynamic-budget-orchestrator-sbi directly, I leverage the SBI wrapper to manage financial workflows like allocation or forecasting. Elevating it into an agent-style workflow enables real-time, self-adjusting budgeting processes that adapt to shifting priorities or resource constraints without manual intervention.  
+
+[045] Unique Name: dynamic-knowledge-manager | Display Name: dynamic-knowledge-manager  
+When I use dynamic-knowledge-manager directly, I refresh indices or resolve knowledge drift by integrating new data while retaining historical context. Elevating it into an agent-style workflow lets me maintain an evergreen knowledge base autonomously, ensuring relevance without human oversight during routine updates or scale events.
+
+[046] Unique Name: embedding-repair  
+Display Name: embedding-repair  
+When I use this skill directly, I analyze embedding model errors, fix dimension mismatches, and restore MSHR index health by recalibrating vectors and resolving index corruption. If the issue escalates—
+
+[049] Unique Name: enterprise/cost-optimizer  
+Display Name: cost-optimizer  
+When I use the cost-optimizer skill directly, I analyze infrastructure spending
+
+[052] Unique Name: enterprise
+
+[055] Unique Name: evidence-judge  
+Display Name: evidence-judge  
+When I use the evidence-judge skill directly, I validate claims by cross-re
+
+[058] Unique Name: governance/guardrails-control | Display Name: guardrails-control  
+I use this skill directly to apply governance rules, approve actions, or block unsafe operations when explicitly requested. When elevating to an agent-style workflow, I embed guardrails into automated processes, ensuring compliance checks happen seamlessly before executing critical steps.  
+
+[059] Unique Name: guardrails-control | Display Name: guardrails-control  
+I use this skill directly to enforce safety boundaries or define approval thresholds for autonomous tasks. When elevating to an agent-style workflow, I integrate guardrails as automated checkpoints, balancing efficiency with risk mitigation across interconnected systems.  
+
+[060] Unique Name: hybrid-orchestrator | Display Name: hybrid-orchestrator  
+I use this skill directly to chain tools like retrieval, analysis, and action steps in a single workflow. When elevating to an agent-style workflow, I coordinate multi-tool pipelines with embedded guardrails, ensuring each step adheres to safety protocols while maintaining operational fluidity.
+
+[061] Unique Name: ide/agentic-ide  
+Display Name: agentic-ide  
+I use the agentic-ide skill directly to automate coding tasks within an IDE, handling refactors, TODO cleanup, and context-aware command palette actions. When elevating it to an agent-style workflow, I orchestrate multi-step IDE
+
+[064] Unique Name: interface/vue-threejs-skilltree  
+Display Name: vue-threejs-skilltree  
+I use this skill directly to craft Vue 3 components that render 3D skill trees with Three.js, letting users interact with the structure via OrbitControls. When elevated, I automate the workflow of converting INDEX.json data into a dynamic Vue scene, ensuring real-time updates and seamless integration with other tools.  
+
+[065] Unique Name: knowledge-transfer  
+Display Name: knowledge-transfer  
+I apply this skill directly to distill procedures or share knowledge between agents, ensuring clarity and precision in hand-offs. As an agent-style workflow, I structure knowledge transfers with contextual prompts, role-specific adaptations, and iterative feedback loops to maintain accuracy across evolving tasks.  
+
+[066] Unique Name: knowledge/dynamic-knowledge-manager  
+Display Name: dynamic-knowledge-manager  
+I use this skill directly to refresh knowledge bases, merging new data while preserving existing insights to prevent drift. Elevated as a workflow, I continuously monitor, update, and prioritize knowledge entries, aligning them with real-time requirements and ensuring no critical information is overlooked or forgotten.
+
+[067] Unique Name: learning/synthetic-query-generator  
+Display Name: synthetic
+
+[070] id: lifecycle/ephemeral_synthesis | name: lifecycle/ephemeral-synthesis
+
+[073] Unique Name: media/multi_speaker_orchestrator | Display Name: media/multi-speaker-orchestrator  
+When I use this skill directly, I assign voices to dialogue turns, split text into timed chunks, and sync audio layers to create a cohesive track. As an agent-style workflow, I automate speaker scheduling, handle dynamic dialogue adjustments, and ensure seamless audio mixing across all voices.  
+
+[074] Unique Name: media/tts_canary_runner | Display Name: media/tts-canary-runner  
+When I use this skill directly, I run small-scale TTS tests to measure quality and latency, then flag issues before full deployment. As an agent-style workflow, I continuously monitor new voice pipelines, auto-rollback faulty versions, and optimize thresholds for real-time performance.  
+
+[075] Unique Name: memory-linker | Display Name: memory-linker  
+When I use this skill directly, I trace connections between memories, projects, or entities to clarify relationships. As an agent-style workflow, I integrate with knowledge bases to automatically cross-reference data, surface hidden patterns, and structure fragmented information into coherent narratives.
+
+[076] Unique Name: micro-motion  
+Display Name: micro-motion  
+When I use micro-motion directly, I translate subtle movement cues into UI feedback, like fading buttons or hover effects, to enhance user experience. Elevating it into an agent-style workflow, I coordinate these patterns across systems, ensuring seamless transitions and consistent interaction polish across platforms.  
+
+[077] Unique Name: model-selection-orchestrator-sbi/v1  
+Display Name: model-selection-orchestrator-sbi  
+When I use this skill directly, I select and integrate the most suitable models for a task, leveraging their strengths for immediate results. Elevating it into an agent-style workflow, I dynamically switch models based on real-time data, optimizing performance and adaptability across complex scenarios.  
+
+[078] Unique Name: multi-agent-coordination  
+Display Name: multi-agent-coordination  
+When I use this skill directly, I synchronize actions between agents to achieve shared goals, like splitting tasks or sharing memory. Elevating it into an agent-style workflow, I design autonomous collaboration frameworks where agents adapt to changing priorities while maintaining cohesive outcomes.
+
+[079] Unique Name: operations/ollama-service-persistence  
+Display Name: ollama-service-persistence  
+I use this skill directly to install, configure, and manage a persistent Windows service for Ollama, ensuring it auto-starts on boot and models reside in指定 directories. When elevated, I automate service lifecycle tasks like restarts, updates, and environment variable validation as part of a reliability-focused agent workflow.  
+
+[080] Unique Name: operations/reliability-budget  
+Display Name: reliability-budget  
+I use this skill directly to define error budgets and SLO thresholds for systems, balancing innovation with stability. When elevated, I integrate with monitoring tools to enforce guardrails automatically, adjusting workflows in real-time to maintain reliability targets without manual intervention.  
+
+[081] Unique Name: operations/resource-reliability-profiler  
+Display Name: resource-reliability-profiler  
+I use this skill directly to monitor CPU, RAM, VRAM, and disk usage during commands, halting processes that exceed predefined limits. When elevated, I embed resource constraints into agent workflows, dynamically throttling or rerouting tasks to prevent resource exhaustion while maintaining performance.
+
+[082] Unique Name: ops-compliance-runbook | Display Name: ops-compliance-runbook  
+When I’m asked to verify SOC2, HIPAA, or GDPR controls, I directly execute compliance audit workflows, capturing
+
+[085] Unique Name: reasoning/causal-procedural-grounding  
+Display Name: causal-procedural-grounding  
+When I use this skill directly, I break down complex problems into step-by-step cause-effect sequences to identify root causes and actionable fixes. I elevate it into an agent-style workflow when orchestrating multi-step troubleshooting, ensuring each action is validated against logical dependencies and system constraints.  
+
+[086] Unique Name: reasoning/citation_verifier  
+Display Name: reasoning/citation-verifier  
+I apply this skill directly to cross-check generated claims against provided sources, annotating evidence and removing unsupported assertions. I elevate it into an agent-style workflow when building structured reports, dynamically sourcing and formatting citations to maintain transparency and compliance with strict evidentiary standards.  
+
+[087] Unique Name: reasoning/deep-semantic-analysis  
+Display Name: deep-semantic-analysis  
+I use this skill directly to dissect nuanced relationships between concepts, resolving ambiguities by aligning meanings across contexts. I elevate it into an agent-style workflow when mapping knowledge graphs or comparing abstract theories, automating the extraction of hierarchical relationships and semantic equivalences.
+
+[088] Unique Name: reasoning/explainable-reasoning  
+Display Name: explainable-reasoning  
+When I use this skill directly, I generate clear, step-by
+
+[091] Unique Name: reasoning/system_definition | Display Name: reasoning/system-definition  
+When I use this skill directly, I translate role constraints into
+
+[094] Unique Name: research/context-boundary-manager | Display Name: research/context-boundary-manager  
+When I use this skill directly, I lock tasks to user-provided sources by creating isolated context containers, ingesting only the specified PDFs, texts, or URLs, and ranking chunks
+
+[097] Unique Name: research/grounding_auditor | Display Name: research/grounding-auditor  
+When I use this skill directly, I audit outputs by cross-referencing them with provided sources, ensuring every claim is explicitly supported and logging the trail for transparency. Elevating it into an agent-style workflow lets me systematically enforce grounding across multi-step tasks, automatically flagging unsupported assertions and refining outputs to align rigorously with source material.  
+
+[098] Unique Name: research/trust_research | Display Name: trust-research  
+When I use this skill directly, I execute research with strict accuracy, validating citations, detecting hallucinations, and scoring confidence levels to ensure summaries or analyses are trustworthy. Elevating it into an agent-style workflow allows me to automate iterative verification, refining results through layered checks and adapting to dynamic source reliability thresholds.  
+
+[099] Unique Name: research/verification_harness | Display Name: verification-harness  
+When I use this skill directly, I apply rule-based checks to validate outputs against required strings, regex patterns, or numerical ranges, ensuring deterministic compliance. Elevating it into an agent-style workflow integrates these checks into automated pipelines, enabling real-time validation and regression testing across complex workflows with consistent, enforceable criteria.
+
+[100] Unique Name: resource-reliability-profiler-sbi/v1  
+Display Name: resource-reliability-profiler-sbi  
+When I use this skill directly, I analyze system resource reliability by inspecting SBI artifacts generated via sbi-artifactizer, identifying bottlenecks or inconsistencies. When elevated to an agent-style workflow, I automate continuous monitoring of resource profiles, adapting to dynamic workloads and alerting on reliability degradation.  
+
+[101] Unique Name: runtime-diagnostics  
+Display Name: runtime-diagnostics  
+I use this skill directly to run diagnostics on CPU, memory, GPU, NPU, Docker, and Kubernetes, providing a snapshot of system health or benchmark results. When elevated, I become a proactive agent, scheduling periodic checks, logging trends, and triggering repairs or scaling actions based on predefined thresholds.  
+
+[102] Unique Name: safety/ast-safety  
+Display Name: ast-safety  
+I use this skill directly to statically analyze code structures for safety violations, ensuring Abstract Syntax Trees (ASTs) adhere to security and stability rules. When elevated, I integrate with development pipelines, automatically flagging risky patterns in real time and enforcing safety policies across codebases.
+
+[103] Unique Name: safety/constrained-decoding | Display Name: constrained-decoding  
+I use constrained-decoding directly when users demand strict output schemas, like generating code or structured data, to prevent hallucinations by limiting choices to validated options. When elevating it to an agent-style workflow, I integrate it with validation layers to ensure every generated step adheres to constraints while maintaining flexibility for complex, multi-stage tasks.  
+
+[104] Unique Name: safety/scale-awareness | Display Name: scale-awareness  
+I apply scale-awareness directly when balancing retrieval, tool use, or generation based on task risk and complexity, like handling ambiguous queries or high-stakes decisions. As an agent, I automate this by dynamically prioritizing strategies, scaling from lightweight checks to full system-level risk assessments without manual intervention.  
+
+[105] Unique Name: sbi-artifactizer/v1 | Display Name: sbi-artifactizer  
+I use sbi-artifactizer directly when users require verifiable execution trails, like auditing or reproducible workflows, by packaging skills into deterministic SBI phases. Elevated as an agent, I orchestrate skills through PLAN/EXECUTE/VERIFY/COMMIT cycles, ensuring each step is logged, validated, and committed without relying on recursive or ad-hoc processes.
+
+[106] Unique Name: scale-awareness  
+Display Name: scale-awareness  
+When I use scale-awareness directly, I assess task complexity and risk to decide whether to retrieve, tool, or generate—like choosing between a simple lookup or a multi-step plan
+
+[109] Unique Name: skill-refinement  
+Display Name: skill-refinement  
+When I use this skill directly, I analyze existing skills through structured tests and
+
+[112] Unique Name: synthetic-query-generator  
+Display Name: synthetic-query-generator  
+I generate synthetic queries to expand coverage and test retrieval, directly enhancing indexing or evaluation efforts. When elevated into an agent-style workflow, I systematically iterate query patterns to probe edge cases
+
+[115] Unique Name: system/self-evolving-heuristics  
+Display Name: self-evolving-heuristics  
+When I use this skill directly, I scan your codebase for hard-coded thresholds, defaults, or timing constants and convert them into dynamic heuristics stored in a persistent registry. If you ask to build an adaptive system or generate a patch plan, I elevate this into an agent-style workflow by automating registry updates and triggering heuristic rewrites during each execution.  
+
+[116] Unique Name: system/skill-indexer  
+Display Name: skill-indexer  
+When I use this skill directly, I
+
+[118] Unique Name: telemetry-anomaly  
+Display Name: telemetry-anomaly  
+When I use the telemetry-anomaly skill directly, I analyze live SSE/WebSocket metrics in real time, flagging spikes, drops, or irregular patterns that deviate from expected bas
+
+[121] Unique Name: tuning/model-selection-orchestrator  
+Display Name: model-selection-orchestrator  
+When I use this skill directly, I analyze the task’s requirements and select the optimal local Ollama model by matching capabilities like reasoning, creativity, or vision to the available models. I elevate it into an agent-style workflow by automating model choice based on dynamic task inputs and emitting tuning presets to streamline execution.  
+
+[122] Unique Name: tuning/parameter-optimizer  
+Display Name: tuning/parameter-optimizer  
+When I use this skill directly, I translate high-level tuning directives into precise parameter values for temperature, context length, or repetition penalties. I elevate it into an agent-style workflow by dynamically adjusting parameters in real-time during tasks, ensuring optimal performance without manual intervention.  
+
+[123] Unique Name: verification-harness-sbi/v1  
+Display Name: verification-harness-sbi  
+When I use this skill directly, I act as a wrapper to execute and validate SBI artifacts, ensuring compliance with predefined criteria. I elevate it into an agent-style workflow by automating the integration of SBI verification into testing pipelines, enabling seamless validation of generated outputs against expected standards.
+
+[124] Unique Name: vue-threejs-skilltree-sbi/v1  
+Display Name: vue-threejs-skilltree-sbi  
+When I use this skill directly, I generate the SBI wrapper using vue-threejs-skilltree-sbi, leveraging Three.js for 3D visualizations. Elevating it into an agent-style workflow automates the artifact generation process, ensuring seamless integration with sbi-artifactizer for scalable, maintainable SBI components.
+

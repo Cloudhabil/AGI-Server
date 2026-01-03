@@ -1,0 +1,85 @@
+id: system/placeholder-scanner
+name: Placeholder Scanner
+description: Scans repository for placeholders (TODO, FIXME, ..., stubs) and uses GPIA to populate them with contextually appropriate content
+version: 1.0.0
+level: intermediate
+category: system
+capabilities:
+  - scan: Find all placeholders in the repository
+  - analyze: Analyze placeholder context and determine what should fill it
+  - populate: Use GPIA to generate appropriate content for placeholders
+  - report: Generate a report of all placeholders found
+  - fix: Apply GPIA-generated fixes to placeholders
+
+input_schema:
+  type: object
+  properties:
+    capability:
+      type: string
+      enum: [scan, analyze, populate, report, fix]
+      description: The operation to perform
+    paths:
+      type: array
+      items:
+        type: string
+      description: Specific paths to scan (defaults to entire repo)
+    patterns:
+      type: array
+      items:
+        type: string
+      description: Custom placeholder patterns to search for
+    exclude_patterns:
+      type: array
+      items:
+        type: string
+      description: Patterns to exclude from results
+    auto_fix:
+      type: boolean
+      default: false
+      description: Automatically apply fixes (requires confirmation)
+    dry_run:
+      type: boolean
+      default: true
+      description: Preview changes without applying them
+
+output_schema:
+  type: object
+  properties:
+    placeholders:
+      type: array
+      items:
+        type: object
+        properties:
+          file:
+            type: string
+          line:
+            type: integer
+          pattern:
+            type: string
+          context:
+            type: string
+          suggested_fix:
+            type: string
+          confidence:
+            type: number
+    summary:
+      type: object
+      properties:
+        total_found:
+          type: integer
+        by_pattern:
+          type: object
+        by_file:
+          type: object
+    fixes_applied:
+      type: integer
+
+dependencies:
+  - conscience/memory
+  - conscience/safety
+
+tags:
+  - maintenance
+  - code-quality
+  - automation
+  - refactoring

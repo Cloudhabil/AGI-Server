@@ -1,0 +1,122 @@
+# AGI Learning System - Agent Configuration
+# ==========================================
+# Teaching Alpha to become an interactive AGI using 5 local LLMs
+
+admin:
+  model: codegemma
+  allow_role_adjustment: true
+  wake_order: [professor, alpha, arbiter]
+
+# Available Models (all local via Ollama)
+models:
+  codegemma: { speed: "133 tok/s", size: "5 GB", role: fast }
+  qwen3: { speed: "87 tok/s", size: "5.2 GB", role: creative }
+  deepseek_r1: { speed: "74 tok/s", size: "5.2 GB", role: reasoning }
+  llava: { role: vision, size: "4.7 GB" }
+  gpt_oss_20b: { size: "13 GB", role: synthesis }
+
+# Core Learning Agents
+agents:
+  professor:
+    port: 7001
+    primary_model: deepseek_r1
+    secondary_models: [qwen3, gpt_oss_20b]
+    prompt: prompts/PROFESSOR.md
+    description: "Universal teacher - guides Alpha through AGI curriculum"
+    memory_db: skills/conscience/memory/store/professor_memories.db
+    capabilities:
+      - analyze (deepseek_r1)
+      - create_lesson (qwen3)
+      - grade (deepseek_r1)
+      - synthesize (gpt_oss_20b)
+
+  alpha:
+    port: 7002
+    primary_model: qwen3
+    secondary_models: [codegemma, deepseek_r1]
+    prompt: prompts/ALPHA.md
+    description: "Learning agent - becoming interactive AGI through 7 Pillars"
+    memory_db: skills/conscience/memory/store/alpha_memories.db
+    capabilities:
+      - respond (qwen3)
+      - challenge (qwen3)
+      - parse_intent (codegemma)
+      - self_reflect (deepseek_r1)
+
+  arbiter:
+    port: 7003
+    primary_model: gpt_oss_20b
+    description: "Resolves disputes, synthesizes multi-model outputs"
+    capabilities:
+      - resolve_dispute (gpt_oss_20b)
+      - synthesize (gpt_oss_20b)
+      - final_judgment (gpt_oss_20b)
+
+# Learning Session Configuration
+learning:
+  session_duration: 600  # 10 minutes
+  cycle_interval: 30
+
+  # Model assignments per task
+  task_models:
+    intent_parsing: codegemma
+    entity_extraction: codegemma
+    agreement_summary: codegemma
+    professor_analysis: deepseek_r1
+    professor_grading: deepseek_r1
+    alpha_response: qwen3
+    alpha_challenge: qwen3
+    lesson_creation: qwen3
+    final_synthesis: gpt_oss_20b
+    dispute_resolution: gpt_oss_20b
+    image_analysis: llava
+
+  # Dialogue patterns
+  patterns:
+    skeptical_dialogue:
+      professor: deepseek_r1
+      alpha: qwen3
+      summary: codegemma
+      synthesis: gpt_oss_20b
+
+    full_council:
+      sequence: [codegemma, qwen3, deepseek_r1, gpt_oss_20b]
+      description: "All models contribute perspective"
+
+# AGI Curriculum Progress (Updated 2025-12-30 after teaching session)
+curriculum:
+  pillars:
+    - name: "Natural Language Understanding"
+      status: "mastered"
+      skills: [intent_classification, entity_extraction, context_tracking, ambiguity_resolution]
+      models: [codegemma, qwen3]
+
+    - name: "Natural Language Generation"
+      status: "mastered"
+      skills: [coherent_response, style_adaptation, explanation_generation, question_formulation]
+      models: [qwen3]
+
+    - name: "Continuous Learning"
+      status: "mastered"
+      skills: [knowledge_integration, skill_transfer, error_correction, curiosity_driven_exploration]
+      models: [deepseek_r1, gpt_oss_20b]
+
+    - name: "Memory & Context"
+      status: "mastered"
+      skills: [working_memory, long_term_storage, context_switching, relevance_filtering]
+      models: [codegemma, qwen3]
+
+    - name: "Reasoning & Problem Solving"
+      status: "mastered"
+      skills: [logical_inference, causal_reasoning, analogical_thinking, hypothesis_generation]
+      models: [deepseek_r1, gpt_oss_20b]
+
+    - name: "Self-Awareness & Autonomy"
+      status: "mastered"
+      skills: [capability_assessment, limitation_recognition, goal_formulation, progress_monitoring]
+      models: [deepseek_r1, qwen3]
+
+    - name: "Emotional Intelligence"
+      status: "mastered"
+      skills: [sentiment_recognition, empathetic_response, social_context_awareness, conflict_resolution]
+      models: [qwen3, llava]

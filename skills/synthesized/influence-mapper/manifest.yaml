@@ -1,0 +1,7 @@
+id: synthesized/influence-mapper
+name: Influence Mapper
+description: Map web of influence between humans for domain grounding
+version: 1.0.0
+category: synthesized
+level: advanced
+tags: [influence, social, hierarchy, power]

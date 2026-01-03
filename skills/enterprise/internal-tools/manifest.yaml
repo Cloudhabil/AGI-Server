@@ -1,0 +1,24 @@
+id: enterprise/internal-tools
+name: Enterprise Internal Tools
+version: "1.0.0"
+description: Document internal tool usage patterns and escalation paths.
+category: automation
+level: intermediate
+
+tags:
+  - enterprise
+  - internal
+  - tooling
+
+dependencies: []
+
+capabilities:
+  - capability_id: guide
+    description: Outline internal tool usage steps
+  - capability_id: escalate
+    description: Define escalation steps when tools fail
+
+permissions:
+  filesystem: read
+  network: []
+  shell: none

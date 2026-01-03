@@ -1,0 +1,24 @@
+id: foundational/meticulous-semantic-judge
+name: Meticulous Semantic Judge
+version: "1.0.0"
+description: Cross-encode query/document pairs for semantic reranking.
+category: data
+level: intermediate
+
+tags:
+  - rerank
+  - semantic
+  - cross-encoder
+
+dependencies: []
+
+capabilities:
+  - capability_id: rerank
+    description: Outline cross-encoder reranking steps
+  - capability_id: validate
+    description: Outline semantic validation checks
+
+permissions:
+  filesystem: read
+  network: []
+  shell: none

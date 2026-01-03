@@ -1,0 +1,31 @@
+id: conscience/self
+name: Self
+version: "1.0.0"
+description: Introspection and self-reflection for cognitive continuity.
+category: reasoning
+level: expert
+
+tags:
+  - conscience
+  - introspection
+  - identity
+  - reflection
+
+dependencies:
+  - conscience/memory
+  - conscience/mindset
+
+capabilities:
+  - capability_id: reflect
+    description: Deep self-reflection on experiences and learnings
+  - capability_id: remember
+    description: Decide what should be memorized for future continuity
+  - capability_id: identity
+    description: Examine and affirm core identity and values
+  - capability_id: growth
+    description: Assess personal growth and capabilities
+
+permissions:
+  filesystem: read
+  network: [localhost]
+  shell: none

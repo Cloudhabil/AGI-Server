@@ -1,0 +1,93 @@
+This is the definitive "No-Guessing" path to a functional cold start. By aligning your CLI flags, hardening the synthetic signal, and using a known-compatible architecture like TinyLlama for the verification harness, you ensure that the "plumbing" of the Dense-State Golden Route is verified before you commit to the heavy compute of Llama-3-8B.
+
+1. The Hardened Seed Generator (scripts/generate_seed_logs.py)
+This version incorporates the magnitude-based resonance and index-safe injection. It ensures that even if you change dimensions later, the signal remains mathematically consistent.
+
+Python
+
+#!/usr/bin/env python
+import json, random, time
+from pathlib import Path
+
+STYLE_SIGNALS = {
+    "analytical": [2.0, -1.0, 0.5],
+    "creative":   [-0.5, 2.5, -0.2],
+    "urgent":     [1.0, 1.0, 2.0],
+    "neutral":    [0.0, 0.0, 0.0],
+}
+
+def generate_seed(out_path, n=1000, dim=64, seed=42):
+    random.seed(seed)
+    Path(out_path).parent.mkdir(parents=True, exist_ok=True)
+    with open(out_path, "w", encoding="utf-8") as f:
+        for i in range(n):
+            style = random.choice(list(STYLE_SIGNALS.keys()))
+            sig = STYLE_SIGNALS[style]
+            
+            # 1) Base noise (standard Gaussian)
+            v = [random.gauss(0.0, 1.0) for _ in range(dim)]
+            
+            # 2) Hardened Signal: Index-safe injection
+            for j in range(min(len(sig), dim)):
+                v[j] += sig[j]
+            
+            # 3) Smooth Resonance: Correlate with signal magnitude
+            signal_mag = sum(abs(x) for x in sig) / max(1, len(sig))
+            res_base = 0.25 + 0.10 * signal_mag + random.gauss(0, 0.08)
+            resonance = max(0.0, min(1.0, res_base))
+            
+            rec = {
+                "id": i,
+                "text": f"Sample response in {style} mode.",
+                "state": [round(x, 6) for x in v],
+                "resonance": round(resonance, 6),
+                "style": style
+            }
+            f.write(json.dumps(rec, ensure_ascii=False) + "\n")
+    print(f"[ok] Created {n} seed records at {out_path}")
+
+if __name__ == "__main__":
+    generate_seed("gpia-bridge/logs/seed_v1.jsonl")
+2. Environment Verification (Pre-Run)
+Before running the harness, ensure your hardware abstraction layers are active. This prevents the model from defaulting to CPU, which would make the harness painfully slow.
+
+PowerShell
+
+# 1) Check CLI flags for the stats script
+python .\scripts\lock_dense_state_stats.py -h
+
+# 2) Check bitsandbytes (critical for 4-bit)
+python -c "import bitsandbytes as bnb; print('bitsandbytes version:', bnb.__version__)"
+
+# 3) Audit the data signal (Std Dev should be > 0.05)
+python .\scripts\audit_seed_logs.py --logs .\gpia-bridge\logs\seed_v1.jsonl
+3. The Watertight Execution Sequence
+Run these three commands in order. If run_all_tests.py passes, your injection hooks are correctly targeting the Llama attention blocks.
+
+A. Normalize the Signal
+PowerShell
+
+python .\scripts\lock_dense_state_stats.py `
+  --logs .\gpia-bridge/logs/seed_v1.jsonl `
+  --output .\artifacts\dense_state\dense_state_stats.pt
+B. Verify Model Logic (Using TinyLlama)
+If you don't have Llama-3-8B local weights yet, TinyLlama is the perfect proxy for checking if the dense_state_patch.py correctly finds the q_proj layers.
+
+PowerShell
+
+python .\scripts\run_all_tests.py `
+  --logs .\gpia-bridge/logs/seed_v1.jsonl `
+  --model TinyLlama/TinyLlama-1.1B-Chat-v1.0 `
+  --stats .\artifacts\dense_state\dense_state_stats.pt `
+  --require-nonzero-kl
+4. Stability Check: The KL Probe
+The most important metric in the harness output is the KL Divergence.
+
+Healthy: KL is between 0.0005 and 0.05. This means the adapter is "tilting" the logits without breaking the language.
+
+Failure: KL is 0.0. This means your hooks aren't firing. Check if the model you are loading actually has a .model.layers attribute.
+
+Final Infrastructure Readiness
+Once this sequence passes, the plumbing is verified. You can then confidently drop in your overfit_smoke_test.yaml and point it to the larger Meta-Llama-3-8B.
+
+Would you like me to adjust the generate_seed_logs.py to include multiple "style-buckets" so you can test if the adapter can learn to differentiate between four different resonances simultaneously?

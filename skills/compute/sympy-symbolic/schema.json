@@ -1,0 +1,57 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "skill_id": "compute/sympy-symbolic",
+  "input": {
+    "type": "object",
+    "properties": {
+      "capability": {
+        "type": "string",
+        "enum": [
+          "manipulate_zeta_function",
+          "verify_functional_equation",
+          "series_expansion",
+          "symbolic_derivative",
+          "simplify_expression"
+        ],
+        "default": "manipulate_zeta_function"
+      },
+      "operation": {
+        "type": "string",
+        "description": "Operation to perform"
+      },
+      "s_value": {
+        "type": "string",
+        "description": "Value of s for zeta function (e.g., '2', '1/2', '1/2 + 14.134i')"
+      },
+      "point": {
+        "type": "string",
+        "description": "Expansion point"
+      },
+      "order": {
+        "type": "integer",
+        "description": "Order of expansion or derivative"
+      },
+      "expression": {
+        "type": "string",
+        "description": "Mathematical expression to simplify"
+      }
+    },
+    "required": ["capability"]
+  },
+  "output": {
+    "type": "object",
+    "properties": {
+      "success": {
+        "type": "boolean"
+      },
+      "output": {
+        "type": "object",
+        "description": "Result data"
+      },
+      "error": {
+        "type": "string",
+        "description": "Error message if failed"
+      }
+    }
+  }
+}

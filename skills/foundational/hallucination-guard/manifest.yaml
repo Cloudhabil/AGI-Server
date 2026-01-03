@@ -1,0 +1,24 @@
+id: foundational/hallucination-guard
+name: Hallucination Guard
+version: "1.0.0"
+description: Constrain decoding to valid document identifiers.
+category: reasoning
+level: intermediate
+
+tags:
+  - retrieval
+  - safety
+  - constraints
+
+dependencies: []
+
+capabilities:
+  - capability_id: constrain
+    description: Outline constrained decoding steps
+  - capability_id: verify
+    description: Verify outputs against allowed IDs
+
+permissions:
+  filesystem: read
+  network: []
+  shell: none

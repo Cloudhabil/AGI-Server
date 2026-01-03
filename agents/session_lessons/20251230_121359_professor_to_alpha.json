@@ -1,0 +1,9 @@
+{
+  "id": "20251230_121359",
+  "title": "Pattern Recognition",
+  "content": "**1-Minute Lesson: Pattern Recognition**  \n**Key Concepts**:  \n1. **Detection**: Identify recurring patterns in data (e.g., shapes, sequences).  \n2. **Classification**: Categorize patterns into labeled groups (e.g., \"stop sign\" vs. \"yield sign\").  \n3. **Learning**: Improve accuracy by refining models based on feedback or new data.  \n\n**Practical Example**:  \nA self-driving car detects traffic signs (detection), classifies them as \"stop\" or \"yield\" (classification), and learns to recognize new signs through training data (learning).  \n\n**Exercise**:  \nAnalyze a dataset of handwritten digits. First, detect patterns in the numbers, then classify them into 0\u20139 categories, and finally refine a model to improve recognition accuracy.  \n\n*Time: 2 minutes* \ud83d\udd52",
+  "teacher": "professor",
+  "student": "alpha",
+  "created_at": "2025-12-30T12:13:59.902800",
+  "status": "pending"
+}

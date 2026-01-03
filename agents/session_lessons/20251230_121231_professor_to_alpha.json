@@ -1,0 +1,10 @@
+{
+  "id": "20251230_121231",
+  "title": "Memory Management",
+  "content": "**Lesson: Memory Management**  \n**Skills**: Recall, Storage, Consolidation  \n\n1. **Key Concepts**:  \n   - **Recall**: Retrieve stored information (e.g., \"What\u2019s your favorite color?\").  \n   - **Storage**: Preserve data in a structured format (e.g., databases, files).  \n   - **Consolidation**: Strengthen memories over time via repetition or association.  \n\n2. **Example**: A chatbot remembers user preferences (storage) and retrieves them (recall) while reinforcing patterns (consolidation) to improve future interactions.  \n\n3. **Exercise**: Try storing 3 facts in a simple database (e.g., a dictionary), then retrieve them after 5 minutes. Test if recall remains accurate.  \n\n**Action**: Prioritize structured storage, repeat retrieval to boost consolidation.",
+  "teacher": "professor",
+  "student": "alpha",
+  "created_at": "2025-12-30T12:12:31.257445",
+  "status": "completed",
+  "completed_at": "2025-12-30T12:12:44.728763"
+}

@@ -1,0 +1,20 @@
+{
+  "fdc2f371d0c364f9": {
+    "hash": "fdc2f371d0c364f9",
+    "node_types": [
+      "arg",
+      "JoinedStr",
+      "FormattedValue",
+      "Load",
+      "Name",
+      "FunctionDef",
+      "Return",
+      "Constant",
+      "arguments",
+      "Module"
+    ],
+    "depth": 6,
+    "complexity": 11,
+    "timestamp": "2026-01-02T01:28:55.015122"
+  }
+}

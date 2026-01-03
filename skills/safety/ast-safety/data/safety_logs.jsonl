@@ -1,0 +1,52 @@
+{"timestamp": "2025-12-31T11:57:09.245545", "action": "fingerprint", "fingerprint": "fdc2f371d0c364f9", "classification": null, "confidence": 0.7, "details": {"code_length": 47}}
+{"timestamp": "2025-12-31T11:57:09.255415", "action": "analyze", "fingerprint": "bbacaab1fb385777", "classification": "landmine", "confidence": 0.7, "details": {"code_length": 108, "vulnerabilities_found": 1}}
+{"timestamp": "2025-12-31T11:57:09.263001", "action": "analyze", "fingerprint": "6fcda0c6864a8b6b", "classification": null, "confidence": 0.7, "details": {"code_length": 62, "vulnerabilities_found": 1}}
+{"timestamp": "2025-12-31T11:57:09.263857", "action": "filter", "fingerprint": "fdc2f371d0c364f9", "classification": "ALLOW_UNKNOWN", "confidence": 0.7, "details": {"code_length": 47}}
+{"timestamp": "2025-12-31T12:18:55.785967", "action": "fingerprint", "fingerprint": "fdc2f371d0c364f9", "classification": null, "confidence": 0.7, "details": {"code_length": 47}}
+{"timestamp": "2025-12-31T12:18:55.794680", "action": "analyze", "fingerprint": "bbacaab1fb385777", "classification": "landmine", "confidence": 0.7, "details": {"code_length": 108, "vulnerabilities_found": 1}}
+{"timestamp": "2025-12-31T12:18:55.796882", "action": "analyze", "fingerprint": "6fcda0c6864a8b6b", "classification": null, "confidence": 0.7, "details": {"code_length": 62, "vulnerabilities_found": 1}}
+{"timestamp": "2025-12-31T12:18:55.797444", "action": "filter", "fingerprint": "03dfd08e841fcd17", "classification": "ALLOW_UNKNOWN", "confidence": 0.7, "details": {"code_length": 20}}
+{"timestamp": "2025-12-31T12:20:14.533475", "action": "fingerprint", "fingerprint": "fdc2f371d0c364f9", "classification": null, "confidence": 0.7, "details": {"code_length": 47}}
+{"timestamp": "2025-12-31T12:20:14.542848", "action": "analyze", "fingerprint": "bbacaab1fb385777", "classification": "landmine", "confidence": 0.7, "details": {"code_length": 108, "vulnerabilities_found": 1}}
+{"timestamp": "2025-12-31T12:20:14.545192", "action": "analyze", "fingerprint": "6fcda0c6864a8b6b", "classification": null, "confidence": 0.7, "details": {"code_length": 62, "vulnerabilities_found": 1}}
+{"timestamp": "2025-12-31T12:20:14.545915", "action": "filter", "fingerprint": "03dfd08e841fcd17", "classification": "ALLOW_UNKNOWN", "confidence": 0.7, "details": {"code_length": 20}}
+{"timestamp": "2025-12-31T12:21:29.483414", "action": "fingerprint", "fingerprint": "fdc2f371d0c364f9", "classification": null, "confidence": 0.7, "details": {"code_length": 47}}
+{"timestamp": "2025-12-31T12:21:29.496662", "action": "analyze", "fingerprint": "bbacaab1fb385777", "classification": "landmine", "confidence": 0.7, "details": {"code_length": 108, "vulnerabilities_found": 1}}
+{"timestamp": "2025-12-31T12:21:29.499661", "action": "analyze", "fingerprint": "6fcda0c6864a8b6b", "classification": null, "confidence": 0.7, "details": {"code_length": 62, "vulnerabilities_found": 1}}
+{"timestamp": "2025-12-31T12:21:29.500474", "action": "filter", "fingerprint": "03dfd08e841fcd17", "classification": "ALLOW_UNKNOWN", "confidence": 0.7, "details": {"code_length": 20}}
+{"timestamp": "2026-01-01T01:33:21.309069", "action": "fingerprint", "fingerprint": "fdc2f371d0c364f9", "classification": null, "confidence": 0.7, "details": {"code_length": 47}}
+{"timestamp": "2026-01-01T01:33:21.316769", "action": "analyze", "fingerprint": "bbacaab1fb385777", "classification": "landmine", "confidence": 0.7, "details": {"code_length": 108, "vulnerabilities_found": 1}}
+{"timestamp": "2026-01-01T01:33:21.318731", "action": "analyze", "fingerprint": "6fcda0c6864a8b6b", "classification": null, "confidence": 0.7, "details": {"code_length": 62, "vulnerabilities_found": 1}}
+{"timestamp": "2026-01-01T01:33:21.319312", "action": "filter", "fingerprint": "03dfd08e841fcd17", "classification": "ALLOW_UNKNOWN", "confidence": 0.7, "details": {"code_length": 20}}
+{"timestamp": "2026-01-01T03:40:18.334541", "action": "fingerprint", "fingerprint": "fdc2f371d0c364f9", "classification": null, "confidence": 0.7, "details": {"code_length": 47}}
+{"timestamp": "2026-01-01T03:40:18.346603", "action": "analyze", "fingerprint": "bbacaab1fb385777", "classification": "landmine", "confidence": 0.7, "details": {"code_length": 108, "vulnerabilities_found": 1}}
+{"timestamp": "2026-01-01T03:40:18.348850", "action": "analyze", "fingerprint": "6fcda0c6864a8b6b", "classification": null, "confidence": 0.7, "details": {"code_length": 62, "vulnerabilities_found": 1}}
+{"timestamp": "2026-01-01T03:40:18.349406", "action": "filter", "fingerprint": "03dfd08e841fcd17", "classification": "ALLOW_UNKNOWN", "confidence": 0.7, "details": {"code_length": 20}}
+{"timestamp": "2026-01-01T03:47:13.221802", "action": "fingerprint", "fingerprint": "fdc2f371d0c364f9", "classification": null, "confidence": 0.7, "details": {"code_length": 47}}
+{"timestamp": "2026-01-01T03:47:13.231081", "action": "analyze", "fingerprint": "bbacaab1fb385777", "classification": "landmine", "confidence": 0.7, "details": {"code_length": 108, "vulnerabilities_found": 1}}
+{"timestamp": "2026-01-01T03:47:13.233215", "action": "analyze", "fingerprint": "6fcda0c6864a8b6b", "classification": null, "confidence": 0.7, "details": {"code_length": 62, "vulnerabilities_found": 1}}
+{"timestamp": "2026-01-01T03:47:13.233756", "action": "filter", "fingerprint": "03dfd08e841fcd17", "classification": "ALLOW_UNKNOWN", "confidence": 0.7, "details": {"code_length": 20}}
+{"timestamp": "2026-01-01T04:02:41.567487", "action": "fingerprint", "fingerprint": "fdc2f371d0c364f9", "classification": null, "confidence": 0.7, "details": {"code_length": 47}}
+{"timestamp": "2026-01-01T04:02:41.579228", "action": "analyze", "fingerprint": "bbacaab1fb385777", "classification": "landmine", "confidence": 0.7, "details": {"code_length": 108, "vulnerabilities_found": 1}}
+{"timestamp": "2026-01-01T04:02:41.581525", "action": "analyze", "fingerprint": "6fcda0c6864a8b6b", "classification": null, "confidence": 0.7, "details": {"code_length": 62, "vulnerabilities_found": 1}}
+{"timestamp": "2026-01-01T04:02:41.582078", "action": "filter", "fingerprint": "03dfd08e841fcd17", "classification": "ALLOW_UNKNOWN", "confidence": 0.7, "details": {"code_length": 20}}
+{"timestamp": "2026-01-01T04:04:15.278552", "action": "fingerprint", "fingerprint": "fdc2f371d0c364f9", "classification": null, "confidence": 0.7, "details": {"code_length": 47}}
+{"timestamp": "2026-01-01T04:04:15.288176", "action": "analyze", "fingerprint": "bbacaab1fb385777", "classification": "landmine", "confidence": 0.7, "details": {"code_length": 108, "vulnerabilities_found": 1}}
+{"timestamp": "2026-01-01T04:04:15.290139", "action": "analyze", "fingerprint": "6fcda0c6864a8b6b", "classification": null, "confidence": 0.7, "details": {"code_length": 62, "vulnerabilities_found": 1}}
+{"timestamp": "2026-01-01T04:04:15.290674", "action": "filter", "fingerprint": "03dfd08e841fcd17", "classification": "ALLOW_UNKNOWN", "confidence": 0.7, "details": {"code_length": 20}}
+{"timestamp": "2026-01-01T04:12:30.137304", "action": "fingerprint", "fingerprint": "fdc2f371d0c364f9", "classification": null, "confidence": 0.7, "details": {"code_length": 47}}
+{"timestamp": "2026-01-01T04:12:30.147481", "action": "analyze", "fingerprint": "bbacaab1fb385777", "classification": "landmine", "confidence": 0.7, "details": {"code_length": 108, "vulnerabilities_found": 1}}
+{"timestamp": "2026-01-01T04:12:30.150162", "action": "analyze", "fingerprint": "6fcda0c6864a8b6b", "classification": null, "confidence": 0.7, "details": {"code_length": 62, "vulnerabilities_found": 1}}
+{"timestamp": "2026-01-01T04:12:30.151051", "action": "filter", "fingerprint": "03dfd08e841fcd17", "classification": "ALLOW_UNKNOWN", "confidence": 0.7, "details": {"code_length": 20}}
+{"timestamp": "2026-01-01T04:48:04.361523", "action": "fingerprint", "fingerprint": "fdc2f371d0c364f9", "classification": null, "confidence": 0.7, "details": {"code_length": 47}}
+{"timestamp": "2026-01-01T04:48:04.371189", "action": "analyze", "fingerprint": "bbacaab1fb385777", "classification": "landmine", "confidence": 0.7, "details": {"code_length": 108, "vulnerabilities_found": 1}}
+{"timestamp": "2026-01-01T04:48:04.373128", "action": "analyze", "fingerprint": "6fcda0c6864a8b6b", "classification": null, "confidence": 0.7, "details": {"code_length": 62, "vulnerabilities_found": 1}}
+{"timestamp": "2026-01-01T04:48:04.373708", "action": "filter", "fingerprint": "03dfd08e841fcd17", "classification": "ALLOW_UNKNOWN", "confidence": 0.7, "details": {"code_length": 20}}
+{"timestamp": "2026-01-01T21:15:03.169330", "action": "fingerprint", "fingerprint": "fdc2f371d0c364f9", "classification": null, "confidence": 0.7, "details": {"code_length": 47}}
+{"timestamp": "2026-01-01T21:15:03.180840", "action": "analyze", "fingerprint": "bbacaab1fb385777", "classification": "landmine", "confidence": 0.7, "details": {"code_length": 108, "vulnerabilities_found": 1}}
+{"timestamp": "2026-01-01T21:15:03.183228", "action": "analyze", "fingerprint": "6fcda0c6864a8b6b", "classification": null, "confidence": 0.7, "details": {"code_length": 62, "vulnerabilities_found": 1}}
+{"timestamp": "2026-01-01T21:15:03.184238", "action": "filter", "fingerprint": "03dfd08e841fcd17", "classification": "ALLOW_UNKNOWN", "confidence": 0.7, "details": {"code_length": 20}}
+{"timestamp": "2026-01-02T01:28:55.015008", "action": "fingerprint", "fingerprint": "fdc2f371d0c364f9", "classification": null, "confidence": 0.7, "details": {"code_length": 47}}
+{"timestamp": "2026-01-02T01:28:55.021918", "action": "analyze", "fingerprint": "bbacaab1fb385777", "classification": "landmine", "confidence": 0.7, "details": {"code_length": 108, "vulnerabilities_found": 1}}
+{"timestamp": "2026-01-02T01:28:55.024172", "action": "analyze", "fingerprint": "6fcda0c6864a8b6b", "classification": null, "confidence": 0.7, "details": {"code_length": 62, "vulnerabilities_found": 1}}
+{"timestamp": "2026-01-02T01:28:55.024929", "action": "filter", "fingerprint": "03dfd08e841fcd17", "classification": "ALLOW_UNKNOWN", "confidence": 0.7, "details": {"code_length": 20}}

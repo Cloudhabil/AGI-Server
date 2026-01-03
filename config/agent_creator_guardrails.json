@@ -1,0 +1,45 @@
+{
+  "defaults": {
+    "session_window_seconds": 3600,
+    "max_agents_per_hour": 5,
+    "max_agents_per_session": 3,
+    "max_steps_limit": 10,
+    "ttl_hours": 24,
+    "force_ephemeral": false,
+    "require_approval": false,
+    "allowlist_categories": [],
+    "resource_budget": {
+      "max_tokens": 4096,
+      "vram_limit": 0.85,
+      "cpu_limit": 0.9
+    }
+  },
+  "manual": {
+    "max_agents_per_hour": 5,
+    "max_agents_per_session": 3,
+    "max_steps_limit": 10,
+    "ttl_hours": 24,
+    "force_ephemeral": false,
+    "require_approval": false,
+    "allowlist_categories": []
+  },
+  "transpiler": {
+    "max_agents_per_hour": 1,
+    "max_agents_per_session": 1,
+    "max_steps_limit": 5,
+    "ttl_hours": 1,
+    "force_ephemeral": true,
+    "require_approval": true,
+    "allowlist_categories": [
+      "automation",
+      "system",
+      "verification",
+      "safety",
+      "ops",
+      "governance"
+    ],
+    "max_spawn_depth": 1,
+    "max_agents_per_request": 1,
+    "dry_run_default": true
+  }
+}

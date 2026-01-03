@@ -1,0 +1,8 @@
+id: synthesized/synth-emotional_intelligence-9558f1
+name: Unknown
+description: Synthesized skill
+version: 0.1.0
+category: synthesized
+level: advanced
+tags: [synthesized, emotional_intelligence, auto-generated]
+requires_model: qwen3

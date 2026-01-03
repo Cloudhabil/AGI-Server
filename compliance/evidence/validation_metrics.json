@@ -1,0 +1,65 @@
+{
+  "run_id": "gpai-val-20251230-214346",
+  "timestamp": "2025-12-30T20:43:46.447450Z",
+  "validation_config": {
+    "dataset": "synthetic_validation",
+    "batch_size": 32,
+    "num_batches": 50,
+    "precision": "fp32",
+    "seed": 42
+  },
+  "model_info": {
+    "architecture": "TransformerEncoder",
+    "vocab_size": 32000,
+    "hidden_size": 512,
+    "num_layers": 6,
+    "num_parameters": 35298304,
+    "weight_tying": true
+  },
+  "hardware_info": {
+    "device": "cuda",
+    "cuda_available": true,
+    "gpu_name": "NVIDIA GeForce RTX 4070 SUPER",
+    "gpu_memory_gb": 11.99
+  },
+  "metrics": {
+    "loss": 423.1832,
+    "perplexity": 2.6881171418161356e+43,
+    "accuracy_top1": 0.0,
+    "accuracy_top5": 0.0002,
+    "tokens_per_second": 133832.8
+  },
+  "integrity_check": {
+    "gradient_norm_mean": 18.284763569395018,
+    "gradient_norm_std": 27.59496973836692,
+    "gradient_norm_max": 130.05795288085938,
+    "nan_detected": false,
+    "inf_detected": false,
+    "weight_norm_mean": 65.8535525978428,
+    "activation_mean": 0.03552166745066643,
+    "activation_std": 22.729673385620117,
+    "checks_passed": {
+      "no_nan": true,
+      "no_inf": true,
+      "reasonable_loss": false,
+      "reasonable_perplexity": false,
+      "gradient_stable": false
+    }
+  },
+  "lora_metrics": {
+    "adapter_type": "QLoRA",
+    "rank": 8,
+    "alpha": 16,
+    "target_modules": [
+      "q_proj",
+      "v_proj"
+    ],
+    "trainable_params": 35298,
+    "trainable_percent": 0.1,
+    "quantization": "4-bit NF4",
+    "compute_dtype": "bfloat16",
+    "adapter_status": "trained",
+    "merge_status": "ready"
+  },
+  "compliance_status": "REQUIRES_REVIEW"
+}

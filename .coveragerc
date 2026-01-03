@@ -1,0 +1,29 @@
+[run]
+source =
+    agent_server
+    bus_server
+    core
+    hnet
+    plugins
+    observability
+    server/security
+    server/config
+    server/models
+omit =
+    */tests/*
+    admin_*.py
+    ui_texts.py
+    agent.py
+    loop_agent.py
+    orchestrator.py
+    prospect.py
+    models/backend.py
+    server/db.py
+    server/dev_agent_sim.py
+    server/redis_bus.py
+    server/main.py
+
+[report]
+fail_under = 60
+show_missing = True
+skip_covered = True

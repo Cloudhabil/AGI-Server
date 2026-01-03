@@ -1,0 +1,19 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "skill_id": "automation/kubernetes-control",
+  "input": {
+    "type": "object",
+    "properties": {
+      "capability": {"type": "string", "enum": ["status", "deploy", "scale"]},
+      "target": {"type": "string"}
+    },
+    "required": ["capability"],
+    "additionalProperties": false
+  },
+  "output": {
+    "type": "object",
+    "properties": {
+      "steps": {"type": "array"}
+    }
+  }
+}

@@ -1,0 +1,1391 @@
+That is a hard stop for the "Golden Route." If the logs are empty or purely skeletal, there is no **resonance signal** for the model to learn, and the normalization stats will divide by zero or default to noise.
+
+For this Llama model to function in the **dense-state**, the logs must contain the "soul" of the interaction: the specific relationship between a state vector and the resulting text.
+
+### 1. The "Signal Minimum" Requirement
+
+To move past the Stats-Lock phase, you need a dataset that meets these three criteria:
+
+* **Dimensional Consistency:** Every state vector must have the same length (e.g., if you started with 64-dim, you must stay at 64-dim).
+* **Variance:** If every resonance score is identical (e.g., all 1.0), the **Resonance Head** will collapse because there is no "poor" vs. "great" to differentiate.
+* **Volume:** While we've built the pipeline to handle GBs of data, you need at least **500–1,000 high-quality interactions** to prevent the adapter from simply memorizing a handful of examples.
+
+---
+
+### 2. How to "Prime" Your Logs
+
+If your current logs are empty, you have two paths to generate the training data needed for the Golden Route:
+
+**Path A: The "Trace" Run**
+Run your existing system in "Collection Mode." Feed it a diverse set of prompts and let it generate outputs. Even if it isn't "resonant" yet, the logs will capture the baseline relationship between state and text.
+
+**Path B: Synthetic Distillation**
+If you have a "Gold Standard" model (like a larger Llama-3-70B or GPT-4), use it to generate responses to your prompts. Then, assign a **synthetic resonance score** to those responses. This "teaches" your smaller model to mimic the high-density behavior of the larger one.
+
+---
+
+### 3. Immediate Diagnostic: The "Empty File" Check
+
+Run this quick command to see if your log file actually contains valid JSON objects before we attempt the lock:
+
+
+bash
+# Count lines (records)
+wc -l path/to/your/dense-state.jsonl
+
+# Peek at the first record's keys
+python -c "import json; print(json.loads(open('path/to/your/dense-state.jsonl').readline()).keys())"
+
+
+---
+
+### 4. The "Cold Start" Failure Mode
+
+If you try to run lock_dense_state_stats.py on an empty file, the **Welford Algorithm** will fail at the finalize() step because .
+
+> **Warning:** Never attempt to bypass the stats lock with "dummy" zeros. An adapter trained on zero-mean/zero-std data will produce massive, unscaled gradients that can permanently corrupt your Llama weights during fine-tuning.
+
+---
+
+**Next Step**
+Do you currently have a small "seed" dataset of interactions, or should we draft a **Data Generation Script** to help you fill those logs with initial traces?
+
+Hard stop confirmed. If the JSONL is empty or “skeleton-only”, the Golden Route can’t even lock stats safely, and any attempt to fake it will poison the adapter signal.
+
+You do not need a philosophical plan. You need logs with signal. So here’s a complete, local-first way to generate a seed dataset that meets the minimum requirements, plus a deterministic validator that refuses to proceed if the dataset is unusable.
+
+Summary
+
+Generate a seed JSONL with at least 500 to 1,000 records.
+
+Ensure fixed state_dim, non-trivial variance in resonance, and valid text.
+
+Validate and print a quality report before running stats lock.
+
+Then run lock_dense_state_stats.py on that validated file.
+
+1) Fast diagnosis: is the file empty or broken (PowerShell)
+
+Replace the path.
+
+$LOG=".\gpia-bridge\logs\v1.jsonl"
+(Get-Item $LOG).Length
+(Get-Content $LOG -TotalCount 1)
+(Get-Content $LOG | Measure-Object -Line).Lines
+
+
+If Lines is 0, you have no dataset.
+
+2) Seed-data generator (synthetic but structurally correct)
+
+This creates a JSONL file with:
+
+prompt and output text (so you can later format causality)
+
+state: float vector with fixed dim
+
+resonance: scalar with variance
+
+optional: id, ts
+
+Save as scripts/generate_seed_dense_state_logs.py.
+
+#!/usr/bin/env python
+import argparse
+import json
+import random
+import time
+from pathlib import Path
+from typing import List
+
+PROMPTS = [
+    "Explain photosynthesis in simple terms.",
+    "Write a short email asking for a meeting.",
+    "Summarize the main tradeoffs of microservices vs monoliths.",
+    "Give a calm step-by-step troubleshooting plan for a failing deployment.",
+    "Describe why normalization drift breaks ML systems.",
+    "Write a concise LinkedIn post about engineering discipline.",
+    "Explain what a forward hook does in PyTorch.",
+    "Give a checklist to debug NaNs in training.",
+]
+
+STYLE_TILTS = [
+    ("calm", 0.8),
+    ("sharp", 0.6),
+    ("formal", 0.55),
+    ("minimal", 0.7),
+    ("verbose", 0.5),
+    ("skeptical", 0.65),
+]
+
+def make_state(dim: int, style: str) -> List[float]:
+    # Fixed dim vector with controlled variance.
+    # First few dimensions encode a coarse style signal; rest is noise.
+    v = [random.gauss(0, 1) for _ in range(dim)]
+    # Encode style in first dims deterministically
+    style_map = {
+        "calm": (1.5, -0.5, 0.2),
+        "sharp": (-0.3, 1.7, -0.1),
+        "formal": (0.8, 0.3, 1.2),
+        "minimal": (0.2, -0.2, 1.8),
+        "verbose": (1.2, 0.9, -0.4),
+        "skeptical": (-0.7, 1.0, 0.9),
+    }
+    a, b, c = style_map.get(style, (0.0, 0.0, 0.0))
+    v[0] += a
+    if dim > 1: v[1] += b
+    if dim > 2: v[2] += c
+    return [float(x) for x in v]
+
+def make_output(prompt: str, style: str) -> str:
+    # This is not “gold answers”. It’s a bootstrapping scaffold so the pipeline has shape + variance.
+    # Replace with your real gpia-bridge outputs later.
+    if style == "minimal":
+        return f"Answer: {prompt.split('.')[0]}."
+    if style == "formal":
+        return f"Here is a structured response:\n1) Context\n2) Explanation\n3) Next steps\nPrompt: {prompt}"
+    if style == "calm":
+        return f"Let’s take this step by step. {prompt} First, define the goal, then explain the mechanism, then give an example."
+    if style == "sharp":
+        return f"Direct answer: {prompt} Key point: stop guessing, measure the variables, then act."
+    if style == "verbose":
+        return f"{prompt}\n\nDetailed breakdown:\n- Background\n- Mechanism\n- Edge cases\n- Practical checklist"
+    if style == "skeptical":
+        return f"{prompt} Before accepting any claim, verify assumptions, check data, and look for confounders."
+    return f"{prompt}"
+
+def main():
+    ap = argparse.ArgumentParser()
+    ap.add_argument("--out", type=str, required=True, help="Output JSONL path")
+    ap.add_argument("--n", type=int, default=1000, help="Number of records to generate")
+    ap.add_argument("--state-dim", type=int, default=64, help="Dense-state dimension")
+    ap.add_argument("--seed", type=int, default=42)
+    args = ap.parse_args()
+
+    random.seed(args.seed)
+
+    out_path = Path(args.out)
+    out_path.parent.mkdir(parents=True, exist_ok=True)
+
+    with out_path.open("w", encoding="utf-8") as f:
+        for i in range(args.n):
+            prompt = random.choice(PROMPTS)
+            style, base_res = random.choice(STYLE_TILTS)
+            state = make_state(args.state_dim, style)
+            output = make_output(prompt, style)
+
+            # Resonance has variance and mild correlation to style signal
+            resonance = max(0.0, min(1.0, random.gauss(base_res, 0.12)))
+
+            rec = {
+                "id": i,
+                "ts": int(time.time()),
+                "prompt": prompt,
+                "output": output,
+                "state": state,
+                "resonance": float(resonance),
+                "style": style,
+            }
+            f.write(json.dumps(rec, ensure_ascii=False) + "\n")
+
+    print(f"[ok] wrote {args.n} records to {out_path}")
+
+if __name__ == "__main__":
+    main()
+
+
+Run it:
+
+python .\scripts\generate_seed_dense_state_logs.py --out .\gpia-bridge\logs\seed_v1.jsonl --n 1000 --state-dim 64
+
+
+This gets you past “empty file” and gives you a working end-to-end harness. Later you replace seed outputs with real gpia-bridge traces.
+
+3) Dataset validator (fails fast)
+
+Save as scripts/validate_dense_state_logs.py.
+
+#!/usr/bin/env python
+import argparse
+import json
+import math
+from pathlib import Path
+from statistics import mean, pstdev
+
+def iter_jsonl(path: Path):
+    with path.open("r", encoding="utf-8") as f:
+        for line_no, line in enumerate(f, start=1):
+            line = line.strip()
+            if not line:
+                continue
+            yield line_no, json.loads(line)
+
+def main():
+    ap = argparse.ArgumentParser()
+    ap.add_argument("--logs", type=str, required=True)
+    ap.add_argument("--state-key", type=str, default="state")
+    ap.add_argument("--res-key", type=str, default="resonance")
+    ap.add_argument("--text-keys", type=str, default="prompt,output", help="Comma-separated")
+    ap.add_argument("--min-records", type=int, default=500)
+    args = ap.parse_args()
+
+    p = Path(args.logs)
+    if not p.exists():
+        raise FileNotFoundError(p)
+
+    text_keys = [x.strip() for x in args.text_keys.split(",") if x.strip()]
+    n = 0
+    dims = set()
+    res = []
+    bad = 0
+
+    for line_no, rec in iter_jsonl(p):
+        n += 1
+        st = rec.get(args.state_key)
+        r = rec.get(args.res_key)
+
+        if not isinstance(st, list) or len(st) == 0 or not any(isinstance(x, float) for x in st):
+            bad += 1
+            continue
+        dims.add(len(st))
+
+        if not isinstance(r, (int, float)) or math.isnan(float(r)):
+            bad += 1
+            continue
+        res.append(float(r))
+
+        # require at least one text field non-empty
+        ok_text = False
+        for k in text_keys:
+            if isinstance(rec.get(k), str) and rec.get(k).strip():
+                ok_text = True
+                break
+        if not ok_text:
+            bad += 1
+
+    print(f"[report] records={n} valid_res={len(res)} bad={bad} dims={sorted(list(dims))}")
+
+    if n < args.min_records:
+        raise SystemExit(f"[fail] need >= {args.min_records} records, got {n}")
+
+    if len(dims) != 1:
+        raise SystemExit(f"[fail] state_dim inconsistent: {sorted(list(dims))}")
+
+    if len(res) < args.min_records:
+        raise SystemExit(f"[fail] not enough valid resonance values: {len(res)}")
+
+    r_mean = mean(res)
+    r_std = pstdev(res)
+    print(f"[report] resonance mean={r_mean:.4f} std={r_std:.4f} min={min(res):.4f} max={max(res):.4f}")
+
+    if r_std < 1e-3:
+        raise SystemExit("[fail] resonance variance too low (std ~ 0). No learnable signal.")
+
+    print("[ok] dataset meets minimum signal requirements")
+
+if __name__ == "__main__":
+    main()
+
+
+Run:
+
+python .\scripts\validate_dense_state_logs.py --logs .\gpia-bridge\logs\seed_v1.jsonl
+
+4) Once validator passes: lock stats
+python .\scripts\lock_dense_state_stats.py --logs .\gpia-bridge\logs\seed_v1.jsonl --output .\artifacts\dense_state\dense_state_stats.pt
+
+
+Then you can run run_all_tests.py and the rest of the Golden Route.
+
+Two choices, pick one (no extra questions)
+If you want real signal ASAP:
+
+Run your real gpia-bridge in “collection mode” and write JSONL records with fields like:
+
+prompt, output, state, resonance
+
+If you need the pipeline to work today:
+
+Use the seed generator above, then replace the synthetic output later.
+
+If you paste one example JSONL record from your real system (even if it’s skeletal), I’ll align the validator and formatter to your exact keys and make sure we never accidentally treat a token-id list as the dense state.
+
+Since you have confirmed a "hard stop" due to empty logs, we are switching from **architectural design** to **data synthesis**. Without a dense-state signal, the transformer hooks will be "tilting" toward a void.
+
+To fix this, we will generate a **Seed Dataset** that mimics the structural and statistical properties of a real gpia-bridge log. This ensures your code is ready for the day you swap in real human/agentic traces.
+
+---
+
+### 1. Generating the Signal: The Seed Generator
+
+This script creates a synthetic but structurally sound JSONL file. It ensures the state vectors have a "style tilt" (signal) buried in noise, providing a learnable target for the adapter.
+
+**Save as:** scripts/generate_seed_logs.py
+
+
+python
+import json, random, time, torch
+from pathlib import Path
+
+# Signal encoding: Mapping styles to specific vector regions
+STYLE_SIGNALS = {
+    "analytical": [2.0, -1.0, 0.5],
+    "creative":   [-0.5, 2.5, -0.2],
+    "urgent":     [1.0, 1.0, 2.0],
+    "neutral":    [0.0, 0.0, 0.0]
+}
+
+def generate_seed_data(out_path, n=1000, dim=64):
+    Path(out_path).parent.mkdir(parents=True, exist_ok=True)
+    with open(out_path, "w") as f:
+        for i in range(n):
+            style = random.choice(list(STYLE_SIGNALS.keys()))
+            # Create a vector: [Signal] + [Noise]
+            sig = STYLE_SIGNALS[style]
+            vector = [random.gauss(0, 0.1) for _ in range(dim)]
+            for j in range(len(sig)): vector[j] += sig[j] # Inject style
+            
+            # Resonance: Correlated to how well 'style' matches a fake target
+            res = 0.5 + (0.4 * random.random()) if style != "neutral" else 0.3
+            
+            rec = {
+                "text": f"Sample response in {style} mode.",
+                "state": [round(x, 4) for x in vector],
+                "resonance": round(res, 4)
+            }
+            f.write(json.dumps(rec) + "\n")
+    print(f"Generated {n} records with {dim}-dim states.")
+
+if __name__ == "__main__":
+    generate_seed_data("gpia-bridge/logs/seed_v1.jsonl")
+
+
+---
+
+### 2. Validating the "Marrow": The Signal Audit
+
+Before locking stats, we must ensure the dataset isn't "flat." If the standard deviation () of your resonance is near zero, the model has nothing to optimize.
+
+**Run this diagnostic:**
+
+
+python
+import json
+import numpy as np
+
+def audit_logs(path):
+    res_scores = [json.loads(l)['resonance'] for l in open(path)]
+    print(f"Count: {len(res_scores)}")
+    print(f"Mean Resonance: {np.mean(res_scores):.4f}")
+    print(f"Std Dev (Signal Strength): {np.std(res_scores):.4f}")
+    
+    if np.std(res_scores) < 0.01:
+        print("CRITICAL: Signal variance too low for training.")
+
+audit_logs("gpia-bridge/logs/seed_v1.jsonl")
+
+
+---
+
+### 3. The "Cold Start" Workflow
+
+Now that you have a seed file, the **Golden Route** is unblocked. Follow this sequence exactly:
+
+1. **Lock Stats:** Run lock_dense_state_stats.py on your new seed_v1.jsonl.
+2. **Verify Harness:** Run run_all_tests.py. It will now see the 64-dim states and pass the KL-divergence smoke check.
+3. **Overfit Test:** Run train_golden_route.py for 50 steps. The loss_res should drop immediately because the style signal in the seed data is very clean.
+
+---
+
+### Final Next Step
+
+With the seed data generated, your infrastructure is no longer "theoretical."
+
+**Would you like me to adjust the generate_seed_logs.py script to match a specific vector dimension you intend to use in production, or are you ready to run the first Stats-Lock on the 64-dim seed?**
+
+Run the first Stats-Lock on 64-dim now. Don’t burn cycles optimizing the seed generator before you’ve proven the whole pipe stays watertight end-to-end.
+
+But I’m going to tighten two things so you don’t shoot yourself in the foot:
+
+your audit script uses NumPy (unnecessary dependency)
+
+your resonance distribution is a bit “two-bucket” (neutral vs non-neutral) which can make early training look good for the wrong reasons
+
+Below is the exact execution sequence plus a slightly hardened seed generator (still 64-dim, still simple, better variance).
+
+1) Save the seed generator (64-dim, better signal)
+
+Save as scripts/generate_seed_logs.py:
+
+#!/usr/bin/env python
+import argparse
+import json
+import random
+from pathlib import Path
+
+STYLE_SIGNALS = {
+    "analytical": [2.0, -1.0, 0.5],
+    "creative":   [-0.5, 2.5, -0.2],
+    "urgent":     [1.0, 1.0, 2.0],
+    "neutral":    [0.0, 0.0, 0.0],
+}
+
+PROMPTS = [
+    "Explain the concept clearly.",
+    "Give a step-by-step plan.",
+    "Summarize the tradeoffs.",
+    "Write a concise response.",
+    "Provide a technical diagnosis.",
+]
+
+def generate_seed(out_path: str, n: int = 1000, dim: int = 64, seed: int = 42):
+    random.seed(seed)
+    outp = Path(out_path)
+    outp.parent.mkdir(parents=True, exist_ok=True)
+
+    styles = list(STYLE_SIGNALS.keys())
+
+    with outp.open("w", encoding="utf-8") as f:
+        for i in range(n):
+            style = random.choice(styles)
+            sig = STYLE_SIGNALS[style]
+
+            # Base noise
+            v = [random.gauss(0.0, 1.0) for _ in range(dim)]
+            # Inject style into first dims
+            for j in range(min(len(sig), dim)):
+                v[j] += sig[j]
+
+            # Resonance: smooth distribution + correlated with signal magnitude
+            # This prevents "flat" resonance and keeps it learnable.
+            signal_mag = sum(abs(x) for x in sig) / max(1, len(sig))  # neutral -> 0
+            base = 0.25 + 0.15 * random.random()
+            bump = 0.10 * signal_mag + random.gauss(0.0, 0.08)
+            resonance = max(0.0, min(1.0, base + bump))
+
+            rec = {
+                "id": i,
+                "text": f"{random.choice(PROMPTS)} Sample response in {style} mode.",
+                "state": [round(x, 6) for x in v],
+                "resonance": round(resonance, 6),
+                "style": style,
+            }
+            f.write(json.dumps(rec, ensure_ascii=False) + "\n")
+
+    print(f"[ok] wrote {n} records to {outp} (dim={dim})")
+
+def main():
+    ap = argparse.ArgumentParser()
+    ap.add_argument("--out", type=str, default="gpia-bridge/logs/seed_v1.jsonl")
+    ap.add_argument("--n", type=int, default=1000)
+    ap.add_argument("--dim", type=int, default=64)
+    ap.add_argument("--seed", type=int, default=42)
+    args = ap.parse_args()
+    generate_seed(args.out, n=args.n, dim=args.dim, seed=args.seed)
+
+if __name__ == "__main__":
+    main()
+
+
+Generate:
+
+python .\scripts\generate_seed_logs.py --out .\gpia-bridge\logs\seed_v1.jsonl --n 1000 --dim 64
+
+2) Audit the marrow (no NumPy)
+
+Save as scripts/audit_seed_logs.py:
+
+#!/usr/bin/env python
+import argparse, json, math
+from pathlib import Path
+
+def mean(xs):
+    return sum(xs) / max(1, len(xs))
+
+def std(xs):
+    m = mean(xs)
+    return math.sqrt(sum((x - m) ** 2 for x in xs) / max(1, len(xs)))
+
+def main():
+    ap = argparse.ArgumentParser()
+    ap.add_argument("--logs", type=str, required=True)
+    args = ap.parse_args()
+    p = Path(args.logs)
+
+    res = []
+    dims = set()
+    n = 0
+    with p.open("r", encoding="utf-8") as f:
+        for line in f:
+            if not line.strip():
+                continue
+            rec = json.loads(line)
+            n += 1
+            res.append(float(rec["resonance"]))
+            dims.add(len(rec["state"]))
+
+    print(f"Count: {n}")
+    print(f"State dims: {sorted(dims)}")
+    print(f"Mean resonance: {mean(res):.4f}")
+    print(f"Std resonance:  {std(res):.4f}")
+    if std(res) < 0.01:
+        print("CRITICAL: Signal variance too low for training.")
+
+if __name__ == "__main__":
+    main()
+
+
+Run:
+
+python .\scripts\audit_seed_logs.py --logs .\gpia-bridge\logs\seed_v1.jsonl
+
+3) Now do the Stats-Lock (64-dim seed)
+python .\scripts\lock_dense_state_stats.py `
+  --logs .\gpia-bridge\logs\seed_v1.jsonl `
+  --output .\artifacts\dense_state\dense_state_stats.pt
+
+4) Immediate pipeline verification (single command)
+python .\scripts\run_all_tests.py `
+  --logs .\gpia-bridge\logs\seed_v1.jsonl `
+  --model path/to/llama `
+  --stats .\artifacts\dense_state\dense_state_stats.pt `
+  --require-nonzero-kl
+
+
+If this passes, you’re officially unblocked: the Golden Route is real, not theoretical.
+
+When to change dimension
+
+Only change dim when you have a production decision for the dense-state encoder output. Until then, 64 is the right default: big enough to encode multiple factors, small enough to train fast.
+
+If you tell me the planned production state_dim (8, 16, 32, 64, 128), I’ll adjust:
+
+seed generator signal placement
+
+adapter bottleneck defaults
+
+recommended layer_range and lambda_res starting points
+
+Since we have a "hard stop" due to empty logs, we are shifting from high-level architectural design to **Data Synthesis**. Without a dense-state signal, the transformer hooks would be "tilting" toward a void.
+
+To fix this, we will generate a **Seed Dataset** that mimics the structural and statistical properties of a real gpia-bridge log. This ensures your code is ready for the day you swap in real human/agentic traces.
+
+---
+
+## 1. Generating the Signal: The Seed Generator
+
+This script creates a synthetic but structurally sound JSONL file. It ensures the state vectors have a "style tilt" (signal) buried in Gaussian noise, providing a learnable target for the adapter.
+
+**Save as:** scripts/generate_seed_logs.py
+
+
+python
+import json, random, time
+from pathlib import Path
+
+# Signal encoding: Mapping styles to specific vector regions
+# This gives the model a pattern to actually "hook" onto.
+STYLE_SIGNALS = {
+    "analytical": [2.0, -1.0, 0.5],
+    "creative":   [-0.5, 2.5, -0.2],
+    "urgent":     [1.0, 1.0, 2.0],
+    "neutral":    [0.0, 0.0, 0.0]
+}
+
+def generate_seed_data(out_path, n=1000, dim=64):
+    Path(out_path).parent.mkdir(parents=True, exist_ok=True)
+    with open(out_path, "w") as f:
+        for i in range(n):
+            style = random.choice(list(STYLE_SIGNALS.keys()))
+            # Create a vector: [Style Signal] + [Random Noise]
+            sig = STYLE_SIGNALS[style]
+            vector = [random.gauss(0, 0.1) for _ in range(dim)]
+            for j in range(len(sig)): 
+                vector[j] += sig[j] # Inject the bias
+            
+            # Resonance: Correlated to the style signal
+            res = 0.5 + (0.4 * random.random()) if style != "neutral" else 0.3
+            
+            rec = {
+                "text": f"Sample response in {style} mode.",
+                "state": [round(x, 4) for x in vector],
+                "resonance": round(res, 4)
+            }
+            f.write(json.dumps(rec) + "\n")
+    print(f"Generated {n} records with {dim}-dim states.")
+
+if __name__ == "__main__":
+    generate_seed_data("gpia-bridge/logs/seed_v1.jsonl")
+
+
+---
+
+## 2. Validating the "Marrow": The Signal Audit
+
+Before locking stats, we must ensure the dataset isn't "flat." If the standard deviation () of your resonance is near zero, the model has nothing to optimize. We need to see clear distribution peaks.
+
+**Run this diagnostic:**
+
+
+python
+import json
+import numpy as np
+
+def audit_logs(path):
+    res_scores = [json.loads(l)['resonance'] for l in open(path)]
+    print(f"Count: {len(res_scores)}")
+    print(f"Mean Resonance: {np.mean(res_scores):.4f}")
+    print(f"Std Dev (Signal Strength): {np.std(res_scores):.4f}")
+    
+    if np.std(res_scores) < 0.01:
+        print("CRITICAL: Signal variance too low for training. The model will not learn.")
+
+audit_logs("gpia-bridge/logs/seed_v1.jsonl")
+
+
+---
+
+## 3. The "Cold Start" Workflow
+
+Now that you have a seed file, the **Golden Route** is unblocked. Follow this sequence exactly to initialize your environment:
+
+1. **Lock Stats:** Run lock_dense_state_stats.py on your new seed_v1.jsonl.
+2. **Verify Harness:** Run run_all_tests.py. It will now detect the 64-dim states and pass the KL-divergence smoke check because the "tilt" is now mathematically present.
+3. **Overfit Test:** Run train_golden_route.py for 50 steps. You should see loss_res (resonance loss) drop immediately because the style signals in the seed data are deliberately clean.
+
+---
+
+### Final Next Step
+
+With the seed data generated, your infrastructure is no longer "theoretical"—it is functional.
+
+**Would you like me to adjust the generate_seed_logs.py script to match a specific vector dimension you intend to use in production (e.g., 128 or 256), or are you ready to run the first Stats-Lock on this 64-dim seed?**
+
+Run the first Stats-Lock on the 64-dim seed now.
+
+Reason: the dimension choice is a product decision tied to your real dense-state encoder. Until real traces exist, changing 64 → 128 → 256 is just moving the goalposts. The only thing that matters today is proving the full Golden Route (seed → stats lock → tests → tiny overfit) works deterministically.
+
+Also: your audit script pulls in NumPy, which is an unnecessary dependency for this stage. Below is the exact sequence with a NumPy-free audit, plus one small improvement to the seed generator so resonance has smoother variance (still correlated to style).
+
+1) Generate the seed JSONL (64-dim)
+
+Save as scripts/generate_seed_logs.py (use this version; same idea, better variance, still simple):
+
+#!/usr/bin/env python
+import json, random, time
+from pathlib import Path
+
+STYLE_SIGNALS = {
+    "analytical": [2.0, -1.0, 0.5],
+    "creative":   [-0.5, 2.5, -0.2],
+    "urgent":     [1.0, 1.0, 2.0],
+    "neutral":    [0.0, 0.0, 0.0],
+}
+
+def generate_seed_data(out_path, n=1000, dim=64, seed=42):
+    random.seed(seed)
+    Path(out_path).parent.mkdir(parents=True, exist_ok=True)
+
+    with open(out_path, "w", encoding="utf-8") as f:
+        for i in range(n):
+            style = random.choice(list(STYLE_SIGNALS.keys()))
+            sig = STYLE_SIGNALS[style]
+
+            # Gaussian noise (unit-ish) so std_ref won't collapse
+            vector = [random.gauss(0.0, 1.0) for _ in range(dim)]
+            for j in range(min(len(sig), dim)):
+                vector[j] += sig[j]
+
+            # Resonance: smooth distribution + correlated with signal magnitude
+            signal_mag = sum(abs(x) for x in sig) / max(1, len(sig))  # neutral -> 0
+            base = 0.25 + 0.15 * random.random()
+            bump = 0.10 * signal_mag + random.gauss(0.0, 0.08)
+            resonance = max(0.0, min(1.0, base + bump))
+
+            rec = {
+                "id": i,
+                "ts": int(time.time()),
+                "text": f"Sample response in {style} mode.",
+                "state": [round(x, 6) for x in vector],
+                "resonance": round(resonance, 6),
+                "style": style,
+            }
+            f.write(json.dumps(rec, ensure_ascii=False) + "\n")
+
+    print(f"[ok] Generated {n} records with {dim}-dim states -> {out_path}")
+
+if __name__ == "__main__":
+    generate_seed_data("gpia-bridge/logs/seed_v1.jsonl", n=1000, dim=64, seed=42)
+
+
+Run it:
+
+python .\scripts\generate_seed_logs.py
+
+2) Audit signal variance (NumPy-free)
+
+Save as scripts/audit_seed_logs.py:
+
+#!/usr/bin/env python
+import json, math
+from pathlib import Path
+
+def mean(xs): return sum(xs) / max(1, len(xs))
+def std(xs):
+    m = mean(xs)
+    return math.sqrt(sum((x - m) ** 2 for x in xs) / max(1, len(xs)))
+
+def audit_logs(path):
+    p = Path(path)
+    res = []
+    dims = set()
+    with p.open("r", encoding="utf-8") as f:
+        for line in f:
+            if not line.strip():
+                continue
+            rec = json.loads(line)
+            res.append(float(rec["resonance"]))
+            dims.add(len(rec["state"]))
+
+    print(f"Count: {len(res)}")
+    print(f"State dims: {sorted(dims)}")
+    print(f"Mean Resonance: {mean(res):.4f}")
+    s = std(res)
+    print(f"Std Dev (Signal Strength): {s:.4f}")
+    if s < 0.01:
+        print("CRITICAL: Signal variance too low for training. The model will not learn.")
+
+if __name__ == "__main__":
+    audit_logs("gpia-bridge/logs/seed_v1.jsonl")
+
+
+Run:
+
+python .\scripts\audit_seed_logs.py
+
+3) Lock stats (this is the real unblock)
+python .\scripts\lock_dense_state_stats.py `
+  --logs .\gpia-bridge\logs\seed_v1.jsonl `
+  --output .\artifacts\dense_state\dense_state_stats.pt
+
+4) Verify the whole Golden Route with one command
+python .\scripts\run_all_tests.py `
+  --logs .\gpia-bridge\logs\seed_v1.jsonl `
+  --model path/to/llama `
+  --stats .\artifacts\dense_state\dense_state_stats.pt `
+  --require-nonzero-kl
+
+5) Tiny overfit test (50 steps)
+
+Run your training script with a short run (whatever flag you’ve implemented, typically steps: 50 in training_config.yaml). Expected result: resonance loss drops quickly.
+
+When to change state_dim (128/256)
+
+Only do it when you can answer: “What produces the dense-state vector in production, and what is its native dimension?”
+Until then, 64 is the correct engineering default.
+
+If you reply with your intended production source of dense-state (eg 32-dim resonance/entropy/goal alignment vector, or 256-dim latent from a separate encoder), I’ll recommend a dimension and adjust:
+
+bottleneck sizing
+
+lambda_res starting value
+
+layer_range defaults
+
+This is the correct engineering move. Proving the pipeline is **watertight** with a 64-dim seed allows you to flush out any integration bugs before committing to a production-scale encoder. By using the standard-library-only audit, you eliminate environment friction.
+
+---
+
+## The "Watertight" Execution Sequence
+
+Follow this exactly to confirm the Golden Route is functional.
+
+### 1. Generate & Audit (The Data Gate)
+
+Run the generator to create your baseline signal, then audit to ensure the **Resonance Variance** is healthy.
+
+
+powershell
+# Generate 1000 records
+python .\scripts\generate_seed_logs.py --n 1000 --dim 64
+
+# Audit the signal strength
+python .\scripts\audit_seed_logs.py --logs .\gpia-bridge\logs\seed_v1.jsonl
+
+
+### 2. Lock Stats (The Normalization Anchor)
+
+This step is the most critical for stability. It converts your raw seed signals into zero-centered, unit-variance tensors.
+
+
+powershell
+python .\scripts\lock_dense_state_stats.py `
+  --logs .\gpia-bridge\logs\seed_v1.jsonl `
+  --output .\artifacts\dense_state\dense_state_stats.pt
+
+
+### 3. End-to-End Verification (The Harness)
+
+This confirms that the **Llama model hooks** correctly intercept the query projections and that the **dense-state bias** actually shifts the token probabilities (KL Divergence).
+
+
+powershell
+python .\scripts\run_all_tests.py `
+  --logs .\gpia-bridge\logs\seed_v1.jsonl `
+  --model path/to/llama `
+  --stats .\artifacts\dense_state\dense_state_stats.pt `
+  --require-nonzero-kl
+
+
+---
+
+## Why 64-Dim is the "Sweet Spot"
+
+While you can change the dimension later, 64-dim provides enough "semantic surface area" to test the pipeline's limits without the computational overhead of larger vectors.
+
+* **Signal Placement:** We are currently injecting signal into the first 3 indices ().
+* **Noise Absorption:** The remaining 61 dimensions act as a "stress test" for the DenseStateAdapter, forcing it to learn to ignore noise via the bottleneck layer.
+
+---
+
+## Expected Harness Output
+
+If the pipe is watertight, your harness will print:
+
+> [4/6] Zero-leakage test: max|delta|=0.00e+00
+> [5/6] KL(A||B)=0.001240 (or similar non-zero value)
+> **[ok] All Golden Route tests passed.**
+
+---
+
+## Next Step
+
+Once the harness passes, the infrastructure is proven. We can then initiate the first **"Overfit Smoke Test"** to see if the adapter can actually drive the resonance loss toward zero on this synthetic signal.
+
+**Would you like me to prepare the overfit_smoke_test.yaml config for the first 50-step training session, or should we verify the results of your audit_seed_logs.py first?**
+
+Prepare the overfit_smoke_test.yaml now.
+
+Reason: it is deterministic, cheap, and you will run it immediately after the harness passes. The audit is already enforced by the generator design and the harness will fail anyway if the dataset is unusable. So we ship the config and you run it.
+
+Below is a minimal, aggressive 50-step config designed to overfit fast on seed data while staying stable. It assumes:
+
+base model is frozen
+
+adapter + resonance head train
+
+layer injection is last 8 blocks by default
+
+stats are locked at artifacts/dense_state/dense_state_stats.pt
+
+overfit_smoke_test.yaml
+# overfit_smoke_test.yaml
+# Goal: prove the adapter + resonance head can learn quickly on seed data (50 steps).
+# Expected: resonance loss drops sharply within 20-50 steps, LM loss stays stable.
+
+model_path: "path/to/llama"                  # <-- set this
+logs_path: "gpia-bridge/logs/seed_v1.jsonl"
+stats_path: "artifacts/dense_state/dense_state_stats.pt"
+
+data:
+  # key mapping for the seed generator
+  text_key: "text"
+  state_key: "state"
+  resonance_key: "resonance"
+  max_length: 256
+
+training:
+  steps: 50
+  batch_size: 2
+  grad_accum: 4                               # effective batch = 8
+  lr: 2.0e-4
+  weight_decay: 0.0
+  warmup_steps: 5
+  max_grad_norm: 1.0
+  mixed_precision: "bf16"                     # use "fp16" if your stack prefers it
+  seed: 42
+  log_every: 1
+  eval_every: 10
+  save_every: 0                               # rely on "best" saves only for smoke
+
+architecture:
+  state_dim: 64                                # inferred from stats, but explicit is fine
+  bottleneck_dim: 128
+  pooling_mode: "masked_mean"
+  layer_range: [-8, 0]                         # last 8 blocks, safest default
+  gate_init: -4.0                              # sigmoid(-4) ~ 0.018
+
+loss:
+  lambda_res: 0.10                             # strong signal for smoke test
+  huber_delta: 1.0
+
+checkpointing:
+  run_dir: "checkpoints/overfit_smoke_seed_v1"
+  mode: "best_res"
+  top_k: 3
+  save_every_steps: 0
+
+observability:
+  # optional if your trainer supports it
+  log_gate: true
+  log_kl_probe: true
+  kl_probe_prompt: "Explain photosynthesis clearly."
+  kl_probe_every: 10
+
+How to run it (PowerShell)
+python .\scripts\train_golden_route.py --config .\overfit_smoke_test.yaml
+
+What “pass” looks like in 50 steps
+
+You want to see these three signals:
+
+Resonance loss drops hard
+
+Step 0 to Step 50: noticeable decline (often dramatic on seed data)
+
+Gate opens slowly
+
+Starts near sigmoid(-4) ~ 0.018
+
+Should not jump to 0.5+ immediately
+
+Healthy range by step 50: maybe 0.02 to 0.10
+
+LM loss does not blow up
+
+Some wobble is fine, but it should not trend sharply upward
+
+If resonance loss does not move at all:
+
+injection path is broken OR
+
+lambda_res too low OR
+
+labels are wrong/masked incorrectly
+
+If gate spikes early:
+
+reduce lambda_res to 0.05
+
+tighten layer_range to [-4, 0]
+
+One tiny upgrade (optional but smart)
+
+After step 50, run your A/B generate_with_dense_state.py --logit-diff --kl using the saved best adapter from checkpoints/overfit_smoke_seed_v1. If you see non-zero KL and reasonable token shifts, the system is alive.
+
+If you paste your audit_seed_logs.py output (mean/std), I can tune lambda_res and lr to match your actual variance, but you don’t need that to start.
+
+This is the correct engineering move. Proving the pipeline is **watertight** with a 64-dim seed allows you to flush out integration bugs before committing to a production-scale encoder. By using the standard-library-only audit, you eliminate environment friction.
+
+---
+
+## 1. The Watertight Execution Sequence
+
+Follow this exactly to confirm the Golden Route is functional.
+
+### Step 1: Generate & Audit (The Data Gate)
+
+Run the generator to create your baseline signal, then audit to ensure the **Resonance Variance** is healthy.
+
+
+powershell
+# Generate 1000 records
+python .\scripts\generate_seed_logs.py
+
+# Audit the signal strength without NumPy
+python .\scripts\audit_seed_logs.py
+
+
+### Step 2: Lock Stats (The Normalization Anchor)
+
+This step is critical for stability. It converts your raw seed signals into zero-centered, unit-variance tensors.
+
+
+powershell
+python .\scripts\lock_dense_state_stats.py `
+  --logs .\gpia-bridge\logs\seed_v1.jsonl `
+  --output .\artifacts\dense_state\dense_state_stats.pt
+
+
+### Step 3: End-to-End Verification (The Harness)
+
+This confirms that the **Llama model hooks** correctly intercept the query projections and that the **dense-state bias** actually shifts the token probabilities (KL Divergence).
+
+
+powershell
+python .\scripts\run_all_tests.py `
+  --logs .\gpia-bridge\logs\seed_v1.jsonl `
+  --model path/to/llama `
+  --stats .\artifacts\dense_state\dense_state_stats.pt `
+  --require-nonzero-kl
+
+
+---
+
+## 2. Why 64-Dim is the "Sweet Spot"
+
+While you can change the dimension later, 64-dim provides enough "semantic surface area" to test the pipeline's limits without unnecessary overhead.
+
+* **Signal Placement:** Signal is injected into the first 3 indices ().
+* **Noise Absorption:** The remaining 61 dimensions act as a "stress test" for the DenseStateAdapter, forcing it to learn to ignore noise via the bottleneck layer.
+
+---
+
+## 3. Expected Harness Output
+
+If the pipe is watertight, your harness should print:
+
+> [4/6] Zero-leakage test: max|delta|=0.00e+00
+> [5/6] KL(A||B)=0.001240 (or similar non-zero value)
+> **[ok] All Golden Route tests passed.**
+
+---
+
+## 4. The Overfit Smoke Test (50 Steps)
+
+Once the harness passes, the infrastructure is proven. We now initiate the first **"Overfit Smoke Test"** to see if the adapter can actually drive the resonance loss toward zero on this synthetic signal.
+
+### The Objective
+
+Confirm that  (Resonance Loss) declines steadily. Because the seed data is highly correlated, a failure to overfit here indicates a problem with the **Adapter Architecture** or **Gradient Propagation**.
+
+### Implementation Policy
+
+* **Steps:** 50
+* **Layer Range:** (-8, 0) (Target only the final blocks)
+* **Lambda Res:** 0.05
+* **Expected Behavior:**  stays flat;  drops.
+
+---
+
+## Next Step
+
+**Would you like me to prepare the overfit_smoke_test.yaml config for this session, or should we verify the results of your audit_seed_logs.py first to ensure the resonance distribution is healthy?**
+
+Prepare the overfit_smoke_test.yaml now. If the audit is unhealthy, the run will fail fast anyway and we adjust. The fastest path to truth is: generate, audit, lock stats, run harness, then run the 50-step overfit with a known-good config.
+
+Here is the config tuned to your stated policy (50 steps, layer_range = -8,0, lambda_res = 0.05).
+
+overfit_smoke_test.yaml
+# overfit_smoke_test.yaml
+# Goal: 50-step overfit smoke test on seed_v1 to prove gradients + injection are correct.
+# Expected: resonance loss drops; LM loss stays stable.
+
+model_path: "path/to/llama"                   # TODO: set this
+logs_path: "gpia-bridge/logs/seed_v1.jsonl"
+stats_path: "artifacts/dense_state/dense_state_stats.pt"
+
+data:
+  text_key: "text"
+  state_key: "state"
+  resonance_key: "resonance"
+  max_length: 256
+  shuffle_buffer: 0                           # deterministic for smoke (if supported)
+
+training:
+  steps: 50
+  batch_size: 2
+  grad_accum: 4                               # effective batch = 8
+  lr: 2.0e-4
+  warmup_steps: 5
+  weight_decay: 0.0
+  max_grad_norm: 1.0
+  seed: 42
+  mixed_precision: "bf16"                     # use "fp16" if bf16 unsupported
+  log_every: 1
+  eval_every: 10
+
+architecture:
+  state_dim: 64                               # should match stats, explicit for clarity
+  bottleneck_dim: 128
+  pooling_mode: "masked_mean"
+  layer_range: [-8, 0]                        # last 8 blocks
+  gate_init: -4.0                             # sigmoid(-4) ~ 0.018 (stable start)
+
+loss:
+  lambda_res: 0.05                            # per your policy
+  huber_delta: 1.0
+
+checkpointing:
+  run_dir: "checkpoints/overfit_smoke_seed_v1"
+  mode: "best_res"
+  top_k: 3
+  save_every_steps: 0                         # best-only saves for smoke
+
+guardrails:
+  # Optional if your trainer supports it; otherwise ignore
+  early_gate_warn_threshold: 0.25
+  early_gate_warn_steps: 50
+
+Run it (PowerShell)
+python .\scripts\train_golden_route.py --config .\overfit_smoke_test.yaml
+
+Pass/Fail criteria (50 steps)
+
+You want to see:
+
+Resonance loss: clear downward trend (ideally sharp on seed data)
+
+Gate: starts near ~0.018 and drifts upward slowly; should not jump to 0.5+
+
+LM loss: roughly flat (minor noise is fine)
+
+If resonance loss does not move:
+
+injection path isn’t active, or dense_state isn’t reaching the hook, or labels/masking is wrong, or optimizer is not touching adapter/head params.
+
+If gate spikes early:
+
+reduce lambda_res to 0.02 or restrict layers to [-4, 0].
+
+If you paste the output of python .\scripts\audit_seed_logs.py, I’ll tell you whether your resonance std is healthy and whether lambda_res 0.05 is conservative or too timid for your current synthetic distribution.
+
+This is the final piece of the "Cold Start" sequence. By setting lambda_res to **0.10** and grad_accum to **4**, we create an environment where the resonance signal is loud enough to be captured immediately, but the updates are stable enough to protect the base model.
+
+---
+
+## 1. The Smoke Test Configuration (overfit_smoke_test.yaml)
+
+
+yaml
+# overfit_smoke_test.yaml
+# Purpose: Deterministic 50-step overfit on seed_v1.jsonl
+# Target: Confirm the Adapter and Resonance Head are functional.
+
+model_path: "path/to/your/llama"
+logs_path: "gpia-bridge/logs/seed_v1.jsonl"
+stats_path: "artifacts/dense_state/dense_state_stats.pt"
+
+data:
+  text_key: "text"
+  state_key: "state"
+  resonance_key: "resonance"
+  max_length: 256
+
+training:
+  steps: 50
+  batch_size: 2
+  grad_accum: 4                # Effective batch size of 8
+  lr: 2.0e-4
+  weight_decay: 0.0            # No decay for pure overfit
+  warmup_steps: 5
+  max_grad_norm: 1.0
+  mixed_precision: "bf16"      # Optimized for Llama-3/NVIDIA 30/40 series
+  seed: 42
+  log_every: 1
+  eval_every: 10
+
+architecture:
+  state_dim: 64
+  bottleneck_dim: 128
+  pooling_mode: "masked_mean"
+  layer_range: [-8, 0]         # Injecting into the final 8 blocks only
+  gate_init: -4.0              # Initial injection strength ~1.8%
+
+loss:
+  lambda_res: 0.10             # Aggressive resonance weight for smoke test
+  huber_delta: 1.0
+
+checkpointing:
+  run_dir: "checkpoints/overfit_smoke_v1"
+  mode: "best_res"
+  top_k: 2
+
+
+---
+
+## 2. The Success Protocol (What to Watch)
+
+Run the test and monitor the console. A successful "Pass" will exhibit the following telemetry:
+
+### I. Resonance Loss ()
+
+* **Healthy:** You should see a sharp drop from step 1 to step 50. Since the seed_v1 data has a high correlation between state and resonance, the model should find the signal within the first 20 steps.
+* **Failure:** If  remains flat, your ResonanceHead is likely not receiving the gradients from the adapter.
+
+### II. The Gate Parameter
+
+* **Healthy:** The gate value should stay stable for the first 10 steps, then begin to climb. By step 50, a value between **0.02 and 0.08** is ideal.
+* **Failure:** If the gate hits **0.5+** within 50 steps, the model is essentially "ignoring" its language pre-training to satisfy the resonance head.
+
+### III. Language Modeling Loss ()
+
+* **Healthy:** This should stay within  of the initial step's value.
+* **Failure:** A sharp spike in  indicates the adapter is corrupting the attention queries.
+
+---
+
+## 3. Post-Smoke Audit: The Inference Check
+
+Once step 50 completes, run the logit-diff tool against the best saved adapter to see if the "tilt" is semantically coherent:
+
+
+powershell
+python .\scripts\generate_with_dense_state.py `
+  --model "path/to/llama" `
+  --stats "artifacts/dense_state/dense_state_stats.pt" `
+  --adapter "checkpoints/overfit_smoke_v1/step_00000050_best/adapter.pt" `
+  --prompt "Explain the analytical approach." `
+  --ab-test --logit-diff --kl
+
+
+---
+
+## Next Steps
+
+With the overfit smoke test prepared, you have a 100% deterministic path from **empty logs** to a **functional resonance-aware Llama model**.
+
+**Would you like me to help you interpret the results of your first 50-step run, or should we discuss how to scale this to Multi-GPU (DDP) once you move from seed data to your full production logs?**
+
+Help you interpret the first 50-step run.
+
+Scaling to DDP is a later optimization. If the single-GPU smoke test is not behaving exactly as expected, DDP will only amplify confusion and hide bugs behind distributed noise. First we confirm: gradients flow, hooks work, stats match, and the gate behaves.
+
+Here’s a clean “readout rubric” you can apply the moment you paste your console logs.
+
+What I need from your run output
+
+Paste these three snippets (no more):
+
+Steps 1 to 5 log lines
+
+Steps 45 to 50 log lines
+
+The best checkpoint folder name (the one saved by CheckpointManager)
+
+That’s enough to diagnose 95% of issues.
+
+Interpretation rubric
+A) Resonance loss does not drop
+
+Most common causes, in order:
+
+Resonance head not in the optimizer
+
+Symptom: loss_res flat, gate flat, LM loss moves a bit.
+
+Fix: ensure optimizer params include res_head.parameters() and adapter.parameters().
+
+You are not feeding attention_mask into resonance pooling
+
+Symptom: resonance head sees padding, signal diluted, tiny gradients.
+
+Fix: pass attention_mask to ResonanceHead.forward(hidden_states, attention_mask).
+
+You are not actually computing pred_res from the model’s hidden states
+
+Symptom: loss_res exists but doesn’t respond.
+
+Fix: make sure pred_res = res_head(hidden_states_last, attention_mask) uses the real hidden states.
+
+State normalization mismatch
+
+Symptom: loss_res spikes or NaNs, gate jumps.
+
+Fix: confirm mean_ref/std_ref loaded from the same dense_state_stats.pt used for training; check state_dim.
+
+B) Gate behavior tells you what’s happening inside the attention
+
+Gate is your truth serum.
+
+Gate stays near ~0.018 the whole run
+
+This means: the adapter pathway is being ignored.
+Likely causes:
+
+Hook not installed on q_proj in the selected layer_range
+
+dense_state_bias never passed into model forward
+
+Adapter output always near zero because projection layer is zero-initialized and gradients are not reaching it
+
+Quick check:
+
+Your training loop should call model(..., dense_state_bias=state_bias) every step.
+
+Hook installer should print hooked layers, and hook count should match expected.
+
+Gate jumps to 0.5+ early
+
+This means: state dominates too early.
+Likely causes:
+
+Normalized state magnitudes are too large (std_ref too small or bad stats)
+
+lambda_res too high for the current signal scale
+
+You are injecting into too many layers
+
+Fix sequence:
+
+Reduce lambda_res from 0.10 → 0.05
+
+Reduce layer_range from [-8,0] → [-4,0]
+
+Add clamp on normalized state: norm_state = norm_state.clamp(-5, 5) as a temporary guardrail
+
+C) LM loss spikes sharply
+
+That indicates query corruption: your bias is too strong or injected too early.
+
+Most common causes:
+
+Injecting into early layers (wrong layer indexing)
+
+Casting mismatch causing numeric instability (bf16/fp16)
+
+Bias not scaled by gate properly (gate applied after projection must multiply the bias)
+
+Fix sequence:
+
+Confirm layer_range resolves to the last blocks by actual model layer count
+
+Ensure dense_state_bias dtype matches q_proj output dtype inside the hook
+
+Enforce: q = q + (gate * bias) not q = q + bias while gate is small
+
+Post-smoke inference check: what “good” looks like
+
+When you run generate_with_dense_state.py --ab-test --logit-diff --kl:
+
+KL should be non-zero but small-ish (often 1e-4 to 1e-2 on seed)
+
+Top increases should be plausible tokens (not garbage unicode or weird fragments)
+
+A/B text should differ subtly, not become gibberish
+
+If A and B are identical:
+
+hook path or bias path is broken
+
+If B is nonsense:
+
+normalization or scaling is broken
+
+One thing to fix in your inference command
+
+You referenced a checkpoint path:
+checkpoints/overfit_smoke_v1/step_00000050_best/adapter.pt
+
+Your CheckpointManager saves directories like:
+
+step_00000050_best/adapter.pt only if that step was “best”
+
+otherwise maybe step_00000040_best/…
+
+So use the dashboard to get the real best checkpoint:
+
+python .\scripts\dashboard_summary.py --run-dir .\checkpoints\overfit_smoke_v1 --top 1 --sort val_res_loss
+
+
+Then paste the checkpoint dir it prints.
+
+Next action
+
+Paste:
+
+steps 1 to 5 logs
+
+steps 45 to 50 logs
+
+best checkpoint dir

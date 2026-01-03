@@ -1,0 +1,3 @@
+# Placeholder citation rules
+format: "[Source: {path}:L{line}]"
+prune_if_no_match: true

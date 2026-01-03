@@ -1,0 +1,24 @@
+id: "conscience/safety"
+version: "0.1.0"
+name: "Safety"
+description: "Enforce operational rights and responsibilities for sensitive actions"
+
+category: system
+tags: [conscience, safety, guardrail, approval]
+level: expert
+
+load_weight: light
+entry_point: "skill.py:SafetySkill"
+
+requires: []
+
+capabilities:
+  - capability_id: "approve"
+    description: "Approve or halt sensitive actions based on repo boundary"
+  - capability_id: "check_path"
+    description: "Check if a path is within the repo"
+
+permissions:
+  filesystem: read
+  network: []
+  shell: none

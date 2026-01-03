@@ -1,0 +1,164 @@
+# =============================================================================
+# Skill Manifest Template
+# =============================================================================
+#
+# This manifest describes your skill's metadata, capabilities, and requirements.
+# Copy this file to your skill directory and customize.
+#
+# Location: skills/category/your-skill/manifest.yaml
+#
+# =============================================================================
+
+# -----------------------------------------------------------------------------
+# Required Fields
+# -----------------------------------------------------------------------------
+
+# Unique identifier (format: category/subcategory/name)
+# Examples: code/python, data/analysis/pandas, writing/docs/readme
+id: category/your-skill-name
+
+# Human-readable name (shown in UIs and listings)
+name: Your Skill Name
+
+# Short description (1-2 sentences, shown in search results)
+description: >
+  A brief description of what your skill does and its primary use case.
+
+# -----------------------------------------------------------------------------
+# Classification
+# -----------------------------------------------------------------------------
+
+# Semantic version (MAJOR.MINOR.PATCH)
+version: "0.1.0"
+
+# Primary category (determines where skill appears in browsing)
+# Options: code, data, writing, research, automation, integration, reasoning, creative
+category: code
+
+# Complexity level (affects progressive disclosure)
+# Options: basic, intermediate, advanced, expert
+# - basic: Always available, low token cost
+# - intermediate: Loaded on relevant tasks
+# - advanced: Loaded when explicitly needed
+# - expert: May require user confirmation
+level: intermediate
+
+# Searchable tags (help users discover your skill)
+tags:
+  - tag1
+  - tag2
+  - tag3
+
+# -----------------------------------------------------------------------------
+# Documentation
+# -----------------------------------------------------------------------------
+
+# Full documentation (optional - can also be loaded from README.md)
+# Supports markdown formatting
+long_description: |
+  # Your Skill Name
+
+  Detailed description of your skill's capabilities.
+
+  ## Features
+
+  - Feature 1
+  - Feature 2
+  - Feature 3
+
+  ## Usage
+
+  Explain how to use the skill effectively.
+
+# Example inputs and outputs (used for documentation and testing)
+examples:
+  - input:
+      task: example_task
+      data: example_data
+    output:
+      result: expected_output
+    description: Brief description of this example
+
+  - input:
+      task: another_task
+      data: other_data
+    output:
+      result: other_output
+    description: Another example scenario
+
+# -----------------------------------------------------------------------------
+# Dependencies
+# -----------------------------------------------------------------------------
+
+# Other skills this skill depends on
+dependencies:
+  # Required dependency
+  # - skill_id: code/python
+  #   version: ">=0.1.0"
+  #   reason: Used for Python code analysis
+
+  # Optional dependency
+  # - skill_id: data/analysis
+  #   optional: true
+  #   reason: Enhanced analysis when available
+
+# External tools/libraries required
+requires_tools:
+  # - python_interpreter
+  # - pandas
+  # - numpy
+
+# Specific model requirements (optional)
+# requires_model: qwen_coder
+
+# -----------------------------------------------------------------------------
+# Resource Estimates
+# -----------------------------------------------------------------------------
+
+# Approximate tokens needed when skill is loaded
+# Used for token budget planning
+estimated_tokens: 500
+
+# Expected execution time (for timeout settings)
+# estimated_execution_seconds: 30
+
+# -----------------------------------------------------------------------------
+# Authorship
+# -----------------------------------------------------------------------------
+
+# Skill author/maintainer
+author: Your Name
+
+# License (recommend MIT for open source)
+license: MIT
+
+# Source repository (optional)
+repository: https://github.com/your-org/your-skill
+
+# Support/documentation URL (optional)
+# documentation_url: https://docs.example.com/skill
+
+# -----------------------------------------------------------------------------
+# Advanced Configuration
+# -----------------------------------------------------------------------------
+
+# Custom configuration schema (optional)
+# Users can override these in configs/skills.yaml
+# config_schema:
+#   type: object
+#   properties:
+#     custom_option:
+#       type: string
+#       default: "default_value"
+#       description: Description of this option
+
+# Execution hints (optional)
+# execution:
+#   timeout: 60
+#   cache_results: false
+#   parallel_safe: true
+
+# Feature flags (optional)
+# features:
+#   streaming: false
+#   async_execution: false

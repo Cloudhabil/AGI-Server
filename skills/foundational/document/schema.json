@@ -1,0 +1,24 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "skill_id": "foundational/document",
+  "input": {
+    "type": "object",
+    "properties": {
+      "capability": {"type": "string", "enum": ["create", "edit", "format"]},
+      "title": {"type": "string"},
+      "content": {"type": "string"},
+      "style": {"type": "string"},
+      "requirements": {"type": "array", "items": {"type": "string"}}
+    },
+    "required": ["capability"],
+    "additionalProperties": false
+  },
+  "output": {
+    "type": "object",
+    "properties": {
+      "plan": {"type": "array"},
+      "changes": {"type": "array"},
+      "style_rules": {"type": "array"}
+    }
+  }
+}

@@ -1,0 +1,24 @@
+id: thirdparty/notion-workspace
+name: Third-Party Notion Workspace
+version: "1.0.0"
+description: Plan and structure research across Notion workspaces.
+category: integration
+level: intermediate
+
+tags:
+  - notion
+  - workspace
+  - research
+
+dependencies: []
+
+capabilities:
+  - capability_id: search
+    description: Outline Notion search steps
+  - capability_id: synthesize
+    description: Synthesize workspace findings
+
+permissions:
+  filesystem: read
+  network: [workspace]
+  shell: none

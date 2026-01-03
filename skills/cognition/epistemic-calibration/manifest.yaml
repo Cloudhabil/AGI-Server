@@ -1,0 +1,69 @@
+id: cognition/epistemic-calibration
+name: Epistemic Calibration
+description: |
+  True uncertainty modeling through calibrated confidence.
+  Moves from hallucination to genuine "I don't know" by analyzing
+  token entropy, perplexity, and knowledge boundaries.
+  Philosophy: "It is not enough to be right; one must be felt."
+version: 1.0.0
+level: basic
+category: cognition
+capabilities:
+  - calculate_sequence_perplexity: Measure statistical "surprise" of drafted answer
+  - extract_token_logprobs: Retrieve confidence scores for pivotal keywords
+  - detect_knowledge_boundary: Compare query against skill index for domain match
+  - inject_hedging_markers: Rewrite assertions based on confidence thresholds
+  - trigger_clarification_loop: Ask specific questions instead of guessing
+
+input_schema:
+  type: object
+  properties:
+    capability:
+      type: string
+      enum: [calculate_sequence_perplexity, extract_token_logprobs, detect_knowledge_boundary, inject_hedging_markers, trigger_clarification_loop, assess_confidence]
+    draft_response:
+      type: string
+      description: The response to analyze/modify
+    query:
+      type: string
+      description: The original user query
+    logprobs:
+      type: array
+      items:
+        type: number
+      description: Token log probabilities from model
+    confidence_threshold:
+      type: number
+      default: 0.75
+      description: Threshold below which hedging is injected
+
+output_schema:
+  type: object
+  properties:
+    confidence_score:
+      type: number
+      description: Calibrated confidence 0.0-1.0
+    certainty_level:
+      type: string
+      enum: [HIGH, MEDIUM, LOW, UNKNOWN]
+    perplexity:
+      type: number
+    in_domain:
+      type: boolean
+    modified_response:
+      type: string
+    clarification_question:
+      type: string
+    reasoning:
+      type: string
+
+dependencies:
+  - system/skill-indexer
+  - conscience/memory
+
+tags:
+  - uncertainty
+  - calibration
+  - honesty
+  - anti-hallucination
+  - human-dynamics

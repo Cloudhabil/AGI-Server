@@ -1,0 +1,32 @@
+version: "1.0"
+reflexes:
+  - id: "system/reflex-engine-core"
+    path: "reflexes/system/reflex-engine-core"
+    enabled: true
+    priority: 0
+    layer: "L1"
+    version_tag: "1.0.0"
+  - id: "memory/reflex-recency-injector"
+    path: "reflexes/memory/reflex-recency-injector"
+    enabled: true
+    priority: 10
+    layer: "L1"
+    version_tag: "1.0.0"
+  - id: "optimization/reflex-stabilizer"
+    path: "reflexes/optimization/reflex-stabilizer"
+    enabled: true
+    priority: 20
+    layer: "L2"
+    version_tag: "1.0.0"
+  - id: "governance/reflex-guard-l4"
+    path: "reflexes/governance/reflex-guard-l4"
+    enabled: true
+    priority: 90
+    layer: "L4"
+    version_tag: "1.0.0"
+  - id: "system/reflex-audit-logger"
+    path: "reflexes/system/reflex-audit-logger"
+    enabled: true
+    priority: 95
+    layer: "L4"
+    version_tag: "1.0.0"

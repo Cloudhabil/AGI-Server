@@ -1,0 +1,14 @@
+id: auto_learned/the_aha_moment_does_it_have_a_genuine_ep_65aa5839
+name: "Auto Learned the_aha_moment_does_it_have_a_genuine_ep"
+description: "Auto-learned skill for: The \"Aha!\" Moment: Does it have a genuine epiphany, or just a successful computation?"
+version: "0.1.0"
+category: automation
+level: intermediate
+tags:
+  - auto-learned
+  - drafted
+dependencies: []
+requires_tools: []
+estimated_tokens: 400
+author: GPIA
+license: MIT

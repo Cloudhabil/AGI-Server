@@ -1,0 +1,93 @@
+# CI/CD Runner Container
+# ======================
+# This container extends the cognitive system with CI/CD capabilities:
+# - Docker-in-Docker for building images
+# - Git for version control
+# - Testing tools (pytest, coverage)
+# - Linting tools (ruff, mypy)
+# - Multi-model LLM access for intelligent pipeline decisions
+#
+# Multi-Model Strategy:
+# - CodeGemma: Quick validation, linting
+# - Qwen3: Code generation, skill creation
+# - DeepSeek-R1: Deep analysis, debugging
+
+FROM python:3.11-slim
+
+LABEL maintainer="H-Net Cognitive System"
+LABEL description="CI/CD Runner with multi-model AI intelligence"
+LABEL version="1.0.0"
+
+WORKDIR /app
+
+# Install system dependencies including Docker CLI
+RUN apt-get update && apt-get install -y --no-install-recommends \
+    gcc \
+    git \
+    curl \
+    wget \
+    ca-certificates \
+    gnupg \
+    lsb-release \
+    && rm -rf /var/lib/apt/lists/*
+
+# Install Docker CLI (not daemon - we use host's Docker via socket)
+RUN curl -fsSL https://download.docker.com/linux/debian/gpg | gpg --dearmor -o /usr/share/keyrings/docker-archive-keyring.gpg \
+    && echo "deb [arch=$(dpkg --print-architecture) signed-by=/usr/share/keyrings/docker-archive-keyring.gpg] https://download.docker.com/linux/debian $(lsb_release -cs) stable" > /etc/apt/sources.list.d/docker.list \
+    && apt-get update \
+    && apt-get install -y --no-install-recommends docker-ce-cli docker-compose-plugin \
+    && rm -rf /var/lib/apt/lists/*
+
+# Copy project files
+COPY pyproject.toml ./
+COPY skills/ ./skills/
+COPY core/ ./core/
+COPY configs/ ./configs/
+COPY models/ ./models/
+COPY templates/ ./templates/
+COPY static/ ./static/
+COPY main.py interface.py run.py cicd_runner.py ./
+COPY data/ ./data/
+
+# Install Python dependencies including CI/CD tools
+RUN pip install --no-cache-dir . \
+    && pip install --no-cache-dir \
+    pytest \
+    pytest-cov \
+    pytest-asyncio \
+    ruff \
+    mypy \
+    black \
+    isort \
+    bandit \
+    safety \
+    pyyaml
+
+# Create directories
+RUN mkdir -p \
+    /app/data \
+    /app/data/pipeline_runs \
+    /app/data/artifacts \
+    /app/skills/conscience/memory/store \
+    /workspace
+
+# Set up git config for CI operations
+RUN git config --global user.email "cicd@cli-ai.local" \
+    && git config --global user.name "CLI-AI CI/CD"
+
+# Environment variables
+ENV PYTHONUNBUFFERED=1
+ENV PYTHONDONTWRITEBYTECODE=1
+ENV CICD_RUNNER=true
+ENV PIPELINE_DATA_DIR=/app/data/pipeline_runs
+ENV ARTIFACTS_DIR=/app/data/artifacts
+
+# Volume mount points
+VOLUME ["/app/data", "/workspace", "/var/run/docker.sock"]
+
+# Health check - verify skill system is functional
+HEALTHCHECK --interval=60s --timeout=30s --start-period=10s --retries=3 \
+    CMD python -c "import importlib; m = importlib.import_module('skills.automation.cicd-pipeline.skill'); print('OK')" || exit 1
+
+# Default command - run CI/CD service continuously
+CMD ["python", "cicd_runner.py"]

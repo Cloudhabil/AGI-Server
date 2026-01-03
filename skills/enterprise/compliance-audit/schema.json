@@ -1,0 +1,20 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "skill_id": "enterprise/compliance-audit",
+  "input": {
+    "type": "object",
+    "properties": {
+      "capability": {"type": "string", "enum": ["plan", "evidence"]},
+      "standard": {"type": "string"}
+    },
+    "required": ["capability"],
+    "additionalProperties": false
+  },
+  "output": {
+    "type": "object",
+    "properties": {
+      "steps": {"type": "array"},
+      "checklist": {"type": "array"}
+    }
+  }
+}

@@ -1,0 +1,91 @@
+# Cognitive Orchestration Configuration
+# Based on benchmark results from 2025-12-29
+
+compute:
+  embeddings:
+    primary: gpu  # 4782 texts/sec (RTX 4070 SUPER)
+    background: npu  # 254 texts/sec (Intel AI Boost) - frees GPU for LLM
+    fallback: cpu  # 1301 texts/sec
+  
+  llm:
+    device: gpu  # All models run on RTX 4070 SUPER via Ollama
+
+models:
+  codegemma:
+    ollama_id: codegemma:latest
+    role: fast
+    speed: 133  # tok/s
+    best_for:
+      - quick_checks
+      - formatting
+      - simple_completions
+      - intent_classification
+
+  qwen3:
+    ollama_id: qwen3:latest
+    role: creative
+    speed: 87  # tok/s
+    best_for:
+      - code_generation
+      - idea_synthesis
+      - creative_writing
+      - solution_design
+
+  deepseek-r1:
+    ollama_id: deepseek-r1:latest
+    role: analytical
+    speed: 74  # tok/s
+    best_for:
+      - reasoning
+      - analysis
+      - debugging
+      - critique
+      - validation
+
+routing:
+  # Task type -> recommended model
+  simple: codegemma
+  code: qwen3
+  reasoning: deepseek-r1
+  analysis: deepseek-r1
+  creative: qwen3
+  debug: deepseek-r1
+  default: qwen3
+
+retrieval:
+  engine: mshr  # Multi-Space Hierarchical Retrieval
+  performance:
+    pure_search: 80000  # queries/sec
+    full_pipeline: 39  # queries/sec (with embedding)
+    vs_sqlite: 17.8  # x faster than basic SQLite
+  
+  memory_types:
+    episodic:
+      description: Events and experiences
+      recency_weight: 0.4
+      threshold: 0.3
+    semantic:
+      description: Facts and knowledge
+      importance_weight: 0.4
+      threshold: 0.4
+    procedural:
+      description: Skills and methods
+      frequency_weight: 0.3
+      threshold: 0.5
+    identity:
+      description: Values and beliefs
+      stability_bias: 0.6
+      threshold: 0.6
+
+hybrid_strategy:
+  # When GPU is running LLM inference:
+  background_tasks:
+    - npu_embed_incoming_context
+    - npu_precompute_likely_queries
+    - cpu_memory_consolidation
+  
+  # Parallel processing:
+  parallel:
+    gpu: llm_inference
+    npu: embedding_generation
+    cpu: retrieval_scoring

@@ -1,0 +1,26 @@
+id: "system/control-plane"
+version: "0.1.0"
+name: "Resource Control Plane"
+description: "Manages compute budgets and cognitive stages"
+category: reasoning
+level: intermediate
+
+tags:
+  - resources
+  - budget
+  - optimization
+
+dependencies: []
+
+capabilities:
+  - capability_id: "check_budget"
+    description: "Verify if execution fits within current stage limits"
+  - capability_id: "set_stage"
+    description: "Transition system to a new cognitive stage"
+  - capability_id: "get_status"
+    description: "Report current stage and budgets"
+
+permissions:
+  filesystem: read
+  network: []
+  shell: none

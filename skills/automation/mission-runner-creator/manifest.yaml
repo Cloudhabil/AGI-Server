@@ -1,0 +1,103 @@
+id: automation/mission-runner-creator
+name: Mission Runner Creator
+description: |
+  Create multi-agent mission runners that orchestrate complex tasks using
+  all available LLMs. This skill generates Python scripts that:
+
+  1. Define phased execution with agent specialization
+  2. Support parallel execution for independent phases
+  3. Integrate PASS protocol for blocked agent recovery
+  4. Persist learnings to MSHR memory
+  5. Generate validation and integration artifacts
+
+  Use this skill when you need to build a new automated workflow
+  that requires multiple LLM agents working together.
+
+version: 1.0.0
+level: advanced
+category: automation
+
+capabilities:
+  - name: design_mission
+    description: Design a mission structure with phases and agents
+    input:
+      goal: string (required) - The mission objective
+      constraints: string - Hardware/time constraints
+      deliverables: array - Expected outputs
+    output:
+      mission_spec: object - Mission specification
+      phases: array - Ordered phases with agent assignments
+      estimated_time: string
+
+  - name: generate_runner
+    description: Generate a complete Python mission runner script
+    input:
+      mission_spec: object (required) - From design_mission
+      output_path: string - Where to write the script
+      include_pass: boolean - Include PASS protocol (default true)
+      include_parallel: boolean - Enable parallel phases (default true)
+      include_memory: boolean - Persist to MSHR (default true)
+    output:
+      script_path: string
+      components: array - Generated classes/functions
+
+  - name: execute_mission
+    description: Execute a mission runner and monitor progress
+    input:
+      script_path: string (required) - Path to mission runner
+      dry_run: boolean - Don't write files (default false)
+      verbose: boolean - Show detailed output (default true)
+    output:
+      status: string
+      results: object
+      files_created: array
+
+  - name: list_missions
+    description: List all created mission runners
+    output:
+      missions: array
+
+requirements:
+  python:
+    - pyyaml>=6.0
+
+hardware:
+  min_vram_gb: 0
+  supports_cpu: true
+  notes: |
+    Mission runners use Ollama for LLM calls.
+    Ensure target models are loaded.
+
+templates:
+  phase_template: |
+    @dataclass
+    class {phase_name}Phase:
+        agent: str = "{agent}"
+        timeout: int = {timeout}
+        parallel: bool = {parallel}
+
+        def execute(self, context: Dict) -> PhaseResult:
+            # Phase implementation
+            pass
+
+  mission_structure: |
+    class {mission_name}Mission:
+        def __init__(self):
+            self.phases = [
+                {phases_list}
+            ]
+
+        def run(self) -> MissionResult:
+            for phase in self.phases:
+                result = phase.execute(self.context)
+                if result.status == "failed":
+                    return self.handle_failure(phase, result)
+            return MissionResult(status="completed")
+
+author: GPIA
+tags:
+  - automation
+  - orchestration
+  - multi-agent
+  - mission-runner
+  - code-generation

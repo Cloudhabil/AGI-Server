@@ -1,0 +1,17 @@
+{
+  "id": "evolved-253aef94",
+  "name": "Evolved: Solve: What is the difference ",
+  "description": "Skill evolved from solving: What is the difference between lists and tuples?",
+  "trigger": "What is the difference between lists and tuples?",
+  "approach": "**1. Mutability:**  \n- **Lists** are mutable\u2014elements can be added, removed, or modified after creation.  \n- **Tuples**, however, are immutable\u2014once created, their elements cannot be changed (no insertions, deletions).  \n\n**2. Syntax:**  \n- Lists use **square brackets `[]`**: e.g., `[1, 2, 3]`.  \n- Tuples use **parentheses `()`**: e.g., `(1, 2, 3)` or even without parentheses in older Python versions (though style guides recommend them for clarity).  \n\n**3. Use Cases:**  \n- Lists are ideal for dynamic data requiring frequent updates.  \n- Tuples suit static data and ensure immutability to prevent unintended changes.  \n\n**4. Default Operations:**  \n- **Tuples**: Safer defaults in functions/iterations due to their fixed nature (avoids accidental modifications).  \n- **Lists**: More flexible but riskier if mutable elements are accessed directly without checks (e.g., `append()` can alter structure unexpectedly).",
+  "model": "deepseek_r1",
+  "prompt_template": "You are solving: What is the difference between lists and tuples?\n\nYour analysis: **1. Mutability:**  \n- **Lists** are mutable\u2014elements can be added, removed, or modified after creation.  \n- **Tuples**, however, are immutable\u2014once created, their elements cannot be changed (no insertions, deletions).  \n\n**2. Syntax:**  \n- Lists use **square brackets `[]`**: e.g., `[1, 2, 3]`.  \n- Tuples use **parentheses `()`**: e.g., `(1, 2, 3)` or even without parentheses in older Python versions (though style guides recommend them for clarity).  \n\n**3. Use Cases:**  \n- Lists are ideal for dynamic data requiring frequent updates.  \n- Tuples suit static data and ensure immutability to prevent unintended changes.  \n\n**4. Default Operations:**  \n- **Tuples**: Safer defaults in functions/iterations due to their fixed nature (avoids accidental modifications).  \n- **Lists**: More flexible but riskier if mutable elements are accessed directly without checks (e.g., `append()` can alter structure unexpectedly).\n\nNow provide a complete solution. Be specific and actionable.\nIf code is needed, write working code.\nIf steps are needed, list them clearly.",
+  "examples": [
+    {
+      "input": "What is the difference between lists and tuples?",
+      "output": "To solve the problem of understanding the difference between lists and tuples in Python, here's a structured approach:\n\n### **1. Mutability**\n**Actionable Analysis:**  \n- **Lists**: Use `[]` with square brackets; elements can be modified after creation (e.g., changing an item or inserting/deleting).  \n  ```python\n  my_list = [10, 20, 30]\n  my_list[0] = 'Modified'  # Allowed\n  print(my_list)            # Output: ['Modified', 20, 30]\n\n- **Tuples**: Use `()` with parentheses; elements are fixed and"
+    }
+  ],
+  "success_rate": 1.0,
+  "created_at": "2025-12-30T16:33:41.461808"
+}

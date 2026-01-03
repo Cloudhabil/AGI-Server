@@ -1,0 +1,12 @@
+{
+  "models": [
+    {
+      "name": "default",
+      "path": "models/llama3-8b/llama3-8b.gguf",
+      "format": "gguf",
+      "quantization": "Q4_0",
+      "context_size": 2048,
+      "backend": "cuda"
+    }
+  ]
+}

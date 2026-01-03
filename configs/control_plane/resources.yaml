@@ -1,0 +1,49 @@
+version: "1.0"
+meta:
+  description: "CORTEX-OS Resource Budgeting & Stage Definitions"
+
+global_limits:
+  max_system_cpu: 95
+  max_system_ram: 90
+
+stages:
+  MONITOR:
+    description: "Passive observation, high latency allowed"
+    interval: 300
+    budgets:
+      cpu: 10
+      memory: 20
+      gpu: 0
+      npu: 0
+
+  ORIENT:
+    description: "Standard OODA loop, basic RAG"
+    interval: 60
+    budgets:
+      cpu: 30
+      memory: 40
+      gpu: 20
+      npu: 10
+
+  FOCUS:
+    description: "Deep reasoning, compilation, or batch embedding"
+    interval: 10
+    budgets:
+      cpu: 80
+      memory: 80
+      gpu: 100
+      npu: 100
+
+skill_overrides:
+  "compute/npu":
+    npu: 100
+    priority: "critical"
+  "conscience/mindset":
+    gpu: 90
+    cpu: 50
+    priority: "high"
+  "system/benchmark":
+    cpu: 100
+    gpu: 100
+    npu: 100
+    priority: "max"

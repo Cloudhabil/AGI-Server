@@ -1,0 +1,31 @@
+# Mathematical Literature Research Skill
+id: "research/math-literature"
+version: "1.0.0"
+name: "Mathematical Literature Research"
+description: "ArXiv paper search and theorem extraction for Riemann Hypothesis research"
+
+category: research
+tags: [mathematics, literature, arxiv, riemann, papers]
+level: intermediate
+
+load_weight: light
+entry_point: "skill.py:MathLiteratureSkill"
+
+requires:
+  - arxiv>=2.0.0
+
+capabilities:
+  - capability_id: "search_arxiv"
+    description: "Search arXiv for papers"
+  - capability_id: "get_paper_details"
+    description: "Get details of a specific paper"
+  - capability_id: "search_riemann_hypothesis"
+    description: "Search for Riemann Hypothesis papers"
+  - capability_id: "extract_recent_results"
+    description: "Extract recent RH-related results"
+
+permissions:
+  filesystem: read
+  network:
+    - arxiv.org
+  shell: none

@@ -1,0 +1,6 @@
+id: "system/reflex-engine-core"
+version: "1.0.0"
+priority: 0
+layer: "L1"
+description: "Kernel reflex bootstrap marker."
+entry_point: "execute.py:run"

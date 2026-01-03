@@ -1,0 +1,9 @@
+[flake8]
+max-line-length = 100
+extend-ignore =
+    # Allow module-level imports in this specific test where we set up env first
+    E402
+    E501
+per-file-ignores =
+    tests/test_openvino_embedder.py:E402
+exclude = .git,.venv,dist,build,node_modules

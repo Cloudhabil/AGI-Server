@@ -1,0 +1,15 @@
+{
+  "ui": {
+    "footer": {
+      "hideContextPercentage": false
+    }
+  },
+  "general": {
+    "previewFeatures": true
+  },
+  "security": {
+    "folderTrust": {
+      "enabled": true
+    }
+  }
+}

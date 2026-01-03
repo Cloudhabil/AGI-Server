@@ -1,0 +1,14 @@
+id: hello_counter
+name: Hello Counter
+version: 0.1.0
+description: Deterministic counter that adds N to a base value.
+entry_point: handlers.run:main
+inputs:
+  schema: schema/input.json
+outputs:
+  schema: schema/output.json
+permissions:
+  - none
+capabilities:
+  - arithmetic
+  - demo

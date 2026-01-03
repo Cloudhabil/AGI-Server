@@ -1,0 +1,14 @@
+id: auto_learned/write_a_python_factorial_n_with_docstrin_da8f5da1
+name: "Auto Learned write_a_python_factorial_n_with_docstrin"
+description: "Auto-learned skill for: write a python factorial(n) with docstring and input validation"
+version: "0.1.0"
+category: automation
+level: intermediate
+tags:
+  - auto-learned
+  - drafted
+dependencies: []
+requires_tools: []
+estimated_tokens: 400
+author: GPIA
+license: MIT

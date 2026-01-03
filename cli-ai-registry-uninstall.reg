@@ -1,0 +1,45 @@
+Windows Registry Editor Version 5.00
+
+; ============================================================================
+; CLI AI Application Registry Removal
+; Version: 0.1.0
+; Description: Removes all CLI AI registry entries
+; ============================================================================
+;
+; WARNING: This will remove all CLI AI registry keys and values
+; Run this file to completely uninstall CLI AI registry entries
+;
+; ============================================================================
+
+; ----------------------------------------------------------------------------
+; Remove Application Installation Information
+; ----------------------------------------------------------------------------
+[-HKEY_LOCAL_MACHINE\SOFTWARE\CLI-AI]
+
+; ----------------------------------------------------------------------------
+; Remove File Associations
+; ----------------------------------------------------------------------------
+[-HKEY_CLASSES_ROOT\.cliai]
+[-HKEY_CLASSES_ROOT\CLI.AI.Workflow]
+
+; ----------------------------------------------------------------------------
+; Remove Uninstall Information
+; ----------------------------------------------------------------------------
+[-HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows\CurrentVersion\Uninstall\CLI-AI]
+
+; ----------------------------------------------------------------------------
+; Remove Current User Settings
+; ----------------------------------------------------------------------------
+[-HKEY_CURRENT_USER\Software\CLI-AI]
+
+; ----------------------------------------------------------------------------
+; Remove Environment Variables
+; ----------------------------------------------------------------------------
+[HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Control\Session Manager\Environment]
+"CLI_AI_HOME"=-
+"CLI_AI_VERSION"=-
+
+; ============================================================================
+; Registry cleanup complete
+; Note: You may need to restart your computer for changes to take full effect
+; ============================================================================

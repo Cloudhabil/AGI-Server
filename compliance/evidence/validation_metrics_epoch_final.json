@@ -1,0 +1,19 @@
+{
+  "run_id": "gpai-val-20251230-214346",
+  "timestamp": "2025-12-30T20:43:46.447450Z",
+  "validation_config": {
+    "dataset": "synthetic_validation",
+    "batch_size": 32,
+    "precision": "fp32"
+  },
+  "metrics": {
+    "loss": 423.1832,
+    "perplexity": 2.6881171418161356e+43,
+    "accuracy_top1": 0.0,
+    "accuracy_top5": 0.0002
+  },
+  "integrity_check": {
+    "gradient_norms": 18.2848,
+    "nan_detected": false
+  }
+}

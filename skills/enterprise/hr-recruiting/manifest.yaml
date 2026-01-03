@@ -1,0 +1,24 @@
+id: enterprise/hr-recruiting
+name: Enterprise HR Recruiting
+version: "1.0.0"
+description: Encode recruiting workflows and candidate screening steps.
+category: writing
+level: intermediate
+
+tags:
+  - enterprise
+  - hr
+  - recruiting
+
+dependencies: []
+
+capabilities:
+  - capability_id: screen
+    description: Outline candidate screening steps
+  - capability_id: workflow
+    description: Provide recruiting workflow checklist
+
+permissions:
+  filesystem: read
+  network: []
+  shell: none

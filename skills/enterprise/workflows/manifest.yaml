@@ -1,0 +1,24 @@
+id: enterprise/workflows
+name: Enterprise Workflows
+version: "1.0.0"
+description: Encode internal operational workflows into repeatable steps.
+category: automation
+level: intermediate
+
+tags:
+  - enterprise
+  - workflow
+  - operations
+
+dependencies: []
+
+capabilities:
+  - capability_id: define
+    description: Outline a workflow for a given process
+  - capability_id: execute
+    description: Provide a step list for executing a workflow
+
+permissions:
+  filesystem: read
+  network: []
+  shell: none

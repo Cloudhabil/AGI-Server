@@ -1,0 +1,16 @@
+{
+  "steps": [
+    {"kind": "check_ollama"},
+    {"kind": "start_ollama", "when": "ollama_down"},
+    {
+      "kind": "run_benchmark",
+      "sections": "model",
+      "args": ["--memory-mode", "safe", "--guardrails", "on"]
+    },
+    {
+      "kind": "run_benchmark",
+      "sections": "s2,memory,skill,safety,conscience,e2e",
+      "args": ["--memory-mode", "safe", "--guardrails", "on"]
+    }
+  ]
+}

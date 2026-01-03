@@ -1,0 +1,12 @@
+{
+  "version": "1.0",
+  "control_ratio_floor": 0.3,
+  "control_ratio_shadow": 0.5,
+  "uncertainty_limit": 0.6,
+  "recursion_limit": 4,
+  "semantic_drift_limit": 0.4,
+  "cost_velocity_limit": 0.5,
+  "forbidden_impact_levels": ["CRITICAL"],
+  "min_reversibility_score": 4,
+  "max_risk_score": 8
+}

@@ -1,0 +1,172 @@
+# AGI Learning System - Model Configuration
+# ==========================================
+# All available local models for Professor-Alpha learning sessions
+# Hardware: RTX 4070 SUPER (12GB), Intel NPU, CPU fallback
+
+models:
+  # Fast Model - Quick responses, intent parsing
+  codegemma:
+    kind: ollama
+    endpoint: http://127.0.0.1:11435/api/generate
+    model: gpia-codegemma:latest
+    size: "5.0 GB"
+    speed: "133 tok/s"
+    role: fast
+    strengths:
+      - Intent classification
+      - Quick code checks
+      - Agreement extraction
+      - Entity recognition
+    use_for: "Fast parsing, quick checks, low-latency responses"
+
+  # Creative Model - Dialogue, lesson creation
+  qwen3:
+    kind: ollama
+    endpoint: http://127.0.0.1:11435/api/generate
+    model: gpia-qwen3:latest
+    size: "5.2 GB"
+    speed: "87 tok/s"
+    role: creative
+    strengths:
+      - Natural dialogue
+      - Creative writing
+      - Lesson generation
+      - Solution design
+    use_for: "Alpha responses, lesson creation, creative synthesis"
+    params:
+      max_tokens: 2048
+
+  # Reasoning Model - Deep analysis, grading
+  deepseek_r1:
+    kind: ollama
+    endpoint: http://127.0.0.1:11435/api/generate
+    model: gpia-deepseek-r1:latest
+    size: "5.2 GB"
+    speed: "74 tok/s"
+    role: reasoning
+    strengths:
+      - Chain-of-thought reasoning
+      - Critical analysis
+      - Debugging
+      - Grading and evaluation
+    use_for: "Professor analysis, grading, critique, deep reasoning"
+    params:
+      max_tokens: 2048
+
+  # Vision Model - Image understanding
+  llava:
+    kind: ollama
+    endpoint: http://127.0.0.1:11435/api/generate
+    model: gpia-llava:latest
+    size: "4.7 GB"
+    role: vision
+    strengths:
+      - Image analysis
+      - Visual reasoning
+      - Screenshot understanding
+      - Diagram interpretation
+    use_for: "Visual learning, image-based tasks, UI analysis"
+
+  # Large Model - Complex synthesis, arbitration
+  gpt_oss_20b:
+    kind: ollama
+    endpoint: http://127.0.0.1:11435/api/generate
+    model: gpia-gpt-oss:20b
+    size: "13 GB"
+    role: synthesis
+    strengths:
+      - Complex reasoning
+      - Multi-perspective synthesis
+      - Dispute resolution
+      - Long-form generation
+    use_for: "Final synthesis, complex tasks, arbitration between agents"
+
+  # GPIA Master Model - Primary execution profile
+  gpia_master:
+    kind: ollama
+    endpoint: http://127.0.0.1:11435/api/generate
+    model: gpia-master
+    size: "4.7 GB"
+    role: gpia
+    strengths:
+      - GPIA core policy
+      - Deterministic execution
+      - Skill orchestration
+    use_for: "Primary GPIA runtime when invoking the master model"
+    params:
+      max_tokens: 2048
+
+  # External - For tasks beyond local capacity
+  anthropic_claude:
+    kind: anthropic
+    endpoint: ""
+    model: claude-3-5-sonnet-latest
+    role: architect
+    use_for: "Complex planning, multi-file refactoring (external API)"
+
+  # Embedding Model (Ollama embeddings)
+  minilm_ollama:
+    kind: ollama
+    endpoint: http://127.0.0.1:11435/api/embeddings
+    model: gpia-minilm-l6-v2:latest
+    size: "46 MB"
+    role: embedding
+    strengths:
+      - Sentence embeddings
+      - Lightweight footprint
+    use_for: "Memory/H-Net/skill-index embeddings; fallback when NPU/ST unavailable"
+
+# Model Routing for AGI Learning Tasks
+routing:
+  # Professor tasks
+  professor_analysis: deepseek_r1
+  professor_grading: deepseek_r1
+  professor_lesson: qwen3
+
+  # Alpha tasks
+  alpha_response: qwen3
+  alpha_challenge: qwen3
+  alpha_learning: qwen3
+
+  # Fast tasks
+  intent_parsing: codegemma
+  entity_extraction: codegemma
+  agreement_summary: codegemma
+
+  # Complex tasks
+  final_synthesis: gpt_oss_20b
+  dispute_resolution: gpt_oss_20b
+  curriculum_planning: gpt_oss_20b
+
+  # GPIA master routing (optional)
+  gpia_primary: gpia_master
+
+  # Embeddings
+  memory_embeddings: minilm_ollama
+  s2_embedding: minilm_ollama
+
+  # Vision tasks
+  image_analysis: llava
+  screenshot_review: llava
+
+# Multi-Model Collaboration Patterns
+patterns:
+  balanced:
+    description: "Thorough analysis with multiple perspectives"
+    sequence: [deepseek_r1, qwen3, deepseek_r1]
+
+  rapid_iteration:
+    description: "Fast feedback loop"
+    sequence: [codegemma, codegemma, deepseek_r1]
+
+  deep_reasoning:
+    description: "Analytical deep dive"
+    sequence: [deepseek_r1, deepseek_r1, gpt_oss_20b]
+
+  creative_synthesis:
+    description: "Innovative solution generation"
+    sequence: [qwen3, qwen3, gpt_oss_20b]
+
+  full_council:
+    description: "All models contribute"
+    sequence: [codegemma, qwen3, deepseek_r1, gpt_oss_20b]

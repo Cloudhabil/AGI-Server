@@ -1,0 +1,6 @@
+# Placeholder rules for context-boundary-manager
+allow_domains: []
+deny_keywords: []
+chunking:
+  max_tokens: 800
+  overlap: 80

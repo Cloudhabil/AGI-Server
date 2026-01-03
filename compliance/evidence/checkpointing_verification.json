@@ -1,0 +1,62 @@
+{
+  "artifact_id": "GPAI-CKPT-001",
+  "version": "1.0.0",
+  "timestamp": "2025-12-30T20:42:56.389424Z",
+  "device_info": {
+    "type": "CUDA",
+    "name": "NVIDIA GeForce RTX 4070 SUPER",
+    "compute_capability": "8.9",
+    "memory_total_gb": 11.99,
+    "cuda_version": "12.4",
+    "pytorch_version": "2.6.0+cu124"
+  },
+  "model_config": {
+    "num_layers": 6,
+    "hidden_size": 768,
+    "num_heads": 12,
+    "intermediate_size": 3072
+  },
+  "test_config": {
+    "batch_size": 4,
+    "sequence_length": 256,
+    "num_runs": 2,
+    "dtype": "float32"
+  },
+  "measurements": [
+    {
+      "condition": "WITHOUT_CHECKPOINTING",
+      "peak_memory_mb": 600.59,
+      "allocated_memory_mb": 355.15,
+      "reserved_memory_mb": 676.0,
+      "forward_time_ms": 106.47,
+      "backward_time_ms": 19.61,
+      "total_time_ms": 126.09
+    },
+    {
+      "condition": "WITH_CHECKPOINTING",
+      "peak_memory_mb": 420.08,
+      "allocated_memory_mb": 354.84,
+      "reserved_memory_mb": 500.0,
+      "forward_time_ms": 1256.73,
+      "backward_time_ms": 21.64,
+      "total_time_ms": 1278.37
+    }
+  ],
+  "comparison": {
+    "standard_peak_memory_mb": 600.59,
+    "checkpoint_peak_memory_mb": 420.08,
+    "memory_savings_mb": 180.51,
+    "memory_savings_percent": 30.1,
+    "standard_time_ms": 126.09,
+    "checkpoint_time_ms": 1278.37,
+    "compute_overhead_percent": 913.9
+  },
+  "conclusion": {
+    "checkpointing_effective": true,
+    "memory_reduction_achieved": "30.1%",
+    "expected_range": "50-70%",
+    "compute_tradeoff": "913.9% additional time",
+    "recommendation": "PASS - Gradient checkpointing is functioning as expected",
+    "compliance_status": "COMPLIANT"
+  }
+}

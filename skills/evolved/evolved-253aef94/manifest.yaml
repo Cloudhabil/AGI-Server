@@ -1,0 +1,8 @@
+id: "evolved/evolved-253aef94"
+name: "Evolved: Solve: What is the difference "
+description: "Skill evolved from solving: What is the difference between lists and tuples?"
+version: "0.1.0"
+category: "evolved"
+level: "intermediate"
+tags: ["evolved", "auto-generated"]
+requires_model: "deepseek_r1"

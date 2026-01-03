@@ -1,0 +1,59 @@
+# Git
+.git
+.gitignore
+
+# Python
+__pycache__
+*.py[cod]
+*$py.class
+*.so
+.Python
+.venv
+venv/
+ENV/
+.eggs/
+*.egg-info/
+*.egg
+.pytest_cache/
+.mypy_cache/
+
+# IDE
+.vscode
+.idea
+*.swp
+*.swo
+
+# Docker
+Dockerfile*
+docker-compose*.yml
+.docker
+
+# Frontend (built separately)
+frontend/
+node_modules/
+
+# Logs and temp
+*.log
+*.tmp
+.DS_Store
+Thumbs.db
+
+# Documentation
+*.md
+docs/
+
+# Tests
+tests/
+test_*.py
+*_test.py
+
+# NPU models (large files)
+data/npu_models/
+
+# Environment
+.env
+.env.local
+*.env
+
+# Runs and patches
+runs/

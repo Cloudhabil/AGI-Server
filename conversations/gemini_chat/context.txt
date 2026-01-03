@@ -1,0 +1,36 @@
+That is a hard stop for the "Golden Route." If the logs are empty or purely skeletal, there is no resonance signal for the model to learn, and the normalization stats will divide by zero or default to noise.
+
+For this Llama model to function in the dense-state, the logs must contain the "soul" of the interaction: the specific relationship between a state vector and the resulting text.
+
+1. The "Signal Minimum" Requirement
+To move past the Stats-Lock phase, you need a dataset that meets these three criteria:
+
+Dimensional Consistency: Every state vector must have the same length (e.g., if you started with 64-dim, you must stay at 64-dim).
+
+Variance: If every resonance score is identical (e.g., all 1.0), the Resonance Head will collapse because there is no "poor" vs. "great" to differentiate.
+
+Volume: While we've built the pipeline to handle GBs of data, you need at least 500–1,000 high-quality interactions to prevent the adapter from simply memorizing a handful of examples.
+
+2. How to "Prime" Your Logs
+If your current logs are empty, you have two paths to generate the training data needed for the Golden Route:
+
+Path A: The "Trace" Run Run your existing system in "Collection Mode." Feed it a diverse set of prompts and let it generate outputs. Even if it isn't "resonant" yet, the logs will capture the baseline relationship between state and text.
+
+Path B: Synthetic Distillation If you have a "Gold Standard" model (like a larger Llama-3-70B or GPT-4), use it to generate responses to your prompts. Then, assign a synthetic resonance score to those responses. This "teaches" your smaller model to mimic the high-density behavior of the larger one.
+
+3. Immediate Diagnostic: The "Empty File" Check
+Run this quick command to see if your log file actually contains valid JSON objects before we attempt the lock:
+
+Bash
+
+# Count lines (records)
+wc -l path/to/your/dense-state.jsonl
+
+# Peek at the first record's keys
+python -c "import json; print(json.loads(open('path/to/your/dense-state.jsonl').readline()).keys())"
+4. The "Cold Start" Failure Mode
+If you try to run lock_dense_state_stats.py on an empty file, the Welford Algorithm will fail at the finalize() step because n<2.
+
+Warning: Never attempt to bypass the stats lock with "dummy" zeros. An adapter trained on zero-mean/zero-std data will produce massive, unscaled gradients that can permanently corrupt your Llama weights during fine-tuning.
+
+Next Step Do you currently have a small "seed" dataset of interactions, or should we draft a Data Generation Script to help you fill those logs with initial traces?

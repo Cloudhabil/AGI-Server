@@ -1,0 +1,142 @@
+version: "3.8"
+
+services:
+  backend:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: cli-ai-backend
+    ports:
+      - "8000:8000"
+    environment:
+      # Connect to host's Ollama (Windows/Mac: host.docker.internal)
+      - OLLAMA_HOST=http://host.docker.internal:11434
+      - QWEN_BASE_URL=http://host.docker.internal:11434/v1
+      - DEEPSEEK_BASE_URL=http://host.docker.internal:11434/v1
+      - HEARTBEAT_INTERVAL=300
+    volumes:
+      # Persistent volumes for memory and data
+      - cli-ai-memory:/app/skills/conscience/memory/store
+      - cli-ai-data:/app/data
+      - cli-ai-workflows:/app/data/workflows
+      # Mount configs for hot-reload
+      - ./configs:/app/configs:ro
+    restart: always
+    healthcheck:
+      test: ["CMD", "python", "-c", "import urllib.request; urllib.request.urlopen('http://localhost:8000/api/status')"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 10s
+    extra_hosts:
+      # Allow container to reach host network (for Ollama)
+      - "host.docker.internal:host-gateway"
+
+  frontend:
+    build:
+      context: ./frontend
+      dockerfile: Dockerfile
+    container_name: cli-ai-frontend
+    ports:
+      - "5173:80"
+    depends_on:
+      backend:
+        condition: service_healthy
+    restart: always
+    healthcheck:
+      test: ["CMD", "wget", "--quiet", "--tries=1", "--spider", "http://localhost:80/"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 5s
+
+  # Worker container for background task execution
+  worker:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: cli-ai-worker
+    command: ["python", "run.py", "--verbose"]
+    environment:
+      - OLLAMA_HOST=http://host.docker.internal:11434
+      - QWEN_BASE_URL=http://host.docker.internal:11434/v1
+      - DEEPSEEK_BASE_URL=http://host.docker.internal:11434/v1
+      - HEARTBEAT_INTERVAL=300
+    volumes:
+      # Share memory and data with backend
+      - cli-ai-memory:/app/skills/conscience/memory/store
+      - cli-ai-data:/app/data
+      - cli-ai-workflows:/app/data/workflows
+      - ./configs:/app/configs:ro
+    restart: always
+    depends_on:
+      backend:
+        condition: service_healthy
+    extra_hosts:
+      - "host.docker.internal:host-gateway"
+
+  # CI/CD Runner - Autonomous pipeline executor with multi-model intelligence
+  # Uses: CodeGemma (quick), Qwen3 (creative), DeepSeek (reasoning)
+  cicd:
+    build:
+      context: .
+      dockerfile: Dockerfile.cicd
+    container_name: cli-ai-cicd
+    environment:
+      # LLM endpoints for multi-model routing
+      - OLLAMA_HOST=http://host.docker.internal:11434
+      - QWEN_BASE_URL=http://host.docker.internal:11434/v1
+      - DEEPSEEK_BASE_URL=http://host.docker.internal:11434/v1
+      # CI/CD configuration
+      - CICD_POLL_INTERVAL=60
+      - CICD_AUTO_IMPROVE=true
+      - PIPELINE_DATA_DIR=/app/data/pipeline_runs
+      - ARTIFACTS_DIR=/app/data/artifacts
+    volumes:
+      # Shared data with other containers
+      - cli-ai-memory:/app/skills/conscience/memory/store
+      - cli-ai-data:/app/data
+      - cli-ai-workflows:/app/data/workflows
+      - cli-ai-pipelines:/app/data/pipeline_runs
+      - cli-ai-artifacts:/app/data/artifacts
+      # Workspace for builds
+      - cli-ai-workspace:/workspace
+      # Docker socket for container operations
+      - /var/run/docker.sock:/var/run/docker.sock
+      # Source code for analysis (read-only)
+      - ./skills:/app/skills:ro
+      - ./configs:/app/configs:ro
+    restart: always
+    depends_on:
+      backend:
+        condition: service_healthy
+    extra_hosts:
+      - "host.docker.internal:host-gateway"
+    # Run with access to docker group
+    group_add:
+      - "999"  # Docker group (may vary by system)
+
+# Named volumes for persistence across container restarts
+volumes:
+  cli-ai-memory:
+    name: cli-ai-memory
+    driver: local
+  cli-ai-data:
+    name: cli-ai-data
+    driver: local
+  cli-ai-workflows:
+    name: cli-ai-workflows
+    driver: local
+  cli-ai-pipelines:
+    name: cli-ai-pipelines
+    driver: local
+  cli-ai-artifacts:
+    name: cli-ai-artifacts
+    driver: local
+  cli-ai-workspace:
+    name: cli-ai-workspace
+    driver: local
+
+networks:
+  default:
+    name: cli-ai-network

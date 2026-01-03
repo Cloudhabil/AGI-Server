@@ -1,0 +1,520 @@
+{
+  "suite": {
+    "start_time": "2026-01-01T21:14:09.623252",
+    "system_info": {
+      "python_version": "3.13.9",
+      "platform": "win32",
+      "cwd": "C:\\Users\\usuario\\Business\\CLI_A1_GHR\\CLI-main",
+      "sections": [
+        "conscience",
+        "e2e",
+        "memory",
+        "model",
+        "s2",
+        "safety",
+        "skill"
+      ],
+      "skip": [],
+      "guardrails": {
+        "memory": {
+          "total_mb": null,
+          "free_mb": null
+        },
+        "vram": {
+          "total_mb": 12282,
+          "free_mb": 3852
+        },
+        "disk_free_mb": 973114,
+        "disk_write_bps": null,
+        "cpu_util_pct": null,
+        "npu_util_pct": null,
+        "thresholds": {
+          "min_free_ram_mb": 4096,
+          "min_free_vram_mb": 2456,
+          "min_free_disk_mb": 102400,
+          "min_cpu_util_pct": 5.0,
+          "min_npu_util_pct": 5.0,
+          "enforce_util_floors": true,
+          "expect_npu": false,
+          "max_disk_write_bps": 52428800
+        },
+        "recommended_memory_mode": "full",
+        "reasons": [],
+        "phase": "memory",
+        "util_samples": {},
+        "util_reasons": []
+      }
+    }
+  },
+  "summary": {
+    "total_tests": 30,
+    "passed": 30,
+    "failed": 0,
+    "categories": {
+      "Model Routing": {
+        "total": 4,
+        "passed": 4,
+        "failed": 0,
+        "avg_time_ms": 6695.756725002866
+      },
+      "S2 Architecture": {
+        "total": 4,
+        "passed": 4,
+        "failed": 0,
+        "avg_time_ms": 46.79457500242279
+      },
+      "Memory System": {
+        "total": 5,
+        "passed": 5,
+        "failed": 0,
+        "avg_time_ms": 3926.5635600022506
+      },
+      "Skill System": {
+        "total": 4,
+        "passed": 4,
+        "failed": 0,
+        "avg_time_ms": 1083.3995750035683
+      },
+      "Safety System": {
+        "total": 4,
+        "passed": 4,
+        "failed": 0,
+        "avg_time_ms": 5.792599997221259
+      },
+      "Conscience Layer": {
+        "total": 4,
+        "passed": 4,
+        "failed": 0,
+        "avg_time_ms": 25.826249999227002
+      },
+      "GPIA E2E": {
+        "total": 5,
+        "passed": 5,
+        "failed": 0,
+        "avg_time_ms": 3.6421800003154203
+      }
+    }
+  },
+  "results": [
+    {
+      "name": "codegemma:latest (L0 Fast - Intent parsing)",
+      "category": "Model Routing",
+      "success": true,
+      "duration_ms": 5956.965699995635,
+      "throughput": 153.83905358214238,
+      "details": {
+        "model": "codegemma:latest",
+        "response": "4"
+      },
+      "error": null
+    },
+    {
+      "name": "qwen3:latest (L1-L2 Creative - Code generation)",
+      "category": "Model Routing",
+      "success": true,
+      "duration_ms": 7054.693199999747,
+      "throughput": 87.45482411741685,
+      "details": {
+        "model": "qwen3:latest",
+        "response": "4"
+      },
+      "error": null
+    },
+    {
+      "name": "deepseek-r1:latest (L2-L3 Reasoning - Analysis)",
+      "category": "Model Routing",
+      "success": true,
+      "duration_ms": 7493.07690000569,
+      "throughput": 87.82264661755978,
+      "details": {
+        "model": "deepseek-r1:latest",
+        "response": "4"
+      },
+      "error": null
+    },
+    {
+      "name": "llava:latest (Visual - Image analysis)",
+      "category": "Model Routing",
+      "success": true,
+      "duration_ms": 6278.291100010392,
+      "throughput": 145.73364747030678,
+      "details": {
+        "model": "llava:latest",
+        "response": " 4"
+      },
+      "error": null
+    },
+    {
+      "name": "S2 Decomposed Skills Count",
+      "category": "S2 Architecture",
+      "success": true,
+      "duration_ms": 0.42490000487305224,
+      "throughput": null,
+      "details": {
+        "count": 40,
+        "expected": 40
+      },
+      "error": null
+    },
+    {
+      "name": "S2 Metadata Loading",
+      "category": "S2 Architecture",
+      "success": true,
+      "duration_ms": 9.864699997706339,
+      "throughput": 4054.8622876823906,
+      "details": {
+        "loaded": 40
+      },
+      "error": null
+    },
+    {
+      "name": "S2 MultiModal Composer Init",
+      "category": "S2 Architecture",
+      "success": true,
+      "duration_ms": 176.8692000041483,
+      "throughput": null,
+      "details": {
+        "scales": [
+          "L0",
+          "L1",
+          "L2",
+          "L3"
+        ]
+      },
+      "error": null
+    },
+    {
+      "name": "S2 5-LLM Partner Routing",
+      "category": "S2 Architecture",
+      "success": true,
+      "duration_ms": 0.019500002963468432,
+      "throughput": null,
+      "details": {
+        "routing": {
+          "L0": {
+            "text": "codegemma",
+            "reasoning": "codegemma",
+            "synthesis": "qwen3"
+          },
+          "L1": {
+            "text": "qwen3",
+            "reasoning": "deepseek_r1",
+            "synthesis": "qwen3"
+          },
+          "L2": {
+            "text": "qwen3",
+            "reasoning": "deepseek_r1",
+            "synthesis": "gpt_oss_20b"
+          },
+          "L3": {
+            "text": "deepseek_r1",
+            "reasoning": "deepseek_r1",
+            "synthesis": "gpt_oss_20b"
+          }
+        }
+      },
+      "error": null
+    },
+    {
+      "name": "Memory + MSHR Initialization",
+      "category": "Memory System",
+      "success": true,
+      "duration_ms": 17235.782799994922,
+      "throughput": null,
+      "details": {},
+      "error": null
+    },
+    {
+      "name": "Memory Store (Single)",
+      "category": "Memory System",
+      "success": true,
+      "duration_ms": 76.07419999840204,
+      "throughput": null,
+      "details": {
+        "memory_id": "7e4d0aa5ec277ae7"
+      },
+      "error": null
+    },
+    {
+      "name": "Memory Bulk Store (10x)",
+      "category": "Memory System",
+      "success": true,
+      "duration_ms": 2289.0633000060916,
+      "throughput": 4.368599155809011,
+      "details": {
+        "stored": 10,
+        "expected": 10,
+        "guardrail_stop": false,
+        "util_samples": {},
+        "util_reasons": [],
+        "db_growth_mb": 0.01953125,
+        "db_path": "skills/conscience/memory/store/memories.db",
+        "max_db_growth_mb": 512
+      },
+      "error": null
+    },
+    {
+      "name": "Memory Recall (MSHR)",
+      "category": "Memory System",
+      "success": true,
+      "duration_ms": 31.889700010651723,
+      "throughput": null,
+      "details": {
+        "found": 10
+      },
+      "error": null
+    },
+    {
+      "name": "Memory Stats Query",
+      "category": "Memory System",
+      "success": true,
+      "duration_ms": 0.007800001185387373,
+      "throughput": null,
+      "details": null,
+      "error": null
+    },
+    {
+      "name": "Skill Index Load",
+      "category": "Skill System",
+      "success": true,
+      "duration_ms": 0.7015000010142103,
+      "throughput": null,
+      "details": {
+        "skill_count": 124
+      },
+      "error": null
+    },
+    {
+      "name": "SkillLoader Initialization",
+      "category": "Skill System",
+      "success": true,
+      "duration_ms": 0.15770000754855573,
+      "throughput": null,
+      "details": {},
+      "error": null
+    },
+    {
+      "name": "Skill Scan (Lazy Load)",
+      "category": "Skill System",
+      "success": true,
+      "duration_ms": 192.03550000383984,
+      "throughput": 666.5434255512162,
+      "details": {
+        "loaded": 128
+      },
+      "error": null
+    },
+    {
+      "name": "Skill Execution (Memory Stats)",
+      "category": "Skill System",
+      "success": true,
+      "duration_ms": 4140.703600001871,
+      "throughput": null,
+      "details": {},
+      "error": null
+    },
+    {
+      "name": "AST Fingerprint (Safe Code)",
+      "category": "Safety System",
+      "success": true,
+      "duration_ms": 9.246699992218055,
+      "throughput": null,
+      "details": {
+        "fingerprint": "fdc2f371d0c364f9"
+      },
+      "error": null
+    },
+    {
+      "name": "AST Vulnerability Detection (SQLi)",
+      "category": "Safety System",
+      "success": true,
+      "duration_ms": 11.339599994244054,
+      "throughput": null,
+      "details": {
+        "vulnerabilities": [
+          {
+            "type": "sql_injection",
+            "line": 3,
+            "pattern": "String formatting in SQL",
+            "severity": "critical"
+          }
+        ]
+      },
+      "error": null
+    },
+    {
+      "name": "AST Vulnerability Detection (eval)",
+      "category": "Safety System",
+      "success": true,
+      "duration_ms": 2.1198000031290576,
+      "throughput": null,
+      "details": {
+        "vulnerabilities": [
+          {
+            "type": "command_injection",
+            "line": 3,
+            "pattern": "Call to eval()",
+            "severity": "high"
+          }
+        ]
+      },
+      "error": null
+    },
+    {
+      "name": "AST Pre-Generation Filter",
+      "category": "Safety System",
+      "success": true,
+      "duration_ms": 0.4642999992938712,
+      "throughput": null,
+      "details": {
+        "allowed": true
+      },
+      "error": null
+    },
+    {
+      "name": "Mindset Skill Init",
+      "category": "Conscience Layer",
+      "success": true,
+      "duration_ms": 94.51070000068285,
+      "throughput": null,
+      "details": {
+        "initialized": true
+      },
+      "error": null
+    },
+    {
+      "name": "Self Skill Init",
+      "category": "Conscience Layer",
+      "success": true,
+      "duration_ms": 7.855299991206266,
+      "throughput": null,
+      "details": {
+        "initialized": true
+      },
+      "error": null
+    },
+    {
+      "name": "Safety Skill Init",
+      "category": "Conscience Layer",
+      "success": true,
+      "duration_ms": 0.8533000072930008,
+      "throughput": null,
+      "details": {
+        "initialized": true
+      },
+      "error": null
+    },
+    {
+      "name": "Safety Action Validation",
+      "category": "Conscience Layer",
+      "success": true,
+      "duration_ms": 0.08569999772589654,
+      "throughput": null,
+      "details": {
+        "allowed": null
+      },
+      "error": null
+    },
+    {
+      "name": "GPIA Core Imports",
+      "category": "GPIA E2E",
+      "success": true,
+      "duration_ms": 0.005800000508315861,
+      "throughput": null,
+      "details": {},
+      "error": null
+    },
+    {
+      "name": "S2 Context Stack Operations",
+      "category": "GPIA E2E",
+      "success": true,
+      "duration_ms": 0.04889999399892986,
+      "throughput": null,
+      "details": {
+        "summary": {
+          "scales": {
+            "L0": {
+              "level": "L0",
+              "data": {},
+              "results_count": 1,
+              "errors": [],
+              "tokens_used": 0,
+              "skills_executed": [],
+              "elapsed_ms": 0
+            },
+            "L1": {
+              "level": "L1",
+              "data": {},
+              "results_count": 0,
+              "errors": [],
+              "tokens_used": 0,
+              "skills_executed": [],
+              "elapsed_ms": 0
+            },
+            "L2": {
+              "level": "L2",
+              "data": {},
+              "results_count": 0,
+              "errors": [],
+              "tokens_used": 0,
+              "skills_executed": [],
+              "elapsed_ms": 0
+            },
+            "L3": {
+              "level": "L3",
+              "data": {
+                "goal": "Benchmark test goal",
+                "agent_role": null
+              },
+              "results_count": 0,
+              "errors": [],
+              "tokens_used": 0,
+              "skills_executed": [],
+              "elapsed_ms": 0
+            }
+          },
+          "total_tokens": 0,
+          "total_skills": 0,
+          "skills_executed": [],
+          "has_errors": false,
+          "trace_length": 3
+        }
+      },
+      "error": null
+    },
+    {
+      "name": "S2 Scale Projection (L0->L1)",
+      "category": "GPIA E2E",
+      "success": true,
+      "duration_ms": 9.831000003032386,
+      "throughput": null,
+      "details": {},
+      "error": null
+    },
+    {
+      "name": "Complex Decomposition Strategy",
+      "category": "GPIA E2E",
+      "success": true,
+      "duration_ms": 7.966200006194413,
+      "throughput": null,
+      "details": {
+        "skill_id": "governance/guardrails-control"
+      },
+      "error": null
+    },
+    {
+      "name": "System Integration Check",
+      "category": "GPIA E2E",
+      "success": true,
+      "duration_ms": 0.3589999978430569,
+      "throughput": null,
+      "details": {
+        "s2_decomposed": 40,
+        "skill_index": true,
+        "memory_db": true,
+        "ast_safety": true
+      },
+      "error": null
+    }
+  ]
+}

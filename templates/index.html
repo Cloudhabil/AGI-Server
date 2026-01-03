@@ -1,0 +1,1305 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cognitive Interface // {{ name }}</title>
+    <link rel="icon" href="/static/ch_logo.ico" type="image/x-icon">
+    <style>
+        :root {
+            --bg-primary: #0a0f14;
+            --bg-secondary: #0d1117;
+            --bg-card: #161b22;
+            --bg-glass: rgba(22, 27, 34, 0.8);
+            --border: #30363d;
+            --text-primary: #f0f6fc;
+            --text-secondary: #8b949e;
+            --text-muted: #6e7681;
+            --accent-green: #2ea043;
+            --accent-blue: #58a6ff;
+            --accent-purple: #a371f7;
+            --accent-yellow: #d29922;
+            --accent-red: #f85149;
+            --gradient-cyber: linear-gradient(135deg, #0d1117 0%, #1a1f2e 50%, #0d1117 100%);
+            --gradient-glow: linear-gradient(135deg, rgba(88,166,255,0.1) 0%, rgba(163,113,247,0.1) 100%);
+            --shadow-glow: 0 0 40px rgba(88, 166, 255, 0.15);
+        }
+
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+
+        body {
+            background: var(--bg-primary);
+            color: var(--text-primary);
+            font-family: 'SF Mono', 'Fira Code', 'Consolas', monospace;
+            min-height: 100vh;
+            overflow-x: hidden;
+        }
+
+        /* Grid Layout */
+        .container {
+            display: grid;
+            grid-template-columns: 320px 1fr 380px;
+            grid-template-rows: auto 1fr;
+            gap: 16px;
+            padding: 16px;
+            min-height: 100vh;
+            max-width: 1920px;
+            margin: 0 auto;
+        }
+
+        /* Header */
+        .header {
+            grid-column: 1 / -1;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 16px 24px;
+            background: var(--bg-glass);
+            backdrop-filter: blur(12px);
+            border: 1px solid var(--border);
+            border-radius: 16px;
+            box-shadow: var(--shadow-glow);
+        }
+
+        .header-left {
+            display: flex;
+            align-items: center;
+            gap: 16px;
+        }
+
+        .logo {
+            width: 48px;
+            height: 48px;
+            border-radius: 12px;
+            background: var(--gradient-glow);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 24px;
+        }
+
+        .logo img { width: 32px; height: 32px; }
+
+        .identity h1 {
+            font-size: 1.4rem;
+            font-weight: 600;
+            background: linear-gradient(135deg, var(--text-primary) 0%, var(--accent-blue) 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .identity .purpose {
+            font-size: 0.85rem;
+            color: var(--text-secondary);
+            margin-top: 2px;
+        }
+
+        .status-badges {
+            display: flex;
+            gap: 12px;
+        }
+
+        .badge {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            padding: 6px 12px;
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            border-radius: 20px;
+            font-size: 0.75rem;
+        }
+
+        .badge .dot {
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+            animation: pulse 2s infinite;
+        }
+
+        .badge .dot.green { background: var(--accent-green); }
+        .badge .dot.blue { background: var(--accent-blue); }
+        .badge .dot.purple { background: var(--accent-purple); }
+
+        @keyframes pulse {
+            0%, 100% { opacity: 1; transform: scale(1); }
+            50% { opacity: 0.6; transform: scale(0.9); }
+        }
+
+        /* Sidebar */
+        .sidebar {
+            display: flex;
+            flex-direction: column;
+            gap: 16px;
+        }
+
+        /* Cards */
+        .card {
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            overflow: hidden;
+        }
+
+        .card-header {
+            padding: 16px;
+            border-bottom: 1px solid var(--border);
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        .card-header h3 {
+            font-size: 0.9rem;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            color: var(--text-secondary);
+        }
+
+        .card-body {
+            padding: 16px;
+        }
+
+        /* Memory Stats */
+        .memory-stats {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 12px;
+        }
+
+        .stat-item {
+            padding: 12px;
+            background: var(--bg-secondary);
+            border-radius: 8px;
+            text-align: center;
+        }
+
+        .stat-value {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: var(--text-primary);
+        }
+
+        .stat-label {
+            font-size: 0.7rem;
+            color: var(--text-muted);
+            text-transform: uppercase;
+            margin-top: 4px;
+        }
+
+        .stat-item.episodic .stat-value { color: var(--accent-green); }
+        .stat-item.semantic .stat-value { color: var(--accent-blue); }
+        .stat-item.procedural .stat-value { color: var(--accent-purple); }
+        .stat-item.identity .stat-value { color: var(--accent-yellow); }
+
+        /* Goals */
+        .goals-list {
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+            max-height: 200px;
+            overflow-y: auto;
+        }
+
+        .goal-item {
+            padding: 10px 12px;
+            background: var(--bg-secondary);
+            border-left: 3px solid var(--accent-blue);
+            border-radius: 6px;
+            font-size: 0.85rem;
+        }
+
+        .goal-item .priority {
+            font-size: 0.7rem;
+            color: var(--text-muted);
+            margin-top: 4px;
+        }
+
+        /* Main Content */
+        .main-content {
+            display: flex;
+            flex-direction: column;
+            gap: 16px;
+        }
+
+        /* Memory Feed */
+        .memory-feed {
+            flex: 1;
+            overflow-y: auto;
+            max-height: calc(100vh - 200px);
+        }
+
+        .memory-card {
+            padding: 16px;
+            margin-bottom: 12px;
+            background: var(--bg-secondary);
+            border: 1px solid var(--border);
+            border-radius: 10px;
+            position: relative;
+            transition: all 0.3s ease;
+            animation: fadeIn 0.5s ease;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(-10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .memory-card:hover {
+            border-color: var(--accent-blue);
+            transform: translateX(4px);
+        }
+
+        .memory-card.episodic { border-left: 3px solid var(--accent-green); }
+        .memory-card.semantic { border-left: 3px solid var(--accent-blue); }
+        .memory-card.procedural { border-left: 3px solid var(--accent-purple); }
+        .memory-card.identity { border-left: 3px solid var(--accent-yellow); }
+
+        .memory-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 8px;
+        }
+
+        .memory-type {
+            font-size: 0.7rem;
+            padding: 3px 8px;
+            border-radius: 10px;
+            text-transform: uppercase;
+            font-weight: 600;
+        }
+
+        .memory-type.episodic { background: rgba(46, 160, 67, 0.2); color: var(--accent-green); }
+        .memory-type.semantic { background: rgba(88, 166, 255, 0.2); color: var(--accent-blue); }
+        .memory-type.procedural { background: rgba(163, 113, 247, 0.2); color: var(--accent-purple); }
+        .memory-type.identity { background: rgba(210, 153, 34, 0.2); color: var(--accent-yellow); }
+
+        .memory-timestamp {
+            font-size: 0.75rem;
+            color: var(--text-muted);
+        }
+
+        .memory-content {
+            font-size: 0.9rem;
+            line-height: 1.5;
+            color: var(--text-secondary);
+        }
+
+        .memory-importance {
+            margin-top: 8px;
+            height: 3px;
+            background: var(--bg-card);
+            border-radius: 2px;
+            overflow: hidden;
+        }
+
+        .memory-importance-bar {
+            height: 100%;
+            background: linear-gradient(90deg, var(--accent-blue), var(--accent-purple));
+            border-radius: 2px;
+            transition: width 0.5s ease;
+        }
+
+        /* Right Panel */
+        .right-panel {
+            display: flex;
+            flex-direction: column;
+            gap: 16px;
+        }
+
+        /* Chat */
+        .chat-container {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            min-height: 300px;
+        }
+
+        .chat-messages {
+            flex: 1;
+            overflow-y: auto;
+            padding: 12px;
+            max-height: 250px;
+        }
+
+        .chat-message {
+            padding: 10px 14px;
+            margin-bottom: 8px;
+            border-radius: 12px;
+            font-size: 0.85rem;
+            line-height: 1.4;
+        }
+
+        .chat-message.user {
+            background: var(--accent-blue);
+            color: white;
+            margin-left: 20%;
+            border-bottom-right-radius: 4px;
+        }
+
+        .chat-message.assistant {
+            background: var(--bg-secondary);
+            border: 1px solid var(--border);
+            margin-right: 20%;
+            border-bottom-left-radius: 4px;
+        }
+
+        .chat-input-container {
+            padding: 12px;
+            border-top: 1px solid var(--border);
+            display: flex;
+            gap: 8px;
+        }
+
+        .chat-input {
+            flex: 1;
+            padding: 12px 16px;
+            background: var(--bg-secondary);
+            border: 1px solid var(--border);
+            border-radius: 24px;
+            color: var(--text-primary);
+            font-family: inherit;
+            font-size: 0.9rem;
+            outline: none;
+            transition: border-color 0.3s;
+        }
+
+        .chat-input:focus {
+            border-color: var(--accent-blue);
+        }
+
+        .chat-input::placeholder {
+            color: var(--text-muted);
+        }
+
+        .chat-send {
+            padding: 12px 20px;
+            background: linear-gradient(135deg, var(--accent-blue), var(--accent-purple));
+            border: none;
+            border-radius: 24px;
+            color: white;
+            font-weight: 600;
+            cursor: pointer;
+            transition: transform 0.2s, box-shadow 0.2s;
+        }
+
+        .chat-send:hover {
+            transform: scale(1.05);
+            box-shadow: 0 4px 20px rgba(88, 166, 255, 0.4);
+        }
+
+        /* Skills Panel */
+        .skills-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 10px;
+        }
+
+        .skill-btn {
+            padding: 14px;
+            background: var(--bg-secondary);
+            border: 1px solid var(--border);
+            border-radius: 10px;
+            color: var(--text-secondary);
+            font-family: inherit;
+            font-size: 0.8rem;
+            cursor: pointer;
+            transition: all 0.3s;
+            text-align: center;
+        }
+
+        .skill-btn:hover {
+            background: var(--gradient-glow);
+            border-color: var(--accent-blue);
+            color: var(--text-primary);
+            transform: translateY(-2px);
+        }
+
+        .skill-btn .icon {
+            font-size: 1.5rem;
+            margin-bottom: 6px;
+            display: block;
+        }
+
+        /* Recall Input */
+        .recall-container {
+            display: flex;
+            gap: 8px;
+        }
+
+        .recall-input {
+            flex: 1;
+            padding: 10px 14px;
+            background: var(--bg-secondary);
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            color: var(--text-primary);
+            font-family: inherit;
+            font-size: 0.85rem;
+            outline: none;
+        }
+
+        .recall-btn {
+            padding: 10px 16px;
+            background: var(--accent-green);
+            border: none;
+            border-radius: 8px;
+            color: white;
+            font-weight: 600;
+            cursor: pointer;
+            transition: transform 0.2s;
+        }
+
+        .recall-btn:hover {
+            transform: scale(1.05);
+        }
+
+        /* Heartbeat */
+        .heartbeat-indicator {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            padding: 16px;
+            background: var(--bg-secondary);
+            border-radius: 10px;
+        }
+
+        .heartbeat-pulse {
+            width: 20px;
+            height: 20px;
+            border-radius: 50%;
+            background: var(--accent-green);
+            animation: heartbeat 1.5s ease-in-out infinite;
+        }
+
+        @keyframes heartbeat {
+            0%, 100% { transform: scale(1); box-shadow: 0 0 0 0 rgba(46, 160, 67, 0.4); }
+            50% { transform: scale(1.1); box-shadow: 0 0 20px 10px rgba(46, 160, 67, 0); }
+        }
+
+        .heartbeat-info {
+            flex: 1;
+        }
+
+        .heartbeat-label {
+            font-size: 0.75rem;
+            color: var(--text-muted);
+            text-transform: uppercase;
+        }
+
+        .heartbeat-time {
+            font-size: 0.9rem;
+            color: var(--text-primary);
+        }
+
+        /* Compute Panel */
+        .compute-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 8px;
+        }
+
+        .compute-item {
+            padding: 12px;
+            background: var(--bg-secondary);
+            border-radius: 8px;
+            text-align: center;
+        }
+
+        .compute-icon {
+            font-size: 1.5rem;
+            margin-bottom: 4px;
+        }
+
+        .compute-name {
+            font-size: 0.7rem;
+            color: var(--text-muted);
+            text-transform: uppercase;
+        }
+
+        .compute-status {
+            font-size: 0.75rem;
+            color: var(--accent-green);
+            margin-top: 2px;
+        }
+
+        .compute-status.offline {
+            color: var(--text-muted);
+        }
+
+        /* Scrollbar */
+        ::-webkit-scrollbar {
+            width: 6px;
+        }
+
+        ::-webkit-scrollbar-track {
+            background: var(--bg-secondary);
+        }
+
+        ::-webkit-scrollbar-thumb {
+            background: var(--border);
+            border-radius: 3px;
+        }
+
+        ::-webkit-scrollbar-thumb:hover {
+            background: var(--text-muted);
+        }
+
+        /* Responsive */
+        @media (max-width: 1400px) {
+            .container {
+                grid-template-columns: 280px 1fr 320px;
+            }
+        }
+
+        @media (max-width: 1100px) {
+            .container {
+                grid-template-columns: 1fr;
+            }
+            .memory-feed {
+                max-height: 400px;
+            }
+        }
+
+        /* Loading Spinner */
+        .loading {
+            display: inline-block;
+            width: 16px;
+            height: 16px;
+            border: 2px solid var(--border);
+            border-radius: 50%;
+            border-top-color: var(--accent-blue);
+            animation: spin 1s linear infinite;
+        }
+
+        @keyframes spin {
+            to { transform: rotate(360deg); }
+        }
+
+        /* Modal */
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.7);
+            backdrop-filter: blur(4px);
+            z-index: 1000;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .modal.active { display: flex; }
+
+        .modal-content {
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            border-radius: 16px;
+            padding: 24px;
+            max-width: 600px;
+            width: 90%;
+            max-height: 80vh;
+            overflow-y: auto;
+        }
+
+        .modal-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 16px;
+        }
+
+        .modal-close {
+            background: none;
+            border: none;
+            color: var(--text-secondary);
+            font-size: 1.5rem;
+            cursor: pointer;
+        }
+
+        .modal-body {
+            color: var(--text-secondary);
+            line-height: 1.6;
+        }
+
+        .modal-body pre {
+            background: var(--bg-secondary);
+            padding: 16px;
+            border-radius: 8px;
+            overflow-x: auto;
+            font-size: 0.85rem;
+        }
+
+        /* Tab Filters */
+        .tab-filters {
+            display: flex;
+            gap: 8px;
+            margin-bottom: 12px;
+        }
+
+        .tab-filter {
+            padding: 6px 14px;
+            background: var(--bg-secondary);
+            border: 1px solid var(--border);
+            border-radius: 20px;
+            color: var(--text-muted);
+            font-family: inherit;
+            font-size: 0.75rem;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+
+        .tab-filter:hover, .tab-filter.active {
+            background: var(--accent-blue);
+            border-color: var(--accent-blue);
+            color: white;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <!-- Header -->
+        <header class="header">
+            <div class="header-left">
+                <div class="logo">
+                    <img src="/static/ch_logo.ico" alt="Logo" onerror="this.parentElement.innerHTML='&#129302;'">
+                </div>
+                <div class="identity">
+                    <h1 id="agent-name">{{ name }}</h1>
+                    <div class="purpose" id="agent-purpose">{{ purpose }}</div>
+                </div>
+            </div>
+            <div class="status-badges">
+                <div class="badge">
+                    <span class="dot green" id="status-dot"></span>
+                    <span id="status-text">Online</span>
+                </div>
+                <div class="badge">
+                    <span class="dot blue"></span>
+                    <span id="gpu-status">GPU: Loading...</span>
+                </div>
+                <div class="badge">
+                    <span class="dot purple"></span>
+                    <span id="npu-status">NPU: Loading...</span>
+                </div>
+                <div class="badge">
+                    <span class="dot purple"></span>
+                    <span id="stage-status">Stage: --</span>
+                </div>
+            </div>
+        </header>
+
+        <!-- Sidebar -->
+        <aside class="sidebar">
+            <!-- Memory Stats -->
+            <div class="card">
+                <div class="card-header">
+                    <h3>Memory Matrix</h3>
+                    <span id="total-memories">0</span>
+                </div>
+                <div class="card-body">
+                    <div class="memory-stats">
+                        <div class="stat-item episodic">
+                            <div class="stat-value" id="stat-episodic">0</div>
+                            <div class="stat-label">Episodic</div>
+                        </div>
+                        <div class="stat-item semantic">
+                            <div class="stat-value" id="stat-semantic">0</div>
+                            <div class="stat-label">Semantic</div>
+                        </div>
+                        <div class="stat-item procedural">
+                            <div class="stat-value" id="stat-procedural">0</div>
+                            <div class="stat-label">Procedural</div>
+                        </div>
+                        <div class="stat-item identity">
+                            <div class="stat-value" id="stat-identity">0</div>
+                            <div class="stat-label">Identity</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Compute Status -->
+            <div class="card">
+                <div class="card-header">
+                    <h3>Compute Tier</h3>
+                </div>
+                <div class="card-body">
+                    <div class="compute-grid">
+                        <div class="compute-item">
+                            <div class="compute-icon">&#128187;</div>
+                            <div class="compute-name">GPU</div>
+                            <div class="compute-status" id="compute-gpu">--</div>
+                        </div>
+                        <div class="compute-item">
+                            <div class="compute-icon">&#129504;</div>
+                            <div class="compute-name">NPU</div>
+                            <div class="compute-status" id="compute-npu">--</div>
+                        </div>
+                        <div class="compute-item">
+                            <div class="compute-icon">&#128300;</div>
+                            <div class="compute-name">CPU</div>
+                            <div class="compute-status">Active</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Goals -->
+            <div class="card">
+                <div class="card-header">
+                    <h3>Active Goals</h3>
+                </div>
+                <div class="card-body">
+                    <div class="goals-list" id="goals-list">
+                        {% for goal in goals %}
+                        <div class="goal-item">
+                            <div>{{ goal.objective }}</div>
+                            <div class="priority">Priority: {{ goal.priority }}</div>
+                        </div>
+                        {% else %}
+                        <div style="color: var(--text-muted); font-size: 0.85rem;">No active goals</div>
+                        {% endfor %}
+                    </div>
+                </div>
+            </div>
+
+            <!-- Heartbeat -->
+            <div class="card">
+                <div class="card-header">
+                    <h3>Heartbeat</h3>
+                </div>
+                <div class="card-body">
+                    <div class="heartbeat-indicator">
+                        <div class="heartbeat-pulse"></div>
+                        <div class="heartbeat-info">
+                            <div class="heartbeat-label">Last Cycle</div>
+                            <div class="heartbeat-time" id="last-heartbeat">--</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- New Goal Form -->
+            <div class="card">
+                <div class="card-header">
+                    <h3>New Directive</h3>
+                </div>
+                <div class="card-body">
+                    <form action="/goal" method="post" class="recall-container">
+                        <input type="text" name="objective" class="recall-input" placeholder="Enter goal..." required autocomplete="off">
+                        <button type="submit" class="recall-btn">Add</button>
+                    </form>
+                </div>
+            </div>
+
+            <!-- Skill Timeline -->
+            <div class="card">
+                <div class="card-header">
+                    <h3>Skill Timeline</h3>
+                </div>
+                <div class="card-body">
+                    <div class="goals-list">
+                        {% for row in learned_skills %}
+                        <div class="goal-item">
+                            <div>{{ row.content }}</div>
+                            <div class="priority">{{ row.timestamp }}</div>
+                        </div>
+                        {% else %}
+                        <div style="color: var(--text-muted); font-size: 0.85rem;">No learned skills yet</div>
+                        {% endfor %}
+                    </div>
+                </div>
+            </div>
+
+            <!-- Registered Skills -->
+            <div class="card">
+                <div class="card-header">
+                    <h3>Skills Registry</h3>
+                    <span id="skill-count">{{ registered_skills|length }}</span>
+                </div>
+                <div class="card-body">
+                    <div class="goals-list" style="max-height: 300px;">
+                        {% for skill in registered_skills %}
+                        <div class="goal-item" style="border-left-color: {% if skill.category == 'reasoning' %}var(--accent-purple){% elif skill.category == 'code' %}var(--accent-green){% elif skill.category == 'data' %}var(--accent-blue){% else %}var(--accent-yellow){% endif %};">
+                            <div style="font-weight: 600;">{{ skill.name }}</div>
+                            <div class="priority">{{ skill.id }} | {{ skill.level }}</div>
+                        </div>
+                        {% else %}
+                        <div style="color: var(--text-muted); font-size: 0.85rem;">No skills registered</div>
+                        {% endfor %}
+                    </div>
+                </div>
+            </div>
+        </aside>
+
+        <!-- Main Content -->
+        <main class="main-content">
+            <div class="card" style="flex: 1; display: flex; flex-direction: column;">
+                <div class="card-header">
+                    <h3>Stream of Consciousness</h3>
+                    <div class="tab-filters">
+                        <button class="tab-filter active" data-filter="all">All</button>
+                        <button class="tab-filter" data-filter="episodic">Episodic</button>
+                        <button class="tab-filter" data-filter="semantic">Semantic</button>
+                        <button class="tab-filter" data-filter="procedural">Procedural</button>
+                        <button class="tab-filter" data-filter="identity">Identity</button>
+                    </div>
+                </div>
+                <div class="card-body memory-feed" id="memory-feed">
+                    {% for mem in memories %}
+                    <div class="memory-card {{ mem.memory_type }}">
+                        <div class="memory-header">
+                            <span class="memory-type {{ mem.memory_type }}">{{ mem.memory_type }}</span>
+                            <span class="memory-timestamp">{{ mem.timestamp }}</span>
+                        </div>
+                        <div class="memory-content">{{ mem.content }}</div>
+                        <div class="memory-importance">
+                            <div class="memory-importance-bar" style="width: {{ (mem.importance or 0.5) * 100 }}%"></div>
+                        </div>
+                    </div>
+                    {% endfor %}
+                </div>
+            </div>
+        </main>
+
+        <!-- Right Panel -->
+        <aside class="right-panel">
+            <!-- Chat -->
+            <div class="card chat-container">
+                <div class="card-header">
+                    <h3>Cognitive Interface</h3>
+                </div>
+                <div class="chat-messages" id="chat-messages">
+                    <div class="chat-message assistant">
+                        Hello! I'm your cognitive interface. Ask me anything or trigger a skill below.
+                    </div>
+                </div>
+                <div class="chat-input-container">
+                    <input type="text" class="chat-input" id="chat-input" placeholder="Talk to me..." autocomplete="off">
+                    <button class="chat-send" id="chat-send">Send</button>
+                </div>
+            </div>
+
+            <!-- Skills -->
+            <div class="card">
+                <div class="card-header">
+                    <h3>Cognitive Skills</h3>
+                </div>
+                <div class="card-body">
+                    <div class="skills-grid">
+                        <button class="skill-btn" onclick="triggerSkill('analyze')">
+                            <span class="icon">&#128270;</span>
+                            Analyze
+                        </button>
+                        <button class="skill-btn" onclick="triggerSkill('reflect')">
+                            <span class="icon">&#129504;</span>
+                            Reflect
+                        </button>
+                        <button class="skill-btn" onclick="triggerSkill('recall')">
+                            <span class="icon">&#128218;</span>
+                            Recall
+                        </button>
+                        <button class="skill-btn" onclick="triggerSkill('decide')">
+                            <span class="icon">&#9889;</span>
+                            Decide
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Memory Search -->
+            <div class="card">
+                <div class="card-header">
+                    <h3>Semantic Recall</h3>
+                </div>
+                <div class="card-body">
+                    <div class="recall-container">
+                        <input type="text" class="recall-input" id="recall-input" placeholder="Search memories..." autocomplete="off">
+                        <button class="recall-btn" onclick="performRecall()">Search</button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Quick Store -->
+            <div class="card">
+                <div class="card-header">
+                    <h3>Store Memory</h3>
+                </div>
+                <div class="card-body">
+                    <form action="/chat" method="post" class="recall-container">
+                        <input type="text" name="message" class="recall-input" placeholder="New experience..." required autocomplete="off">
+                        <button type="submit" class="recall-btn">Store</button>
+                    </form>
+                </div>
+            </div>
+        </aside>
+    </div>
+
+    <!-- Modal -->
+    <div class="modal" id="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3 id="modal-title">Result</h3>
+                <button class="modal-close" onclick="closeModal()">&times;</button>
+            </div>
+            <div class="modal-body" id="modal-body">
+                Loading...
+            </div>
+        </div>
+    </div>
+
+    <script>
+    // State
+    const state = {
+        memories: {{ memories | tojson }},
+        filter: 'all',
+        chatHistory: [],
+    };
+
+    // Elements
+    const memoryFeed = document.getElementById('memory-feed');
+    const chatMessages = document.getElementById('chat-messages');
+    const chatInput = document.getElementById('chat-input');
+    const chatSend = document.getElementById('chat-send');
+    const recallInput = document.getElementById('recall-input');
+    const modal = document.getElementById('modal');
+    const modalTitle = document.getElementById('modal-title');
+    const modalBody = document.getElementById('modal-body');
+
+    // Utility functions
+    function escapeHtml(text) {
+        return String(text)
+            .replace(/&/g, '&amp;')
+            .replace(/</g, '&lt;')
+            .replace(/>/g, '&gt;')
+            .replace(/"/g, '&quot;')
+            .replace(/'/g, '&#39;');
+    }
+
+    function formatTimestamp(ts) {
+        try {
+            const date = new Date(ts);
+            return date.toLocaleTimeString('en-US', { hour: '2-digit', minute: '2-digit' });
+        } catch {
+            return ts;
+        }
+    }
+
+    // Render functions
+    function renderMemory(mem) {
+        const importance = mem.importance || 0.5;
+        return `
+            <div class="memory-card ${mem.memory_type}">
+                <div class="memory-header">
+                    <span class="memory-type ${mem.memory_type}">${escapeHtml(mem.memory_type)}</span>
+                    <span class="memory-timestamp">${formatTimestamp(mem.timestamp)}</span>
+                </div>
+                <div class="memory-content">${escapeHtml(mem.content)}</div>
+                <div class="memory-importance">
+                    <div class="memory-importance-bar" style="width: ${importance * 100}%"></div>
+                </div>
+            </div>
+        `;
+    }
+
+    function renderMemories() {
+        const filtered = state.filter === 'all'
+            ? state.memories
+            : state.memories.filter(m => m.memory_type === state.filter);
+
+        memoryFeed.innerHTML = filtered.slice(0, 100).map(renderMemory).join('');
+    }
+
+    function addChatMessage(text, isUser = false) {
+        const msgDiv = document.createElement('div');
+        msgDiv.className = `chat-message ${isUser ? 'user' : 'assistant'}`;
+        msgDiv.textContent = text;
+        chatMessages.appendChild(msgDiv);
+        chatMessages.scrollTop = chatMessages.scrollHeight;
+    }
+
+    // API functions
+    async function fetchStatus() {
+        try {
+            const res = await fetch('/api/status');
+            const data = await res.json();
+
+            // Update GPU
+            const gpu = data.compute?.gpu;
+            document.getElementById('gpu-status').textContent =
+                gpu?.available ? `GPU: ${gpu.name.split(' ').slice(-2).join(' ')}` : 'GPU: N/A';
+            document.getElementById('compute-gpu').textContent =
+                gpu?.available ? gpu.memory : 'N/A';
+
+            // Update NPU
+            const npu = data.compute?.npu;
+            document.getElementById('npu-status').textContent =
+                npu?.available ? 'NPU: Active' : 'NPU: N/A';
+            document.getElementById('compute-npu').textContent =
+                npu?.available ? 'Active' : 'N/A';
+            document.getElementById('compute-npu').className =
+                npu?.available ? 'compute-status' : 'compute-status offline';
+
+            const stage = data.control_plane?.stage || 'UNKNOWN';
+            document.getElementById('stage-status').textContent = `Stage: ${stage}`;
+
+            // Update memory stats
+            const mem = data.memory?.by_type || {};
+            document.getElementById('stat-episodic').textContent = mem.episodic || 0;
+            document.getElementById('stat-semantic').textContent = mem.semantic || 0;
+            document.getElementById('stat-procedural').textContent = mem.procedural || 0;
+            document.getElementById('stat-identity').textContent = mem.identity || 0;
+            document.getElementById('total-memories').textContent = data.memory?.total || 0;
+
+        } catch (e) {
+            console.error('Status fetch failed:', e);
+        }
+    }
+
+    async function fetchHeartbeat() {
+        try {
+            const res = await fetch('/api/heartbeat');
+            const data = await res.json();
+            if (data.heartbeats?.length > 0) {
+                const last = data.heartbeats[0];
+                document.getElementById('last-heartbeat').textContent =
+                    formatTimestamp(last.timestamp);
+            }
+        } catch (e) {
+            console.error('Heartbeat fetch failed:', e);
+        }
+    }
+
+    async function sendChat(message) {
+        if (!message.trim()) return;
+
+        addChatMessage(message, true);
+        chatInput.value = '';
+        chatInput.disabled = true;
+        chatSend.disabled = true;
+
+        // Add loading indicator
+        const loadingDiv = document.createElement('div');
+        loadingDiv.className = 'chat-message assistant';
+        loadingDiv.innerHTML = '<span class="loading"></span> Thinking...';
+        chatMessages.appendChild(loadingDiv);
+
+        try {
+            const response = await fetch('/api/chat/stream', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ message }),
+            });
+
+            const reader = response.body.getReader();
+            const decoder = new TextDecoder();
+            let fullResponse = '';
+
+            // Remove loading indicator
+            loadingDiv.remove();
+
+            const responseDiv = document.createElement('div');
+            responseDiv.className = 'chat-message assistant';
+            chatMessages.appendChild(responseDiv);
+
+            while (true) {
+                const { done, value } = await reader.read();
+                if (done) break;
+
+                const chunk = decoder.decode(value);
+                const lines = chunk.split('\n');
+
+                for (const line of lines) {
+                    if (line.startsWith('data: ')) {
+                        try {
+                            const data = JSON.parse(line.slice(6));
+                            if (data.text) {
+                                fullResponse += data.text;
+                                responseDiv.textContent = fullResponse;
+                                chatMessages.scrollTop = chatMessages.scrollHeight;
+                            }
+                        } catch {}
+                    }
+                }
+            }
+
+        } catch (e) {
+            loadingDiv.textContent = 'Error: ' + e.message;
+        }
+
+        chatInput.disabled = false;
+        chatSend.disabled = false;
+        chatInput.focus();
+    }
+
+    async function performRecall() {
+        const query = recallInput.value.trim();
+        if (!query) return;
+
+        showModal('Searching...', '<span class="loading"></span> Searching memories...');
+
+        try {
+            const res = await fetch('/api/memories/recall', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ query, limit: 10 }),
+            });
+            const data = await res.json();
+
+            if (data.memories?.length > 0) {
+                const html = data.memories.map(m => `
+                    <div style="margin-bottom: 16px; padding: 12px; background: var(--bg-secondary); border-radius: 8px; border-left: 3px solid var(--accent-blue);">
+                        <div style="color: var(--text-muted); font-size: 0.8rem; margin-bottom: 4px;">
+                            ${escapeHtml(m.memory_type)} | Similarity: ${(m.similarity * 100).toFixed(1)}%
+                        </div>
+                        <div>${escapeHtml(m.content)}</div>
+                    </div>
+                `).join('');
+                showModal(`Found ${data.memories.length} Memories`, html);
+            } else {
+                showModal('No Results', 'No matching memories found.');
+            }
+        } catch (e) {
+            showModal('Error', e.message);
+        }
+    }
+
+    async function triggerSkill(skill) {
+        showModal(`${skill.charAt(0).toUpperCase() + skill.slice(1)}`, '<span class="loading"></span> Processing...');
+
+        try {
+            let endpoint, body;
+
+            switch (skill) {
+                case 'analyze':
+                    const problem = prompt('What would you like to analyze?');
+                    if (!problem) { closeModal(); return; }
+                    endpoint = '/api/mindset/analyze';
+                    body = { problem, pattern: 'balanced' };
+                    break;
+                case 'reflect':
+                    const topic = prompt('What would you like to reflect on?');
+                    if (!topic) { closeModal(); return; }
+                    endpoint = '/api/self/reflect';
+                    body = { topic };
+                    break;
+                case 'recall':
+                    const query = prompt('What would you like to recall?');
+                    if (!query) { closeModal(); return; }
+                    endpoint = '/api/memories/recall';
+                    body = { query, limit: 10 };
+                    break;
+                case 'decide':
+                    const decision = prompt('What decision do you need help with?');
+                    if (!decision) { closeModal(); return; }
+                    endpoint = '/api/mindset/analyze';
+                    body = { problem: decision, pattern: 'deep_reasoning' };
+                    break;
+                default:
+                    closeModal();
+                    return;
+            }
+
+            const res = await fetch(endpoint, {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify(body),
+            });
+            const data = await res.json();
+
+            let html;
+            if (data.error) {
+                html = `<div style="color: var(--accent-red);">${escapeHtml(data.error)}</div>`;
+            } else if (skill === 'recall' && data.memories) {
+                html = data.memories.map(m => `
+                    <div style="margin-bottom: 12px; padding: 10px; background: var(--bg-secondary); border-radius: 6px;">
+                        <strong>${escapeHtml(m.memory_type)}</strong> (${(m.similarity * 100).toFixed(1)}%)<br>
+                        ${escapeHtml(m.content)}
+                    </div>
+                `).join('') || 'No memories found.';
+            } else {
+                html = `<pre>${JSON.stringify(data, null, 2)}</pre>`;
+            }
+
+            showModal(`${skill.charAt(0).toUpperCase() + skill.slice(1)} Result`, html);
+
+        } catch (e) {
+            showModal('Error', e.message);
+        }
+    }
+
+    // Modal functions
+    function showModal(title, content) {
+        modalTitle.textContent = title;
+        modalBody.innerHTML = content;
+        modal.classList.add('active');
+    }
+
+    function closeModal() {
+        modal.classList.remove('active');
+    }
+
+    // Event listeners
+    document.querySelectorAll('.tab-filter').forEach(btn => {
+        btn.addEventListener('click', () => {
+            document.querySelectorAll('.tab-filter').forEach(b => b.classList.remove('active'));
+            btn.classList.add('active');
+            state.filter = btn.dataset.filter;
+            renderMemories();
+        });
+    });
+
+    chatSend.addEventListener('click', () => sendChat(chatInput.value));
+    chatInput.addEventListener('keypress', (e) => {
+        if (e.key === 'Enter') sendChat(chatInput.value);
+    });
+
+    recallInput.addEventListener('keypress', (e) => {
+        if (e.key === 'Enter') performRecall();
+    });
+
+    modal.addEventListener('click', (e) => {
+        if (e.target === modal) closeModal();
+    });
+
+    // WebSocket for real-time updates
+    function connectWebSocket() {
+        const ws = new WebSocket(`ws://${location.host}/ws`);
+
+        ws.onmessage = (event) => {
+            try {
+                const batch = JSON.parse(event.data);
+                batch.forEach(mem => {
+                    // Add to beginning
+                    state.memories.unshift(mem);
+                });
+                // Keep only last 200
+                state.memories = state.memories.slice(0, 200);
+                renderMemories();
+            } catch (e) {
+                console.error('WS parse error:', e);
+            }
+        };
+
+        ws.onerror = ws.onclose = () => {
+            setTimeout(connectWebSocket, 3000);
+        };
+    }
+
+    // Initialize
+    fetchStatus();
+    fetchHeartbeat();
+    connectWebSocket();
+
+    // Periodic updates
+    setInterval(fetchStatus, 30000);
+    setInterval(fetchHeartbeat, 10000);
+    </script>
+</body>
+</html>

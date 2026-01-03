@@ -1,0 +1,24 @@
+id: thirdparty/web-research-navigator
+name: Web Research Navigator
+version: "1.0.0"
+description: Navigate live web sources to augment retrieval.
+category: integration
+level: intermediate
+
+tags:
+  - web
+  - research
+  - navigation
+
+dependencies: []
+
+capabilities:
+  - capability_id: plan
+    description: Outline web research steps
+  - capability_id: capture
+    description: Outline capture and citation steps
+
+permissions:
+  filesystem: read
+  network: [web]
+  shell: none

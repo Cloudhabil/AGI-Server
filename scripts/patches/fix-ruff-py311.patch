@@ -1,0 +1,24 @@
+diff --git a/CLI/ch_repl.py b/CLI/ch_repl.py
+--- a/CLI/ch_repl.py
++++ b/CLI/ch_repl.py
+@@
+-    if not code:
+-        console.print(
+-            f"[yellow]{TEXTS.get('no_code_block', 'No encontr\\u00e9 bloque ```python``` en el \\u00faltimo output.')}[/yellow]")
++    if not code:
++        msg = TEXTS.get('no_code_block', 'No encontré bloque ```python``` en el último output.')
++        console.print(f"[yellow]{msg}[/yellow]")
+@@
+-    console.print(f"[bold]{TEXTS.get('exec_running', '\\u25B6 Ejecutando')}[/bold] {script}")
++    exec_label = TEXTS.get('exec_running', '▶ Ejecutando')
++    console.print(f"[bold]{exec_label}[/bold] {script}")
+diff --git a/ui/__init__.py b/ui/__init__.py
+--- a/ui/__init__.py
++++ b/ui/__init__.py
+@@
+-from .free_canvas import FreeCanvas
+-from .pixel_avatar import PixelAvatarEditor, edit_avatar
++from .free_canvas import FreeCanvas as FreeCanvas
++from .pixel_avatar import PixelAvatarEditor as PixelAvatarEditor, edit_avatar as edit_avatar
++
++__all__ = ["FreeCanvas", "PixelAvatarEditor", "edit_avatar"]

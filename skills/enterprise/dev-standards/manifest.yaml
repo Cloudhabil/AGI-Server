@@ -1,0 +1,24 @@
+id: enterprise/dev-standards
+name: Enterprise Dev Standards
+version: "1.0.0"
+description: Apply internal code standards and workflow expectations.
+category: code
+level: intermediate
+
+tags:
+  - enterprise
+  - standards
+  - developer
+
+dependencies: []
+
+capabilities:
+  - capability_id: checklist
+    description: Provide a standard compliance checklist
+  - capability_id: review
+    description: Outline review steps aligned to internal standards
+
+permissions:
+  filesystem: read
+  network: []
+  shell: none

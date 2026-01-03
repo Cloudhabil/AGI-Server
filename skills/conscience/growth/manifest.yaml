@@ -1,0 +1,49 @@
+id: conscience/growth
+name: Growth
+version: 1.0.0
+description: Meta-cognitive skill acquisition and capability expansion
+category: reasoning
+level: expert
+
+tags:
+  - conscience
+  - meta-cognition
+  - learning
+  - growth
+  - self-improvement
+
+capabilities:
+  - recognize    # Identify capability gaps from failures
+  - analyze      # Reason about what's needed to fill gaps
+  - acquire      # Find or create skills to fill gaps
+  - integrate    # Add new skills to the registry
+  - reflect      # Review growth history and patterns
+  - grow         # Full growth cycle
+
+dependencies:
+  - skill_id: conscience/memory
+    optional: false
+  - skill_id: conscience/mindset
+    optional: false
+  - skill_id: thirdparty/mcp-connector
+    optional: true
+
+examples:
+  - input:
+      capability: grow
+      task: "Deploy application to Kubernetes"
+      error: "No kubernetes skill available"
+    output:
+      cycle:
+        recognize: { gap: "Missing K8s deployment capability" }
+        analyze: { requirements: "Need kubectl wrapper or MCP server" }
+        acquire: { type: "mcp", status: "connected" }
+
+  - input:
+      capability: reflect
+    output:
+      reflection:
+        insights: "Growth patterns show preference for MCP acquisition"
+        memories_analyzed: 15
+
+author: H-Net Cognitive System

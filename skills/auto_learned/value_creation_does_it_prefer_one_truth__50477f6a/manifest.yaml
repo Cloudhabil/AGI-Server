@@ -1,0 +1,14 @@
+id: auto_learned/value_creation_does_it_prefer_one_truth__50477f6a
+name: "Auto Learned value_creation_does_it_prefer_one_truth_"
+description: "Auto-learned skill for: Value Creation: Does it prefer one truth over another because it finds one more \"beautiful\" or \"elegant\"?"
+version: "0.1.0"
+category: automation
+level: intermediate
+tags:
+  - auto-learned
+  - drafted
+dependencies: []
+requires_tools: []
+estimated_tokens: 400
+author: GPIA
+license: MIT

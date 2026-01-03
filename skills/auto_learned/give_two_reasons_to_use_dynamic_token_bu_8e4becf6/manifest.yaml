@@ -1,0 +1,14 @@
+id: auto_learned/give_two_reasons_to_use_dynamic_token_bu_8e4becf6
+name: "Auto Learned give_two_reasons_to_use_dynamic_token_bu"
+description: "Auto-learned skill for: Give two reasons to use dynamic token budgets in local LLMs."
+version: "0.1.0"
+category: automation
+level: intermediate
+tags:
+  - auto-learned
+  - drafted
+dependencies: []
+requires_tools: []
+estimated_tokens: 400
+author: GPIA
+license: MIT

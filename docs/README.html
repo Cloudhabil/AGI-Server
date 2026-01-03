@@ -1,0 +1,694 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>GPIA README - Skilltree Constellation</title>
+<style>
+  :root {
+    --ink: #1a1a1a;
+    --muted: #4a4a4a;
+    --paper: #f6f2ea;
+    --paper-2: #e7efe6;
+    --accent: #2f6f5e;
+    --accent-2: #d08b2f;
+    --accent-3: #4b5f9a;
+    --card: #ffffff;
+    --line: rgba(26, 26, 26, 0.12);
+    --glow: rgba(47, 111, 94, 0.18);
+  }
+
+  * { box-sizing: border-box; }
+
+  body {
+    margin: 0;
+    color: var(--ink);
+    background:
+      radial-gradient(1200px 600px at 10% -10%, rgba(47, 111, 94, 0.18), transparent 60%),
+      radial-gradient(900px 500px at 95% 10%, rgba(208, 139, 47, 0.22), transparent 60%),
+      linear-gradient(180deg, var(--paper) 0%, var(--paper-2) 100%);
+    font-family: "Trebuchet MS", "Gill Sans", "Lucida Sans", sans-serif;
+  }
+
+  .grid {
+    position: fixed;
+    inset: 0;
+    pointer-events: none;
+    background-image:
+      repeating-linear-gradient(0deg, rgba(26, 26, 26, 0.06) 0, rgba(26, 26, 26, 0.06) 1px, transparent 1px, transparent 28px),
+      repeating-linear-gradient(90deg, rgba(26, 26, 26, 0.06) 0, rgba(26, 26, 26, 0.06) 1px, transparent 1px, transparent 28px);
+    opacity: 0.45;
+  }
+
+  .wrap {
+    max-width: 1100px;
+    margin: 0 auto;
+    padding: 48px 20px 80px;
+    position: relative;
+  }
+
+  header {
+    display: grid;
+    gap: 18px;
+    padding: 28px;
+    background: var(--card);
+    border: 1px solid var(--line);
+    border-radius: 20px;
+    box-shadow: 0 20px 60px rgba(0, 0, 0, 0.08);
+    position: relative;
+    overflow: hidden;
+  }
+
+  header::before {
+    content: "";
+    position: absolute;
+    inset: -80px auto auto -120px;
+    width: 280px;
+    height: 280px;
+    background: radial-gradient(circle, var(--glow) 0%, transparent 70%);
+    transform: rotate(12deg);
+  }
+
+  .badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    padding: 6px 12px;
+    border: 1px solid var(--line);
+    border-radius: 999px;
+    font-size: 12px;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--muted);
+    background: #fffaf0;
+  }
+
+  h1, h2, h3 {
+    font-family: "Palatino Linotype", "Book Antiqua", Palatino, serif;
+    margin: 0;
+  }
+
+  h1 {
+    font-size: clamp(32px, 4.6vw, 54px);
+    letter-spacing: 0.02em;
+  }
+
+  h2 {
+    font-size: clamp(22px, 3vw, 30px);
+  }
+
+  p {
+    margin: 0;
+    color: var(--muted);
+    line-height: 1.6;
+  }
+
+  .hero-actions {
+    display: grid;
+    gap: 12px;
+    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  }
+
+  .cta {
+    padding: 14px 16px;
+    border-radius: 14px;
+    border: 1px solid var(--line);
+    background: #fcfbf7;
+  }
+
+  code, pre {
+    font-family: "Cascadia Mono", "Consolas", "Lucida Console", monospace;
+  }
+
+  .section {
+    margin-top: 42px;
+    display: grid;
+    gap: 18px;
+  }
+
+  .card {
+    background: var(--card);
+    border: 1px solid var(--line);
+    border-radius: 18px;
+    padding: 20px;
+    box-shadow: 0 16px 40px rgba(0, 0, 0, 0.06);
+  }
+
+  .columns {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+    gap: 18px;
+  }
+
+  .tagline {
+    font-size: 18px;
+  }
+
+  .signal {
+    display: grid;
+    gap: 8px;
+    padding: 14px 16px;
+    border-left: 3px solid var(--accent);
+    background: #f4f0e7;
+  }
+
+  .list {
+    display: grid;
+    gap: 8px;
+    margin: 0;
+    padding: 0 0 0 18px;
+  }
+
+  .pill {
+    display: inline-flex;
+    align-items: center;
+    padding: 4px 10px;
+    border-radius: 999px;
+    border: 1px solid var(--line);
+    font-size: 12px;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+  }
+
+  .steps {
+    display: grid;
+    gap: 14px;
+  }
+
+  .step {
+    display: grid;
+    gap: 6px;
+    padding: 14px;
+    border-radius: 14px;
+    border: 1px dashed var(--line);
+    background: #fbfaf6;
+  }
+
+  .skilltree {
+    display: grid;
+    gap: 16px;
+  }
+
+  .skilltree-head {
+    display: flex;
+    justify-content: space-between;
+    gap: 20px;
+    flex-wrap: wrap;
+  }
+
+  .legend {
+    display: grid;
+    gap: 6px;
+    font-size: 13px;
+    color: var(--muted);
+  }
+
+  .legend-item {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+  }
+
+  .legend-dot {
+    width: 10px;
+    height: 10px;
+    border-radius: 999px;
+    display: inline-block;
+  }
+
+  .legend-core { background: var(--accent); }
+  .legend-category { background: var(--accent-2); }
+  .legend-skill { background: var(--accent-3); }
+
+  .skilltree-view {
+    height: 520px;
+    border-radius: 16px;
+    background: #0b0f12;
+    border: 1px solid rgba(231, 241, 240, 0.2);
+    overflow: hidden;
+    position: relative;
+  }
+
+  .skilltree-foot {
+    display: flex;
+    justify-content: space-between;
+    gap: 12px;
+    flex-wrap: wrap;
+    color: var(--muted);
+    font-size: 14px;
+  }
+
+  .skilltree-label {
+    font-weight: 600;
+    color: var(--ink);
+  }
+
+  .foot {
+    margin-top: 32px;
+    text-align: center;
+    color: var(--muted);
+    font-size: 14px;
+  }
+
+  .highlight {
+    color: var(--accent);
+    font-weight: bold;
+  }
+
+  .glow {
+    animation: float 6s ease-in-out infinite;
+  }
+
+  @keyframes float {
+    0%, 100% { transform: translateY(0px); }
+    50% { transform: translateY(-6px); }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .glow { animation: none; }
+  }
+
+  @media (max-width: 720px) {
+    header { padding: 22px; }
+    .skilltree-view { height: 360px; }
+  }
+</style>
+</head>
+<body>
+<div class="grid" aria-hidden="true"></div>
+<div class="wrap">
+  <header>
+    <span class="badge">GPIA / CLI AI / Living Organism</span>
+    <h1>GPIA is a calm, evolving system that learns the way you work.</h1>
+    <p class="tagline">Think of it as a workshop that grows tools instead of hoarding them. When a solution works, it becomes a skill. When the hardware strains, it steps back and runs safely.</p>
+    <div class="hero-actions">
+      <div class="cta">
+        <div class="pill">Quick Start</div>
+        <pre>python main.py
+python gpia_evolving.py</pre>
+      </div>
+      <div class="cta">
+        <div class="pill">Safe Benchmarks</div>
+        <pre>python gpia_benchmark_suite.py --sections memory --memory-mode safe --guardrails on</pre>
+      </div>
+    </div>
+  </header>
+
+  <section class="section">
+    <h2>Skilltree constellation</h2>
+    <p>Drag to orbit, scroll to zoom, click a node to focus. The core is GPIA, the ring is categories, and the satellites are skills.</p>
+    <div id="skilltree-app"></div>
+  </section>
+
+  <section class="section">
+    <h2>What this system actually does</h2>
+    <div class="columns">
+      <div class="card signal">
+        <h3>It evolves on purpose</h3>
+        <p>When it spots a gap, it sends a focused agent, captures the success, and turns that into a reusable skill. The skill list lives in <span class="highlight">skills/INDEX.json</span>.</p>
+      </div>
+      <div class="card signal">
+        <h3>It runs with guardrails</h3>
+        <p>Benchmarks can be segmented. Memory can switch to safe mode. The goal is stable output without hammering your SSD, VRAM, or CPU.</p>
+      </div>
+      <div class="card signal">
+        <h3>It stays local by design</h3>
+        <p>Embedding backends prioritize NPU, then Ollama, then CPU. That keeps memory fast and avoids unnecessary downloads.</p>
+      </div>
+    </div>
+  </section>
+
+  <section class="section">
+    <h2>How the evolution loop feels day to day</h2>
+    <div class="steps">
+      <div class="step">
+        <div class="pill">Step 1</div>
+        <h3>Hunt the gap</h3>
+        <p>GPIA detects a missing capability and triggers a focused exploration.</p>
+      </div>
+      <div class="step">
+        <div class="pill">Step 2</div>
+        <h3>Spawn and solve</h3>
+        <p>Ephemeral agents handle the task with the right model for the job.</p>
+      </div>
+      <div class="step">
+        <div class="pill">Step 3</div>
+        <h3>Dissect and synthesize</h3>
+        <p>What worked is distilled into a new skill, which becomes permanent.</p>
+      </div>
+    </div>
+  </section>
+
+  <section class="section">
+    <h2>Hardware-aware defaults</h2>
+    <div class="columns">
+      <div class="card">
+        <h3>Embedding order</h3>
+        <ul class="list">
+          <li>NPU (OpenVINO)</li>
+          <li>Ollama embeddings</li>
+          <li>sentence-transformers (CPU)</li>
+        </ul>
+        <p>Default Ollama model: <span class="highlight">mahonzhan/all-MiniLM-L6-v2</span> (GPIA alias: <span class="highlight">gpia-minilm-l6-v2</span>).</p>
+      </div>
+      <div class="card">
+        <h3>Safer memory runs</h3>
+        <pre>python gpia_benchmark_suite.py --sections memory --memory-mode safe --guardrails on</pre>
+        <p>Safe mode reduces disk churn and avoids heavy embedding work.</p>
+      </div>
+      <div class="card">
+        <h3>Segmented benchmarks</h3>
+        <pre>python gpia_benchmark_suite.py --sections model,s2,memory --guardrails on</pre>
+        <p>Smaller bursts keep CPU, GPU, and SSD usage within safer ranges.</p>
+      </div>
+    </div>
+  </section>
+
+  <section class="section">
+    <h2>What makes it worth keeping</h2>
+    <div class="columns">
+      <div class="card">
+        <h3>121 persistent skills</h3>
+        <p>Every hard-won solution gets stored so the next task starts smarter than the last.</p>
+      </div>
+      <div class="card">
+        <h3>PASS protocol</h3>
+        <p>When an agent gets stuck, it asks for help, receives it, and resumes cleanly.</p>
+      </div>
+      <div class="card">
+        <h3>Conscience layer</h3>
+        <p>Memory, mindset, self, and safety keep behavior grounded and accountable.</p>
+      </div>
+    </div>
+  </section>
+
+  <footer class="foot">
+    Built as a living organism: evolve, stabilize, repeat.
+  </footer>
+</div>
+
+<script type="importmap">
+{
+  "imports": {
+    "three": "https://unpkg.com/three@0.161.0/build/three.module.js",
+    "three/addons/": "https://unpkg.com/three@0.161.0/examples/jsm/"
+  }
+}
+</script>
+<script type="module">
+  import { createApp } from "https://unpkg.com/vue@3/dist/vue.esm-browser.prod.js";
+  import * as THREE from "three";
+  import { OrbitControls } from "three/addons/controls/OrbitControls.js";
+
+  const rawSkills = [{"id": ".system/skill-creator", "name": "skill-creator", "description": "Guide for creating effective skills. This skill should be used when users want to create a new skill (or update an existing skill) that extends Codex's capabilities with specialized knowledge, workflows, or tool integrations."}, {"id": ".system/skill-installer", "name": "skill-installer", "description": "Install Codex skills into $CODEX_HOME/skills from a curated list or a GitHub repo path. Use when a user asks to list installable skills, install a curated skill, or install a skill from another repo (including private repos)."}, {"id": "abm-supply-chain", "name": "abm-supply-chain", "description": "Design agent-based simulations for supply chain stress tests; use when asked to model disruptions and mitigation strategies."}, {"id": "automation/canary-orchestration", "name": "canary-orchestration", "description": "Plan and run canary or blue-green rollouts with health gates and rollback criteria; use when asked to deploy safely with progressive traffic shifting."}, {"id": "automation/environment-grounding", "name": "environment-grounding", "description": "Ground reasoning via real system interactions; use when asked to validate actions with live tools or environments."}, {"id": "automation/gpia-bridge", "name": "gpia-bridge", "description": "Bridge Codex requests to the local GPIA system. Use when the user invokes /GPIA, asks to hand off a task to the GPIA agent, or needs PASS protocol execution, capsule tracking, or GPIA-specific runs (quick/analyze/create)."}, {"id": "automation/hybrid-orchestrator", "name": "hybrid-orchestrator", "description": "Coordinate multi-tool workflows with guardrails; use when asked to chain retrieval, analysis, and action steps."}, {"id": "automation/knowledge-transfer", "name": "knowledge-transfer", "description": "Share knowledge across agents or roles; use when asked to distill or hand off procedures."}, {"id": "automation/multi-agent-coordination", "name": "multi-agent-coordination", "description": "Coordinate tasks and memory across multiple agents; use when asked to orchestrate parallel work or role-based collaboration."}, {"id": "automation/progressive-disclosure", "name": "progressive-disclosure", "description": "Load only essential context for long tasks; use when asked to manage context window or staged retrieval."}, {"id": "automation/runtime-diagnostics", "name": "runtime-diagnostics", "description": "Run local system diagnostics and model benchmarks across CPU, memory, GPU, NPU, Docker, and Kubernetes; use when asked to benchmark, health-check, or collect environment diagnostics, and store a summary in memory."}, {"id": "automation/skill-refinement", "name": "skill-refinement", "description": "Evaluate and improve skills with tests and metrics; use when asked to validate or iterate on skill quality."}, {"id": "automation/skill_smoke_bench", "name": "automation/skill-smoke-bench", "description": "Run lightweight import/exec smoke tests for skills and report pass/fail. Use in CI/CD or after creating new skills."}, {"id": "automation/telemetry-anomaly", "name": "telemetry-anomaly", "description": "Detect anomalies from live telemetry streams and propose remediation; use when asked to analyze SSE/WebSocket metrics for abnormal behavior."}, {"id": "automation/tool-persistence", "name": "tool-persistence", "description": "Capture solutions as reusable scripts or tools; use when asked to turn workflows into persistent tooling."}, {"id": "canary-orchestration", "name": "canary-orchestration", "description": "Plan and run canary or blue-green rollouts with health gates and rollback criteria; use when asked to deploy safely with progressive traffic shifting."}, {"id": "causal-procedural-grounding", "name": "causal-procedural-grounding", "description": "Encode cause-effect logic into executable steps; use when asked to ensure robust troubleshooting and remediation."}, {"id": "conscience/embedding-repair", "name": "embedding-repair", "description": "Diagnose and repair embedding model availability and MSHR index health; use when embedding errors, dimension mismatches, or rebuild failures appear."}, {"id": "conscience/embedding_backend_selector", "name": "conscience/embedding-backend-selector", "description": "Choose the best embedding backend (OpenVINO NPU \u2192 Ollama embeddings \u2192 sentence-transformers CPU) and fall back gracefully with logging. Use when embedding reliability matters."}, {"id": "conscience/memory-linker", "name": "memory-linker", "description": "Create semantic links between related memories and entities; use when asked to connect projects, goals, or artifacts across sources."}, {"id": "conscience/tangible-memory", "name": "tangible-memory", "description": "Ensure long-term procedural memory persists across sessions; use when asked to store reusable knowledge for future tasks."}, {"id": "constrained-decoding", "name": "constrained-decoding", "description": "Restrict outputs to validated options to reduce hallucinations; use when asked to enforce strict output schemas."}, {"id": "cost-optimizer", "name": "cost-optimizer", "description": "Analyze infrastructure spend and recommend cost reductions; use when asked to optimize cloud or tooling costs under budget constraints."}, {"id": "deep-semantic-analysis", "name": "deep-semantic-analysis", "description": "Perform fine-grained semantic relationship analysis; use when asked to compare meaning, resolve ambiguity, or map concepts."}, {"id": "deployment/model_provisioning", "name": "deployment/model-provisioning", "description": "Build and provision Ollama models from Modelfiles, verify health, and hot-swap personas. Use to translate Modelfile text into runnable models."}, {"id": "design-tokens", "name": "design-tokens", "description": "Define or enforce typography, color, spacing, and motion tokens; use when asked to standardize UI styling or generate a design system."}, {"id": "design/design-tokens", "name": "design-tokens", "description": "Define or enforce typography, color, spacing, and motion tokens; use when asked to standardize UI styling or generate a design system."}, {"id": "design/generative-ui", "name": "generative-ui", "description": "Generate high-end UI/UX and dashboard systems using design tokens, micro-interactions, and reactive state; use when asked to build adaptive interfaces, dashboards, or generative UI patterns."}, {"id": "design/micro-motion", "name": "micro-motion", "description": "Specify motion and micro-interaction patterns for UI feedback; use when asked to design transitions, loading states, or interaction polish."}, {"id": "domain-grounding", "name": "domain-grounding", "description": "Apply domain constraints and professional rules; use when asked to comply with enterprise, legal, or scientific standards."}, {"id": "dynamic-knowledge-manager", "name": "dynamic-knowledge-manager", "description": "Maintain a continually updated knowledge base without forgetting; use when asked to refresh indices or manage drift."}, {"id": "embedding-repair", "name": "embedding-repair", "description": "Diagnose and repair embedding model availability and MSHR index health; use when embedding errors, dimension mismatches, or rebuild failures appear."}, {"id": "enterprise/abm-supply-chain", "name": "abm-supply-chain", "description": "Design agent-based simulations for supply chain stress tests; use when asked to model disruptions and mitigation strategies."}, {"id": "enterprise/autonomous-devops", "name": "autonomous-devops", "description": "Orchestrate self-healing DevOps workflows with telemetry, Kubernetes control, and CI/CD automation; use when asked to design or operate autonomous infrastructure remediation, predictive scaling, or canary rollouts."}, {"id": "enterprise/cost-optimizer", "name": "cost-optimizer", "description": "Analyze infrastructure spend and recommend cost reductions; use when asked to optimize cloud or tooling costs under budget constraints."}, {"id": "enterprise/domain-grounding", "name": "domain-grounding", "description": "Apply domain constraints and professional rules; use when asked to comply with enterprise, legal, or scientific standards."}, {"id": "enterprise/ops-chief-of-staff", "name": "ops-chief-of-staff", "description": "Automate enterprise operations (compliance, HR recruiting, finance ops) with audit trails and approvals; use when asked to design or run administrative autonomous workflows."}, {"id": "enterprise/ops-compliance-runbook", "name": "ops-compliance-runbook", "description": "Execute compliance audit workflows with evidence trails and approvals; use when asked to verify SOC2, HIPAA, or GDPR controls."}, {"id": "enterprise/synthetic-rehearsal", "name": "synthetic-rehearsal", "description": "Run autonomous simulations and synthetic user rehearsals for risk, crisis, or UX validation; use when asked to simulate scenarios, tabletop exercises, or agent-based modeling."}, {"id": "environment-grounding", "name": "environment-grounding", "description": "Ground reasoning via real system interactions; use when asked to validate actions with live tools or environments."}, {"id": "evidence-judge", "name": "evidence-judge", "description": "Validate claims against sources and score confidence; use when asked to verify research output accuracy."}, {"id": "explainable-reasoning", "name": "explainable-reasoning", "description": "Produce transparent reasoning trails and decision explanations; use when asked to justify actions or audits."}, {"id": "geometric-grounding", "name": "geometric-grounding", "description": "Anchor semantic meaning to embedding geometry; use when asked to validate vector spaces or similarity behavior."}, {"id": "governance/guardrails-control", "name": "guardrails-control", "description": "Enforce governance, approvals, and safety boundaries for autonomous actions; use when asked to define or apply guardrails."}, {"id": "guardrails-control", "name": "guardrails-control", "description": "Enforce governance, approvals, and safety boundaries for autonomous actions; use when asked to define or apply guardrails."}, {"id": "hybrid-orchestrator", "name": "hybrid-orchestrator", "description": "Coordinate multi-tool workflows with guardrails; use when asked to chain retrieval, analysis, and action steps."}, {"id": "ide/agentic-ide", "name": "agentic-ide", "description": "Drive autonomous IDE workflows including refactors, TODO cleanup, and context-aware command palette actions; use when asked to automate coding tasks inside the IDE."}, {"id": "ide/refactor-engine", "name": "refactor-engine", "description": "Plan and execute multi-file refactors with safety checks; use when asked to reduce tech debt or reorganize code modules."}, {"id": "interface/template_architect", "name": "interface/template-architect", "description": "Define and validate Ollama Modelfile TEMPLATE blocks (Jinja2 layout), including chat format detection and syntax validation. Use to translate TEMPLATE directives into safe prompt structures."}, {"id": "knowledge-transfer", "name": "knowledge-transfer", "description": "Share knowledge across agents or roles; use when asked to distill or hand off procedures."}, {"id": "knowledge/dynamic-knowledge-manager", "name": "dynamic-knowledge-manager", "description": "Maintain a continually updated knowledge base without forgetting; use when asked to refresh indices or manage drift."}, {"id": "learning/synthetic-query-generator", "name": "synthetic-query-generator", "description": "Generate synthetic queries to expand coverage and test retrieval; use when asked to strengthen indexing or evaluation."}, {"id": "learning/transferable-learning", "name": "transferable-learning", "description": "Convert successful procedures into reusable patterns; use when asked to generalize workflows across tasks."}, {"id": "lifecycle/compile_jit_modelfile", "name": "lifecycle/compile-jit-modelfile", "description": "Build a JIT Modelfile that hardcodes current context into SYSTEM/TEMPLATE/PARAMETER and creates a temporary Ollama model. Use when you need a hyper-focused ephemeral model."}, {"id": "lifecycle/ephemeral_synthesis", "name": "lifecycle/ephemeral-synthesis", "description": "Spawn transient agents with disposable identity, memory shard, and compute slot for JIT tasks. Use when you need \u201cexist just to solve then vanish.\u201d"}, {"id": "lifecycle/garbage_collection", "name": "lifecycle/garbage-collection", "description": "Remove the ephemeral model, flush VRAM, drop temp memory shards, and verify cleanup. Use immediately after transient execution."}, {"id": "lifecycle/transient_execution", "name": "lifecycle/transient-execution", "description": "Hot-swap to the ephemeral model, run the atomic task, capture result, and hand it back. Use for spawn\u2192solve\u2192return flows."}, {"id": "media/multi_speaker_orchestrator", "name": "media/multi-speaker-orchestrator", "description": "Orchestrate multi-voice TTS production: assign speakers, chunk dialogue, dispatch to voices, sync timing, and mix into a final track. Use after dialogue-dramatizer produces script turns."}, {"id": "media/tts_canary_runner", "name": "media/tts-canary-runner", "description": "Run TTS canary tests, measure audio quality/latency, and rollback on threshold breaches. Use before rolling out new voices or pipelines."}, {"id": "memory-linker", "name": "memory-linker", "description": "Create semantic links between related memories and entities; use when asked to connect projects, goals, or artifacts across sources."}, {"id": "micro-motion", "name": "micro-motion", "description": "Specify motion and micro-interaction patterns for UI feedback; use when asked to design transitions, loading states, or interaction polish."}, {"id": "multi-agent-coordination", "name": "multi-agent-coordination", "description": "Coordinate tasks and memory across multiple agents; use when asked to orchestrate parallel work or role-based collaboration."}, {"id": "operations/reliability-budget", "name": "reliability-budget", "description": "Define and enforce error budgets and SLO guardrails; use when asked to balance velocity with reliability targets."}, {"id": "ops-compliance-runbook", "name": "ops-compliance-runbook", "description": "Execute compliance audit workflows with evidence trails and approvals; use when asked to verify SOC2, HIPAA, or GDPR controls."}, {"id": "ops/proxy_aware_fetcher", "name": "ops/proxy-aware-fetcher", "description": "Detect proxy requirements and route fetches through secure proxies with auth handling and offline fallbacks. Use when data retrieval must honor enterprise proxy rules or when direct access is blocked."}, {"id": "progressive-disclosure", "name": "progressive-disclosure", "description": "Load only essential context for long tasks; use when asked to manage context window or staged retrieval."}, {"id": "reasoning/causal-procedural-grounding", "name": "causal-procedural-grounding", "description": "Encode cause-effect logic into executable steps; use when asked to ensure robust troubleshooting and remediation."}, {"id": "reasoning/citation_verifier", "name": "reasoning/citation-verifier", "description": "Verify each generated claim against provided sources, enforce inline citations, and prune unsupported text. Use when outputs must be strictly grounded."}, {"id": "reasoning/deep-semantic-analysis", "name": "deep-semantic-analysis", "description": "Perform fine-grained semantic relationship analysis; use when asked to compare meaning, resolve ambiguity, or map concepts."}, {"id": "reasoning/explainable-reasoning", "name": "explainable-reasoning", "description": "Produce transparent reasoning trails and decision explanations; use when asked to justify actions or audits."}, {"id": "reasoning/geometric-grounding", "name": "geometric-grounding", "description": "Anchor semantic meaning to embedding geometry; use when asked to validate vector spaces or similarity behavior."}, {"id": "reasoning/semantic-id-constructor", "name": "semantic-id-constructor", "description": "Create stable semantic identifiers and aliases for entities across systems; use when asked to map names, titles, or IDs across sources."}, {"id": "reasoning/system_definition", "name": "reasoning/system-definition", "description": "Draft and enforce system-level persona/rules for Ollama SYSTEM blocks. Use to translate role/constraints into Modelfile SYSTEM text."}, {"id": "refactor-engine", "name": "refactor-engine", "description": "Plan and execute multi-file refactors with safety checks; use when asked to reduce tech debt or reorganize code modules."}, {"id": "reliability-budget", "name": "reliability-budget", "description": "Define and enforce error budgets and SLO guardrails; use when asked to balance velocity with reliability targets."}, {"id": "research/context_boundary_manager", "name": "research/context-boundary-manager", "description": "Lock tasks to user-provided sources (PDF/txt/URL) by creating a per-task context container, ingesting and chunking only those sources, ranking chunks for relevance, and enforcing negative constraints against out-of-scope content. Use when strict source grounding is required."}, {"id": "research/evidence-judge", "name": "evidence-judge", "description": "Validate claims against sources and score confidence; use when asked to verify research output accuracy."}, {"id": "research/grounding_auditor", "name": "research/grounding-auditor", "description": "Audit outputs against provided sources, enforce grounding, and log an audit trail. Use when strict source fidelity is required."}, {"id": "research/trust-research", "name": "trust-research", "description": "Execute high-fidelity research with hallucination guard, citation checks, and confidence scoring; use when asked to summarize or analyze sources with strict accuracy."}, {"id": "runtime-diagnostics", "name": "runtime-diagnostics", "description": "Run local system diagnostics and model benchmarks across CPU, memory, GPU, NPU, Docker, and Kubernetes; use when asked to benchmark, health-check, or collect environment diagnostics, and store a summary in memory."}, {"id": "safety/ast-safety", "name": "ast-safety", "description": ""}, {"id": "safety/constrained-decoding", "name": "constrained-decoding", "description": "Restrict outputs to validated options to reduce hallucinations; use when asked to enforce strict output schemas."}, {"id": "safety/scale-awareness", "name": "scale-awareness", "description": "Adjust strategy based on task complexity and risk; use when asked to choose between retrieval, tools, or generation."}, {"id": "scale-awareness", "name": "scale-awareness", "description": "Adjust strategy based on task complexity and risk; use when asked to choose between retrieval, tools, or generation."}, {"id": "semantic-id-constructor", "name": "semantic-id-constructor", "description": "Create stable semantic identifiers and aliases for entities across systems; use when asked to map names, titles, or IDs across sources."}, {"id": "skill-indexer", "name": "skill-indexer", "description": "Build a combined index of available skills and support auto-registration by scanning repo and Codex skill directories; use when asked to list or catalog skills quickly."}, {"id": "skill-refinement", "name": "skill-refinement", "description": "Evaluate and improve skills with tests and metrics; use when asked to validate or iterate on skill quality."}, {"id": "synthesis/dialogue_dramatizer", "name": "synthesis/dialogue-dramatizer", "description": "Convert dense source-grounded content into a two-speaker dramatized script with persona roles, prosody cues, and interruptions. Use for audio-friendly overviews that stay faithful to cited material."}, {"id": "synthesis/grounded_audio_brief", "name": "synthesis/grounded-audio-brief", "description": "Produce grounded audio briefs by chaining source-scoped input, citation verification, dialogue dramatization, and multi-speaker TTS orchestration. Use for \u201cAudio Overview\u201d style outputs."}, {"id": "synthetic-query-generator", "name": "synthetic-query-generator", "description": "Generate synthetic queries to expand coverage and test retrieval; use when asked to strengthen indexing or evaluation."}, {"id": "system/model_selector", "name": "system/model-selector", "description": "Select the correct Ollama base model (and adapters) based on task type, resource fit, and registry availability. Use to translate Modelfile FROM/ADAPTER decisions into agent behavior."}, {"id": "system/skill-indexer", "name": "skill-indexer", "description": "Build a combined index of available skills and support auto-registration by scanning repo and Codex skill directories; use when asked to list or catalog skills quickly."}, {"id": "tangible-memory", "name": "tangible-memory", "description": "Ensure long-term procedural memory persists across sessions; use when asked to store reusable knowledge for future tasks."}, {"id": "telemetry-anomaly", "name": "telemetry-anomaly", "description": "Detect anomalies from live telemetry streams and propose remediation; use when asked to analyze SSE/WebSocket metrics for abnormal behavior."}, {"id": "tool-persistence", "name": "tool-persistence", "description": "Capture solutions as reusable scripts or tools; use when asked to turn workflows into persistent tooling."}, {"id": "transferable-learning", "name": "transferable-learning", "description": "Convert successful procedures into reusable patterns; use when asked to generalize workflows across tasks."}, {"id": "tuning/parameter_optimizer", "name": "tuning/parameter-optimizer", "description": "Optimize Ollama PARAMETER values (temperature, num_ctx, top_k, top_p, repeat_penalty, stop sequences) per task. Use to translate tuning directives into runtime presets."}, {"id": "auto_learned/create_a_vue_3_component_that_renders_a__c26ee1fc", "name": "auto_learned/create_a_vue_3_component_that_renders_a__c26ee1fc", "description": "Auto-learned skill for: Create a Vue 3 component that renders a 3D skill tree using Three.js. Use a PerspectiveCamera and OrbitControls, load data from frontend/src/assets/skilltree..."}, {"id": "automation/autonomy-recovery-loop", "name": "autonomy-recovery-loop", "description": "Autonomous failure recovery and self-healing loop for tasks, benchmarks, or services. Use when a run fails, dependencies break, or the system must diagnose, remediate, and re-run safely under guardrails."}, {"id": "research/generalization-evaluator", "name": "generalization-evaluator", "description": "Cross-domain evaluation to estimate generality and detect blind spots. Use when asked to assess broad capability, compare models across domains, or identify missing skills."}, {"id": "automation/scaffolding-reducer", "name": "scaffolding-reducer", "description": "Reduce heavy scaffolding by crystallizing repeated workflows into scripts, templates, or skills. Use when tasks require repeated manual steps or long prompt scaffolds."}, {"id": "automation/adaptive-guardrail-calibrator", "name": "adaptive-guardrail-calibrator", "description": "Calibrate guardrail thresholds from live hardware telemetry and emit environment presets. Use when thresholds are hand-tuned or drift with hardware changes."}, {"id": "automation/dynamic-budget-orchestrator", "name": "dynamic-budget-orchestrator", "description": "Dynamically scale model token budgets using resource telemetry, prompt size, and profile presets. Use when token limits must adapt to hardware constraints, per-request size, or safe/fast/quality modes."}, {"id": "interface/vue-threejs-skilltree", "name": "vue-threejs-skilltree", "description": "Build Vue 3 components that render a 3D skill tree using Three.js and OrbitControls. Use when asked to visualize skills as an interactive 3D constellation or to turn skills/INDEX.json into a Vue scene."}, {"id": "tuning/model-selection-orchestrator", "name": "model-selection-orchestrator", "description": "Select the best local Ollama model for a task and emit tuning presets. Use when choosing between reasoning, creative, fast, vision, synthesis, or pre-AGI modes based on available local models."}, {"id": "dialogue/answering-core", "name": "answering-core", "description": "Enforce a consistent answer-first response protocol with clear support and next steps. Use when responses must be concise, structured, and resilient to uncertainty."}, {"id": "answering-core-sbi/v1", "name": "answering-core-sbi", "description": "SBI wrapper for dialogue/answering-core with deterministic PLAN/EXECUTE/VERIFY/COMMIT output."}, {"id": "dialogue/response-state-visualizer", "name": "response-state-visualizer", "description": "Stream safe, staged previews of answers in CLI output. Use when you need to show how a response forms or changes state without exposing chain-of-thought."}, {"id": "sbi-artifactizer/v1", "name": "sbi-artifactizer", "description": "Transform a skill into a Standard Binary Interface (SBI) artifact with deterministic PLAN/EXECUTE/VERIFY/COMMIT phases. Use when a skill must produce verifiable, committed execution artifacts with minimal recursion."}, {"id": "research/verification-harness", "name": "verification-harness", "description": "Validate outputs using rule-based checks (required strings, regex, length, ranges). Use when you need deterministic verification or regression checks."}, {"id": "automation/embodiment-grounding-loop", "name": "embodiment-grounding-loop", "description": "Execute a safe sensor/actuator loop to ground tasks in local system state. Use when tasks require environment feedback or bounded actions."}, {"id": "operations/resource-reliability-profiler", "name": "resource-reliability-profiler", "description": "Run commands under resource budgets and stop runs that exceed CPU, RAM, VRAM, disk write, or time thresholds. Use when reliability and resource constraints must be enforced."}, {"id": "auto_learned/given_available_local_ollama_models_llam_bff8b74f", "name": "auto_learned/given_available_local_ollama_models_llam_bff8b74f", "description": "Auto-learned skill for: Given available local Ollama models (llama3:8b, qwen3:latest, deepseek-r1:latest, codegemma:latest, llava:latest, gpt-oss:20b), which base model is best for ..."}, {"id": "auto_learned/recommended_model_backup_model_temperatu_730a9ddb", "name": "auto_learned/recommended_model_backup_model_temperatu_730a9ddb", "description": "Auto-learned skill for: recommended=<model>; backup=<model>; temperature=<val>; top_p=<val>; top_k=<val>; num_ctx=<val>; repeat_penalty=<val>; caution=<short text>."}, {"id": "auto_learned/choose_the_best_pre_agi_base_model_from__65c809b6", "name": "auto_learned/choose_the_best_pre_agi_base_model_from__65c809b6", "description": "Auto-learned skill for: Choose the best PRE-AGI base model from llama3:8b, qwen3:latest, deepseek-r1:latest, codegemma:latest, llava:latest, gpt-oss:20b."}, {"id": "auto_learned/what_is_2_2_d6444f86", "name": "auto_learned/what_is_2_2_d6444f86", "description": "Auto-learned skill for: What is 2 + 2?"}, {"id": "auto_learned/what_is_12_30_answer_with_just_the_numbe_385f929a", "name": "auto_learned/what_is_12_30_answer_with_just_the_numbe_385f929a", "description": "Auto-learned skill for: What is 12 + 30? Answer with just the number."}, {"id": "auto_learned/give_two_reasons_to_use_dynamic_token_bu_8e4becf6", "name": "auto_learned/give_two_reasons_to_use_dynamic_token_bu_8e4becf6", "description": "Auto-learned skill for: Give two reasons to use dynamic token budgets in local LLMs."}, {"id": "auto_learned/create_a_4_step_checklist_to_safely_run__97d7e005", "name": "auto_learned/create_a_4_step_checklist_to_safely_run__97d7e005", "description": "Auto-learned skill for: Create a 4-step checklist to safely run a local benchmark on a workstation with CPU/NPU/VRAM guardrails."}, {"id": "resource-reliability-profiler-sbi/v1", "name": "resource-reliability-profiler-sbi", "description": "SBI wrapper for operations/resource-reliability-profiler with deterministic PLAN/EXECUTE/VERIFY/COMMIT output."}, {"id": "adaptive-guardrail-calibrator-sbi/v1", "name": "adaptive-guardrail-calibrator-sbi", "description": "SBI wrapper for automation/adaptive-guardrail-calibrator with deterministic PLAN/EXECUTE/VERIFY/COMMIT output."}, {"id": "dynamic-budget-orchestrator-sbi/v1", "name": "dynamic-budget-orchestrator-sbi", "description": "SBI wrapper for automation/dynamic-budget-orchestrator with deterministic PLAN/EXECUTE/VERIFY/COMMIT output."}, {"id": "autonomy-recovery-loop-sbi/v1", "name": "autonomy-recovery-loop-sbi", "description": "SBI wrapper for automation/autonomy-recovery-loop with deterministic PLAN/EXECUTE/VERIFY/COMMIT output."}, {"id": "verification-harness-sbi/v1", "name": "verification-harness-sbi", "description": "SBI wrapper for research/verification-harness with deterministic PLAN/EXECUTE/VERIFY/COMMIT output."}, {"id": "vue-threejs-skilltree-sbi/v1", "name": "vue-threejs-skilltree-sbi", "description": "SBI wrapper for interface/vue-threejs-skilltree with deterministic PLAN/EXECUTE/VERIFY/COMMIT output."}, {"id": "model-selection-orchestrator-sbi/v1", "name": "model-selection-orchestrator-sbi", "description": "SBI wrapper for tuning/model-selection-orchestrator with deterministic PLAN/EXECUTE/VERIFY/COMMIT output."}, {"id": "operations/ollama-service-persistence", "name": "ollama-service-persistence", "description": "Create, update, and validate a persistent Windows service for Ollama (auto-start on boot), including setting OLLAMA_MODELS and managing the service lifecycle. Use when Ollama must be always-on or models must live in a custom directory."}];
+
+  function asciiOnly(text) {
+    return String(text || "").replace(/[^ -~]/g, "");
+  }
+
+  function humanizeName(text) {
+    return asciiOnly(text).replace(/[_-]+/g, " ").replace(/\s+/g, " ").trim();
+  }
+
+  function humanizeDescription(text) {
+    return asciiOnly(text).replace(/\s+/g, " ").trim();
+  }
+
+  function clampText(text, maxLen = 160) {
+    if (!text || text.length <= maxLen) {
+      return text;
+    }
+    return text.slice(0, maxLen - 3).trim() + "...";
+  }
+
+  function normalizeSkills(rows) {
+    return rows
+      .map((row) => {
+        const id = String(row.id || "").trim();
+        const name = String(row.name || row.id || "").trim();
+        const description = String(row.description || "").trim();
+        const category = id.includes("/") ? id.split("/")[0] : "root";
+        return { id, name, description, category };
+      })
+      .filter((row) => row.id);
+  }
+
+  function buildGraph(skills) {
+    const categories = Array.from(new Set(skills.map((s) => s.category)));
+    categories.sort((a, b) => {
+      if (a === "root") return -1;
+      if (b === "root") return 1;
+      return a.localeCompare(b);
+    });
+
+    const nodes = [];
+    const edges = [];
+    const byCategory = new Map();
+    const categoryCounts = new Map();
+    skills.forEach((skill) => {
+      if (!byCategory.has(skill.category)) {
+        byCategory.set(skill.category, []);
+      }
+      byCategory.get(skill.category).push(skill);
+      categoryCounts.set(skill.category, (categoryCounts.get(skill.category) || 0) + 1);
+    });
+
+    nodes.push({
+      id: "core",
+      label: "GPIA Core",
+      human: "GPIA core: orchestrates skills, guardrails, and evolution.",
+      type: "core",
+      position: new THREE.Vector3(0, 0, 0)
+    });
+
+    const ringRadius = 150;
+    categories.forEach((cat, i) => {
+      const angle = (i / categories.length) * Math.PI * 2;
+      const x = Math.cos(angle) * ringRadius;
+      const z = Math.sin(angle) * ringRadius;
+      const y = Math.sin(angle * 2) * 18;
+      const catId = `cat:${cat}`;
+      const catLabel = humanizeName(cat);
+      const catCount = categoryCounts.get(cat) || 0;
+      nodes.push({
+        id: catId,
+        label: catLabel,
+        human: `Category ${catLabel}: ${catCount} skills.`,
+        type: "category",
+        position: new THREE.Vector3(x, y, z)
+      });
+      edges.push({ from: "core", to: catId });
+
+      const items = byCategory.get(cat) || [];
+      const count = Math.max(items.length, 1);
+      const radius = 26 + Math.min(42, Math.ceil(Math.sqrt(count)) * 6);
+      items.forEach((skill, idx) => {
+        const t = idx + 0.5;
+        const phi = Math.acos(1 - 2 * t / count);
+        const theta = Math.PI * (1 + Math.sqrt(5)) * t;
+        const sx = x + radius * Math.sin(phi) * Math.cos(theta);
+        const sy = y + radius * Math.cos(phi);
+        const sz = z + radius * Math.sin(phi) * Math.sin(theta);
+        const labelSource = humanizeName(skill.name || skill.id);
+        const label = labelSource.includes("/") ? labelSource.split("/").pop() : labelSource;
+        const description = humanizeDescription(skill.description);
+        const human = clampText(description ? `${label}: ${description}` : label);
+        nodes.push({
+          id: skill.id,
+          label,
+          human,
+          type: "skill",
+          position: new THREE.Vector3(sx, sy, sz)
+        });
+        edges.push({ from: catId, to: skill.id });
+      });
+    });
+
+    return { nodes, edges };
+  }
+
+  function initSkilltree(container, setLabel) {
+    const scene = new THREE.Scene();
+    scene.background = new THREE.Color(0x0b0f12);
+    scene.fog = new THREE.Fog(0x0b0f12, 220, 520);
+
+    const camera = new THREE.PerspectiveCamera(55, 1, 0.1, 1000);
+    camera.position.set(0, 160, 260);
+
+    const renderer = new THREE.WebGLRenderer({ antialias: true });
+    renderer.setPixelRatio(Math.min(window.devicePixelRatio || 1, 2));
+    container.appendChild(renderer.domElement);
+
+    const controls = new OrbitControls(camera, renderer.domElement);
+    controls.enableDamping = true;
+    controls.dampingFactor = 0.08;
+    controls.minDistance = 90;
+    controls.maxDistance = 520;
+
+    const ambient = new THREE.AmbientLight(0xffffff, 0.7);
+    const keyLight = new THREE.DirectionalLight(0xffffff, 0.6);
+    keyLight.position.set(140, 200, 120);
+    scene.add(ambient, keyLight);
+
+    const skills = normalizeSkills(rawSkills);
+    const graph = buildGraph(skills);
+
+    const colors = {
+      core: 0x2f6f5e,
+      category: 0xd08b2f,
+      skill: 0x4b5f9a
+    };
+
+    const sizes = {
+      core: 6,
+      category: 4,
+      skill: 2.6
+    };
+
+    const meshes = [];
+    const nodeById = new Map();
+
+    graph.nodes.forEach((node) => {
+      const geometry = new THREE.SphereGeometry(sizes[node.type], 16, 16);
+      const material = new THREE.MeshStandardMaterial({
+        color: colors[node.type],
+        roughness: 0.3,
+        metalness: 0.1
+      });
+      const mesh = new THREE.Mesh(geometry, material);
+      mesh.position.copy(node.position);
+      mesh.userData.node = node;
+      node.mesh = mesh;
+      scene.add(mesh);
+      meshes.push(mesh);
+      nodeById.set(node.id, node);
+    });
+
+    const edgePositions = new Float32Array(graph.edges.length * 2 * 3);
+    graph.edges.forEach((edge, i) => {
+      const from = nodeById.get(edge.from);
+      const to = nodeById.get(edge.to);
+      const offset = i * 6;
+      edgePositions[offset] = from.position.x;
+      edgePositions[offset + 1] = from.position.y;
+      edgePositions[offset + 2] = from.position.z;
+      edgePositions[offset + 3] = to.position.x;
+      edgePositions[offset + 4] = to.position.y;
+      edgePositions[offset + 5] = to.position.z;
+    });
+
+    const edgeGeometry = new THREE.BufferGeometry();
+    edgeGeometry.setAttribute("position", new THREE.BufferAttribute(edgePositions, 3));
+    const edgeMaterial = new THREE.LineBasicMaterial({
+      color: 0xaab7b7,
+      transparent: true,
+      opacity: 0.35
+    });
+    const edgeLines = new THREE.LineSegments(edgeGeometry, edgeMaterial);
+    scene.add(edgeLines);
+
+    const raycaster = new THREE.Raycaster();
+    const pointer = new THREE.Vector2();
+    let hovered = null;
+
+    function setHover(node) {
+      if (hovered && hovered.mesh) {
+        hovered.mesh.scale.set(1, 1, 1);
+      }
+      if (node && node.mesh) {
+        const scale = node.type == "core" ? 1.4 : 1.2;
+        node.mesh.scale.set(scale, scale, scale);
+      }
+      hovered = node;
+      if (node) {
+        setLabel(node.human || node.label);
+      } else {
+        setLabel("Hover a node to see its skill summary.");
+      }
+    }
+
+    function onPointerMove(event) {
+      const rect = renderer.domElement.getBoundingClientRect();
+      pointer.x = ((event.clientX - rect.left) / rect.width) * 2 - 1;
+      pointer.y = -((event.clientY - rect.top) / rect.height) * 2 + 1;
+      raycaster.setFromCamera(pointer, camera);
+      const hits = raycaster.intersectObjects(meshes, false);
+      if (hits.length) {
+        const node = hits[0].object.userData.node;
+        setHover(node);
+      } else {
+        setHover(null);
+      }
+    }
+
+    function onClick(event) {
+      const rect = renderer.domElement.getBoundingClientRect();
+      pointer.x = ((event.clientX - rect.left) / rect.width) * 2 - 1;
+      pointer.y = -((event.clientY - rect.top) / rect.height) * 2 + 1;
+      raycaster.setFromCamera(pointer, camera);
+      const hits = raycaster.intersectObjects(meshes, false);
+      if (hits.length) {
+        const node = hits[0].object.userData.node;
+        controls.target.copy(node.position);
+      }
+    }
+
+    renderer.domElement.addEventListener("pointermove", onPointerMove);
+    renderer.domElement.addEventListener("click", onClick);
+
+    function resize() {
+      const width = container.clientWidth || 1;
+      const height = container.clientHeight || 1;
+      renderer.setSize(width, height, false);
+      camera.aspect = width / height;
+      camera.updateProjectionMatrix();
+    }
+
+    window.addEventListener("resize", resize);
+    resize();
+
+    function animate() {
+      requestAnimationFrame(animate);
+      controls.update();
+      renderer.render(scene, camera);
+    }
+
+    animate();
+  }
+
+  const SkilltreeApp = {
+    template: `
+      <div class="card skilltree">
+        <div class="skilltree-head">
+          <div>
+            <div class="pill">Interactive Skilltree</div>
+            <h3>GPIA skill constellation</h3>
+            <p>Drag to orbit, scroll to zoom, click a node to focus.</p>
+          </div>
+          <div class="legend">
+            <span class="legend-item"><span class="legend-dot legend-core"></span>Core</span>
+            <span class="legend-item"><span class="legend-dot legend-category"></span>Category</span>
+            <span class="legend-item"><span class="legend-dot legend-skill"></span>Skill</span>
+          </div>
+        </div>
+        <div class="skilltree-view" ref="viewport"></div>
+        <div class="skilltree-foot">
+          <span class="skilltree-label">{{ hoverLabel }}</span>
+          <span>Tip: drag to orbit, scroll to zoom.</span>
+        </div>
+      </div>
+    `,
+    data() {
+      return { hoverLabel: "Hover a node to see its skill summary." };
+    },
+    mounted() {
+      initSkilltree(this.$refs.viewport, (label) => {
+        this.hoverLabel = label;
+      });
+    }
+  };
+
+  createApp(SkilltreeApp).mount("#skilltree-app");
+</script>
+</body>
+</html>

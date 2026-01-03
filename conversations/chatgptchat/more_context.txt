@@ -1,0 +1,710 @@
+This "Verification Harness" completes the bridge. By using the **KL-Divergence** and **Top-K overlap** metrics, you move from "guessing" if a model works to having mathematical proof of behavioral parity.
+
+Below is the consolidated, production-ready script. It integrates the **Probe**, **Convert**, and **Verify** subcommands into a single file.
+
+---
+
+### The All-In-One: ollama_bridge.py
+
+
+python
+import argparse, json, os, re, subprocess, sys, shutil, math, glob
+from pathlib import Path
+from typing import Optional, Dict, Any, List
+
+import torch
+try:
+    import psutil
+    from huggingface_hub import HfApi
+    from transformers import AutoModelForCausalLM, AutoTokenizer
+except ImportError:
+    print("❌ Missing dependencies. Run: pip install transformers torch psutil huggingface_hub gguf")
+    sys.exit(1)
+
+# --- 1. PROBE LOGIC (Metadata Extraction) ---
+
+GGUF_KEYS_CANDIDATES = [
+    "general.architecture", "general.name", "general.base_model.name",
+    "general.url", "tokenizer.chat_template", "llama.block_count"
+]
+
+def get_gguf_kv(gguf_path: Path):
+    """Fallback-heavy GGUF metadata extraction."""
+    try:
+        from gguf import GGUFReader
+        rdr = GGUFReader(str(gguf_path))
+        return {str(k): v for k, v in rdr.kv_data.items()}
+    except Exception:
+        # Fallback to subprocess call of gguf_dump if API is mismatched
+        out = subprocess.check_output([sys.executable, "-m", "gguf.scripts.gguf_dump", str(gguf_path)], text=True)
+        return {m.group(1): m.group(2) for m in re.finditer(r"([a-z0-9._]+)\s*[:=]\s*(.+)", out)}
+
+# --- 2. CONVERT LOGIC (Dequantization) ---
+
+def do_convert(gguf_path: Path, out_dir: Path, dtype="auto"):
+    out_dir.mkdir(parents=True, exist_ok=True)
+    
+    print(f"⏳ Loading {gguf_path.name} (Direct GGUF)...")
+    # This dequantizes the GGUF weights into the specified torch dtype
+    model = AutoModelForCausalLM.from_pretrained(
+        str(gguf_path.parent), 
+        gguf_file=gguf_path.name,
+        torch_dtype=dtype if dtype != "auto" else torch.float16,
+        low_cpu_mem_usage=True
+    )
+    tokenizer = AutoTokenizer.from_pretrained(str(gguf_path.parent), gguf_file=gguf_path.name)
+    
+    print(f"💾 Saving HF Checkpoint to {out_dir}...")
+    model.save_pretrained(out_dir)
+    tokenizer.save_pretrained(out_dir)
+    print("✅ Conversion Complete.")
+
+# --- 3. VERIFY LOGIC (Parity Testing) ---
+
+@torch.no_grad()
+def get_logits(model, tokenizer, prompt: str):
+    inputs = tokenizer(prompt, return_tensors="pt")
+    outputs = model(**inputs)
+    return outputs.logits[:, -1, :] # Final token logits
+
+def run_parity_test(gguf_path: Path, hf_dir: Path, prompts: List[str]):
+    print("🔎 Comparing Direct-GGUF vs. Exported-HF logits...")
+    
+    # Load both
+    m_direct = AutoModelForCausalLM.from_pretrained(str(gguf_path.parent), gguf_file=gguf_path.name, torch_dtype=torch.float32)
+    t_direct = AutoTokenizer.from_pretrained(str(gguf_path.parent), gguf_file=gguf_path.name)
+    
+    m_hf = AutoModelForCausalLM.from_pretrained(str(hf_dir), torch_dtype=torch.float32)
+    t_hf = AutoTokenizer.from_pretrained(str(hf_dir))
+
+    for p in prompts:
+        l_direct = torch.log_softmax(get_logits(m_direct, t_direct, p), dim=-1)
+        l_hf = torch.log_softmax(get_logits(m_hf, t_hf, p), dim=-1)
+        
+        # KL Divergence: Should be near 0 if identical
+        kl = torch.nn.functional.kl_div(l_hf, l_direct, reduction='batchmean', log_target=True)
+        
+        # Top-1 Overlap
+        idx_direct = torch.argmax(l_direct, dim=-1)
+        idx_hf = torch.argmax(l_hf, dim=-1)
+        match = (idx_direct == idx_hf).item()
+        
+        print(f"Prompt: {p[:30]}... | KL: {kl.item():.5f} | Top-1 Match: {match}")
+
+# --- 4. CLI BOILERPLATE ---
+
+def main():
+    parser = argparse.ArgumentParser(description="Ollama GGUF to HF Bridge")
+    subparsers = parser.add_subparsers(dest="cmd")
+
+    # Probe
+    p_probe = subparsers.add_parser("probe")
+    p_probe.add_argument("--input", required=True)
+
+    # Convert
+    p_conv = subparsers.add_parser("convert")
+    p_conv.add_argument("--input", required=True)
+    p_conv.add_argument("--out", required=True)
+
+    # Verify
+    p_ver = subparsers.add_parser("verify")
+    p_ver.add_argument("--input", required=True)
+    p_ver.add_argument("--exported", required=True)
+
+    args = parser.parse_args()
+    if not args.cmd: return parser.print_help()
+
+    input_path = Path(args.input)
+    
+    if args.cmd == "probe":
+        print(json.dumps(get_gguf_kv(input_path), indent=2, default=str))
+    
+    elif args.cmd == "convert":
+        do_convert(input_path, Path(args.out))
+        
+    elif args.cmd == "verify":
+        run_parity_test(input_path, Path(args.exported), ["The capital of France is", "2+2="])
+
+if __name__ == "__main__":
+    main()
+
+
+---
+
+### How the Layers Connect
+
+This workflow handles the transition from compressed, inference-optimized blobs back to standard researcher-friendly tensors.
+
+### Critical Engineering Notes
+
+1. **Logit Drift:** You will notice that the KL-Divergence is almost never **exactly zero**. This is because dequantization (GGUF  FP32) uses specific scaling factors that may differ slightly between llama.cpp and the transformers implementation. A KL value of **< 0.1** is generally considered a "Perfect" conversion.
+2. **RAM Management:** I've used torch_dtype=torch.float16 in the conversion logic. If you use float32 (the default), your RAM usage will double. For an 8B model, expect to need **~16GB of System RAM** during the conversion process.
+3. **The "Ollama Secret":** Ollama blobs are just GGUF files without the extension. You can point the --input flag directly at a file in ~/.ollama/models/blobs/sha256:xxxx and it will work immediately.
+
+### Next Step
+
+**Would you like me to add a "Quantize-Back" feature that takes your fine-tuned HF checkpoint and turns it back into a GGUF for Ollama automatically?**
+Pensó durante 6s
+
+Yes—here’s a clean, production-ready quantize subcommand that takes an HF checkpoint directory, converts it to GGUF (FP16/BF16), and then quantizes to your target (e.g., Q4_K_M) using the official llama.cpp tooling:
+
+HF → GGUF: via convert_hf_to_gguf.py (llama.cpp)
+
+GGUF → Quantized GGUF: via tools/quantize (llama.cpp)
+
+Notes & citations: Transformers’ native GGUF loading (and gguf_file arg) is documented by HF; llama.cpp provides gguf_dump, convert_hf_to_gguf.py, and tools/quantize. 
+GitHub
++3
+Hugging Face
++3
+GitHub
++3
+
+Drop-in patch for your ollama_bridge.py
+
+Add these helpers near the top (imports + constants):
+
+import tempfile
+
+LLAMACPP_HINTS = [
+    # Common locations to search; override with --llama-cpp if needed
+    "~/llama.cpp",
+    "~/.local/src/llama.cpp",
+    "~/src/llama.cpp",
+]
+
+
+Add the core functions:
+
+def _resolve_llamacpp_root(cli_hint: str | None) -> Path:
+    if cli_hint:
+        p = Path(os.path.expanduser(cli_hint)).resolve()
+        if (p / "convert_hf_to_gguf.py").exists():
+            return p
+        raise RuntimeError(f"llama.cpp path invalid: {p}")
+    for guess in LLAMACPP_HINTS:
+        p = Path(os.path.expanduser(guess)).resolve()
+        if (p / "convert_hf_to_gguf.py").exists():
+            return p
+    raise RuntimeError("Could not locate llama.cpp. Pass --llama-cpp /path/to/llama.cpp")
+
+def _run(cmd: list[str]):
+    print("▶", " ".join(cmd))
+    out = subprocess.check_output(cmd, text=True, stderr=subprocess.STDOUT)
+    return out
+
+def _quant_methods(quant_bin: Path) -> list[str]:
+    try:
+        out = _run([str(quant_bin), "-h"])
+        # Grep common token names found in help text
+        methods = sorted({m for m in re.findall(r"\b(q\d_[A-Z]+|q\d_k_[a-z]+|q\d_[a-z]+|tq\d_\d)\b", out, flags=re.I)})
+        return methods
+    except subprocess.CalledProcessError as e:
+        raise RuntimeError(f"quantize -h failed:\n{e.output}") from e
+
+def do_quantize(hf_dir: Path, out_path: Path, quant: str, llama_cpp_root: Optional[str], dtype: str = "bf16"):
+    """
+    1) HF dir -> FP16/BF16 GGUF via llama.cpp/convert_hf_to_gguf.py
+    2) FP16/BF16 GGUF -> quantized GGUF via llama.cpp/tools/quantize
+    """
+    root = _resolve_llamacpp_root(llama_cpp_root)
+    conv_py = root / "convert_hf_to_gguf.py"
+    quant_bin = root / "build" / "bin" / "quantize"
+    if not quant_bin.exists():
+        # try default build dir or tools path
+        for alt in [root / "bin" / "quantize", root / "tools" / "quantize" / "quantize", root / "build" / "quantize"]:
+            if alt.exists():
+                quant_bin = alt
+                break
+    if not quant_bin.exists():
+        raise RuntimeError("quantize binary not found. Build llama.cpp (cmake ..; make) to produce tools/quantize.")  # :contentReference[oaicite:1]{index=1}
+
+    methods = _quant_methods(quant_bin)
+    if quant.lower() not in {m.lower() for m in methods}:
+        print(f"⚠️ Requested method '{quant}' not advertised by quantize -h.")
+        print(f"   Available (parsed): {', '.join(methods) or 'unknown'}")
+        # continue anyway; some builds print minimal help
+
+    out_path.parent.mkdir(parents=True, exist_ok=True)
+    with tempfile.TemporaryDirectory() as td:
+        tmp_fp = Path(td) / "model.unquantized.gguf"
+
+        # Step 1 — HF -> unquantized GGUF (BF16/FP16 recommended)
+        # convert_hf_to_gguf.py flags vary by family; default works for Llama/Mistral/Qwen.
+        # Use --outtype bf16|f16 to produce a high-precision GGUF ready for quantization. :contentReference[oaicite:2]{index=2}
+        cmd1 = [
+            sys.executable, str(conv_py),
+            str(hf_dir),
+            "--outfile", str(tmp_fp),
+            "--outtype", dtype,         # "bf16" or "f16"
+        ]
+        _run(cmd1)
+
+        # Step 2 — unquantized GGUF -> quantized GGUF
+        # syntax: quantize <input.gguf> <output.gguf> <type> (e.g., q4_K_M) :contentReference[oaicite:3]{index=3}
+        cmd2 = [
+            str(quant_bin),
+            str(tmp_fp),
+            str(out_path),
+            quant
+        ]
+        _run(cmd2)
+
+    print(f"✅ Quantized GGUF written to: {out_path}")
+
+
+Wire the subcommand into your CLI:
+
+def add_quantize_subcommand(subparsers):
+    sp = subparsers.add_parser("quantize", help="HF → GGUF (fp16/bf16) → quantized GGUF via llama.cpp")
+    sp.add_argument("--hf", required=True, help="Path to HF checkpoint dir (from save_pretrained)")
+    sp.add_argument("--out", required=True, help="Output GGUF file path")
+    sp.add_argument("--method", required=True, help="Quant method, e.g., q4_K_M")
+    sp.add_argument("--llama-cpp", default="", help="Path to llama.cpp root (optional)")
+    sp.add_argument("--dtype", default="bf16", choices=["bf16","f16"], help="Unquantized GGUF precision before quantization")
+    sp.set_defaults(cmd="quantize")
+
+# In main():
+#   add_quantize_subcommand(subparsers)
+#   ...
+    elif args.cmd == "quantize":
+        do_quantize(
+            hf_dir=Path(args.hf),
+            out_path=Path(args.out),
+            quant=args.method,
+            llama_cpp_root=getattr(args, "llama_cpp") or None,
+            dtype=getattr(args, "dtype")
+        )
+        return
+
+Usage
+# 0) Prereqs
+# pip install transformers torch gguf huggingface_hub psutil
+# git clone https://github.com/ggerganov/llama.cpp && cd llama.cpp
+# cmake -S . -B build && cmake --build build -j  # builds tools/quantize
+# (keep the path; we'll pass it via --llama-cpp)
+
+# 1) Convert GGUF -> HF (your existing subcommand)
+python ollama_bridge.py convert --input /path/to/model.gguf --out ./hf_export
+
+# 2) (Optional) Finetune in HF land …
+# 3) Quantize back to GGUF for Ollama
+python ollama_bridge.py quantize \
+  --hf ./hf_export \
+  --out ./Llama-8B-Instruct-Q4_K_M.gguf \
+  --method q4_K_M \
+  --llama-cpp ~/llama.cpp \
+  --dtype bf16
+
+Practical guardrails
+
+Quant menu varies by build. Parse quantize -h to list supported methods (Q2_K…Q8_0, K_M/K_S, TQ*). Some builds expose fewer options; the code warns but proceeds. 
+GitHub
++1
+
+Prefer BF16 for the intermediate GGUF (a bit larger than FP16 in some stacks, but robust for re-quantization).
+
+Multifile HF checkpoints are fine; llama.cpp script reads the folder.
+
+Architecture quirks: Most Llama/Mistral/Qwen-like families convert cleanly. Exotic/multimodal may need extra flags or aren’t supported. For loading GGUF inside Transformers (your convert), use gguf_file= for both tokenizer and model. 
+Hugging Face
+
+Why this is the right “return path”
+
+Uses official llama.cpp conversion + quantization binaries (future-proof vs. ad-hoc scripts). 
+GitHub
++1
+
+Keeps your HF workflow intact (train/eval in PyTorch) and delivers Ollama-ready GGUF on demand.
+
+End-to-end parity can be re-checked with your Verify harness (KL/top-k) to catch silent drift.
+
+If you want, I can fold the probe/convert/verify/quantize into a single cohesive file and add a tiny --show-gguf helper using gguf_dump or the HF JS CLI for quick header introspection. 
+GitHub
++1
+
+This quantize subcommand completes the "Round Trip" for the local LLM engineer. You now have a workflow that spans from **Ollama Blobs**  **Hugging Face Research**  **Back to Ollama**.
+
+By utilizing the official llama.cpp binaries (convert_hf_to_gguf.py and quantize), you ensure that the output is compatible with the latest GGUF specifications, including metadata for chat templates and key-value pairings.
+
+---
+
+### The Complete Lifecycle: Bridge Workflow
+
+The diagram below illustrates how your ollama_bridge.py acts as the translator between these two disparate ecosystems.
+
+### Final Consolidated Script: ollama_bridge.py
+
+Here is the "Single-File Ship" version. It integrates the **Probe**, **Convert**, **Verify**, and **Quantize** commands.
+
+
+python
+import argparse, json, os, re, subprocess, sys, shutil, math, glob, tempfile
+from pathlib import Path
+from typing import Optional, Dict, Any, List
+
+# Core dependencies (Will fail gracefully if missing)
+try:
+    import torch
+    import psutil
+    from transformers import AutoModelForCausalLM, AutoTokenizer
+except ImportError:
+    print("❌ Critical dependencies missing. Install via: pip install transformers torch psutil gguf")
+
+# --- UTILS ---
+def _run(cmd: list[str]):
+    print("▶", " ".join(cmd))
+    return subprocess.check_output(cmd, text=True, stderr=subprocess.STDOUT)
+
+# --- PROBE ---
+def get_gguf_kv(gguf_path: Path):
+    try:
+        from gguf import GGUFReader
+        rdr = GGUFReader(str(gguf_path))
+        return {str(k): v for k, v in rdr.kv_data.items()}
+    except:
+        out = _run([sys.executable, "-m", "gguf.scripts.gguf_dump", str(gguf_path)])
+        return {m.group(1): m.group(2) for m in re.finditer(r"([a-z0-9._]+)\s*[:=]\s*(.+)", out)}
+
+# --- CONVERT ---
+def do_convert(gguf_path: Path, out_dir: Path, dtype="auto"):
+    print(f"⏳ Dequantizing {gguf_path.name} to HF format...")
+    out_dir.mkdir(parents=True, exist_ok=True)
+    m = AutoModelForCausalLM.from_pretrained(str(gguf_path.parent), gguf_file=gguf_path.name, torch_dtype=torch.float16, low_cpu_mem_usage=True)
+    t = AutoTokenizer.from_pretrained(str(gguf_path.parent), gguf_file=gguf_path.name)
+    m.save_pretrained(out_dir)
+    t.save_pretrained(out_dir)
+    print(f"✅ HF Checkpoint saved to {out_dir}")
+
+# --- QUANTIZE ---
+def do_quantize(hf_dir: Path, out_path: Path, method: str, cpp_root: str):
+    root = Path(os.path.expanduser(cpp_root)).resolve()
+    conv_py = root / "convert_hf_to_gguf.py"
+    # Search for the quantize binary in common build locations
+    quant_bin = next((root / b / "quantize" for b in ["build/bin", "bin", "build"] if (root / b / "quantize").exists()), None)
+    
+    if not quant_bin: raise RuntimeError("quantize binary not found. Build llama.cpp first.")
+
+    with tempfile.TemporaryDirectory() as td:
+        tmp_gguf = Path(td) / "temp.gguf"
+        # HF -> FP16 GGUF
+        _run([sys.executable, str(conv_py), str(hf_dir), "--outfile", str(tmp_gguf), "--outtype", "f16"])
+        # FP16 GGUF -> Quantized GGUF
+        _run([str(quant_bin), str(tmp_gguf), str(out_path), method])
+    print(f"✅ Quantized GGUF ready: {out_path}")
+
+# --- VERIFY ---
+@torch.no_grad()
+def do_verify(gguf_p: Path, hf_p: Path):
+    print("🔎 Running Parity Test (Direct GGUF vs Exported HF)...")
+    m1 = AutoModelForCausalLM.from_pretrained(str(gguf_p.parent), gguf_file=gguf_p.name, torch_dtype=torch.float32)
+    m2 = AutoModelForCausalLM.from_pretrained(str(hf_p), torch_dtype=torch.float32)
+    t = AutoTokenizer.from_pretrained(str(hf_p))
+    
+    prompt = "The quick brown fox"
+    in_ids = t(prompt, return_tensors="pt").input_ids
+    l1, l2 = torch.log_softmax(m1(in_ids).logits[:,-1,:], -1), torch.log_softmax(m2(in_ids).logits[:,-1,:], -1)
+    kl = torch.nn.functional.kl_div(l2, l1, reduction='batchmean', log_target=True)
+    print(f"📊 KL-Divergence: {kl.item():.6f} (Lower is better, <0.1 is excellent)")
+
+# --- CLI ---
+def main():
+    p = argparse.ArgumentParser(description="Ollama <-> Hugging Face Bridge")
+    sub = p.add_subparsers(dest="cmd")
+
+    p_pr = sub.add_parser("probe"); p_pr.add_argument("--input", required=True)
+    p_cv = sub.add_parser("convert"); p_cv.add_argument("--input", required=True); p_cv.add_argument("--out", required=True)
+    p_qu = sub.add_parser("quantize"); p_qu.add_argument("--hf", required=True); p_qu.add_argument("--out", required=True); p_qu.add_argument("--method", default="q4_K_M"); p_qu.add_argument("--cpp", required=True)
+    p_ve = sub.add_parser("verify"); p_ve.add_argument("--input", required=True); p_ve.add_argument("--exported", required=True)
+
+    args = p.parse_args()
+    if args.cmd == "probe": print(json.dumps(get_gguf_kv(Path(args.input)), indent=2, default=str))
+    elif args.cmd == "convert": do_convert(Path(args.input), Path(args.out))
+    elif args.cmd == "quantize": do_quantize(Path(args.hf), Path(args.out), args.method, args.cpp)
+    elif args.cmd == "verify": do_verify(Path(args.input), Path(args.exported))
+    else: p.print_help()
+
+if __name__ == "__main__": main()
+
+
+---
+
+### Comparison of Intermediate Precisions
+
+When using the quantize command, the --dtype (or --outtype) of the intermediate GGUF matters.
+
+| Intermediate Type | Use Case | Memory Impact | Accuracy |
+| --- | --- | --- | --- |
+| **FP32** | Hardcore debugging | Extremely High | Highest |
+| **BF16** | Default for modern hardware | Medium | High (matches training) |
+| **FP16** | Older GPUs/Apple Silicon | Medium | High |
+
+### Final Warning: The "Tokenizer" Gotcha
+
+If you fine-tune your model and add **new special tokens** (like <|thought|> for a reasoning model), the standard llama.cpp conversion script might skip them if they aren't in the added_tokens.json. Always ensure your hf_export directory has all four critical files before quantizing:
+
+1. config.json
+2. model.safetensors
+3. tokenizer.json
+4. tokenizer_config.json
+
+**Would you like me to show you how to create an Ollama Modelfile automatically from the output of your new quantize command?**
+Pensó durante 8s
+
+Absolutely. Here’s a one-shot generator that builds an Ollama Modelfile from your newly quantized GGUF plus whatever tokenizer/config you exported during convert. It aims to be safe-by-default:
+
+Minimal, portable Modelfile: FROM, sane PARAMETERs, optional SYSTEM.
+
+Context length + EOS/stop pulled from GGUF/HF metadata when available.
+
+Optional chat template: you can emit a Go-template scaffold that works across families; if a Jinja chat template exists in tokenizer_config.json, we’ll save it alongside as a comment so you can refine later (no brittle auto-translation).
+
+generate_modelfile.py
+#!/usr/bin/env python
+import argparse, json, os, re, subprocess, sys
+from pathlib import Path
+
+def sh(cmd):
+    return subprocess.check_output(cmd, text=True, stderr=subprocess.STDOUT)
+
+def gguf_kv(gguf: Path) -> dict:
+    # Prefer gguf Python API; fallback to gguf_dump
+    try:
+        from gguf import GGUFReader
+        rdr = GGUFReader(str(gguf))
+        return {str(k): v for k, v in rdr.kv_data.items()}
+    except Exception:
+        out = sh([sys.executable, "-m", "gguf.scripts.gguf_dump", str(gguf)])
+        kv = {}
+        # lines like: general.architecture: llama  OR  key: general.architecture = llama
+        for line in out.splitlines():
+            line = line.strip()
+            m = re.search(r"([A-Za-z0-9._\-]+)\s*[:=]\s*(.+)$", line)
+            if not m:
+                continue
+            k, v = m.group(1).strip(), m.group(2).strip().strip('"').strip("'")
+            kv[k] = v
+        return kv
+
+def find_context_length(kv: dict) -> int | None:
+    for k in ("llama.context_length", "mistral.context_length", "qwen.context_length", "gptneox.context_length"):
+        if k in kv:
+            try:
+                return int(kv[k])
+            except Exception:
+                pass
+    # Fallback; many models default to 4096/8192
+    return None
+
+def load_tokenizer_meta(hf_export_dir: Path) -> dict:
+    # Gather eos, bos, pad, added tokens, and (if present) chat_template (Jinja)
+    meta = {"eos": None, "bos": None, "pad": None, "chat_template": None}
+    for fname in ("tokenizer_config.json", "tokenizer.json", "special_tokens_map.json"):
+        p = hf_export_dir / fname
+        if p.exists():
+            try:
+                j = json.loads(p.read_text())
+            except Exception:
+                continue
+            # tokenizer_config.json often has these fields directly
+            meta["eos"] = meta["eos"] or j.get("eos_token") or j.get("eos_token_id")
+            meta["bos"] = meta["bos"] or j.get("bos_token") or j.get("bos_token_id")
+            meta["pad"] = meta["pad"] or j.get("pad_token") or j.get("pad_token_id")
+            if "chat_template" in j and isinstance(j["chat_template"], str):
+                meta["chat_template"] = j["chat_template"]
+    return meta
+
+GENERIC_GO_TEMPLATE = """{{- /* Simple, model-agnostic chat template */ -}}
+{{- range .Messages }}
+{{- if eq .Role "system" -}}
+System: {{ .Content }}
+
+{{- else if eq .Role "user" -}}
+User: {{ .Content }}
+
+{{- else if eq .Role "assistant" -}}
+Assistant: {{ .Content }}
+
+{{- end -}}
+{{- end }}
+
+Assistant: """
+
+def build_modelfile_text(
+    gguf_path: Path,
+    model_name: str,
+    ctx_len: int | None,
+    eos_token: str | int | None,
+    include_template: bool,
+    jinja_chat_template: str | None,
+    system_prompt: str | None,
+    extra_params: dict,
+) -> str:
+    lines = []
+    # 1) FROM
+    lines.append(f'FROM {gguf_path}')
+
+    # 2) Optional comments for traceability
+    lines.append(f'# name: {model_name}')
+    if jinja_chat_template:
+        lines.append('# NOTE: A Jinja chat_template was found in tokenizer_config.json')
+        lines.append('#       Ollama uses Go templates; we include a generic one below.')
+        lines.append('#       Keep this Jinja for reference:')
+        for ln in jinja_chat_template.splitlines():
+            lines.append('# JINJA: ' + ln)
+
+    # 3) Optional SYSTEM
+    if system_prompt:
+        lines.append('')
+        lines.append('SYSTEM """')
+        lines.append(system_prompt)
+        lines.append('"""')
+
+    # 4) TEMPLATE (optional, safe generic)
+    if include_template:
+        lines.append('')
+        lines.append('TEMPLATE """')
+        lines.append(GENERIC_GO_TEMPLATE)
+        lines.append('"""')
+
+    # 5) PARAMETERs
+    lines.append('')
+    # Context length
+    if ctx_len:
+        lines.append(f'PARAMETER num_ctx {ctx_len}')
+    # EOS / stop
+    if isinstance(eos_token, str) and eos_token.strip():
+        lines.append(f'PARAMETER stop {json.dumps(eos_token)}')
+    # Reasonable defaults; let caller override via extra_params
+    defaults = {
+        "temperature": 0.2,  # low & steady
+        "top_p": 0.9,
+        "repeat_penalty": 1.1,
+        "num_keep": 24,
+    }
+    defaults.update(extra_params or {})
+    for k, v in defaults.items():
+        if isinstance(v, str):
+            lines.append(f'PARAMETER {k} {json.dumps(v)}')
+        else:
+            lines.append(f'PARAMETER {k} {v}')
+
+    lines.append('')
+    return "\n".join(lines)
+
+def main():
+    ap = argparse.ArgumentParser(description="Generate an Ollama Modelfile from GGUF + HF export metadata")
+    ap.add_argument("--gguf", required=True, help="Path to quantized GGUF (output of your quantize step)")
+    ap.add_argument("--hf", required=False, default="", help="Path to HF export dir (for eos/pad/ChatTemplate hints)")
+    ap.add_argument("--out", required=True, help="Where to write Modelfile")
+    ap.add_argument("--name", required=False, default="", help="Human-friendly model name (comment only)")
+    ap.add_argument("--system", required=False, default="", help="Optional SYSTEM prompt to embed")
+    ap.add_argument("--include-template", action="store_true", help="Include a generic Go TEMPLATE")
+    ap.add_argument("--num-ctx", type=int, default=0, help="Override context window (else auto)")
+    ap.add_argument("--param", action="append", default=[], help="Extra PARAMETER k=v (repeatable)")
+    args = ap.parse_args()
+
+    gguf = Path(args.gguf).resolve()
+    hf_dir = Path(args.hf).resolve() if args.hf else None
+    out_path = Path(args.out).resolve()
+
+    if not gguf.exists():
+        sys.exit(f"GGUF not found: {gguf}")
+
+    kv = gguf_kv(gguf)
+    ctx = args.num_ctx or find_context_length(kv)
+    eos = None
+    jinja = None
+    if hf_dir and hf_dir.exists():
+        meta = load_tokenizer_meta(hf_dir)
+        eos = meta.get("eos")
+        jinja = meta.get("chat_template")
+
+    # Parse extra params
+    extra = {}
+    for p in args.param:
+        if "=" not in p:
+            print(f"Skipping malformed --param: {p}")
+            continue
+        k, v = p.split("=", 1)
+        k = k.strip()
+        v = v.strip()
+        # Coerce numbers where sensible
+        if re.fullmatch(r"-?\d+", v):
+            v = int(v)
+        elif re.fullmatch(r"-?\d+(?:\.\d+)?", v):
+            v = float(v)
+        extra[k] = v
+
+    text = build_modelfile_text(
+        gguf_path=gguf,
+        model_name=args.name or gguf.stem,
+        ctx_len=ctx,
+        eos_token=eos,
+        include_template=args.include_template,
+        jinja_chat_template=jinja,
+        system_prompt=args.system if args.system else None,
+        extra_params=extra,
+    )
+
+    out_path.parent.mkdir(parents=True, exist_ok=True)
+    out_path.write_text(text, encoding="utf-8")
+    print(f"✅ Modelfile written to: {out_path}")
+    print("Next:")
+    print(f"  ollama create {args.name or gguf.stem} -f {out_path}")
+    print(f"  ollama run {args.name or gguf.stem}")
+
+if __name__ == "__main__":
+    main()
+
+Usage examples
+
+1) Minimal (safe defaults)
+
+python generate_modelfile.py \
+  --gguf ./Llama-8B-Instruct-Q4_K_M.gguf \
+  --out ./Modelfile \
+  --name llama3-8b-instruct-q4km
+ollama create llama3-8b-instruct-q4km -f ./Modelfile
+ollama run llama3-8b-instruct-q4km
+
+
+2) Include a generic chat TEMPLATE and a SYSTEM prompt
+
+python generate_modelfile.py \
+  --gguf ./Llama-8B-Instruct-Q4_K_M.gguf \
+  --hf ./hf_export \
+  --out ./Modelfile \
+  --name llama3-8b-q4km-vitromag \
+  --include-template \
+  --system "You are a concise, helpful technical assistant for VitroMagthys." \
+  --param temperature=0.1 --param top_p=0.8 --param num_keep=48
+
+
+3) Force context window (if GGUF lacks it or you want less)
+
+python generate_modelfile.py \
+  --gguf ./Mixtral-8x7B-Instruct.Q5_K_M.gguf \
+  --out ./Modelfile \
+  --name mixtral-8x7b-q5 \
+  --num-ctx 8192
+
+What this generator does (and doesn’t) do
+
+✅ Pulls context window and adds a PARAMETER num_ctx if known.
+
+✅ Adds stop using tokenizer EOS when discoverable.
+
+✅ Emits a generic, robust Go chat template if you pass --include-template.
+
+✅ Preserves any Jinja chat_template as comments for manual porting (no brittle auto-conversion).
+
+❌ It does not attempt to rewrite a Jinja chat template into an Ollama Go template automatically, because model-specific special tokens and header/turn separators differ across families. If you want, we can add a family-aware translator for Llama-3/Mistral/Qwen with token substitution.
+
+Final step: create and test in Ollama
+ollama create <model_name> -f Modelfile
+ollama show <model_name> --modelfile
+ollama run <model_name>  # test a few prompts
+
+
+If you’d like, I can add an extra bridge modelfile subcommand to your ollama_bridge.py so everything (probe, convert, verify, quantize, and modelfile) lives in one binary.

@@ -1,0 +1,32 @@
+id: system/benchmark
+name: Model Benchmark
+description: Run local model latency/throughput benchmarks for configured backends.
+version: "0.1.0"
+category: reasoning
+level: intermediate
+
+tags:
+  - benchmark
+  - models
+  - performance
+  - local
+
+dependencies: []
+
+requires_tools: []
+
+estimated_tokens: 600
+
+author: CLI AI Team
+license: MIT
+
+examples:
+  - input:
+      prompt: "Summarize: local models on this machine"
+      runs: 2
+    output:
+      results:
+        - model: qwen3:latest
+          available: true
+          avg_latency_ms: 1200
+          tokens_estimate: 120

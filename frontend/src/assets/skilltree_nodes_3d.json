@@ -1,0 +1,1034 @@
+{
+  "meta": {
+    "source": "runs\\skilltree_constellation_cropped.txt",
+    "width": 900,
+    "height": 254,
+    "projection": "layered_cone",
+    "base_radius": 120.0,
+    "depth": 80.0
+  },
+  "nodes": [
+    {
+      "id": "node_000",
+      "label": "Trust Research Execute high-fidelity research|with",
+      "title": "Trust Research",
+      "desc1": "Execute high-fidelity",
+      "desc2": "research|with",
+      "x": 814,
+      "y": 7,
+      "connections": [
+        "node_001"
+      ],
+      "x3": 96.472,
+      "y3": -31.98,
+      "z3": 12.243
+    },
+    {
+      "id": "node_001",
+      "label": "Grounding Auditor| Audit outputs against provided sources,",
+      "title": "Grounding Auditor|",
+      "desc1": "Audit outputs against",
+      "desc2": "provided sources,",
+      "x": 778,
+      "y": 17,
+      "connections": [
+        "node_000",
+        "node_002"
+      ],
+      "x3": 86.878,
+      "y3": -29.315,
+      "z3": 18.873
+    },
+    {
+      "id": "node_002",
+      "label": "Context Boundary Manager Lock tasks to|user- provided|sources",
+      "title": "Context Boundary Manager",
+      "desc1": "Lock tasks to|user-",
+      "desc2": "provided|sources",
+      "x": 742,
+      "y": 27,
+      "connections": [
+        "node_001",
+        "node_004"
+      ],
+      "x3": 77.284,
+      "y3": -26.65,
+      "z3": 25.5
+    },
+    {
+      "id": "node_003",
+      "label": "Tool Persistence Capture solutions as reusable scripts or",
+      "title": "Tool Persistence",
+      "desc1": "Capture solutions as",
+      "desc2": "reusable scripts or",
+      "x": 130,
+      "y": 37,
+      "connections": [
+        "node_006"
+      ],
+      "x3": -85.812,
+      "y3": -23.985,
+      "z3": 20.599
+    },
+    {
+      "id": "node_004",
+      "label": "System Definition| Draft and enforce system-level",
+      "title": "System Definition|",
+      "desc1": "Draft and enforce",
+      "desc2": "system-level",
+      "x": 706,
+      "y": 37,
+      "connections": [
+        "node_002",
+        "node_007"
+      ],
+      "x3": 67.691,
+      "y3": -23.985,
+      "z3": 32.124
+    },
+    {
+      "id": "node_005",
+      "label": "Domain Grounding Apply domain constraints and professional rules",
+      "title": "Domain Grounding",
+      "desc1": "Apply domain constraints",
+      "desc2": "and professional rules",
+      "x": 418,
+      "y": 45,
+      "connections": [
+        "node_009"
+      ],
+      "x3": -9.061,
+      "y3": -21.853,
+      "z3": 64.229
+    },
+    {
+      "id": "node_006",
+      "label": "Refactor Engine Plan and|execute multi- file refactors with",
+      "title": "Refactor Engine",
+      "desc1": "Plan and|execute multi-",
+      "desc2": "file refactors with",
+      "x": 166,
+      "y": 47,
+      "connections": [
+        "node_003",
+        "node_008"
+      ],
+      "x3": -76.219,
+      "y3": -21.32,
+      "z3": 27.237
+    },
+    {
+      "id": "node_007",
+      "label": "Citation Verifier| Verify each generated claim against|provided",
+      "title": "Citation Verifier|",
+      "desc1": "Verify each generated",
+      "desc2": "claim against|provided",
+      "x": 670,
+      "y": 47,
+      "connections": [
+        "node_004",
+        "node_010"
+      ],
+      "x3": 58.097,
+      "y3": -21.32,
+      "z3": 38.743
+    },
+    {
+      "id": "node_008",
+      "label": "||Agentic Ide Drive autonomous IDE workflows including",
+      "title": "||Agentic Ide",
+      "desc1": "Drive autonomous IDE",
+      "desc2": "workflows including",
+      "x": 202,
+      "y": 57,
+      "connections": [
+        "node_006",
+        "node_011"
+      ],
+      "x3": -66.625,
+      "y3": -18.655,
+      "z3": 33.875
+    },
+    {
+      "id": "node_009",
+      "label": "Scale Awareness Adjust strategy based on task complexity and risk",
+      "title": "Scale Awareness",
+      "desc1": "Adjust strategy based on",
+      "desc2": "task complexity and risk",
+      "x": 418,
+      "y": 57,
+      "connections": [
+        "node_005",
+        "node_013"
+      ],
+      "x3": -9.061,
+      "y3": -18.655,
+      "z3": 66.174
+    },
+    {
+      "id": "node_010",
+      "label": "Evidence Judge|| Validate claims|against sources and|score",
+      "title": "Evidence Judge||",
+      "desc1": "Validate claims|against",
+      "desc2": "sources and|score",
+      "x": 634,
+      "y": 57,
+      "connections": [
+        "node_007",
+        "node_012"
+      ],
+      "x3": 48.503,
+      "y3": -18.655,
+      "z3": 45.356
+    },
+    {
+      "id": "node_011",
+      "label": "Environment Grounding Ground|reasoning via real system interactions",
+      "title": "Environment Grounding",
+      "desc1": "Ground|reasoning via",
+      "desc2": "real system interactions",
+      "x": 238,
+      "y": 67,
+      "connections": [
+        "node_008",
+        "node_014"
+      ],
+      "x3": -57.031,
+      "y3": -15.99,
+      "z3": 40.513
+    },
+    {
+      "id": "node_012",
+      "label": "Geometric Grounding Anchor semantic|meaning to embedding|geometry",
+      "title": "Geometric Grounding",
+      "desc1": "Anchor semantic|meaning",
+      "desc2": "to embedding|geometry",
+      "x": 598,
+      "y": 67,
+      "connections": [
+        "node_010",
+        "node_015"
+      ],
+      "x3": 38.909,
+      "y3": -15.99,
+      "z3": 51.956
+    },
+    {
+      "id": "node_013",
+      "label": "Ast Safety General utility |",
+      "title": "Ast Safety",
+      "desc1": "General utility",
+      "desc2": "|",
+      "x": 418,
+      "y": 69,
+      "connections": [
+        "node_009",
+        "node_016"
+      ],
+      "x3": -9.061,
+      "y3": -15.457,
+      "z3": 68.055
+    },
+    {
+      "id": "node_014",
+      "label": "Progressive Disclosure Load only|essential context for|long tasks",
+      "title": "Progressive Disclosure",
+      "desc1": "Load only|essential",
+      "desc2": "context for|long tasks",
+      "x": 274,
+      "y": 77,
+      "connections": [
+        "node_011",
+        "node_017"
+      ],
+      "x3": -47.437,
+      "y3": -13.325,
+      "z3": 47.152
+    },
+    {
+      "id": "node_015",
+      "label": "Explainable Reasoning Produce transparent reasoning trails and",
+      "title": "Explainable Reasoning",
+      "desc1": "Produce transparent",
+      "desc2": "reasoning trails and",
+      "x": 562,
+      "y": 77,
+      "connections": [
+        "node_012",
+        "node_018"
+      ],
+      "x3": 29.315,
+      "y3": -13.325,
+      "z3": 58.533
+    },
+    {
+      "id": "node_016",
+      "label": "Constrained Decoding Restrict outputs to validated-options-to",
+      "title": "Constrained Decoding",
+      "desc1": "Restrict outputs to",
+      "desc2": "validated-options-to",
+      "x": 418,
+      "y": 81,
+      "connections": [
+        "node_013",
+        "node_019"
+      ],
+      "x3": -9.061,
+      "y3": -12.259,
+      "z3": 69.837
+    },
+    {
+      "id": "node_017",
+      "label": "Multi|Agent Coordination Coordinate tasks and-- memory across|multiple",
+      "title": "Multi|Agent Coordination",
+      "desc1": "Coordinate tasks and--",
+      "desc2": "memory across|multiple",
+      "x": 310,
+      "y": 87,
+      "connections": [
+        "node_014",
+        "node_020",
+        "node_030"
+      ],
+      "x3": -37.843,
+      "y3": -10.66,
+      "z3": 53.79
+    },
+    {
+      "id": "node_018",
+      "label": "Deep Semantic Analysis --Perform fine-grained semantic-relationship",
+      "title": "Deep Semantic Analysis",
+      "desc1": "--Perform fine-grained",
+      "desc2": "semantic-relationship",
+      "x": 526,
+      "y": 87,
+      "connections": [
+        "node_015",
+        "node_021",
+        "node_036"
+      ],
+      "x3": 19.721,
+      "y3": -10.66,
+      "z3": 65.055
+    },
+    {
+      "id": "node_019",
+      "label": "Guardrails Control Enforce governance, approvals,-and-safety",
+      "title": "Guardrails Control",
+      "desc1": "Enforce governance,",
+      "desc2": "approvals,-and-safety",
+      "x": 418,
+      "y": 93,
+      "connections": [
+        "node_016",
+        "node_020",
+        "node_021",
+        "node_022"
+      ],
+      "x3": -9.061,
+      "y3": -9.061,
+      "z3": 71.457
+    },
+    {
+      "id": "node_020",
+      "label": "Hybrid Orchestrator Coordinate|multi-tool-- workflows|with---",
+      "title": "Hybrid Orchestrator",
+      "desc1": "Coordinate|multi-tool--",
+      "desc2": "workflows|with---",
+      "x": 346,
+      "y": 97,
+      "connections": [
+        "node_017",
+        "node_019",
+        "node_031"
+      ],
+      "x3": -28.249,
+      "y3": -7.995,
+      "z3": 60.428
+    },
+    {
+      "id": "node_021",
+      "label": "Causal Procedural| --Encode cause-effect logic-into-executable",
+      "title": "Causal Procedural|",
+      "desc1": "--Encode cause-effect",
+      "desc2": "logic-into-executable",
+      "x": 490,
+      "y": 97,
+      "connections": [
+        "node_018",
+        "node_019",
+        "node_035"
+      ],
+      "x3": 10.127,
+      "y3": -7.995,
+      "z3": 71.398
+    },
+    {
+      "id": "node_022",
+      "label": "Skill Creator Guide for creating effective|skills",
+      "title": "Skill Creator",
+      "desc1": "Guide for creating",
+      "desc2": "effective|skills",
+      "x": 418,
+      "y": 105,
+      "connections": [
+        "node_019",
+        "node_033"
+      ],
+      "x3": -9.061,
+      "y3": -5.863,
+      "z3": 72.805
+    },
+    {
+      "id": "node_023",
+      "label": "Embedding Backend Choose the best embedding backend||||",
+      "title": "Embedding Backend",
+      "desc1": "Choose the best",
+      "desc2": "embedding backend||||",
+      "x": 18,
+      "y": 117,
+      "connections": [
+        "node_024"
+      ],
+      "x3": -115.66,
+      "y3": -2.665,
+      "z3": 2.873
+    },
+    {
+      "id": "node_024",
+      "label": "Embedding Repair Diagnose and repair ||||embedding|model|||||",
+      "title": "Embedding Repair",
+      "desc1": "Diagnose and repair",
+      "desc2": "||||embedding|model|||||",
+      "x": 58,
+      "y": 117,
+      "connections": [
+        "node_023",
+        "node_025"
+      ],
+      "x3": -105.0,
+      "y3": -2.665,
+      "z3": 9.977
+    },
+    {
+      "id": "node_025",
+      "label": "Synthetic Query Generate synthetic |||queries|to|expand||||",
+      "title": "Synthetic Query",
+      "desc1": "Generate synthetic",
+      "desc2": "|||queries|to|expand||||",
+      "x": 98,
+      "y": 117,
+      "connections": [
+        "node_024",
+        "node_026"
+      ],
+      "x3": -94.34,
+      "y3": -2.665,
+      "z3": 17.081
+    },
+    {
+      "id": "node_026",
+      "label": "Semantic Id Constructor Create stable semantic identifiers|and|aliases|",
+      "title": "Semantic Id Constructor",
+      "desc1": "Create stable semantic",
+      "desc2": "identifiers|and|aliases|",
+      "x": 138,
+      "y": 117,
+      "connections": [
+        "node_025",
+        "node_027"
+      ],
+      "x3": -83.68,
+      "y3": -2.665,
+      "z3": 24.185
+    },
+    {
+      "id": "node_027",
+      "label": "Knowledge Transfer Share knowledge across ||||agents|or|roles|||||",
+      "title": "Knowledge Transfer",
+      "desc1": "Share knowledge across",
+      "desc2": "||||agents|or|roles|||||",
+      "x": 178,
+      "y": 117,
+      "connections": [
+        "node_026",
+        "node_028"
+      ],
+      "x3": -73.021,
+      "y3": -2.665,
+      "z3": 31.287
+    },
+    {
+      "id": "node_028",
+      "label": "Transferable Learning Convert successful procedures|into|reusable",
+      "title": "Transferable Learning",
+      "desc1": "Convert successful",
+      "desc2": "procedures|into|reusable",
+      "x": 218,
+      "y": 117,
+      "connections": [
+        "node_027",
+        "node_029"
+      ],
+      "x3": -62.361,
+      "y3": -2.665,
+      "z3": 38.388
+    },
+    {
+      "id": "node_029",
+      "label": "Tangible Memory Ensure long-term |||procedural|memory||||",
+      "title": "Tangible Memory",
+      "desc1": "Ensure long-term",
+      "desc2": "|||procedural|memory||||",
+      "x": 258,
+      "y": 117,
+      "connections": [
+        "node_028",
+        "node_030"
+      ],
+      "x3": -51.701,
+      "y3": -2.665,
+      "z3": 45.487
+    },
+    {
+      "id": "node_030",
+      "label": "Memory Linker Create semantic links between|related|memories",
+      "title": "Memory Linker",
+      "desc1": "Create semantic links",
+      "desc2": "between|related|memories",
+      "x": 298,
+      "y": 117,
+      "connections": [
+        "node_017",
+        "node_029",
+        "node_031",
+        "node_047"
+      ],
+      "x3": -41.041,
+      "y3": -2.665,
+      "z3": 52.582
+    },
+    {
+      "id": "node_031",
+      "label": "Dynamic Knowledge Maintain a continually |updated|knowledge|base|",
+      "title": "Dynamic Knowledge",
+      "desc1": "Maintain a continually",
+      "desc2": "|updated|knowledge|base|",
+      "x": 338,
+      "y": 117,
+      "connections": [
+        "node_020",
+        "node_030",
+        "node_032",
+        "node_044"
+      ],
+      "x3": -30.381,
+      "y3": -2.665,
+      "z3": 59.668
+    },
+    {
+      "id": "node_032",
+      "label": "Skill Indexer Build a combined index of|available|skills|and|",
+      "title": "Skill Indexer",
+      "desc1": "Build a combined index",
+      "desc2": "of|available|skills|and|",
+      "x": 378,
+      "y": 117,
+      "connections": [
+        "node_031",
+        "node_033"
+      ],
+      "x3": -19.721,
+      "y3": -2.665,
+      "z3": 66.733
+    },
+    {
+      "id": "node_033",
+      "label": "||Gpia Bridge ||| Bridge Codex requests to |the|local|GPIA|system||",
+      "title": "||Gpia Bridge |||",
+      "desc1": "Bridge Codex requests to",
+      "desc2": "|the|local|GPIA|system||",
+      "x": 418,
+      "y": 117,
+      "connections": [
+        "node_022",
+        "node_032",
+        "node_034",
+        "node_043"
+      ],
+      "x3": -9.061,
+      "y3": -2.665,
+      "z3": 73.704
+    },
+    {
+      "id": "node_034",
+      "label": "Skill Installer Install Codex skills into|$CODEX_HOME/skills|",
+      "title": "Skill Installer",
+      "desc1": "Install Codex skills",
+      "desc2": "into|$CODEX_HOME/skills|",
+      "x": 458,
+      "y": 117,
+      "connections": [
+        "node_033",
+        "node_035"
+      ],
+      "x3": 1.599,
+      "y3": -2.665,
+      "z3": 77.928
+    },
+    {
+      "id": "node_035",
+      "label": "Compile Jit Modelfile Build a JIT Modelfile |that|hardcodes|current|",
+      "title": "Compile Jit Modelfile",
+      "desc1": "Build a JIT Modelfile",
+      "desc2": "|that|hardcodes|current|",
+      "x": 498,
+      "y": 117,
+      "connections": [
+        "node_021",
+        "node_034",
+        "node_036",
+        "node_045"
+      ],
+      "x3": 12.259,
+      "y3": -2.665,
+      "z3": 71.637
+    },
+    {
+      "id": "node_036",
+      "label": "Ephemeral-Synthesis Spawn transient agents ||||with|disposable|||||",
+      "title": "Ephemeral-Synthesis",
+      "desc1": "Spawn transient agents",
+      "desc2": "||||with|disposable|||||",
+      "x": 538,
+      "y": 117,
+      "connections": [
+        "node_018",
+        "node_035",
+        "node_037",
+        "node_048"
+      ],
+      "x3": 22.919,
+      "y3": -2.665,
+      "z3": 64.618
+    },
+    {
+      "id": "node_037",
+      "label": "Transient Execution Hot-swap to the ephemeral|model,|run|the",
+      "title": "Transient Execution",
+      "desc1": "Hot-swap to the",
+      "desc2": "ephemeral|model,|run|the",
+      "x": 578,
+      "y": 117,
+      "connections": [
+        "node_036",
+        "node_038"
+      ],
+      "x3": 33.579,
+      "y3": -2.665,
+      "z3": 57.544
+    },
+    {
+      "id": "node_038",
+      "label": "Garbage Collection Remove the ephemeral model,|flush|VRAM,|drop|",
+      "title": "Garbage Collection",
+      "desc1": "Remove the ephemeral",
+      "desc2": "model,|flush|VRAM,|drop|",
+      "x": 618,
+      "y": 117,
+      "connections": [
+        "node_037",
+        "node_039"
+      ],
+      "x3": 44.239,
+      "y3": -2.665,
+      "z3": 50.454
+    },
+    {
+      "id": "node_039",
+      "label": "Model Provisioning Build and provision |||Ollama|models|from|||",
+      "title": "Model Provisioning",
+      "desc1": "Build and provision",
+      "desc2": "|||Ollama|models|from|||",
+      "x": 658,
+      "y": 117,
+      "connections": [
+        "node_038",
+        "node_040"
+      ],
+      "x3": 54.899,
+      "y3": -2.665,
+      "z3": 43.358
+    },
+    {
+      "id": "node_040",
+      "label": "Template Architect Define and validate ||||Ollama|Modelfile||||",
+      "title": "Template Architect",
+      "desc1": "Define and validate",
+      "desc2": "||||Ollama|Modelfile||||",
+      "x": 698,
+      "y": 117,
+      "connections": [
+        "node_039",
+        "node_041"
+      ],
+      "x3": 65.559,
+      "y3": -2.665,
+      "z3": 36.258
+    },
+    {
+      "id": "node_041",
+      "label": "Model Selector Select the correct |Ollama|base|model|(and|",
+      "title": "Model Selector",
+      "desc1": "Select the correct",
+      "desc2": "|Ollama|base|model|(and|",
+      "x": 738,
+      "y": 117,
+      "connections": [
+        "node_040",
+        "node_042"
+      ],
+      "x3": 76.219,
+      "y3": -2.665,
+      "z3": 29.157
+    },
+    {
+      "id": "node_042",
+      "label": "Parameter Optimizer Optimize Ollama ||||PARAMETER|values",
+      "title": "Parameter Optimizer",
+      "desc1": "Optimize Ollama",
+      "desc2": "||||PARAMETER|values",
+      "x": 778,
+      "y": 117,
+      "connections": [
+        "node_041"
+      ],
+      "x3": 86.878,
+      "y3": -2.665,
+      "z3": 22.054
+    },
+    {
+      "id": "node_043",
+      "label": "Skill Refinement Evaluate and improve skills with tests and",
+      "title": "Skill Refinement",
+      "desc1": "Evaluate and improve",
+      "desc2": "skills with tests and",
+      "x": 418,
+      "y": 129,
+      "connections": [
+        "node_033",
+        "node_046"
+      ],
+      "x3": -9.061,
+      "y3": 0.533,
+      "z3": 73.949
+    },
+    {
+      "id": "node_044",
+      "label": "Design-Tokens|||| Define or enforce typography,|color,--",
+      "title": "Design-Tokens||||",
+      "desc1": "Define or enforce",
+      "desc2": "typography,|color,--",
+      "x": 346,
+      "y": 137,
+      "connections": [
+        "node_031",
+        "node_046",
+        "node_047"
+      ],
+      "x3": -28.249,
+      "y3": 2.665,
+      "z3": 61.084
+    },
+    {
+      "id": "node_045",
+      "label": "Autonomous-Devops Orchestrate|self-healing DevOps-workflows with",
+      "title": "Autonomous-Devops",
+      "desc1": "Orchestrate|self-healing",
+      "desc2": "DevOps-workflows with",
+      "x": 490,
+      "y": 137,
+      "connections": [
+        "node_035",
+        "node_046",
+        "node_048"
+      ],
+      "x3": 10.127,
+      "y3": 2.665,
+      "z3": 73.019
+    },
+    {
+      "id": "node_046",
+      "label": "Multi Speaker Orchestrate multi-voice- TTS production:-assign",
+      "title": "Multi Speaker",
+      "desc1": "Orchestrate multi-voice-",
+      "desc2": "TTS production:-assign",
+      "x": 418,
+      "y": 141,
+      "connections": [
+        "node_043",
+        "node_044",
+        "node_045",
+        "node_049"
+      ],
+      "x3": -9.061,
+      "y3": 3.731,
+      "z3": 73.467
+    },
+    {
+      "id": "node_047",
+      "label": "Micro-Motion|||| Specify motion|and micro-interaction---",
+      "title": "Micro-Motion||||",
+      "desc1": "Specify motion|and",
+      "desc2": "micro-interaction---",
+      "x": 310,
+      "y": 147,
+      "connections": [
+        "node_030",
+        "node_044",
+        "node_050"
+      ],
+      "x3": -37.843,
+      "y3": 5.33,
+      "z3": 54.522
+    },
+    {
+      "id": "node_048",
+      "label": "Canary Orchestration Plan and|run-canary or blue-green-rollouts with",
+      "title": "Canary Orchestration",
+      "desc1": "Plan and|run-canary or",
+      "desc2": "blue-green-rollouts with",
+      "x": 526,
+      "y": 147,
+      "connections": [
+        "node_036",
+        "node_045",
+        "node_051"
+      ],
+      "x3": 19.721,
+      "y3": 5.33,
+      "z3": 66.381
+    },
+    {
+      "id": "node_049",
+      "label": "Tts Canary Runner -Run-TTS canary tests, - measure-audio-----",
+      "title": "Tts Canary Runner",
+      "desc1": "-Run-TTS canary tests, -",
+      "desc2": "measure-audio-----",
+      "x": 418,
+      "y": 153,
+      "connections": [
+        "node_046",
+        "node_052"
+      ],
+      "x3": -9.061,
+      "y3": 6.929,
+      "z3": 72.396
+    },
+    {
+      "id": "node_050",
+      "label": "Generative Ui|||| Generate high-end|UI/UX and dashboard|systems",
+      "title": "Generative Ui||||",
+      "desc1": "Generate high-end|UI/UX",
+      "desc2": "and dashboard|systems",
+      "x": 274,
+      "y": 157,
+      "connections": [
+        "node_047"
+      ],
+      "x3": -47.437,
+      "y3": 7.995,
+      "z3": 47.93
+    },
+    {
+      "id": "node_051",
+      "label": "Ops|Chief Of Staff Automate|enterprise operations (compliance,",
+      "title": "Ops|Chief Of Staff",
+      "desc1": "Automate|enterprise",
+      "desc2": "operations (compliance,",
+      "x": 562,
+      "y": 157,
+      "connections": [
+        "node_048",
+        "node_053"
+      ],
+      "x3": 29.315,
+      "y3": 7.995,
+      "z3": 59.743
+    },
+    {
+      "id": "node_052",
+      "label": "Dialogue Dramatizer Convert dense source- grounded content into a",
+      "title": "Dialogue Dramatizer",
+      "desc1": "Convert dense source-",
+      "desc2": "grounded content into a",
+      "x": 418,
+      "y": 165,
+      "connections": [
+        "node_049",
+        "node_054"
+      ],
+      "x3": -9.061,
+      "y3": 10.127,
+      "z3": 70.941
+    },
+    {
+      "id": "node_053",
+      "label": "Ops|Compliance Runbook Execute compliance audit workflows with|evidence",
+      "title": "Ops|Compliance Runbook",
+      "desc1": "Execute compliance audit",
+      "desc2": "workflows with|evidence",
+      "x": 598,
+      "y": 167,
+      "connections": [
+        "node_051",
+        "node_055"
+      ],
+      "x3": 38.909,
+      "y3": 10.66,
+      "z3": 53.105
+    },
+    {
+      "id": "node_054",
+      "label": "Grounded Audio Brief Produce grounded audio briefs by chaining",
+      "title": "Grounded Audio Brief",
+      "desc1": "Produce grounded audio",
+      "desc2": "briefs by chaining",
+      "x": 418,
+      "y": 177,
+      "connections": [
+        "node_052"
+      ],
+      "x3": -9.061,
+      "y3": 13.325,
+      "z3": 69.257
+    },
+    {
+      "id": "node_055",
+      "label": "||Cost Optimizer Analyze|infrastructure spend and recommend cost",
+      "title": "||Cost Optimizer",
+      "desc1": "Analyze|infrastructure",
+      "desc2": "spend and recommend cost",
+      "x": 634,
+      "y": 177,
+      "connections": [
+        "node_053",
+        "node_056"
+      ],
+      "x3": 48.503,
+      "y3": 13.325,
+      "z3": 46.467
+    },
+    {
+      "id": "node_056",
+      "label": "Reliability Budget Define and|enforce error budgets and SLO",
+      "title": "Reliability Budget",
+      "desc1": "Define and|enforce error",
+      "desc2": "budgets and SLO",
+      "x": 670,
+      "y": 187,
+      "connections": [
+        "node_055",
+        "node_057"
+      ],
+      "x3": 58.097,
+      "y3": 15.99,
+      "z3": 39.829
+    },
+    {
+      "id": "node_057",
+      "label": "Telemetry Anomaly Detect anomalies from live telemetry streams",
+      "title": "Telemetry Anomaly",
+      "desc1": "Detect anomalies from",
+      "desc2": "live telemetry streams",
+      "x": 706,
+      "y": 197,
+      "connections": [
+        "node_056",
+        "node_058"
+      ],
+      "x3": 67.691,
+      "y3": 18.655,
+      "z3": 33.191
+    },
+    {
+      "id": "node_058",
+      "label": "Proxy Aware Fetcher Detect proxy requirements|and route",
+      "title": "Proxy Aware Fetcher",
+      "desc1": "Detect proxy",
+      "desc2": "requirements|and route",
+      "x": 742,
+      "y": 207,
+      "connections": [
+        "node_057",
+        "node_059"
+      ],
+      "x3": 77.284,
+      "y3": 21.32,
+      "z3": 26.552
+    },
+    {
+      "id": "node_059",
+      "label": "Skill Smoke Bench Run lightweight import/exec smoke tests",
+      "title": "Skill Smoke Bench",
+      "desc1": "Run lightweight",
+      "desc2": "import/exec smoke tests",
+      "x": 778,
+      "y": 217,
+      "connections": [
+        "node_058",
+        "node_060"
+      ],
+      "x3": 86.878,
+      "y3": 23.985,
+      "z3": 19.914
+    },
+    {
+      "id": "node_060",
+      "label": "Runtime Diagnostics Run local system diagnostics|and model",
+      "title": "Runtime Diagnostics",
+      "desc1": "Run local system",
+      "desc2": "diagnostics|and model",
+      "x": 814,
+      "y": 227,
+      "connections": [
+        "node_059",
+        "node_061"
+      ],
+      "x3": 96.472,
+      "y3": 26.65,
+      "z3": 13.276
+    },
+    {
+      "id": "node_061",
+      "label": "Synthetic Rehearsal Run|autonomous simulations and",
+      "title": "Synthetic Rehearsal",
+      "desc1": "Run|autonomous",
+      "desc2": "simulations and",
+      "x": 850,
+      "y": 237,
+      "connections": [
+        "node_060",
+        "node_062"
+      ],
+      "x3": 106.066,
+      "y3": 29.315,
+      "z3": 6.638
+    },
+    {
+      "id": "node_062",
+      "label": "|Abm Supply Chain Design|agent-based simulations|for supply",
+      "title": "|Abm Supply Chain",
+      "desc1": "Design|agent-based",
+      "desc2": "simulations|for supply",
+      "x": 886,
+      "y": 247,
+      "connections": [
+        "node_061"
+      ],
+      "x3": 115.66,
+      "y3": 31.98,
+      "z3": 0.0
+    }
+  ]
+}

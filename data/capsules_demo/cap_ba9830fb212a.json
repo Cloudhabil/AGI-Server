@@ -1,0 +1,61 @@
+{
+  "capsule_id": "cap_ba9830fb212a",
+  "task": "Analyze the React hooks implementation in /src/hooks/",
+  "agent_id": "gpia",
+  "state": "completed",
+  "context": {
+    "project": "web-app",
+    "assist_/src/hooks/useAuth.js": "export function useAuth() { ... }",
+    "assist_react.hooks.lifecycle": "React hooks lifecycle: mount -> update -> unmount...",
+    "final_output": "Analysis complete: Found 5 custom hooks..."
+  },
+  "assists": [
+    {
+      "assist_id": "assist_9ea9b34e",
+      "need_id": "/src/hooks/useAuth.js",
+      "provider_agent": "file_reader",
+      "content": "export function useAuth() { ... }",
+      "timestamp": "2025-12-30T21:05:10.122124",
+      "success": true
+    },
+    {
+      "assist_id": "assist_fa114c47",
+      "need_id": "react.hooks.lifecycle",
+      "provider_agent": "research_agent",
+      "content": "React hooks lifecycle: mount -> update -> unmount...",
+      "timestamp": "2025-12-30T21:05:10.122554",
+      "success": true
+    }
+  ],
+  "passes": [
+    {
+      "pass_id": "pass_396356f1",
+      "needs": [
+        {
+          "type": "file",
+          "id": "/src/hooks/useAuth.js",
+          "description": "Need to read auth hook",
+          "priority": 1,
+          "resolver_hint": null
+        },
+        {
+          "type": "knowledge",
+          "id": "react.hooks.lifecycle",
+          "description": "Need React hooks lifecycle info",
+          "priority": 1,
+          "resolver_hint": null
+        }
+      ],
+      "partial_work": "Identified hooks directory structure",
+      "resume_hint": "After reading files and learning lifecycle, analyze patterns",
+      "timestamp": "2025-12-30T21:05:10.121637",
+      "depth": 0
+    }
+  ],
+  "created_at": "2025-12-30T21:05:10.120390",
+  "updated_at": "2025-12-30T21:05:10.123602",
+  "parent_capsule_id": null,
+  "attempt_count": 1,
+  "max_attempts": 3,
+  "max_depth": 5
+}

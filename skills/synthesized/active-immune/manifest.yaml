@@ -1,0 +1,8 @@
+id: synthesized/active-immune
+name: Active Immune System
+description: Neutralize threats before they touch runtime - active defense, not passive guardrails
+version: 1.0.0
+category: synthesized
+level: advanced
+tags: [security, defense, immune, threat, active]
+requires_model: deepseek_r1

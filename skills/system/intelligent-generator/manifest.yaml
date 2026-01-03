@@ -1,0 +1,19 @@
+id: system/intelligent-generator
+name: Intelligent Model Generator
+description: Verify the NPU pipeline and write a verification memory entry.
+version: "0.1.0"
+category: reasoning
+level: intermediate
+
+tags:
+  - npu
+  - generator
+  - verification
+
+dependencies:
+  - skill_id: compute/npu
+    optional: true
+    reason: Run OpenVINO inference checks
+
+author: CLI AI Team
+license: MIT

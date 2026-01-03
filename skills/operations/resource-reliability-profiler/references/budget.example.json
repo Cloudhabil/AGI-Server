@@ -1,0 +1,7 @@
+{
+  "max_duration_sec": 120,
+  "max_disk_write_mbps": 50,
+  "min_free_ram_mb": 4096,
+  "min_free_vram_mb": 2048,
+  "sample_interval_sec": 1.0
+}

@@ -1,0 +1,29 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "skill_id": "conscience/awareness",
+  "input": {
+    "type": "object",
+    "properties": {
+      "capability": {
+        "type": "string",
+        "enum": ["protoself", "core", "extended", "full"]
+      },
+      "signal": {"type": "object"},
+      "environment": {"type": "object"},
+      "prompt": {"type": "string"},
+      "depth": {"type": "string", "enum": ["light", "moderate", "deep"]},
+      "history": {"type": "array", "items": {"type": "string"}},
+      "memory_query": {"type": "string"}
+    },
+    "additionalProperties": false
+  },
+  "output": {
+    "type": "object",
+    "properties": {
+      "level": {"type": "string"},
+      "protoself": {"type": "object"},
+      "core": {"type": "object"},
+      "extended": {"type": "object"}
+    }
+  }
+}

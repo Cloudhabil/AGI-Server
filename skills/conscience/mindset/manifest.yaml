@@ -1,0 +1,56 @@
+id: "conscience/mindset"
+version: "0.1.0"
+name: "Mindset"
+description: "Multi-model reasoning orchestrator across all layers"
+
+category: reasoning
+tags: [conscience, orchestration, multi-model, reasoning, chain]
+level: expert
+
+load_weight: heavy
+entry_point: "skill.py:MindsetSkill"
+
+requires:
+  - "conscience/self"
+  - "conscience/memory"
+
+capabilities:
+  - capability_id: "think"
+    description: "Chain models for deep reasoning on a problem"
+  - capability_id: "analyze"
+    description: "Multi-perspective analysis using different models"
+  - capability_id: "create"
+    description: "Creative generation with iterative refinement"
+  - capability_id: "decide"
+    description: "Decision-making with reasoning traces"
+  - capability_id: "learn"
+    description: "Extract and store patterns from reasoning"
+
+permissions:
+  filesystem: read
+  network: [localhost]
+  shell: none
+
+# Model routing configuration
+models:
+  analytical:
+    name: "deepseek-r1"
+    strengths: [reasoning, analysis, debugging, critique]
+  creative:
+    name: "qwen3"
+    strengths: [generation, code, synthesis, ideas]
+  fast:
+    name: "codegemma"
+    strengths: [completion, simple-tasks, quick-checks]
+
+# Thinking patterns
+patterns:
+  deep_analysis:
+    chain: [analytical, creative, analytical]
+    description: "Analyze → Generate alternatives → Critique"
+  creative_synthesis:
+    chain: [creative, analytical, creative]
+    description: "Generate → Critique → Refine"
+  rapid_iteration:
+    chain: [fast, fast, analytical]
+    description: "Quick drafts → Quick refinement → Final review"

@@ -1,0 +1,89 @@
+
+======================================================================
+  GPIA ARTIFICIAL SUPER INTELLIGENT AGENT
+  COMPREHENSIVE BENCHMARK SUITE (PARTIAL)
+======================================================================
+  Started: 2026-01-01T21:14:09.623252
+======================================================================
+
+======================================================================
+  1. MODEL ROUTING BENCHMARKS (5 LLM Partners)
+======================================================================
+  [PASS] codegemma:latest (L0 Fast - Intent parsing): 5957.0ms (153.8/s)
+  [PASS] qwen3:latest (L1-L2 Creative - Code generation): 7054.7ms (87.5/s)
+  [PASS] deepseek-r1:latest (L2-L3 Reasoning - Analysis): 7493.1ms (87.8/s)
+  [PASS] llava:latest (Visual - Image analysis): 6278.3ms (145.7/s)
+
+======================================================================
+  2. S┬▓ MULTI-SCALE ARCHITECTURE
+======================================================================
+  [PASS] S2 Decomposed Skills Count: 0.4ms
+  [PASS] S2 Metadata Loading: 9.9ms (4054.9/s)
+  [PASS] S2 MultiModal Composer Init: 176.9ms
+  [PASS] S2 5-LLM Partner Routing: 0.0ms
+
+======================================================================
+  3. MEMORY/MSHR PERFORMANCE
+======================================================================
+  [PASS] Memory + MSHR Initialization: 17235.8ms
+  [PASS] Memory Store (Single): 76.1ms
+  [PASS] Memory Bulk Store (10x): 2289.1ms (4.4/s)
+  [PASS] Memory Recall (MSHR): 31.9ms
+  [PASS] Memory Stats Query: 0.0ms
+
+======================================================================
+  4. SKILL DISCOVERY & LOADING
+======================================================================
+  [PASS] Skill Index Load: 0.7ms
+  [PASS] SkillLoader Initialization: 0.2ms
+  [PASS] Skill Scan (Lazy Load): 192.0ms (666.5/s)
+  [PASS] Skill Execution (Memory Stats): 4140.7ms
+
+======================================================================
+  5. AST SAFETY VERIFICATION
+======================================================================
+  [PASS] AST Fingerprint (Safe Code): 9.2ms
+  [PASS] AST Vulnerability Detection (SQLi): 11.3ms
+  [PASS] AST Vulnerability Detection (eval): 2.1ms
+  [PASS] AST Pre-Generation Filter: 0.5ms
+
+======================================================================
+  6. CONSCIENCE LAYER OPERATIONS
+======================================================================
+  [PASS] Mindset Skill Init: 94.5ms
+  [PASS] Self Skill Init: 7.9ms
+  [PASS] Safety Skill Init: 0.9ms
+  [PASS] Safety Action Validation: 0.1ms
+
+======================================================================
+  7. END-TO-END GPIA TESTS
+======================================================================
+  [PASS] GPIA Core Imports: 0.0ms
+  [PASS] S2 Context Stack Operations: 0.0ms
+  [PASS] S2 Scale Projection (L0->L1): 9.8ms
+  [PASS] Complex Decomposition Strategy: 8.0ms
+  [PASS] System Integration Check: 0.4ms
+
+======================================================================
+  BENCHMARK SUMMARY
+======================================================================
+
+  Total Tests:  30
+  Passed:       30 (100.0%)
+  Failed:       0 (0.0%)
+
+  By Category:
+  ------------------------------------------------------------------
+  [ PASS  ] Model Routing                  4/4 (6695.8ms avg)
+  [ PASS  ] S2 Architecture                4/4 (46.8ms avg)
+  [ PASS  ] Memory System                  5/5 (3926.6ms avg)
+  [ PASS  ] Skill System                   4/4 (1083.4ms avg)
+  [ PASS  ] Safety System                  4/4 (5.8ms avg)
+  [ PASS  ] Conscience Layer               4/4 (25.8ms avg)
+  [ PASS  ] GPIA E2E                       5/5 (3.6ms avg)
+
+======================================================================
+  VERDICT: ALL SYSTEMS OPERATIONAL
+======================================================================
+
+  Results saved to: runs\gpia_benchmark_results.json

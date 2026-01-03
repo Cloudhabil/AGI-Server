@@ -1,0 +1,20 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "skill_id": "system/intelligent-generator",
+  "input": {
+    "type": "object",
+    "properties": {
+      "action": {"type": "string", "enum": ["verify"]},
+      "model_path": {"type": "string"}
+    },
+    "required": ["action"],
+    "additionalProperties": false
+  },
+  "output": {
+    "type": "object",
+    "properties": {
+      "status": {"type": "string"},
+      "details": {"type": "object"}
+    }
+  }
+}
