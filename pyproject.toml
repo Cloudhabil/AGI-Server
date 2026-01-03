@@ -7,7 +7,7 @@ name = "gpia-agi-server"
 version = "0.1.0"
 description = "A self-evolving cognitive AGI server with active immunity and Dense-State memory."
 authors = [
-    {name = "Cloudhabil Contributors", email = "contact@cloudhabil.com"}
+    {name = "Cloudhabil Contributors", email = "obe@cloudhabil.com"}
 ]
 readme = "README.md"
 requires-python = ">=3.11"
