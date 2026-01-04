@@ -126,7 +126,7 @@ The heart of CLI AI is the **GPIA Cognitive Ecosystem** (`gpia_cognitive_ecosyst
 ### Prerequisites
 - Python 3.11+
 - [Ollama](https://ollama.ai/)
-- Recommended: RTX 4070 SUPER (12GB) + Intel NPU
+- Recommended in addition: NVIDIA GPU (12GB) + Intel NPU
 
 ### Installation
 
@@ -239,7 +239,7 @@ To use the local models provided in the `/models` directory, ensure your `OLLAMA
 
 ```bash
 # Example of setting the model directory (optional, for Windows)
-setx OLLAMA_MODELS "C:\Users\usuario\Business\CLI_A1_GHR\CLI-main\models"
+setx OLLAMA_MODELS ".\CLI-main\models"
 ```
 
 ## Embedding Backends
