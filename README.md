@@ -157,10 +157,10 @@ python start_autonomous_learning.py
 The system has a dual architecture: a **Runtime Kernel** for the live agent and a **Cognitive Ecosystem** for evolving new skills.
 
 ```
-┌─────────────────────────────────────────────────────┐
-│              COGNITIVE ECOSYSTEM (Offline Tool)       │
-│   Hunter -> Dissector -> Synthesizer -> New Skill File  │
-└─────────────────────────────────────────────────────┘
+                 ┌─────────────────────────────────────────────────────┐
+                 │           COGNITIVE ECOSYSTEM (Offline Tool)        │
+                 │ Hunter -> Dissector -> Synthesizer -> New Skill File│
+                 └─────────────────────────────────────────────────────┘
                                               │
 ┌─────────────────────────────────────────────────────────────────────────────────────┐
 │                                 RUNTIME KERNEL (Live Agent)                          │
