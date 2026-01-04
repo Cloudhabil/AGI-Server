@@ -7,7 +7,7 @@ models:
   # Fast Model - Quick responses, intent parsing
   codegemma:
     kind: ollama
-    endpoint: http://127.0.0.1:11435/api/generate
+    endpoint: http://XXX.0.0.1:11435/api/generate
     model: gpia-codegemma:latest
     size: "5.0 GB"
     speed: "133 tok/s"
@@ -39,7 +39,7 @@ models:
   # Reasoning Model - Deep analysis, grading
   deepseek_r1:
     kind: ollama
-    endpoint: http://127.0.0.1:11435/api/generate
+    endpoint: http://xxx.0.0.1:11435/api/generate
     model: gpia-deepseek-r1:latest
     size: "5.2 GB"
     speed: "74 tok/s"
@@ -56,7 +56,7 @@ models:
   # Vision Model - Image understanding
   llava:
     kind: ollama
-    endpoint: http://127.0.0.1:11435/api/generate
+    endpoint: http://xxx.0.0.1:11435/api/generate
     model: gpia-llava:latest
     size: "4.7 GB"
     role: vision
@@ -70,7 +70,7 @@ models:
   # Large Model - Complex synthesis, arbitration
   gpt_oss_20b:
     kind: ollama
-    endpoint: http://127.0.0.1:11435/api/generate
+    endpoint: http://xxx.0.0.1:11435/api/generate
     model: gpia-gpt-oss:20b
     size: "13 GB"
     role: synthesis
@@ -84,7 +84,7 @@ models:
   # GPIA Master Model - Primary execution profile
   gpia_master:
     kind: ollama
-    endpoint: http://127.0.0.1:11435/api/generate
+    endpoint: http://xxx.0.0.1:11435/api/generate
     model: gpia-master
     size: "4.7 GB"
     role: gpia
@@ -107,7 +107,7 @@ models:
   # Embedding Model (Ollama embeddings)
   minilm_ollama:
     kind: ollama
-    endpoint: http://127.0.0.1:11435/api/embeddings
+    endpoint: http://xxx.0.0.1:11435/api/embeddings
     model: gpia-minilm-l6-v2:latest
     size: "46 MB"
     role: embedding
