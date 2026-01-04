@@ -22,7 +22,7 @@ models:
   # Creative Model - Dialogue, lesson creation
   qwen3:
     kind: ollama
-    endpoint: http://127.0.0.1:11435/api/generate
+    endpoint: http://xxx.0.0.1:11435/api/generate
     model: gpia-qwen3:latest
     size: "5.2 GB"
     speed: "87 tok/s"
