@@ -37,6 +37,11 @@ from hnet.dynamic_chunker import DynamicChunker
 import math
 
 
+# --- Shell connector configuration ---
+# Hard-coded allowlist of shell commands usable via the "shell_command" connector.
+# Keep this list minimal and only include commands that are safe for your environment.
+CONNECTOR_SHELL_ALLOW = {"echo"}
+
 # --- Lifespan Manager (replaces on_event) ---
 
 
@@ -846,18 +851,21 @@ async def dev_sse_token() -> Dict[str, Any]:
 
 
 def _run_shell_command(run_id: str, params: Dict[str, Any]) -> Dict[str, Any]:
-    # Allowlist of commands; default only 'echo'. Override with CONNECTOR_SHELL_ALLOW env (comma-separated base names)
-    allow_env = os.environ.get("CONNECTOR_SHELL_ALLOW", "echo").split(",")
-    allow = {c.strip().lower() for c in allow_env if c.strip()}
+    # Use a hard-coded allowlist of commands. See CONNECTOR_SHELL_ALLOW above.
+    allow = {c.lower() for c in CONNECTOR_SHELL_ALLOW}
     cmd_param = params.get("cmd")
     if not cmd_param:
         raise HTTPException(status_code=400, detail="missing cmd")
-    if isinstance(cmd_param, str):
-        args = shlex.split(cmd_param)
-    elif isinstance(cmd_param, list):
+
+    # Require explicit list of arguments to avoid free-form shell-style parsing.
+    if isinstance(cmd_param, list):
         args = [str(x) for x in cmd_param]
     else:
-        raise HTTPException(status_code=400, detail="invalid cmd")
+        raise HTTPException(status_code=400, detail="invalid cmd; expected list of arguments")
+
+    if not args:
+        raise HTTPException(status_code=400, detail="empty cmd")
+
     base = args[0].lower()
     if base not in allow:
         raise HTTPException(status_code=403, detail=f"command not allowed: {base}")
