@@ -19,9 +19,9 @@ class Settings(BaseSettings):
     """
 
     API_PORT: int = 8000
-    CORS_ORIGINS: List[str] = ["http://localhost:5173"]
-    REDIS_URL: str = "redis://localhost:6379/0"
-    DATABASE_URL: str = "postgresql://postgres:postgres@localhost:5432/cloudhabil"
+    CORS_ORIGINS: List[str] = ["http://localhost:XXXX"]
+    REDIS_URL: str = "redis://localhost:XXXX/X"
+    DATABASE_URL: str = "postgresql://postgres:postgres@localhost:XXX/user_name"
     API_TOKEN: str = "dev-token"
 
     # Accept but ignore common environment knobs not used by the app.
