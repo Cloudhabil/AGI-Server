@@ -54,8 +54,8 @@ Optional: start Ollama in persistent mode (Windows Startup launcher):
 To build GPIA model profiles:
 
 ```powershell
-python .\models\archive_v1\ollama_bridge.py --model gpia-master --create --host http://127.0.0.1:11435
-python .\models\archive_v1\ollama_bridge.py --model gpia-codegemma --create --host http://127.0.0.1:11435
+python .\models\archive_v1\ollama_bridge.py --model gpia-master --create --host http://xxx.0.0.1:11435
+python .\models\archive_v1\ollama_bridge.py --model gpia-codegemma --create --host http://xxx.0.0.1:11435
 ```
 
 ## OpenVINO Runtime (optional)
