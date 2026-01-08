@@ -36,7 +36,7 @@ ollama pull mahonzhan/all-MiniLM-L6-v2:latest
 
 ## GPIA model profiles (repo-local)
 
-GPIA uses profiled copies stored under `models/` and served on `127.0.0.1:11435`.
+GPIA uses profiled copies stored under `models/` and served on `xxx.0.0.1:11435`.
 
 Set the repo-local model store:
 
