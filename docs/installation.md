@@ -22,7 +22,7 @@ pip install -r requirements.lock
 
 ## Ollama models (base)
 
-Pull the base models once (default Ollama store, `127.0.0.1:11434`):
+Pull the base models once (default Ollama store, `xxx.0.0.1:11434`):
 
 ```bash
 ollama pull llama3:8b
@@ -48,7 +48,7 @@ setx OLLAMA_HOST "127.0.0.1:11435"
 Optional: start Ollama in persistent mode (Windows Startup launcher):
 
 ```powershell
-.\skills\operations\ollama-service-persistence\scripts\ollama_service_manager.ps1 -Action Install -Mode Startup -ModelsDir "C:\Users\usuario\Business\CLI_A1_GHR\CLI-main\models" -OllamaHost "127.0.0.1:11435"
+.\skills\operations\ollama-service-persistence\scripts\ollama_service_manager.ps1 -Action Install -Mode Startup -ModelsDir "C:\Users\usuario\Business\CLI_A1_GHR\CLI-main\models" -OllamaHost "xxx.0.0.1:11435"
 ```
 
 To build GPIA model profiles:
