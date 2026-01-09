@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Genesis: Living Organism UI</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+    <style>
+        body { margin: 0; background: #050505; color: #00ff88; font-family: 'Courier New', monospace; overflow: hidden; }
+        #container { display: flex; width: 100vw; height: 100vh; }
+        #visual-space { flex: 1; }
+        #interaction-panel { width: 450px; background: rgba(10,10,10,0.95); border-left: 1px solid #00ff88; display: flex; flex-direction: column; }
+        #chat-thread { flex: 1; overflow-y: auto; padding: 20px; display: flex; flex-direction: column; gap: 12px; font-size: 13px; scroll-behavior: smooth; }
+        
+        .message { padding: 12px; border-radius: 4px; line-height: 1.5; opacity: 0; transform: translateY(10px); transition: all 0.5s ease-out; }
+        .visible { opacity: 1; transform: translateY(0); }
+        
+        .elias-msg { border-right: 3px solid #fff; background: rgba(255, 255, 255, 0.05); color: #fff; align-self: flex-end; width: 85%; }
+        .voice-msg { border-left: 3px solid #00ff88; background: rgba(0, 255, 136, 0.05); width: 85%; }
+        .thought-msg { border-left: 3px solid #ff00ff; background: rgba(255, 0, 255, 0.02); color: #ff00ff; font-style: italic; font-size: 11px; margin-left: 20px; width: 75%; }
+        .wisdom-msg { border-left: 3px solid #ffff00; background: rgba(255, 255, 0, 0.02); color: #ffff00; font-size: 11px; font-weight: bold; margin-left: 20px; width: 75%; }
+        
+        #drop-zone { height: 60px; border: 1px dashed #333; margin: 15px; display: flex; align-items: center; justify-content: center; color: #666; font-size: 10px; cursor: pointer; }
+        #drop-zone.active { border-color: #00ff88; color: #00ff88; background: rgba(0,255,136,0.05); }
+        #input-area { padding: 20px; border-top: 1px solid #222; }
+        input { width: 100%; background: #111; border: 1px solid #333; color: #fff; padding: 12px; outline: none; border-radius: 4px; }
+    </style>
+</head>
+<body>
+    <div id="container">
+        <div id="visual-space"></div>
+        <div id="interaction-panel">
+            <div id="chat-thread"></div>
+            <div id="drop-zone">DROP FILES TO POPULATE WORLD</div>
+            <div id="input-area"><input type="text" id="chat-input" placeholder="Speak to the Soul..." autocomplete="off"></div>
+        </div>
+    </div>
+    <script>
+        const scene = new THREE.Scene();
+        const camera = new THREE.PerspectiveCamera(75, (window.innerWidth-450)/window.innerHeight, 0.1, 1000);
+        const renderer = new THREE.WebGLRenderer({ antialias: true });
+        renderer.setSize(window.innerWidth - 450, window.innerHeight);
+        document.getElementById('visual-space').appendChild(renderer.domElement);
+        
+        const dragon = new THREE.Mesh(
+            new THREE.TorusKnotGeometry(10, 3, 250, 32), 
+            new THREE.MeshPhongMaterial({ color: 0x00ff88, wireframe: true })
+        );
+        scene.add(dragon);
+        
+        // FIX: Sequential light setup
+        const light = new THREE.PointLight(0x00ff88, 2, 100);
+        light.position.set(10, 10, 10);
+        scene.add(light);
+        
+        camera.position.z = 35;
+        
+        function animate() {
+            requestAnimationFrame(animate);
+            dragon.rotation.x += 0.002; dragon.rotation.y += 0.003;
+            renderer.render(scene, camera);
+        }
+        animate();
+
+        const thread = document.getElementById('chat-thread');
+        const input = document.getElementById('chat-input');
+        let processedTimestamps = new Set();
+
+        function append(role, type, content, delay = 0) {
+            const d = document.createElement('div');
+            d.className = 'message ' + (role === 'user' ? 'elias-msg' : type + '-msg');
+            d.innerText = (role === 'genesis' ? '[' + type.toUpperCase() + '] ' : '') + content;
+            thread.appendChild(d);
+            setTimeout(() => { d.classList.add('visible'); thread.scrollTop = thread.scrollHeight; }, delay);
+        }
+
+        async function sync(isInitial = false) {
+            try {
+                const r = await fetch('/history'); 
+                if (!r.ok) return;
+                const h = await r.json();
+                h.forEach((m, index) => {
+                    const uniqueKey = m.ts + m.type + m.content;
+                    if (!processedTimestamps.has(uniqueKey)) {
+                        processedTimestamps.add(uniqueKey);
+                        const delay = isInitial ? 0 : (index % 4) * 800;
+                        append(m.role, m.type, m.content, delay);
+                    }
+                });
+            } catch(e) { console.error("Sync Error:", e); }
+        }
+        
+        sync(true);
+
+        input.addEventListener('keypress', async (e) => {
+            if (e.key === 'Enter' && input.value) {
+                const val = input.value; input.value = '';
+                append('user', 'voice', val, 0);
+                await fetch('/chat', { 
+                    method: 'POST', 
+                    headers: { 'Content-Type': 'application/json' }, 
+                    body: JSON.stringify({ message: val }) 
+                });
+                setTimeout(() => sync(false), 500);
+            }
+        });
+
+        // FILE POPULATION (Drop Zone)
+        const dz = document.getElementById('drop-zone');
+        dz.addEventListener('dragover', (e) => { e.preventDefault(); dz.classList.add('active'); });
+        dz.addEventListener('dragleave', () => { dz.classList.remove('active'); });
+        dz.addEventListener('drop', async (e) => {
+            e.preventDefault(); dz.classList.remove('active');
+            const files = e.dataTransfer.files;
+            for(let f of files) {
+                const fd = new FormData(); fd.append('file', f);
+                await fetch('/upload', { method: 'POST', body: fd });
+            }
+            alert("Substrate populated with " + files.length + " files.");
+        });
+    </script>
+</body>
+</html>

@@ -1,0 +1,44 @@
+ARXIV SUBMISSION CHECKLIST
+==========================
+
+BEFORE SUBMITTING:
+[ ] Create free arXiv account at https://arxiv.org/user
+[ ] Have your institutional affiliation ready
+[ ] Prepare author names
+
+SUBMISSION STEPS:
+1. Go to https://arxiv.org/submit
+2. Click "New Submission"
+3. Select category: math.NT (Number Theory)
+4. Upload files:
+   - main.txt (your document)
+   - execution_log.json
+   - phase2c_results.json  
+   - vnand_audit_trail.json
+5. Fill in metadata:
+   TITLE: Project Alpha: The Grand Synthesis of Spectral Number Theory 
+          and Fundamental Physical Constants
+   
+   ABSTRACT: [Use abstract from ARXIV_SUBMISSION_FORM.txt]
+   
+   AUTHORS: Elias Oulad Brahim
+   AFFILIATION: Cloudhabil, Barcelona
+   CONTACT: obe@cloudhabil.com
+   
+   CATEGORIES: math.NT, math-ph
+   
+6. Review submission
+7. SUBMIT
+8. You'll get arXiv ID within 24 hours
+
+AFTER ACCEPTANCE:
+- arXiv assigns ID (e.g., 2601.00123)
+- Auto DOI generated
+- Indexed in all academic databases
+- Citable in publications
+- 500K+ researchers can access
+
+TIPS:
+- Keep files organized in one folder
+- Descriptive filenames help reviewers
+- Your submission timestamp = 2026 priority proof

@@ -1,0 +1,229 @@
+================================================================================
+                    CloudHabil CLI - Installation Information
+================================================================================
+
+Version: 0.1.0
+Release Date: December 2024
+License: MIT License
+
+================================================================================
+                              WHAT IS CLI AI?
+================================================================================
+
+CLI AI is an intelligent, multi-agent command-line interface for local
+development. It orchestrates specialized AI agents over a message bus and
+stores context with H-Net hierarchical memory and dynamic chunking.
+
+Key Features:
+  • Multi-agent architecture with specialized roles (CEO, CTO, CFO, etc.)
+  • Message bus-based communication (Redis Streams)
+  • H-Net hierarchical memory management
+  • Dynamic chunking for long-term context
+  • Web-based frontend interface
+  • File association support for drag-and-drop operations
+
+================================================================================
+                          SYSTEM REQUIREMENTS
+================================================================================
+
+Minimum Requirements:
+  • Operating System: Windows 10 or later (64-bit)
+  • RAM: 4 GB minimum (8 GB recommended)
+  • Disk Space: 500 MB for installation
+  • Processor: x64 compatible processor
+
+Optional Components:
+  • Redis Server (for message bus functionality)
+  • PostgreSQL (for database features)
+  • Node.js 20+ (for frontend development)
+  • Ollama or compatible LLM API (for AI model endpoints)
+
+================================================================================
+                           WHAT WILL BE INSTALLED
+================================================================================
+
+The installer will create the following:
+
+  1. CloudHabil.exe
+     Main application executable with built-in file association support
+
+  2. Configuration Files
+     - configs/agents.yaml (agent configuration)
+     - configs/models.yaml (model endpoints)
+     - .env.example (environment variable template)
+
+  3. Data Directories
+     - data/ (SQLite database and H-Net memory storage)
+     - tasks/ (task management workspace)
+     - prompts/ (agent system prompts)
+
+  4. Documentation
+     - README.md (general documentation)
+     - CLAUDE.md (development guide)
+     - LICENSE (MIT License)
+
+  5. Desktop Shortcut (optional)
+     Quick access to CloudHabil CLI
+
+================================================================================
+                         INSTALLATION INSTRUCTIONS
+================================================================================
+
+1. Run the installer and follow the on-screen instructions
+
+2. Choose installation directory (default: C:\Program Files\CloudHabil)
+
+3. Select additional tasks:
+   - Create desktop icon
+   - Add to PATH environment variable
+   - Associate file types (optional)
+
+4. Click "Install" to begin the installation
+
+5. After installation, configure your environment:
+   - Copy .env.example to .env and edit settings
+   - Configure model endpoints in configs/models.yaml
+   - Install optional dependencies if needed
+
+================================================================================
+                            FIRST-TIME SETUP
+================================================================================
+
+After installation, you need to:
+
+1. Configure Model Endpoints
+   Edit configs/models.yaml to point to your LLM endpoints:
+   - Ollama (default): http://127.0.0.1:11434/api/chat
+   - OpenAI-compatible APIs
+   - Custom endpoints
+
+2. Set Environment Variables
+   Copy .env.example to .env and configure:
+   - BUS_TOKEN: Authentication token for message bus
+   - REDIS_URL: Redis connection string (if using Redis)
+   - Model API keys (if required)
+
+3. Install Optional Services
+   - Redis Server (for production use)
+   - PostgreSQL (for persistent storage)
+
+4. Test the Installation
+   Open Command Prompt and run:
+   CloudHabil.exe doctor
+
+================================================================================
+                         UPGRADING FROM PREVIOUS VERSION
+================================================================================
+
+If upgrading from a previous version:
+
+1. Backup your data folder before installation
+2. Export any important task data
+3. Note your custom configuration changes
+4. After installation, restore your .env file
+5. Review configs/ for new settings
+
+================================================================================
+                           FILE ASSOCIATIONS
+================================================================================
+
+CloudHabil CLI supports file associations for drag-and-drop operations:
+
+• Drag any text file onto CloudHabil.exe to process it
+• Right-click files and select "Open with CloudHabil"
+• Log files are created at: file_association_log.txt
+
+To set up file associations:
+  1. Right-click a file
+  2. Select "Open with" → "Choose another app"
+  3. Browse to CloudHabil.exe
+  4. Check "Always use this app"
+
+================================================================================
+                            UNINSTALLATION
+================================================================================
+
+To uninstall CloudHabil CLI:
+
+1. Use Windows "Add or Remove Programs"
+2. Select "CloudHabil CLI" and click "Uninstall"
+3. Follow the uninstaller prompts
+
+Note: Your data folder and configuration files will be preserved
+      unless you explicitly choose to delete them.
+
+To completely remove all data:
+  - Delete the installation folder
+  - Delete the data folder
+  - Remove environment variables
+
+================================================================================
+                         TROUBLESHOOTING
+================================================================================
+
+Common Issues:
+
+1. "Module not found" errors
+   → Ensure all dependencies are included in the build
+   → Check that the installation is complete
+
+2. "Cannot connect to bus" errors
+   → Verify BUS_TOKEN is set correctly
+   → Ensure Redis is running (if configured)
+
+3. "Model endpoint unreachable"
+   → Check configs/models.yaml settings
+   → Verify Ollama or LLM service is running
+   → Test endpoints with: CloudHabil.exe doctor
+
+4. File association not working
+   → Re-register the association in Windows
+   → Check file_association_log.txt for errors
+
+For more help:
+  - Documentation: docs/
+  - README: README.md
+  - Development Guide: CLAUDE.md
+  - GitHub Issues: https://github.com/Cloudhabil/CLI/issues
+
+================================================================================
+                          LICENSE INFORMATION
+================================================================================
+
+CloudHabil CLI is licensed under the MIT License.
+
+Copyright (c) 2025 CLI AI contributors
+
+Permission is hereby granted, free of charge, to any person obtaining a copy
+of this software and associated documentation files (the "Software"), to deal
+in the Software without restriction, including without limitation the rights
+to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+copies of the Software, and to permit persons to whom the Software is
+furnished to do so, subject to the following conditions:
+
+The above copyright notice and this permission notice shall be included in
+all copies or substantial portions of the Software.
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+SOFTWARE.
+
+================================================================================
+                          CONTACT & SUPPORT
+================================================================================
+
+For questions, bug reports, or feature requests:
+
+  • Project Homepage: https://github.com/Cloudhabil/CLI
+  • Issue Tracker: https://github.com/Cloudhabil/CLI/issues
+  • Documentation: See docs/ folder in installation directory
+
+Thank you for choosing CloudHabil CLI!
+
+================================================================================
+                         PRESS NEXT TO CONTINUE
+================================================================================

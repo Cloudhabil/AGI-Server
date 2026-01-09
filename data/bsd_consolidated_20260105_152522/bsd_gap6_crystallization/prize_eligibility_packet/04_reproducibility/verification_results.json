@@ -1,0 +1,215 @@
+[
+  {
+    "curve": "11a1",
+    "vector": "euler_systems",
+    "success": false,
+    "computed": 0.013876522920506415,
+    "expected": 0.050768372171182,
+    "error": 0.7266699260374702,
+    "details": {
+      "rank": 0,
+      "prime": 5,
+      "euler_classes_constructed": 0,
+      "control_theorem_satisfied": false
+    }
+  },
+  {
+    "curve": "11a1",
+    "vector": "derived_selmer",
+    "success": true,
+    "computed": 0,
+    "expected": 0,
+    "error": 0,
+    "details": {
+      "h0": 0,
+      "h1": 0,
+      "h2": 0,
+      "virtual_dimension": 0,
+      "algebraic_rank": 0
+    }
+  },
+  {
+    "curve": "11a1",
+    "vector": "infinity_folding",
+    "success": true,
+    "computed": 1.0,
+    "expected": 1.0,
+    "error": 0.0,
+    "details": {
+      "rank": 0,
+      "note": "Trivial regulator for rank 0"
+    }
+  },
+  {
+    "curve": "37a1",
+    "vector": "euler_systems",
+    "success": true,
+    "computed": 1.0966690806805646,
+    "expected": 0.14572155508453047,
+    "error": 6.52578491249566,
+    "details": {
+      "rank": 1,
+      "prime": 5,
+      "euler_classes_constructed": 1,
+      "control_theorem_satisfied": true
+    }
+  },
+  {
+    "curve": "37a1",
+    "vector": "derived_selmer",
+    "success": false,
+    "computed": -1,
+    "expected": 1,
+    "error": 2,
+    "details": {
+      "h0": 0,
+      "h1": 1,
+      "h2": 0,
+      "virtual_dimension": -1,
+      "algebraic_rank": 1
+    }
+  },
+  {
+    "curve": "37a1",
+    "vector": "infinity_folding",
+    "success": true,
+    "computed": 0.0511114082399688,
+    "expected": 0.0511114082399688,
+    "error": 0.0,
+    "details": {
+      "rank": 1,
+      "prime": 5,
+      "precision": 50,
+      "convergence_achieved": true
+    }
+  },
+  {
+    "curve": "389a1",
+    "vector": "euler_systems",
+    "success": false,
+    "computed": 0.29496718367829944,
+    "expected": 0.35988056609111024,
+    "error": 0.1803747924426039,
+    "details": {
+      "rank": 2,
+      "prime": 5,
+      "euler_classes_constructed": 2,
+      "control_theorem_satisfied": false
+    }
+  },
+  {
+    "curve": "389a1",
+    "vector": "derived_selmer",
+    "success": false,
+    "computed": -2,
+    "expected": 2,
+    "error": 4,
+    "details": {
+      "h0": 0,
+      "h1": 2,
+      "h2": 0,
+      "virtual_dimension": -2,
+      "algebraic_rank": 2
+    }
+  },
+  {
+    "curve": "389a1",
+    "vector": "infinity_folding",
+    "success": false,
+    "computed": 0.3705742503552441,
+    "expected": 0.152460177943144,
+    "error": 1.4306297903800163,
+    "details": {
+      "rank": 2,
+      "prime": 5,
+      "precision": 50,
+      "convergence_achieved": false
+    }
+  },
+  {
+    "curve": "5077a1",
+    "vector": "euler_systems",
+    "success": false,
+    "computed": 7.633317858572623,
+    "expected": 539.3834791553713,
+    "error": 0.9858480688534886,
+    "details": {
+      "rank": 3,
+      "prime": 5,
+      "euler_classes_constructed": 3,
+      "control_theorem_satisfied": false
+    }
+  },
+  {
+    "curve": "5077a1",
+    "vector": "derived_selmer",
+    "success": false,
+    "computed": -3,
+    "expected": 3,
+    "error": 6,
+    "details": {
+      "h0": 0,
+      "h1": 3,
+      "h2": 0,
+      "virtual_dimension": -3,
+      "algebraic_rank": 3
+    }
+  },
+  {
+    "curve": "5077a1",
+    "vector": "infinity_folding",
+    "success": false,
+    "computed": 1.0139215607832648,
+    "expected": 0.417143558758384,
+    "error": 1.4306297903800158,
+    "details": {
+      "rank": 3,
+      "prime": 5,
+      "precision": 50,
+      "convergence_achieved": false
+    }
+  },
+  {
+    "curve": "234446a1",
+    "vector": "euler_systems",
+    "success": false,
+    "computed": 4946.369033679846,
+    "expected": 10080948296.80658,
+    "error": 0.9999995093349466,
+    "details": {
+      "rank": 4,
+      "prime": 5,
+      "euler_classes_constructed": 4,
+      "control_theorem_satisfied": false
+    }
+  },
+  {
+    "curve": "234446a1",
+    "vector": "derived_selmer",
+    "success": false,
+    "computed": -4,
+    "expected": 4,
+    "error": 8,
+    "details": {
+      "h0": 0,
+      "h1": 4,
+      "h2": 0,
+      "virtual_dimension": -4,
+      "algebraic_rank": 4
+    }
+  },
+  {
+    "curve": "234446a1",
+    "vector": "infinity_folding",
+    "success": false,
+    "computed": 9.042291297557592,
+    "expected": 3.72014336915696,
+    "error": 1.4306297903800171,
+    "details": {
+      "rank": 4,
+      "prime": 5,
+      "precision": 50,
+      "convergence_achieved": false
+    }
+  }
+]

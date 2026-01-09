@@ -1,0 +1,38 @@
+{
+  "capsule_id": "cap_12793431fe30",
+  "task": "Gap 6 Research: Higher-Rank Euler Systems - Cycle 4",
+  "agent_id": "gap6_euler_systems_4",
+  "state": "passed",
+  "context": {
+    "vector": "euler_systems",
+    "cycle": 4,
+    "phase": "refinement",
+    "target": "Control theorem analogous to Kolyvagin for rank r",
+    "current_progress": 0.26
+  },
+  "assists": [],
+  "passes": [
+    {
+      "pass_id": "pass_0e19fbc3",
+      "needs": [
+        {
+          "type": "knowledge",
+          "id": "euler_systems_theorem_44",
+          "description": "Need additional theorem for euler_systems derivation",
+          "priority": 1,
+          "resolver_hint": null
+        }
+      ],
+      "partial_work": "Computed initial euler_systems structure",
+      "resume_hint": "Continue after theorem resolution",
+      "timestamp": "2026-01-05T02:43:50.400381",
+      "depth": 0
+    }
+  ],
+  "created_at": "2026-01-05T02:43:50.399484",
+  "updated_at": "2026-01-05T02:43:50.400385",
+  "parent_capsule_id": null,
+  "attempt_count": 1,
+  "max_attempts": 3,
+  "max_depth": 5
+}

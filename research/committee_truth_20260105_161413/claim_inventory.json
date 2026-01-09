@@ -1,0 +1,1592 @@
+{
+  "summary": {
+    "bundle": "research\\committee_truth_20260105_161413",
+    "generated_at": "2026-01-05T16:24:31.116328",
+    "total_files": 1051,
+    "candidate_claim_files": 315,
+    "by_domain": {
+      "unknown": 146,
+      "riemann": 88,
+      "bsd": 74,
+      "hodge": 6,
+      "phi_unification": 1
+    }
+  },
+  "candidates": [
+    {
+      "file": "manifest_summary.json",
+      "domain": "unknown",
+      "size": 36393
+    },
+    {
+      "file": "arxiv_submission\\LICENSE_TUL.md",
+      "domain": "unknown",
+      "size": 689
+    },
+    {
+      "file": "arxiv_submission\\README.md",
+      "domain": "unknown",
+      "size": 942
+    },
+    {
+      "file": "arxiv_submission_package\\LICENSE_TUL.md",
+      "domain": "unknown",
+      "size": 689
+    },
+    {
+      "file": "arxiv_submission_package\\MANIFEST.txt",
+      "domain": "unknown",
+      "size": 1295
+    },
+    {
+      "file": "arxiv_submission_package\\README.md",
+      "domain": "unknown",
+      "size": 942
+    },
+    {
+      "file": "docs\\KEY_FINDINGS_SUMMARY.md",
+      "domain": "unknown",
+      "size": 11685
+    },
+    {
+      "file": "docs\\PHASE2_STATUS_REPORT.md",
+      "domain": "unknown",
+      "size": 9451
+    },
+    {
+      "file": "docs\\POST_SPRINT_SYNTHESIS.md",
+      "domain": "unknown",
+      "size": 13489
+    },
+    {
+      "file": "docs\\PRE_PHASE_2_VERIFICATION_RESULTS.md",
+      "domain": "unknown",
+      "size": 11145
+    },
+    {
+      "file": "docs\\VERIFICATION_SUMMARY.txt",
+      "domain": "unknown",
+      "size": 7785
+    },
+    {
+      "file": "gpia_riemann_150beat_sprint\\master_report_20260103_170817.json",
+      "domain": "riemann",
+      "size": 7545
+    },
+    {
+      "file": "publication_archive\\BSD_CONJECTURE_SPECIFICATION.md",
+      "domain": "bsd",
+      "size": 13530
+    },
+    {
+      "file": "publication_archive\\bsd_phase3_targeted_refinement.py",
+      "domain": "bsd",
+      "size": 12836
+    },
+    {
+      "file": "publication_archive\\BSD_PROOF_MANUSCRIPT.tex",
+      "domain": "bsd",
+      "size": 14143
+    },
+    {
+      "file": "publication_archive\\bsd_research_orchestrator.py",
+      "domain": "bsd",
+      "size": 15445
+    },
+    {
+      "file": "publication_archive\\BSD_VALIDATION_REPORT.md",
+      "domain": "bsd",
+      "size": 18125
+    },
+    {
+      "file": "publication_archive\\GENESIS_VALIDATION_REQUEST.md",
+      "domain": "unknown",
+      "size": 10808
+    },
+    {
+      "file": "publication_archive\\PUBLICATION_PACKAGE_README.md",
+      "domain": "unknown",
+      "size": 10669
+    },
+    {
+      "file": "riemann_proof_package\\FINAL_DELIVERY_STATUS.txt",
+      "domain": "riemann",
+      "size": 12981
+    },
+    {
+      "file": "riemann_proof_package\\README.txt",
+      "domain": "riemann",
+      "size": 12707
+    },
+    {
+      "file": "riemann_proof_package\\RESEARCH_COMPLETION_SUMMARY.md",
+      "domain": "riemann",
+      "size": 14670
+    },
+    {
+      "file": "riemann_proof_package\\RIEMANN_PROJECT_INDEX.md",
+      "domain": "riemann",
+      "size": 11249
+    },
+    {
+      "file": "riemann_proof_package\\RIEMANN_PROOF_FINAL_MANUSCRIPT.tex",
+      "domain": "riemann",
+      "size": 12295
+    },
+    {
+      "file": "riemann_proof_package\\VERIFICATION_CHECKLIST.txt",
+      "domain": "riemann",
+      "size": 10279
+    },
+    {
+      "file": "riemann_proof_package\\gpia_energy_minimization_sprint\\master_report_20260103_171104.json",
+      "domain": "riemann",
+      "size": 10474
+    },
+    {
+      "file": "riemann_proof_package\\gpia_riemann_150beat_sprint\\master_report_20260103_170817.json",
+      "domain": "riemann",
+      "size": 7545
+    },
+    {
+      "file": "research\\BSD_Conjecture\\BSD_CONJECTURE_SPECIFICATION.md",
+      "domain": "bsd",
+      "size": 13530
+    },
+    {
+      "file": "research\\BSD_Conjecture\\BSD_PROOF_MANUSCRIPT.tex",
+      "domain": "bsd",
+      "size": 14309
+    },
+    {
+      "file": "research\\BSD_Conjecture\\BSD_PROOF_MANUSCRIPT.tex.backup",
+      "domain": "bsd",
+      "size": 14143
+    },
+    {
+      "file": "research\\BSD_Conjecture\\BSD_VALIDATION_REPORT.md",
+      "domain": "bsd",
+      "size": 18125
+    },
+    {
+      "file": "research\\Documentation\\PUBLICATION_PACKAGE_README.md",
+      "domain": "unknown",
+      "size": 10669
+    },
+    {
+      "file": "research\\Documentation\\PUBLICATION_STRATEGY.md",
+      "domain": "unknown",
+      "size": 3669
+    },
+    {
+      "file": "research\\Documentation\\REGISTRY_KEYS_SUMMARY.txt",
+      "domain": "unknown",
+      "size": 11624
+    },
+    {
+      "file": "research\\General_Research\\RESEARCH_COMPLETION_SUMMARY.md",
+      "domain": "unknown",
+      "size": 14670
+    },
+    {
+      "file": "research\\Hodge_Conjecture\\HODGE_CONJECTURE_ATTACK_PLAN.md",
+      "domain": "hodge",
+      "size": 10809
+    },
+    {
+      "file": "research\\Hodge_Conjecture\\HODGE_PROOF_SUMMARY.md",
+      "domain": "hodge",
+      "size": 7632
+    },
+    {
+      "file": "research\\Methodology_and_Engines\\rh_cross_validation_hub.py",
+      "domain": "riemann",
+      "size": 12559
+    },
+    {
+      "file": "research\\Project_Management\\COMPLETION_SUMMARY.txt",
+      "domain": "unknown",
+      "size": 10705
+    },
+    {
+      "file": "research\\Project_Management\\FINAL_PROJECT_SUMMARY.md",
+      "domain": "unknown",
+      "size": 8634
+    },
+    {
+      "file": "research\\Project_Management\\GENESIS_VALIDATION_REQUEST.md",
+      "domain": "unknown",
+      "size": 10808
+    },
+    {
+      "file": "research\\Project_Management\\PHASE_2_INFRASTRUCTURE_REPORT.md",
+      "domain": "unknown",
+      "size": 9736
+    },
+    {
+      "file": "research\\Project_Management\\PUBLICATION_COMPLETE_SUMMARY.md",
+      "domain": "unknown",
+      "size": 10998
+    },
+    {
+      "file": "research\\Project_Management\\STANDARD_REFINEMENT_SUMMARY.txt",
+      "domain": "unknown",
+      "size": 9633
+    },
+    {
+      "file": "research\\Riemann_Hypothesis\\RIEMANN_PROOF_FINAL_MANUSCRIPT.tex",
+      "domain": "riemann",
+      "size": 12295
+    },
+    {
+      "file": "research\\Riemann_Hypothesis\\RIEMANN_PROOF_FINAL_MANUSCRIPT.tex.backup",
+      "domain": "riemann",
+      "size": 12295
+    },
+    {
+      "file": "research\\research_of_truth_20260105_160746\\gpia_riemann_150beat_sprint\\master_report_20260103_170817.json",
+      "domain": "riemann",
+      "size": 7545
+    },
+    {
+      "file": "research\\research_of_truth_20260105_160746\\Hodge_Conjecture\\HODGE_CONJECTURE_ATTACK_PLAN.md",
+      "domain": "hodge",
+      "size": 10809
+    },
+    {
+      "file": "research\\research_of_truth_20260105_160746\\Hodge_Conjecture\\HODGE_PROOF_SUMMARY.md",
+      "domain": "hodge",
+      "size": 7632
+    },
+    {
+      "file": "research\\research_of_truth_20260105_160746\\Riemann_Hypothesis\\RIEMANN_PROOF_FINAL_MANUSCRIPT.tex",
+      "domain": "riemann",
+      "size": 12295
+    },
+    {
+      "file": "research\\research_of_truth_20260105_160746\\Riemann_Hypothesis\\RIEMANN_PROOF_FINAL_MANUSCRIPT.tex.backup",
+      "domain": "riemann",
+      "size": 12295
+    },
+    {
+      "file": "research\\research_of_truth_20260105_160746\\riemann_proof_package\\FINAL_DELIVERY_STATUS.txt",
+      "domain": "riemann",
+      "size": 12981
+    },
+    {
+      "file": "research\\research_of_truth_20260105_160746\\riemann_proof_package\\README.txt",
+      "domain": "riemann",
+      "size": 12707
+    },
+    {
+      "file": "research\\research_of_truth_20260105_160746\\riemann_proof_package\\RESEARCH_COMPLETION_SUMMARY.md",
+      "domain": "riemann",
+      "size": 14670
+    },
+    {
+      "file": "research\\research_of_truth_20260105_160746\\riemann_proof_package\\RIEMANN_PROJECT_INDEX.md",
+      "domain": "riemann",
+      "size": 11249
+    },
+    {
+      "file": "research\\research_of_truth_20260105_160746\\riemann_proof_package\\RIEMANN_PROOF_FINAL_MANUSCRIPT.tex",
+      "domain": "riemann",
+      "size": 12295
+    },
+    {
+      "file": "research\\research_of_truth_20260105_160746\\riemann_proof_package\\VERIFICATION_CHECKLIST.txt",
+      "domain": "riemann",
+      "size": 10279
+    },
+    {
+      "file": "research\\research_of_truth_20260105_160746\\riemann_proof_package\\gpia_energy_minimization_sprint\\master_report_20260103_171104.json",
+      "domain": "riemann",
+      "size": 10474
+    },
+    {
+      "file": "research\\research_of_truth_20260105_160746\\riemann_proof_package\\gpia_riemann_150beat_sprint\\master_report_20260103_170817.json",
+      "domain": "riemann",
+      "size": 7545
+    },
+    {
+      "file": "research\\research_of_truth_20260105_160746\\meta_analysis_research_program\\modules\\bsd_cycle_30_historical_synthesis.md",
+      "domain": "bsd",
+      "size": 8991
+    },
+    {
+      "file": "research\\research_of_truth_20260105_160746\\meta_analysis_research_program\\modules\\bsd_cycle_35_barrier_synthesis.md",
+      "domain": "bsd",
+      "size": 8432
+    },
+    {
+      "file": "research\\research_of_truth_20260105_160746\\meta_analysis_research_program\\modules\\bsd_cycle_40_knowledge_synthesis.md",
+      "domain": "bsd",
+      "size": 10030
+    },
+    {
+      "file": "research\\research_of_truth_20260105_160746\\meta_analysis_research_program\\modules\\bsd_cycle_50_complete_synthesis.md",
+      "domain": "bsd",
+      "size": 2775
+    },
+    {
+      "file": "research\\research_of_truth_20260105_160746\\meta_analysis_research_program\\modules\\bsd_cycle_50_final_synthesis.md",
+      "domain": "bsd",
+      "size": 12603
+    },
+    {
+      "file": "research\\research_of_truth_20260105_160746\\meta_analysis_research_program\\modules\\riemann_cycle_11_unconditional_theorems.md",
+      "domain": "riemann",
+      "size": 15019
+    },
+    {
+      "file": "research\\research_of_truth_20260105_160746\\meta_analysis_research_program\\modules\\riemann_cycle_12_conditional_theorems.md",
+      "domain": "riemann",
+      "size": 14197
+    },
+    {
+      "file": "research\\research_of_truth_20260105_160746\\meta_analysis_research_program\\modules\\riemann_cycle_15_knowledge_synthesis.md",
+      "domain": "riemann",
+      "size": 15029
+    },
+    {
+      "file": "research\\research_of_truth_20260105_160746\\meta_analysis_research_program\\modules\\riemann_cycle_16_location_gap.md",
+      "domain": "riemann",
+      "size": 15346
+    },
+    {
+      "file": "research\\research_of_truth_20260105_160746\\meta_analysis_research_program\\modules\\riemann_cycle_17_mechanism_gap.md",
+      "domain": "riemann",
+      "size": 13771
+    },
+    {
+      "file": "research\\research_of_truth_20260105_160746\\meta_analysis_research_program\\modules\\riemann_cycle_18_infinity_gap.md",
+      "domain": "riemann",
+      "size": 14093
+    },
+    {
+      "file": "research\\research_of_truth_20260105_160746\\meta_analysis_research_program\\modules\\riemann_cycle_19_proof_strategy_gap.md",
+      "domain": "riemann",
+      "size": 14488
+    },
+    {
+      "file": "research\\research_of_truth_20260105_160746\\meta_analysis_research_program\\modules\\riemann_cycle_20_gap_synthesis.md",
+      "domain": "riemann",
+      "size": 15409
+    },
+    {
+      "file": "research\\research_of_truth_20260105_160746\\meta_analysis_research_program\\modules\\riemann_cycle_25_complete_synthesis.md",
+      "domain": "riemann",
+      "size": 23027
+    },
+    {
+      "file": "research\\research_of_truth_20260105_160746\\meta_analysis_research_program\\modules\\riemann_cycle_5_historical_synthesis.md",
+      "domain": "riemann",
+      "size": 15396
+    },
+    {
+      "file": "research\\research_of_truth_20260105_160746\\meta_analysis_research_program\\modules\\riemann_cycle_7_computational_gap.md",
+      "domain": "riemann",
+      "size": 15856
+    },
+    {
+      "file": "research\\research_of_truth_20260105_160746\\meta_analysis_research_program\\modules\\riemann_cycle_9_obstacle_synthesis.md",
+      "domain": "riemann",
+      "size": 13670
+    },
+    {
+      "file": "publication_archive\\bsd_25_5_research\\phase_3_report_20260103_182158.json",
+      "domain": "bsd",
+      "size": 1736
+    },
+    {
+      "file": "data\\bsd_25_5_research\\block_3_closure.md",
+      "domain": "bsd",
+      "size": 608
+    },
+    {
+      "file": "data\\bsd_25_5_research\\phase_3_report_20260103_182158.json",
+      "domain": "bsd",
+      "size": 1736
+    },
+    {
+      "file": "data\\bsd_consolidated_20260105_152522\\manifest_summary.json",
+      "domain": "bsd",
+      "size": 3230
+    },
+    {
+      "file": "data\\documentation_refinement\\REFINEMENT_REPORT.md",
+      "domain": "unknown",
+      "size": 2402
+    },
+    {
+      "file": "data\\smart_refinement_25_5\\SMART_REFINEMENT_REPORT.json",
+      "domain": "unknown",
+      "size": 2520
+    },
+    {
+      "file": "data\\standard_refinement\\STANDARD_REFINEMENT_REPORT.json",
+      "domain": "unknown",
+      "size": 2610
+    },
+    {
+      "file": "data\\meta_analysis_research_program\\modules\\bsd_cycle_30_historical_synthesis.md",
+      "domain": "bsd",
+      "size": 8991
+    },
+    {
+      "file": "data\\meta_analysis_research_program\\modules\\bsd_cycle_35_barrier_synthesis.md",
+      "domain": "bsd",
+      "size": 8432
+    },
+    {
+      "file": "data\\meta_analysis_research_program\\modules\\bsd_cycle_40_knowledge_synthesis.md",
+      "domain": "bsd",
+      "size": 10030
+    },
+    {
+      "file": "data\\meta_analysis_research_program\\modules\\bsd_cycle_50_complete_synthesis.md",
+      "domain": "bsd",
+      "size": 2775
+    },
+    {
+      "file": "data\\meta_analysis_research_program\\modules\\bsd_cycle_50_final_synthesis.md",
+      "domain": "bsd",
+      "size": 12603
+    },
+    {
+      "file": "data\\meta_analysis_research_program\\modules\\riemann_cycle_11_unconditional_theorems.md",
+      "domain": "riemann",
+      "size": 15019
+    },
+    {
+      "file": "data\\meta_analysis_research_program\\modules\\riemann_cycle_12_conditional_theorems.md",
+      "domain": "riemann",
+      "size": 14197
+    },
+    {
+      "file": "data\\meta_analysis_research_program\\modules\\riemann_cycle_15_knowledge_synthesis.md",
+      "domain": "riemann",
+      "size": 15029
+    },
+    {
+      "file": "data\\meta_analysis_research_program\\modules\\riemann_cycle_16_location_gap.md",
+      "domain": "riemann",
+      "size": 15346
+    },
+    {
+      "file": "data\\meta_analysis_research_program\\modules\\riemann_cycle_17_mechanism_gap.md",
+      "domain": "riemann",
+      "size": 13771
+    },
+    {
+      "file": "data\\meta_analysis_research_program\\modules\\riemann_cycle_18_infinity_gap.md",
+      "domain": "riemann",
+      "size": 14093
+    },
+    {
+      "file": "data\\meta_analysis_research_program\\modules\\riemann_cycle_19_proof_strategy_gap.md",
+      "domain": "riemann",
+      "size": 14488
+    },
+    {
+      "file": "data\\meta_analysis_research_program\\modules\\riemann_cycle_20_gap_synthesis.md",
+      "domain": "riemann",
+      "size": 15409
+    },
+    {
+      "file": "data\\meta_analysis_research_program\\modules\\riemann_cycle_25_complete_synthesis.md",
+      "domain": "riemann",
+      "size": 23027
+    },
+    {
+      "file": "data\\meta_analysis_research_program\\modules\\riemann_cycle_5_historical_synthesis.md",
+      "domain": "riemann",
+      "size": 15396
+    },
+    {
+      "file": "data\\meta_analysis_research_program\\modules\\riemann_cycle_7_computational_gap.md",
+      "domain": "riemann",
+      "size": 15856
+    },
+    {
+      "file": "data\\meta_analysis_research_program\\modules\\riemann_cycle_9_obstacle_synthesis.md",
+      "domain": "riemann",
+      "size": 13670
+    },
+    {
+      "file": "data\\bsd_gap6_crystallization\\arxiv_md\\gap6_synthesis.md",
+      "domain": "bsd",
+      "size": 1674
+    },
+    {
+      "file": "data\\bsd_gap6_crystallization\\prize_eligibility_packet\\01_statement.tex",
+      "domain": "bsd",
+      "size": 3836
+    },
+    {
+      "file": "data\\bsd_gap6_crystallization\\prize_eligibility_packet\\02_dependency_graph.md",
+      "domain": "bsd",
+      "size": 4657
+    },
+    {
+      "file": "data\\bsd_gap6_crystallization\\prize_eligibility_packet\\03_gap6_closure.tex",
+      "domain": "bsd",
+      "size": 16198
+    },
+    {
+      "file": "data\\bsd_gap6_crystallization\\prize_eligibility_packet\\03_gap6_closure_template.tex",
+      "domain": "bsd",
+      "size": 7319
+    },
+    {
+      "file": "data\\bsd_gap6_crystallization\\prize_eligibility_packet\\README.md",
+      "domain": "bsd",
+      "size": 2158
+    },
+    {
+      "file": "data\\bsd_gap6_crystallization\\prize_eligibility_packet\\RIGOR_REVIEW.md",
+      "domain": "bsd",
+      "size": 6622
+    },
+    {
+      "file": "data\\bsd_gap6_crystallization\\prize_eligibility_packet\\04_reproducibility\\README.md",
+      "domain": "bsd",
+      "size": 3639
+    },
+    {
+      "file": "data\\bsd_consolidated_20260105_152522\\bsd_25_5_research\\block_3_closure.md",
+      "domain": "bsd",
+      "size": 608
+    },
+    {
+      "file": "data\\bsd_consolidated_20260105_152522\\bsd_25_5_research\\phase_3_report_20260103_182158.json",
+      "domain": "bsd",
+      "size": 1736
+    },
+    {
+      "file": "data\\bsd_consolidated_20260105_152522\\bsd_gap6_crystallization\\arxiv_md\\gap6_synthesis.md",
+      "domain": "bsd",
+      "size": 1674
+    },
+    {
+      "file": "data\\bsd_consolidated_20260105_152522\\bsd_gap6_crystallization\\prize_eligibility_packet\\01_statement.tex",
+      "domain": "bsd",
+      "size": 3836
+    },
+    {
+      "file": "data\\bsd_consolidated_20260105_152522\\bsd_gap6_crystallization\\prize_eligibility_packet\\02_dependency_graph.md",
+      "domain": "bsd",
+      "size": 4657
+    },
+    {
+      "file": "data\\bsd_consolidated_20260105_152522\\bsd_gap6_crystallization\\prize_eligibility_packet\\03_gap6_closure.tex",
+      "domain": "bsd",
+      "size": 16198
+    },
+    {
+      "file": "data\\bsd_consolidated_20260105_152522\\bsd_gap6_crystallization\\prize_eligibility_packet\\03_gap6_closure_template.tex",
+      "domain": "bsd",
+      "size": 7319
+    },
+    {
+      "file": "data\\bsd_consolidated_20260105_152522\\bsd_gap6_crystallization\\prize_eligibility_packet\\README.md",
+      "domain": "bsd",
+      "size": 2158
+    },
+    {
+      "file": "data\\bsd_consolidated_20260105_152522\\bsd_gap6_crystallization\\prize_eligibility_packet\\RIGOR_REVIEW.md",
+      "domain": "bsd",
+      "size": 6622
+    },
+    {
+      "file": "data\\bsd_consolidated_20260105_152522\\bsd_gap6_crystallization\\prize_eligibility_packet\\04_reproducibility\\README.md",
+      "domain": "bsd",
+      "size": 3639
+    },
+    {
+      "file": "archives_extracted_all\\venv\\Lib\\site-packages\\pkg_resources\\tests\\data\\my-test-package-zip\\my-test-package\\setup.cfg",
+      "domain": "unknown",
+      "size": 0
+    },
+    {
+      "file": "archives_extracted_all\\venv\\Lib\\site-packages\\pkg_resources\\tests\\data\\my-test-package-zip\\my-test-package\\setup.py",
+      "domain": "unknown",
+      "size": 104
+    },
+    {
+      "file": "archives_extracted_all\\venv\\Lib\\site-packages\\pkg_resources\\tests\\data\\my-test-package-zip\\my-test-package\\my_test_package.egg-info\\dependency_links.txt",
+      "domain": "unknown",
+      "size": 1
+    },
+    {
+      "file": "archives_extracted_all\\venv\\Lib\\site-packages\\pkg_resources\\tests\\data\\my-test-package-zip\\my-test-package\\my_test_package.egg-info\\PKG-INFO",
+      "domain": "unknown",
+      "size": 187
+    },
+    {
+      "file": "archives_extracted_all\\venv\\Lib\\site-packages\\pkg_resources\\tests\\data\\my-test-package-zip\\my-test-package\\my_test_package.egg-info\\SOURCES.txt",
+      "domain": "unknown",
+      "size": 208
+    },
+    {
+      "file": "archives_extracted_all\\venv\\Lib\\site-packages\\pkg_resources\\tests\\data\\my-test-package-zip\\my-test-package\\my_test_package.egg-info\\top_level.txt",
+      "domain": "unknown",
+      "size": 1
+    },
+    {
+      "file": "archives_extracted_all\\venv\\Lib\\site-packages\\pkg_resources\\tests\\data\\my-test-package-zip\\my-test-package\\my_test_package.egg-info\\zip-safe",
+      "domain": "unknown",
+      "size": 1
+    },
+    {
+      "file": "archives_extracted_all\\research extended\\research\\Archives_and_Packages\\agi_test_output.zip",
+      "domain": "unknown",
+      "size": 103093
+    },
+    {
+      "file": "archives_extracted_all\\research extended\\research\\Archives_and_Packages\\arxiv_submission_package.tar.gz",
+      "domain": "unknown",
+      "size": 9646
+    },
+    {
+      "file": "archives_extracted_all\\research extended\\research\\Archives_and_Packages\\ELIAS_OULAD_BRAHIM_GENESIS_ARXIV.zip",
+      "domain": "unknown",
+      "size": 4020
+    },
+    {
+      "file": "archives_extracted_all\\research extended\\research\\Archives_and_Packages\\ELIAS_OULAD_BRAHIM_PUBLICATION.zip",
+      "domain": "unknown",
+      "size": 5222
+    },
+    {
+      "file": "archives_extracted_all\\research extended\\research\\Archives_and_Packages\\ELIAS_OULAD_BRAHIM_PUBLICATION_V2.zip",
+      "domain": "unknown",
+      "size": 5828
+    },
+    {
+      "file": "archives_extracted_all\\research extended\\research\\BSD_Conjecture\\BSD_CONJECTURE_SPECIFICATION.md",
+      "domain": "bsd",
+      "size": 13530
+    },
+    {
+      "file": "archives_extracted_all\\research extended\\research\\BSD_Conjecture\\BSD_PROOF_MANUSCRIPT.tex",
+      "domain": "bsd",
+      "size": 14309
+    },
+    {
+      "file": "archives_extracted_all\\research extended\\research\\BSD_Conjecture\\BSD_PROOF_MANUSCRIPT.tex.backup",
+      "domain": "bsd",
+      "size": 14143
+    },
+    {
+      "file": "archives_extracted_all\\research extended\\research\\BSD_Conjecture\\BSD_PUBLICATION_PACKAGE_20260103.zip",
+      "domain": "bsd",
+      "size": 43038
+    },
+    {
+      "file": "archives_extracted_all\\research extended\\research\\BSD_Conjecture\\BSD_VALIDATION_REPORT.md",
+      "domain": "bsd",
+      "size": 18125
+    },
+    {
+      "file": "archives_extracted_all\\research extended\\research\\Documentation\\PUBLICATION_PACKAGE_README.md",
+      "domain": "unknown",
+      "size": 10669
+    },
+    {
+      "file": "archives_extracted_all\\research extended\\research\\Documentation\\PUBLICATION_STRATEGY.md",
+      "domain": "unknown",
+      "size": 3669
+    },
+    {
+      "file": "archives_extracted_all\\research extended\\research\\Documentation\\REGISTRY_KEYS_SUMMARY.txt",
+      "domain": "unknown",
+      "size": 11624
+    },
+    {
+      "file": "archives_extracted_all\\research extended\\research\\Documentation\\SKILL_LEARNING_SUMMARY.md",
+      "domain": "unknown",
+      "size": 14718
+    },
+    {
+      "file": "archives_extracted_all\\research extended\\research\\General_Research\\AGI_PROOF_COMPLETE.md",
+      "domain": "unknown",
+      "size": 14383
+    },
+    {
+      "file": "archives_extracted_all\\research extended\\research\\General_Research\\AGI_PROOF_STEP_1_ARCHITECTURE.md",
+      "domain": "unknown",
+      "size": 7977
+    },
+    {
+      "file": "archives_extracted_all\\research extended\\research\\General_Research\\INTERNET_READINESS_PROOF.md",
+      "domain": "unknown",
+      "size": 16889
+    },
+    {
+      "file": "archives_extracted_all\\research extended\\research\\General_Research\\RESEARCH_COMPLETION_SUMMARY.md",
+      "domain": "unknown",
+      "size": 14670
+    },
+    {
+      "file": "archives_extracted_all\\research extended\\research\\Hodge_Conjecture\\HODGE_CONJECTURE_ATTACK_PLAN.md",
+      "domain": "hodge",
+      "size": 10809
+    },
+    {
+      "file": "archives_extracted_all\\research extended\\research\\Hodge_Conjecture\\HODGE_PROOF_SUMMARY.md",
+      "domain": "hodge",
+      "size": 7632
+    },
+    {
+      "file": "archives_extracted_all\\research extended\\research\\Methodology_and_Engines\\rh_cross_validation_hub.py",
+      "domain": "riemann",
+      "size": 12559
+    },
+    {
+      "file": "archives_extracted_all\\research extended\\research\\phi_unified_framework\\COMPATIBILITY_PROOF.md",
+      "domain": "phi_unification",
+      "size": 9423
+    },
+    {
+      "file": "archives_extracted_all\\research extended\\research\\Project_Management\\COMPLETION_SUMMARY.txt",
+      "domain": "unknown",
+      "size": 10705
+    },
+    {
+      "file": "archives_extracted_all\\research extended\\research\\Project_Management\\FINAL_PROJECT_SUMMARY.md",
+      "domain": "unknown",
+      "size": 8634
+    },
+    {
+      "file": "archives_extracted_all\\research extended\\research\\Project_Management\\GENESIS_VALIDATION_REQUEST.md",
+      "domain": "unknown",
+      "size": 10808
+    },
+    {
+      "file": "archives_extracted_all\\research extended\\research\\Project_Management\\HARDWARE_OPTIMIZATION_REPORT.md",
+      "domain": "unknown",
+      "size": 9954
+    },
+    {
+      "file": "archives_extracted_all\\research extended\\research\\Project_Management\\IMPLEMENTATION_SUMMARY.md",
+      "domain": "unknown",
+      "size": 11055
+    },
+    {
+      "file": "archives_extracted_all\\research extended\\research\\Project_Management\\INTEGRATION_COMPLETE_SUMMARY.md",
+      "domain": "unknown",
+      "size": 16517
+    },
+    {
+      "file": "archives_extracted_all\\research extended\\research\\Project_Management\\PHASE_2_INFRASTRUCTURE_REPORT.md",
+      "domain": "unknown",
+      "size": 9736
+    },
+    {
+      "file": "archives_extracted_all\\research extended\\research\\Project_Management\\PUBLICATION_COMPLETE_SUMMARY.md",
+      "domain": "unknown",
+      "size": 10998
+    },
+    {
+      "file": "archives_extracted_all\\research extended\\research\\Project_Management\\STANDARD_REFINEMENT_SUMMARY.txt",
+      "domain": "unknown",
+      "size": 9633
+    },
+    {
+      "file": "archives_extracted_all\\research extended\\research\\Riemann_Hypothesis\\riemann_hypothesis_proof_complete.zip",
+      "domain": "riemann",
+      "size": 33134
+    },
+    {
+      "file": "archives_extracted_all\\research extended\\research\\Riemann_Hypothesis\\RIEMANN_PROOF_FINAL_MANUSCRIPT.tex",
+      "domain": "riemann",
+      "size": 12295
+    },
+    {
+      "file": "archives_extracted_all\\research extended\\research\\Riemann_Hypothesis\\RIEMANN_PROOF_FINAL_MANUSCRIPT.tex.backup",
+      "domain": "riemann",
+      "size": 12295
+    },
+    {
+      "file": "archives_extracted_all\\research\\Riemann_Hypothesis\\riemann_hypothesis_proof_complete\\riemann_proof_package\\FINAL_DELIVERY_STATUS.txt",
+      "domain": "riemann",
+      "size": 12981
+    },
+    {
+      "file": "archives_extracted_all\\research\\Riemann_Hypothesis\\riemann_hypothesis_proof_complete\\riemann_proof_package\\README.txt",
+      "domain": "riemann",
+      "size": 12707
+    },
+    {
+      "file": "archives_extracted_all\\research\\Riemann_Hypothesis\\riemann_hypothesis_proof_complete\\riemann_proof_package\\RESEARCH_COMPLETION_SUMMARY.md",
+      "domain": "riemann",
+      "size": 14670
+    },
+    {
+      "file": "archives_extracted_all\\research\\Riemann_Hypothesis\\riemann_hypothesis_proof_complete\\riemann_proof_package\\RIEMANN_PROJECT_INDEX.md",
+      "domain": "riemann",
+      "size": 11249
+    },
+    {
+      "file": "archives_extracted_all\\research\\Riemann_Hypothesis\\riemann_hypothesis_proof_complete\\riemann_proof_package\\RIEMANN_PROOF_FINAL_MANUSCRIPT.tex",
+      "domain": "riemann",
+      "size": 12295
+    },
+    {
+      "file": "archives_extracted_all\\research\\Riemann_Hypothesis\\riemann_hypothesis_proof_complete\\riemann_proof_package\\VERIFICATION_CHECKLIST.txt",
+      "domain": "riemann",
+      "size": 10279
+    },
+    {
+      "file": "archives_extracted_all\\research\\Riemann_Hypothesis\\riemann_hypothesis_proof_complete\\riemann_proof_package\\gpia_energy_minimization_sprint\\master_report_20260103_171104.json",
+      "domain": "riemann",
+      "size": 10474
+    },
+    {
+      "file": "archives_extracted_all\\research\\Riemann_Hypothesis\\riemann_hypothesis_proof_complete\\riemann_proof_package\\gpia_riemann_150beat_sprint\\master_report_20260103_170817.json",
+      "domain": "riemann",
+      "size": 7545
+    },
+    {
+      "file": "archives_extracted_all\\research\\research_of_truth_20260105_160746\\Riemann_Hypothesis\\riemann_hypothesis_proof_complete\\riemann_proof_package\\FINAL_DELIVERY_STATUS.txt",
+      "domain": "riemann",
+      "size": 12981
+    },
+    {
+      "file": "archives_extracted_all\\research\\research_of_truth_20260105_160746\\Riemann_Hypothesis\\riemann_hypothesis_proof_complete\\riemann_proof_package\\README.txt",
+      "domain": "riemann",
+      "size": 12707
+    },
+    {
+      "file": "archives_extracted_all\\research\\research_of_truth_20260105_160746\\Riemann_Hypothesis\\riemann_hypothesis_proof_complete\\riemann_proof_package\\RESEARCH_COMPLETION_SUMMARY.md",
+      "domain": "riemann",
+      "size": 14670
+    },
+    {
+      "file": "archives_extracted_all\\research\\research_of_truth_20260105_160746\\Riemann_Hypothesis\\riemann_hypothesis_proof_complete\\riemann_proof_package\\RIEMANN_PROJECT_INDEX.md",
+      "domain": "riemann",
+      "size": 11249
+    },
+    {
+      "file": "archives_extracted_all\\research\\research_of_truth_20260105_160746\\Riemann_Hypothesis\\riemann_hypothesis_proof_complete\\riemann_proof_package\\RIEMANN_PROOF_FINAL_MANUSCRIPT.tex",
+      "domain": "riemann",
+      "size": 12295
+    },
+    {
+      "file": "archives_extracted_all\\research\\research_of_truth_20260105_160746\\Riemann_Hypothesis\\riemann_hypothesis_proof_complete\\riemann_proof_package\\VERIFICATION_CHECKLIST.txt",
+      "domain": "riemann",
+      "size": 10279
+    },
+    {
+      "file": "archives_extracted_all\\research\\research_of_truth_20260105_160746\\Riemann_Hypothesis\\riemann_hypothesis_proof_complete\\riemann_proof_package\\gpia_energy_minimization_sprint\\master_report_20260103_171104.json",
+      "domain": "riemann",
+      "size": 10474
+    },
+    {
+      "file": "archives_extracted_all\\research\\research_of_truth_20260105_160746\\Riemann_Hypothesis\\riemann_hypothesis_proof_complete\\riemann_proof_package\\gpia_riemann_150beat_sprint\\master_report_20260103_170817.json",
+      "domain": "riemann",
+      "size": 7545
+    },
+    {
+      "file": "archives_extracted_all\\research\\Methodology_and_Engines\\Methodology_and_Engines\\rh_cross_validation_hub.py",
+      "domain": "riemann",
+      "size": 12559
+    },
+    {
+      "file": "archives_extracted_all\\research\\BSD_Conjecture\\BSD_PUBLICATION_PACKAGE_20260103\\publication_archive\\BSD_CONJECTURE_SPECIFICATION.md",
+      "domain": "bsd",
+      "size": 13530
+    },
+    {
+      "file": "archives_extracted_all\\research\\BSD_Conjecture\\BSD_PUBLICATION_PACKAGE_20260103\\publication_archive\\bsd_phase3_targeted_refinement.py",
+      "domain": "bsd",
+      "size": 12836
+    },
+    {
+      "file": "archives_extracted_all\\research\\BSD_Conjecture\\BSD_PUBLICATION_PACKAGE_20260103\\publication_archive\\BSD_PROOF_MANUSCRIPT.tex",
+      "domain": "bsd",
+      "size": 14143
+    },
+    {
+      "file": "archives_extracted_all\\research\\BSD_Conjecture\\BSD_PUBLICATION_PACKAGE_20260103\\publication_archive\\bsd_research_orchestrator.py",
+      "domain": "bsd",
+      "size": 15445
+    },
+    {
+      "file": "archives_extracted_all\\research\\BSD_Conjecture\\BSD_PUBLICATION_PACKAGE_20260103\\publication_archive\\BSD_VALIDATION_REPORT.md",
+      "domain": "bsd",
+      "size": 18125
+    },
+    {
+      "file": "archives_extracted_all\\research\\BSD_Conjecture\\BSD_PUBLICATION_PACKAGE_20260103\\publication_archive\\GENESIS_VALIDATION_REQUEST.md",
+      "domain": "bsd",
+      "size": 10808
+    },
+    {
+      "file": "archives_extracted_all\\research\\BSD_Conjecture\\BSD_PUBLICATION_PACKAGE_20260103\\publication_archive\\PUBLICATION_PACKAGE_README.md",
+      "domain": "bsd",
+      "size": 10669
+    },
+    {
+      "file": "archives_extracted_all\\research\\BSD_Conjecture\\BSD_PUBLICATION_PACKAGE_20260103\\publication_archive\\bsd_25_5_research\\cycle_history_20260103_182113.json",
+      "domain": "bsd",
+      "size": 6894
+    },
+    {
+      "file": "archives_extracted_all\\research\\BSD_Conjecture\\BSD_PUBLICATION_PACKAGE_20260103\\publication_archive\\bsd_25_5_research\\phase_1_report_20260103_182113.json",
+      "domain": "bsd",
+      "size": 8004
+    },
+    {
+      "file": "archives_extracted_all\\research\\BSD_Conjecture\\BSD_PUBLICATION_PACKAGE_20260103\\publication_archive\\bsd_25_5_research\\phase_3_report_20260103_182158.json",
+      "domain": "bsd",
+      "size": 1736
+    },
+    {
+      "file": "archives_extracted_all\\research\\Archives_and_Packages\\ELIAS_OULAD_BRAHIM_GENESIS_ARXIV\\data_summary.json",
+      "domain": "unknown",
+      "size": 422
+    },
+    {
+      "file": "archives_extracted_all\\research\\Archives_and_Packages\\ELIAS_OULAD_BRAHIM_GENESIS_ARXIV\\LICENSE_TUL.md",
+      "domain": "unknown",
+      "size": 689
+    },
+    {
+      "file": "archives_extracted_all\\research\\Archives_and_Packages\\ELIAS_OULAD_BRAHIM_GENESIS_ARXIV\\README.md",
+      "domain": "unknown",
+      "size": 942
+    },
+    {
+      "file": "archives_extracted_all\\research\\Archives_and_Packages\\ELIAS_OULAD_BRAHIM_GENESIS_ARXIV\\riemann_swarm_genesis.tex",
+      "domain": "riemann",
+      "size": 3312
+    },
+    {
+      "file": "archives_extracted_all\\research\\Archives_and_Packages\\ELIAS_OULAD_BRAHIM_GENESIS_ARXIV\\SECURITY.md",
+      "domain": "unknown",
+      "size": 891
+    },
+    {
+      "file": "archives_extracted_all\\research\\Archives_and_Packages\\ELIAS_OULAD_BRAHIM_PUBLICATION\\CITATION.cff",
+      "domain": "unknown",
+      "size": 438
+    },
+    {
+      "file": "archives_extracted_all\\research\\Archives_and_Packages\\ELIAS_OULAD_BRAHIM_PUBLICATION\\data_summary.json",
+      "domain": "unknown",
+      "size": 422
+    },
+    {
+      "file": "archives_extracted_all\\research\\Archives_and_Packages\\ELIAS_OULAD_BRAHIM_PUBLICATION\\LICENSE_TUL.md",
+      "domain": "unknown",
+      "size": 689
+    },
+    {
+      "file": "archives_extracted_all\\research\\Archives_and_Packages\\ELIAS_OULAD_BRAHIM_PUBLICATION\\README.md",
+      "domain": "unknown",
+      "size": 942
+    },
+    {
+      "file": "archives_extracted_all\\research\\Archives_and_Packages\\ELIAS_OULAD_BRAHIM_PUBLICATION\\riemann_swarm_genesis.tex",
+      "domain": "riemann",
+      "size": 3312
+    },
+    {
+      "file": "archives_extracted_all\\research\\Archives_and_Packages\\ELIAS_OULAD_BRAHIM_PUBLICATION\\SECURITY.md",
+      "domain": "unknown",
+      "size": 891
+    },
+    {
+      "file": "archives_extracted_all\\research\\Archives_and_Packages\\ELIAS_OULAD_BRAHIM_PUBLICATION\\White_Paper.md",
+      "domain": "unknown",
+      "size": 1199
+    },
+    {
+      "file": "archives_extracted_all\\research\\Archives_and_Packages\\ELIAS_OULAD_BRAHIM_PUBLICATION_V2\\CITATION.cff",
+      "domain": "unknown",
+      "size": 438
+    },
+    {
+      "file": "archives_extracted_all\\research\\Archives_and_Packages\\ELIAS_OULAD_BRAHIM_PUBLICATION_V2\\data_summary.json",
+      "domain": "unknown",
+      "size": 422
+    },
+    {
+      "file": "archives_extracted_all\\research\\Archives_and_Packages\\ELIAS_OULAD_BRAHIM_PUBLICATION_V2\\LEGACY_ALIGNMENT.md",
+      "domain": "unknown",
+      "size": 768
+    },
+    {
+      "file": "archives_extracted_all\\research\\Archives_and_Packages\\ELIAS_OULAD_BRAHIM_PUBLICATION_V2\\LICENSE_TUL.md",
+      "domain": "unknown",
+      "size": 689
+    },
+    {
+      "file": "archives_extracted_all\\research\\Archives_and_Packages\\ELIAS_OULAD_BRAHIM_PUBLICATION_V2\\README.md",
+      "domain": "unknown",
+      "size": 942
+    },
+    {
+      "file": "archives_extracted_all\\research\\Archives_and_Packages\\ELIAS_OULAD_BRAHIM_PUBLICATION_V2\\riemann_swarm_genesis.tex",
+      "domain": "riemann",
+      "size": 3366
+    },
+    {
+      "file": "archives_extracted_all\\research\\Archives_and_Packages\\ELIAS_OULAD_BRAHIM_PUBLICATION_V2\\SECURITY.md",
+      "domain": "unknown",
+      "size": 891
+    },
+    {
+      "file": "archives_extracted_all\\research\\Archives_and_Packages\\ELIAS_OULAD_BRAHIM_PUBLICATION_V2\\White_Paper.md",
+      "domain": "unknown",
+      "size": 1199
+    },
+    {
+      "file": "archives_extracted_all\\research\\Archives_and_Packages\\arxiv_submission_package\\arxiv_submission_package\\foundations_of_temporal_formalism.tex",
+      "domain": "unknown",
+      "size": 6301
+    },
+    {
+      "file": "archives_extracted_all\\research\\Archives_and_Packages\\arxiv_submission_package\\arxiv_submission_package\\genesis_independent_validation.tex",
+      "domain": "unknown",
+      "size": 5669
+    },
+    {
+      "file": "archives_extracted_all\\research\\Archives_and_Packages\\arxiv_submission_package\\arxiv_submission_package\\genesis_sovereign_manifesto.tex",
+      "domain": "unknown",
+      "size": 5699
+    },
+    {
+      "file": "archives_extracted_all\\research\\Archives_and_Packages\\arxiv_submission_package\\arxiv_submission_package\\gpia_sovereign_logic_v1.tex",
+      "domain": "unknown",
+      "size": 5103
+    },
+    {
+      "file": "archives_extracted_all\\research\\Archives_and_Packages\\arxiv_submission_package\\arxiv_submission_package\\LICENSE_TUL.md",
+      "domain": "unknown",
+      "size": 689
+    },
+    {
+      "file": "archives_extracted_all\\research\\Archives_and_Packages\\arxiv_submission_package\\arxiv_submission_package\\MANIFEST.txt",
+      "domain": "unknown",
+      "size": 1295
+    },
+    {
+      "file": "archives_extracted_all\\research\\Archives_and_Packages\\arxiv_submission_package\\arxiv_submission_package\\README.md",
+      "domain": "unknown",
+      "size": 942
+    },
+    {
+      "file": "archives_extracted_all\\research\\Archives_and_Packages\\arxiv_submission_package\\arxiv_submission_package\\riemann_swarm_genesis.tex",
+      "domain": "riemann",
+      "size": 4584
+    },
+    {
+      "file": "archives_extracted_all\\research\\Archives_and_Packages\\arxiv_submission_package\\arxiv_submission_package\\SECURITY.md",
+      "domain": "unknown",
+      "size": 891
+    },
+    {
+      "file": "archives_extracted_all\\research\\Archives_and_Packages\\agi_test_output\\agi_test_output\\agi_physics_reasoning_with_learning.json",
+      "domain": "unknown",
+      "size": 2321
+    },
+    {
+      "file": "archives_extracted_all\\research\\Archives_and_Packages\\agi_test_output\\agi_test_output\\discoveries_rh_2hour_sprint.json",
+      "domain": "riemann",
+      "size": 9454
+    },
+    {
+      "file": "archives_extracted_all\\research\\Archives_and_Packages\\agi_test_output\\agi_test_output\\discoveries_rh_2hour_sprint.md",
+      "domain": "riemann",
+      "size": 0
+    },
+    {
+      "file": "archives_extracted_all\\research\\Archives_and_Packages\\agi_test_output\\agi_test_output\\discoveries_rh_extended_verification.json",
+      "domain": "riemann",
+      "size": 14922
+    },
+    {
+      "file": "archives_extracted_all\\research\\Archives_and_Packages\\agi_test_output\\agi_test_output\\final_physics_response.txt",
+      "domain": "unknown",
+      "size": 0
+    },
+    {
+      "file": "archives_extracted_all\\research\\Archives_and_Packages\\agi_test_output\\agi_test_output\\phase2b_optimization_results.json",
+      "domain": "unknown",
+      "size": 3304
+    },
+    {
+      "file": "archives_extracted_all\\research\\Archives_and_Packages\\agi_test_output\\agi_test_output\\phase2_hamiltonian_results.json",
+      "domain": "unknown",
+      "size": 9064
+    },
+    {
+      "file": "archives_extracted_all\\research\\Archives_and_Packages\\agi_test_output\\agi_test_output\\physics_answer_full.txt",
+      "domain": "unknown",
+      "size": 0
+    },
+    {
+      "file": "archives_extracted_all\\research\\Archives_and_Packages\\agi_test_output\\agi_test_output\\verification_rmt_operator_theory.json",
+      "domain": "unknown",
+      "size": 29482
+    },
+    {
+      "file": "archives_extracted_all\\research\\Archives_and_Packages\\agi_test_output\\agi_test_output\\grand_synthesis\\execution_log.json",
+      "domain": "unknown",
+      "size": 57485
+    },
+    {
+      "file": "archives_extracted_all\\research\\Archives_and_Packages\\agi_test_output\\agi_test_output\\grand_synthesis\\PROJECT_ALPHA_Grand_Synthesis_2026.md",
+      "domain": "unknown",
+      "size": 64003
+    },
+    {
+      "file": "archives_extracted_all\\research\\Archives_and_Packages\\agi_test_output\\agi_test_output\\phase2c_execution\\phase2c_results.json",
+      "domain": "unknown",
+      "size": 47621
+    },
+    {
+      "file": "archives_extracted_all\\research\\Archives_and_Packages\\agi_test_output\\agi_test_output\\phase2c_execution\\vnand_audit_trail.json",
+      "domain": "unknown",
+      "size": 18406
+    },
+    {
+      "file": "archives_extracted_all\\research\\Archives_and_Packages\\agi_test_output\\agi_test_output\\grand_synthesis\\arxiv_submission\\ARXIV_SUBMISSION_FORM.txt",
+      "domain": "unknown",
+      "size": 1408
+    },
+    {
+      "file": "archives_extracted_all\\research\\Archives_and_Packages\\agi_test_output\\agi_test_output\\grand_synthesis\\arxiv_submission\\execution_log.json",
+      "domain": "unknown",
+      "size": 57485
+    },
+    {
+      "file": "archives_extracted_all\\research\\Archives_and_Packages\\agi_test_output\\agi_test_output\\grand_synthesis\\arxiv_submission\\main.txt",
+      "domain": "unknown",
+      "size": 62370
+    },
+    {
+      "file": "archives_extracted_all\\research\\Archives_and_Packages\\agi_test_output\\agi_test_output\\grand_synthesis\\arxiv_submission\\phase2c_results.json",
+      "domain": "unknown",
+      "size": 47621
+    },
+    {
+      "file": "archives_extracted_all\\research\\Archives_and_Packages\\agi_test_output\\agi_test_output\\grand_synthesis\\arxiv_submission\\README.txt",
+      "domain": "unknown",
+      "size": 1080
+    },
+    {
+      "file": "archives_extracted_all\\research\\Archives_and_Packages\\agi_test_output\\agi_test_output\\grand_synthesis\\arxiv_submission\\SUBMISSION_CHECKLIST.txt",
+      "domain": "unknown",
+      "size": 1170
+    },
+    {
+      "file": "archives_extracted_all\\research\\Archives_and_Packages\\agi_test_output\\agi_test_output\\grand_synthesis\\arxiv_submission\\vnand_audit_trail.json",
+      "domain": "unknown",
+      "size": 18406
+    },
+    {
+      "file": "archives_extracted_all\\BSD_Module_Complete_20260104_125001\\BSD_Module\\cycles\\bsd_cycle_30_historical_synthesis.md",
+      "domain": "bsd",
+      "size": 8991
+    },
+    {
+      "file": "archives_extracted_all\\BSD_Module_Complete_20260104_125001\\BSD_Module\\cycles\\bsd_cycle_31_analytic_arithmetic_gap.md",
+      "domain": "bsd",
+      "size": 2631
+    },
+    {
+      "file": "archives_extracted_all\\BSD_Module_Complete_20260104_125001\\BSD_Module\\cycles\\bsd_cycle_35_barrier_synthesis.md",
+      "domain": "bsd",
+      "size": 8432
+    },
+    {
+      "file": "archives_extracted_all\\BSD_Module_Complete_20260104_125001\\BSD_Module\\cycles\\bsd_cycle_40_knowledge_synthesis.md",
+      "domain": "bsd",
+      "size": 10030
+    },
+    {
+      "file": "archives_extracted_all\\BSD_Module_Complete_20260104_125001\\BSD_Module\\cycles\\bsd_cycle_41_to_45_gap_analysis_complete.md",
+      "domain": "bsd",
+      "size": 13838
+    },
+    {
+      "file": "archives_extracted_all\\BSD_Module_Complete_20260104_125001\\BSD_Module\\cycles\\bsd_cycle_50_complete_synthesis.md",
+      "domain": "bsd",
+      "size": 2775
+    },
+    {
+      "file": "archives_extracted_all\\BSD_Module_Complete_20260104_125001\\BSD_Module\\cycles\\bsd_cycle_50_final_synthesis.md",
+      "domain": "bsd",
+      "size": 12603
+    },
+    {
+      "file": "archives_extracted_all\\BSD_Module_Complete_20260104_125001\\BSD_Module\\phi_framework\\COMPATIBILITY_PROOF.md",
+      "domain": "bsd",
+      "size": 9423
+    },
+    {
+      "file": "archives_extracted_all\\agi_test_output\\grand_synthesis\\arxiv_submission\\arxiv_submission\\ARXIV_SUBMISSION_FORM.txt",
+      "domain": "unknown",
+      "size": 1408
+    },
+    {
+      "file": "archives_extracted_all\\agi_test_output\\grand_synthesis\\arxiv_submission\\arxiv_submission\\execution_log.json",
+      "domain": "unknown",
+      "size": 57485
+    },
+    {
+      "file": "archives_extracted_all\\agi_test_output\\grand_synthesis\\arxiv_submission\\arxiv_submission\\main.txt",
+      "domain": "unknown",
+      "size": 62370
+    },
+    {
+      "file": "archives_extracted_all\\agi_test_output\\grand_synthesis\\arxiv_submission\\arxiv_submission\\phase2c_results.json",
+      "domain": "unknown",
+      "size": 47621
+    },
+    {
+      "file": "archives_extracted_all\\agi_test_output\\grand_synthesis\\arxiv_submission\\arxiv_submission\\README.txt",
+      "domain": "unknown",
+      "size": 1080
+    },
+    {
+      "file": "archives_extracted_all\\agi_test_output\\grand_synthesis\\arxiv_submission\\arxiv_submission\\SUBMISSION_CHECKLIST.txt",
+      "domain": "unknown",
+      "size": 1170
+    },
+    {
+      "file": "archives_extracted_all\\agi_test_output\\grand_synthesis\\arxiv_submission\\arxiv_submission\\vnand_audit_trail.json",
+      "domain": "unknown",
+      "size": 18406
+    },
+    {
+      "file": "archives_extracted\\ELIAS_OULAD_BRAHIM_GENESIS_ARXIV\\data_summary.json",
+      "domain": "unknown",
+      "size": 422
+    },
+    {
+      "file": "archives_extracted\\ELIAS_OULAD_BRAHIM_GENESIS_ARXIV\\LICENSE_TUL.md",
+      "domain": "unknown",
+      "size": 689
+    },
+    {
+      "file": "archives_extracted\\ELIAS_OULAD_BRAHIM_GENESIS_ARXIV\\README.md",
+      "domain": "unknown",
+      "size": 942
+    },
+    {
+      "file": "archives_extracted\\ELIAS_OULAD_BRAHIM_GENESIS_ARXIV\\riemann_swarm_genesis.tex",
+      "domain": "riemann",
+      "size": 3312
+    },
+    {
+      "file": "archives_extracted\\ELIAS_OULAD_BRAHIM_GENESIS_ARXIV\\SECURITY.md",
+      "domain": "unknown",
+      "size": 891
+    },
+    {
+      "file": "archives_extracted\\ELIAS_OULAD_BRAHIM_PUBLICATION\\CITATION.cff",
+      "domain": "unknown",
+      "size": 438
+    },
+    {
+      "file": "archives_extracted\\ELIAS_OULAD_BRAHIM_PUBLICATION\\data_summary.json",
+      "domain": "unknown",
+      "size": 422
+    },
+    {
+      "file": "archives_extracted\\ELIAS_OULAD_BRAHIM_PUBLICATION\\LICENSE_TUL.md",
+      "domain": "unknown",
+      "size": 689
+    },
+    {
+      "file": "archives_extracted\\ELIAS_OULAD_BRAHIM_PUBLICATION\\README.md",
+      "domain": "unknown",
+      "size": 942
+    },
+    {
+      "file": "archives_extracted\\ELIAS_OULAD_BRAHIM_PUBLICATION\\riemann_swarm_genesis.tex",
+      "domain": "riemann",
+      "size": 3312
+    },
+    {
+      "file": "archives_extracted\\ELIAS_OULAD_BRAHIM_PUBLICATION\\SECURITY.md",
+      "domain": "unknown",
+      "size": 891
+    },
+    {
+      "file": "archives_extracted\\ELIAS_OULAD_BRAHIM_PUBLICATION\\White_Paper.md",
+      "domain": "unknown",
+      "size": 1199
+    },
+    {
+      "file": "archives_extracted\\ELIAS_OULAD_BRAHIM_PUBLICATION_V2\\CITATION.cff",
+      "domain": "unknown",
+      "size": 438
+    },
+    {
+      "file": "archives_extracted\\ELIAS_OULAD_BRAHIM_PUBLICATION_V2\\data_summary.json",
+      "domain": "unknown",
+      "size": 422
+    },
+    {
+      "file": "archives_extracted\\ELIAS_OULAD_BRAHIM_PUBLICATION_V2\\LEGACY_ALIGNMENT.md",
+      "domain": "unknown",
+      "size": 768
+    },
+    {
+      "file": "archives_extracted\\ELIAS_OULAD_BRAHIM_PUBLICATION_V2\\LICENSE_TUL.md",
+      "domain": "unknown",
+      "size": 689
+    },
+    {
+      "file": "archives_extracted\\ELIAS_OULAD_BRAHIM_PUBLICATION_V2\\README.md",
+      "domain": "unknown",
+      "size": 942
+    },
+    {
+      "file": "archives_extracted\\ELIAS_OULAD_BRAHIM_PUBLICATION_V2\\riemann_swarm_genesis.tex",
+      "domain": "riemann",
+      "size": 3366
+    },
+    {
+      "file": "archives_extracted\\ELIAS_OULAD_BRAHIM_PUBLICATION_V2\\SECURITY.md",
+      "domain": "unknown",
+      "size": 891
+    },
+    {
+      "file": "archives_extracted\\ELIAS_OULAD_BRAHIM_PUBLICATION_V2\\White_Paper.md",
+      "domain": "unknown",
+      "size": 1199
+    },
+    {
+      "file": "archives_extracted\\riemann_hypothesis_proof_complete\\riemann_proof_package\\FINAL_DELIVERY_STATUS.txt",
+      "domain": "riemann",
+      "size": 12981
+    },
+    {
+      "file": "archives_extracted\\riemann_hypothesis_proof_complete\\riemann_proof_package\\README.txt",
+      "domain": "riemann",
+      "size": 12707
+    },
+    {
+      "file": "archives_extracted\\riemann_hypothesis_proof_complete\\riemann_proof_package\\RESEARCH_COMPLETION_SUMMARY.md",
+      "domain": "riemann",
+      "size": 14670
+    },
+    {
+      "file": "archives_extracted\\riemann_hypothesis_proof_complete\\riemann_proof_package\\RIEMANN_PROJECT_INDEX.md",
+      "domain": "riemann",
+      "size": 11249
+    },
+    {
+      "file": "archives_extracted\\riemann_hypothesis_proof_complete\\riemann_proof_package\\RIEMANN_PROOF_FINAL_MANUSCRIPT.tex",
+      "domain": "riemann",
+      "size": 12295
+    },
+    {
+      "file": "archives_extracted\\riemann_hypothesis_proof_complete\\riemann_proof_package\\VERIFICATION_CHECKLIST.txt",
+      "domain": "riemann",
+      "size": 10279
+    },
+    {
+      "file": "archives_extracted\\riemann_hypothesis_proof_complete\\riemann_proof_package\\gpia_energy_minimization_sprint\\master_report_20260103_171104.json",
+      "domain": "riemann",
+      "size": 10474
+    },
+    {
+      "file": "archives_extracted\\riemann_hypothesis_proof_complete\\riemann_proof_package\\gpia_riemann_150beat_sprint\\master_report_20260103_170817.json",
+      "domain": "riemann",
+      "size": 7545
+    },
+    {
+      "file": "archives_extracted\\BSD_PUBLICATION_PACKAGE_20260103\\publication_archive\\BSD_CONJECTURE_SPECIFICATION.md",
+      "domain": "bsd",
+      "size": 13530
+    },
+    {
+      "file": "archives_extracted\\BSD_PUBLICATION_PACKAGE_20260103\\publication_archive\\bsd_phase3_targeted_refinement.py",
+      "domain": "bsd",
+      "size": 12836
+    },
+    {
+      "file": "archives_extracted\\BSD_PUBLICATION_PACKAGE_20260103\\publication_archive\\BSD_PROOF_MANUSCRIPT.tex",
+      "domain": "bsd",
+      "size": 14143
+    },
+    {
+      "file": "archives_extracted\\BSD_PUBLICATION_PACKAGE_20260103\\publication_archive\\bsd_research_orchestrator.py",
+      "domain": "bsd",
+      "size": 15445
+    },
+    {
+      "file": "archives_extracted\\BSD_PUBLICATION_PACKAGE_20260103\\publication_archive\\BSD_VALIDATION_REPORT.md",
+      "domain": "bsd",
+      "size": 18125
+    },
+    {
+      "file": "archives_extracted\\BSD_PUBLICATION_PACKAGE_20260103\\publication_archive\\GENESIS_VALIDATION_REQUEST.md",
+      "domain": "bsd",
+      "size": 10808
+    },
+    {
+      "file": "archives_extracted\\BSD_PUBLICATION_PACKAGE_20260103\\publication_archive\\PUBLICATION_PACKAGE_README.md",
+      "domain": "bsd",
+      "size": 10669
+    },
+    {
+      "file": "archives_extracted\\BSD_PUBLICATION_PACKAGE_20260103\\publication_archive\\bsd_25_5_research\\cycle_history_20260103_182113.json",
+      "domain": "bsd",
+      "size": 6894
+    },
+    {
+      "file": "archives_extracted\\BSD_PUBLICATION_PACKAGE_20260103\\publication_archive\\bsd_25_5_research\\phase_1_report_20260103_182113.json",
+      "domain": "bsd",
+      "size": 8004
+    },
+    {
+      "file": "archives_extracted\\BSD_PUBLICATION_PACKAGE_20260103\\publication_archive\\bsd_25_5_research\\phase_3_report_20260103_182158.json",
+      "domain": "bsd",
+      "size": 1736
+    },
+    {
+      "file": "archives_extracted\\arxiv_submission_package\\arxiv_submission_package\\foundations_of_temporal_formalism.tex",
+      "domain": "unknown",
+      "size": 6301
+    },
+    {
+      "file": "archives_extracted\\arxiv_submission_package\\arxiv_submission_package\\genesis_independent_validation.tex",
+      "domain": "unknown",
+      "size": 5669
+    },
+    {
+      "file": "archives_extracted\\arxiv_submission_package\\arxiv_submission_package\\genesis_sovereign_manifesto.tex",
+      "domain": "unknown",
+      "size": 5699
+    },
+    {
+      "file": "archives_extracted\\arxiv_submission_package\\arxiv_submission_package\\gpia_sovereign_logic_v1.tex",
+      "domain": "unknown",
+      "size": 5103
+    },
+    {
+      "file": "archives_extracted\\arxiv_submission_package\\arxiv_submission_package\\LICENSE_TUL.md",
+      "domain": "unknown",
+      "size": 689
+    },
+    {
+      "file": "archives_extracted\\arxiv_submission_package\\arxiv_submission_package\\MANIFEST.txt",
+      "domain": "unknown",
+      "size": 1295
+    },
+    {
+      "file": "archives_extracted\\arxiv_submission_package\\arxiv_submission_package\\README.md",
+      "domain": "unknown",
+      "size": 942
+    },
+    {
+      "file": "archives_extracted\\arxiv_submission_package\\arxiv_submission_package\\riemann_swarm_genesis.tex",
+      "domain": "riemann",
+      "size": 4584
+    },
+    {
+      "file": "archives_extracted\\arxiv_submission_package\\arxiv_submission_package\\SECURITY.md",
+      "domain": "unknown",
+      "size": 891
+    },
+    {
+      "file": "archives_extracted\\arxiv_submission\\arxiv_submission\\ARXIV_SUBMISSION_FORM.txt",
+      "domain": "unknown",
+      "size": 1408
+    },
+    {
+      "file": "archives_extracted\\arxiv_submission\\arxiv_submission\\execution_log.json",
+      "domain": "unknown",
+      "size": 57485
+    },
+    {
+      "file": "archives_extracted\\arxiv_submission\\arxiv_submission\\main.txt",
+      "domain": "unknown",
+      "size": 62370
+    },
+    {
+      "file": "archives_extracted\\arxiv_submission\\arxiv_submission\\phase2c_results.json",
+      "domain": "unknown",
+      "size": 47621
+    },
+    {
+      "file": "archives_extracted\\arxiv_submission\\arxiv_submission\\README.txt",
+      "domain": "unknown",
+      "size": 1080
+    },
+    {
+      "file": "archives_extracted\\arxiv_submission\\arxiv_submission\\SUBMISSION_CHECKLIST.txt",
+      "domain": "unknown",
+      "size": 1170
+    },
+    {
+      "file": "archives_extracted\\arxiv_submission\\arxiv_submission\\vnand_audit_trail.json",
+      "domain": "unknown",
+      "size": 18406
+    },
+    {
+      "file": "archives_extracted\\agi_test_output\\agi_test_output\\discoveries_rh_extended_verification.json",
+      "domain": "riemann",
+      "size": 14922
+    },
+    {
+      "file": "archives_extracted\\agi_test_output\\agi_test_output\\verification_rmt_operator_theory.json",
+      "domain": "unknown",
+      "size": 29482
+    },
+    {
+      "file": "archives_extracted\\agi_test_output\\agi_test_output\\grand_synthesis\\execution_log.json",
+      "domain": "unknown",
+      "size": 57485
+    },
+    {
+      "file": "archives_extracted\\agi_test_output\\agi_test_output\\grand_synthesis\\PROJECT_ALPHA_Grand_Synthesis_2026.md",
+      "domain": "unknown",
+      "size": 64003
+    },
+    {
+      "file": "archives_extracted\\agi_test_output\\agi_test_output\\grand_synthesis\\arxiv_submission\\ARXIV_SUBMISSION_FORM.txt",
+      "domain": "unknown",
+      "size": 1408
+    },
+    {
+      "file": "archives_extracted\\agi_test_output\\agi_test_output\\grand_synthesis\\arxiv_submission\\execution_log.json",
+      "domain": "unknown",
+      "size": 57485
+    },
+    {
+      "file": "archives_extracted\\agi_test_output\\agi_test_output\\grand_synthesis\\arxiv_submission\\main.txt",
+      "domain": "unknown",
+      "size": 62370
+    },
+    {
+      "file": "archives_extracted\\agi_test_output\\agi_test_output\\grand_synthesis\\arxiv_submission\\phase2c_results.json",
+      "domain": "unknown",
+      "size": 47621
+    },
+    {
+      "file": "archives_extracted\\agi_test_output\\agi_test_output\\grand_synthesis\\arxiv_submission\\README.txt",
+      "domain": "unknown",
+      "size": 1080
+    },
+    {
+      "file": "archives_extracted\\agi_test_output\\agi_test_output\\grand_synthesis\\arxiv_submission\\SUBMISSION_CHECKLIST.txt",
+      "domain": "unknown",
+      "size": 1170
+    },
+    {
+      "file": "archives_extracted\\agi_test_output\\agi_test_output\\grand_synthesis\\arxiv_submission\\vnand_audit_trail.json",
+      "domain": "unknown",
+      "size": 18406
+    }
+  ]
+}

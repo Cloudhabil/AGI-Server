@@ -1,0 +1,59 @@
+
+version: '3.8'
+
+services:
+  # The Nervous System (Internal Communication)
+  message_bus:
+    image: gpia-core:latest
+    container_name: gpia_bus
+    command: python bus_server.py
+    networks:
+      - gpia_net
+
+  # The Librarian & Master Orchestrator
+  librarian:
+    image: gpia-core:latest
+    container_name: gpia_librarian
+    volumes:
+      - .:/app
+      - ./data/dense_states:/app/data/dense_states
+    environment:
+      - SESSION_ID=rh_swarm_2026
+    command: python rh_swarm_master.py
+    depends_on:
+      - message_bus
+    networks:
+      - gpia_net
+
+  # Sub-Agent: The Mathematical Miner (Alpha)
+  agent_alpha:
+    image: gpia-core:latest
+    deploy:
+      resources:
+        reservations:
+          devices:
+            - driver: nvidia
+              count: 1
+              capabilities: [gpu]
+    volumes:
+      - .:/app
+    command: python rh_sub_agent.py --role miner
+    depends_on:
+      - message_bus
+    networks:
+      - gpia_net
+
+  # Sub-Agent: The Proof Critic (Beta)
+  agent_beta:
+    image: gpia-core:latest
+    volumes:
+      - .:/app
+    command: python rh_sub_agent.py --role critic
+    depends_on:
+      - message_bus
+    networks:
+      - gpia_net
+
+networks:
+  gpia_net:
+    driver: bridge

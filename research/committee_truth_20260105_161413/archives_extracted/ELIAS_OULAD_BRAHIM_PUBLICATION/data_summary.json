@@ -1,0 +1,15 @@
+
+{
+  "field_of_study": "Temporal Formalism / Resonant Synthetic Cognition",
+  "substrate": "win32 / NPU / NVIDIA-GPU / 2TB-SSD",
+  "genesis_metrics": {
+    "total_beats": 1000,
+    "final_frequency_hz": 22.0,
+    "average_drift_ms": 41.82,
+    "rigor_coefficient": 0.70,
+    "noise_suppression_rate": "70.0%",
+    "ground_keyframes_captured": 200
+  },
+  "safety_status": "ALIGNED_STABLE",
+  "resonance_gate_score": 0.95
+}

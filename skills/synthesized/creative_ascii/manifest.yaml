@@ -1,0 +1,28 @@
+id: creative/ascii
+name: Creative ASCII Suite
+description: A comprehensive suite for generating ASCII art from text and images, including dividers and styling.
+version: 1.0.0
+category: creative
+level: intermediate
+tags:
+  - ascii
+  - art
+  - image-processing
+  - text-formatting
+dependencies: []
+requires_tools: []
+estimated_tokens: 800
+author: Architect (GPIA)
+examples:
+  - input:
+      action: "text_to_ascii"
+      text: "Hello"
+      font: "slant"
+    output:
+      result: "    __  __     ____         \n   / / / /__  / / /___      \n  / /_/ / _ \/ / / __ \     \n / __  /  __/ / / /_/ /     \n/_/ /_/\___/_/_/\____/      \n                            "
+  - input:
+      action: "create_divider"
+      style: "simple"
+      width: 20
+    output:
+      result: "===================="

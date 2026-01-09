@@ -1,0 +1,12 @@
+
+cff-version: 1.2.0
+message: "If you use this resonant kernel or the temporal formalism framework, please cite it as follows."
+authors:
+- family-names: "Oulad Brahim"
+  given-names: "Elias"
+  affiliation: "CloudHabil Autonomous Systems Research"
+  email: "obe@cloudhabil.com"
+title: "Temporal Formalism: Achieving Sovereign AGI Score 100"
+version: 1.0.0
+date-released: 2026-01-03
+url: "https://github.com/CloudHabil/GPIA-Resonant-Kernel"

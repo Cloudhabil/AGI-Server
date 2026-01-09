@@ -1,0 +1,208 @@
+================================================================================
+CLI AI - Windows Registry Keys and Values Summary
+================================================================================
+Version: 0.1.0
+Date: 2025-12-29
+================================================================================
+
+REGISTRY FILES:
+  - cli-ai-registry.reg              (Install registry entries)
+  - cli-ai-registry-uninstall.reg    (Remove registry entries)
+  - REGISTRY_DOCUMENTATION.md         (Complete documentation)
+
+================================================================================
+SYSTEM-WIDE CONFIGURATION (HKEY_LOCAL_MACHINE)
+================================================================================
+
+HKEY_LOCAL_MACHINE\SOFTWARE\CLI-AI
+────────────────────────────────────────────────────────────────────────────
+  DisplayName          = "CLI AI"
+  Version              = "0.1.0"
+  Publisher            = "CLI AI Contributors"
+  InstallLocation      = "C:\Users\usuario\Business\CLI_A1_GHR\CLI-main"
+  InstallDate          = "20251229"
+  HelpLink             = <GitHub URL>
+  URLInfoAbout         = <GitHub URL>
+
+HKEY_LOCAL_MACHINE\SOFTWARE\CLI-AI\Settings
+────────────────────────────────────────────────────────────────────────────
+  DataDirectory        = "{InstallLocation}\data"
+  ConfigDirectory      = "{InstallLocation}\configs"
+  LogDirectory         = "{InstallLocation}\logs"
+  PromptDirectory      = "{InstallLocation}\prompts"
+
+HKEY_LOCAL_MACHINE\SOFTWARE\CLI-AI\Database
+────────────────────────────────────────────────────────────────────────────
+  KnowledgeBasePath    = "{DataDirectory}\kb.db"
+  HierarchicalMemoryPath = "{DataDirectory}\hier_mem"
+  JournalMode          = "WAL"
+
+HKEY_LOCAL_MACHINE\SOFTWARE\CLI-AI\Server
+────────────────────────────────────────────────────────────────────────────
+  BusServerPort        = 7088 (DWORD: 0x00001BB8)
+  BusServerHost        = "127.0.0.1"
+  RedisURL             = "redis://localhost:6379/0"
+  AgentPortStart       = 7001 (DWORD: 0x00001B59)
+  AgentPortEnd         = 7009 (DWORD: 0x00001B61)
+
+HKEY_LOCAL_MACHINE\SOFTWARE\CLI-AI\Models
+────────────────────────────────────────────────────────────────────────────
+  RouterBaseURL        = "http://localhost:11434/v1"
+  RouterModel          = "qwen2:latest"
+  QwenBaseURL          = "http://localhost:11434/v1"
+  QwenModel            = "qwen2:latest"
+  DeepSeekBaseURL      = "http://localhost:11434/v1"
+  DeepSeekModel        = "codegemma:latest"
+
+HKEY_LOCAL_MACHINE\SOFTWARE\CLI-AI\Features
+────────────────────────────────────────────────────────────────────────────
+  UseOpenVINO          = 0 (DWORD: disabled)
+  UseFAISS             = 0 (DWORD: disabled)
+  EnableObservability  = 0 (DWORD: disabled)
+  EnableTokenCounter   = 0 (DWORD: disabled)
+
+HKEY_LOCAL_MACHINE\SOFTWARE\CLI-AI\Performance
+────────────────────────────────────────────────────────────────────────────
+  MaxWorkers           = 4 (DWORD: 0x00000004)
+  ChunkSize            = 800 (DWORD: 0x00000320)
+  ChunkOverlap         = 80 (DWORD: 0x00000050)
+  MaxTokenBudget       = 8192 (DWORD: 0x00002000)
+
+HKEY_LOCAL_MACHINE\SOFTWARE\CLI-AI\Security
+────────────────────────────────────────────────────────────────────────────
+  RequireBusToken      = 1 (DWORD: enabled)
+  ValidateCertificates = 1 (DWORD: enabled)
+  AllowExternalConnections = 0 (DWORD: disabled)
+
+HKEY_LOCAL_MACHINE\SOFTWARE\CLI-AI\Capabilities
+────────────────────────────────────────────────────────────────────────────
+  ApplicationName      = "CLI AI"
+  ApplicationDescription = "Multi-Agent Command-Line Interface..."
+
+HKEY_LOCAL_MACHINE\SOFTWARE\CLI-AI\Capabilities\FileAssociations
+────────────────────────────────────────────────────────────────────────────
+  .cliai               = "CLI.AI.Workflow"
+
+================================================================================
+USER-SPECIFIC CONFIGURATION (HKEY_CURRENT_USER)
+================================================================================
+
+HKEY_CURRENT_USER\Software\CLI-AI
+────────────────────────────────────────────────────────────────────────────
+  FirstRun             = 1 (DWORD: true)
+  LastUsed             = "" (empty string)
+  UserDataPath         = "%APPDATA%\CLI-AI"
+
+HKEY_CURRENT_USER\Software\CLI-AI\Preferences
+────────────────────────────────────────────────────────────────────────────
+  EnableLogging        = 1 (DWORD: enabled)
+  LogLevel             = "INFO"
+  AutoUpdate           = 0 (DWORD: disabled)
+  TelemetryEnabled     = 0 (DWORD: disabled)
+
+================================================================================
+SYSTEM ENVIRONMENT VARIABLES
+================================================================================
+
+HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Control\Session Manager\Environment
+────────────────────────────────────────────────────────────────────────────
+  CLI_AI_HOME          = "C:\Users\usuario\Business\CLI_A1_GHR\CLI-main"
+  CLI_AI_VERSION       = "0.1.0"
+
+================================================================================
+FILE ASSOCIATIONS
+================================================================================
+
+HKEY_CLASSES_ROOT\.cliai
+────────────────────────────────────────────────────────────────────────────
+  (Default)            = "CLI.AI.Workflow"
+  Content Type         = "application/x-cli-ai-workflow"
+
+HKEY_CLASSES_ROOT\CLI.AI.Workflow
+────────────────────────────────────────────────────────────────────────────
+  (Default)            = "CLI AI Workflow File"
+
+HKEY_CLASSES_ROOT\CLI.AI.Workflow\DefaultIcon
+────────────────────────────────────────────────────────────────────────────
+  (Default)            = "{InstallLocation}\assets\icon.ico,0"
+
+HKEY_CLASSES_ROOT\CLI.AI.Workflow\shell\open\command
+────────────────────────────────────────────────────────────────────────────
+  (Default)            = "python.exe ch_cli.py "%1""
+
+================================================================================
+UNINSTALL INFORMATION
+================================================================================
+
+HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows\CurrentVersion\Uninstall\CLI-AI
+────────────────────────────────────────────────────────────────────────────
+  DisplayName          = "CLI AI - Multi-Agent Command-Line Interface"
+  DisplayVersion       = "0.1.0"
+  Publisher            = "CLI AI Contributors"
+  InstallLocation      = "{InstallLocation}"
+  DisplayIcon          = "{InstallLocation}\assets\icon.ico"
+  UninstallString      = "python.exe {InstallLocation}\uninstall.py"
+  URLInfoAbout         = <GitHub URL>
+  HelpLink             = <GitHub URL>
+  NoModify             = 1 (DWORD)
+  NoRepair             = 1 (DWORD)
+  EstimatedSize        = 800000 (DWORD: ~800 MB in KB)
+
+================================================================================
+USAGE INSTRUCTIONS
+================================================================================
+
+INSTALL REGISTRY ENTRIES:
+  1. Right-click "cli-ai-registry.reg"
+  2. Select "Merge" or "Open"
+  3. Confirm UAC prompt
+  4. Click "Yes" to apply changes
+
+  OR via command line:
+    reg import cli-ai-registry.reg
+
+UNINSTALL REGISTRY ENTRIES:
+  1. Right-click "cli-ai-registry-uninstall.reg"
+  2. Select "Merge" or "Open"
+  3. Confirm UAC prompt
+  4. Click "Yes" to remove entries
+
+  OR via command line:
+    reg import cli-ai-registry-uninstall.reg
+
+BACKUP REGISTRY:
+  reg export HKLM\SOFTWARE\CLI-AI cli-ai-backup.reg
+
+RESTORE REGISTRY:
+  reg import cli-ai-backup.reg
+
+================================================================================
+COMMON MODIFICATIONS
+================================================================================
+
+Enable OpenVINO:
+  reg add "HKLM\SOFTWARE\CLI-AI\Features" /v UseOpenVINO /t REG_DWORD /d 1 /f
+
+Change Bus Port:
+  reg add "HKLM\SOFTWARE\CLI-AI\Server" /v BusServerPort /t REG_DWORD /d 8088 /f
+
+Change Log Level:
+  reg add "HKCU\Software\CLI-AI\Preferences" /v LogLevel /t REG_SZ /d "DEBUG" /f
+
+Set Custom Data Directory:
+  reg add "HKLM\SOFTWARE\CLI-AI\Settings" /v DataDirectory /t REG_SZ /d "C:\CustomPath\data" /f
+
+================================================================================
+NOTES
+================================================================================
+
+- All HKLM (HKEY_LOCAL_MACHINE) modifications require Administrator privileges
+- All HKCU (HKEY_CURRENT_USER) modifications do NOT require Administrator
+- Restart applications after registry changes
+- DWORD values: 0 = disabled/false, 1 = enabled/true
+- Paths use double backslashes in .reg files (\\)
+- Environment variables available after system restart or re-login
+
+================================================================================
+For complete documentation, see: REGISTRY_DOCUMENTATION.md
+================================================================================

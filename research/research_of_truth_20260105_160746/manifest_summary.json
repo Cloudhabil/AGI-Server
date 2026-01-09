@@ -1,0 +1,47 @@
+{
+  "bundle": "research\\research_of_truth_20260105_160746",
+  "generated_at": "2026-01-05T16:07:56.032956",
+  "included_sources": [
+    "research/Riemann_Hypothesis",
+    "gpia_riemann_150beat_sprint",
+    "gpia_riemann_reasoning",
+    "riemann_proof_package",
+    "research/Hodge_Conjecture",
+    "research/phi_unified_framework",
+    "data/meta_analysis_research_program"
+  ],
+  "missing_sources": [
+    "research/Relativity",
+    "research/M_Theory"
+  ],
+  "bundle_stats": {
+    "gpia_riemann_150beat_sprint": {
+      "file_count": 1,
+      "total_bytes": 7545
+    },
+    "gpia_riemann_reasoning": {
+      "file_count": 3,
+      "total_bytes": 11737
+    },
+    "Hodge_Conjecture": {
+      "file_count": 2,
+      "total_bytes": 18441
+    },
+    "meta_analysis_research_program": {
+      "file_count": 61,
+      "total_bytes": 761487
+    },
+    "phi_unified_framework": {
+      "file_count": 14,
+      "total_bytes": 108825
+    },
+    "Riemann_Hypothesis": {
+      "file_count": 10,
+      "total_bytes": 144806
+    },
+    "riemann_proof_package": {
+      "file_count": 8,
+      "total_bytes": 92200
+    }
+  }
+}

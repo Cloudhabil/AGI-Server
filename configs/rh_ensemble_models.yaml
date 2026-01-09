@@ -1,0 +1,223 @@
+# RH Research Ensemble - Optimized Configuration
+# Hardware: Intel Core Ultra 5 (14 cores + NPU), RTX 4070 Super (12GB), 31.7GB RAM, 2TB SSD
+# Optimized for parallel processing and high throughput
+
+ensemble:
+  name: "RH Research Ensemble"
+  version: "1.0"
+  architecture: "6-agent Greek student committee + ensemble validator"
+
+  # Master coordinator
+  orchestrator:
+    budget_aware: true
+    safety_first: true
+    max_parallel_proposals: 4
+    max_parallel_students: 3
+    validation_threshold: 3_model_consensus
+    enable_npu_offloading: true
+    enable_cpu_cache: true
+
+  # Resource limits (optimized for 14-core CPU, 31.7GB RAM, 2TB SSD)
+  resources:
+    max_vram_percent: 0.90
+    vram_reserve_mb: 1024
+    max_ram_percent: 0.85
+    ram_reserve_mb: 5120  # 5GB reserve for system
+    max_cpu_percent: 0.80  # 80% of 14 cores = 11.2 cores
+    disk_write_limit_mbps: 2000  # Server SSD capable of much higher
+    disk_cache_mb: 16384  # 16GB cache for results
+
+# Student profiles (Greek alphabet order)
+students:
+
+  alpha:
+    letter: "α"
+    name: "Alpha Student"
+    model: "nous-hermes:7b"
+    size_gb: 3.8
+    role: "analytical"
+    specialization: "Deep mathematical analysis"
+    approach: "Rigorous step-by-step reasoning"
+    strengths:
+      - Complex mathematical reasoning
+      - Multi-step proof construction
+      - Identifying logical gaps
+      - Rigorous derivations
+    expertise:
+      - Hamiltonian eigenvalue correspondence
+      - GUE connection analysis
+      - Zeta function critical strip analysis
+    token_budget: 2000
+    temperature: 0.5
+    priority: high
+
+  beta:
+    letter: "β"
+    name: "Beta Student"
+    model: "qwen2-math:7b"
+    size_gb: 4.4
+    role: "creative"
+    specialization: "Creative problem-solving"
+    approach: "Novel connections between frameworks"
+    strengths:
+      - Creative analogies
+      - Cross-domain connections
+      - Intuitive problem-solving
+      - Generating new hypotheses
+    expertise:
+      - Physics analogies
+      - Information-theoretic approaches
+      - Unexpected connections
+    token_budget: 2000
+    temperature: 0.7
+    priority: high
+
+  gamma:
+    letter: "γ"
+    name: "Gamma Student"
+    model: "mistral:7b"
+    size_gb: 4.4
+    role: "pattern"
+    specialization: "Fast pattern recognition"
+    approach: "Quick heuristic exploration"
+    strengths:
+      - Fast pattern recognition
+      - Quick problem assessment
+      - Identifying surface patterns
+      - Efficient filtering
+    expertise:
+      - Zero spacing patterns
+      - Statistical regularities
+      - Spectral patterns
+    token_budget: 1200
+    temperature: 0.6
+    priority: medium
+
+  delta:
+    letter: "δ"
+    name: "Delta Student"
+    model: "llama2:7b"
+    size_gb: 3.8
+    role: "logical"
+    specialization: "Logical proof chains"
+    approach: "Formal logical development"
+    strengths:
+      - Formal proof construction
+      - Logical consistency checking
+      - Theorem-lemma chains
+      - Formal frameworks
+    expertise:
+      - Formal logic systems
+      - Proof verification
+      - Theorem dependencies
+    token_budget: 1800
+    temperature: 0.3
+    priority: high
+
+  epsilon:
+    letter: "ε"
+    name: "Epsilon Student"
+    model: "neural-chat:latest"
+    size_gb: 4.1
+    role: "learning"
+    specialization: "Dense-state pattern extraction"
+    approach: "Learning from accumulated patterns"
+    strengths:
+      - Pattern consolidation
+      - Knowledge extraction
+      - Cross-cycle learning
+      - Identifying meta-patterns
+    expertise:
+      - Pattern synthesis
+      - Meta-analysis
+      - Knowledge consolidation
+    token_budget: 1500
+    temperature: 0.6
+    priority: medium
+
+  zeta:
+    letter: "ζ"
+    name: "Zeta Student"
+    model: "codegemma:latest"
+    size_gb: 5.0
+    role: "computational"
+    specialization: "Computational verification"
+    approach: "Algorithm design and implementation"
+    strengths:
+      - Algorithm design
+      - Code generation
+      - Computational verification
+      - Implementation details
+    expertise:
+      - Algorithm efficiency
+      - Numerical methods
+      - Computational testing
+    token_budget: 1600
+    temperature: 0.3
+    priority: high
+
+# Ensemble validator configuration
+validator:
+  name: "RH Ensemble Validator"
+  models:
+    - "nous-hermes:7b"        # Primary validator (strongest reasoning)
+    - "qwen2-math:7b"         # Secondary validator (math specialist)
+    - "mistral:7b"            # Tertiary validator (fast sanity check)
+
+  consensus_rules:
+    all_agree: "HIGH"         # All 3 models agree → HIGH confidence
+    two_agree: "MEDIUM"       # 2 models agree → MEDIUM confidence
+    one_valid: "LOW"          # Only 1 valid → LOW confidence
+    none_valid: "CONFLICTED"  # Disagreement → CONFLICTED
+
+  decision_thresholds:
+    approve: "consensus_score > 70 AND confidence >= MEDIUM"
+    revise: "consensus_score 50-70 AND confidence >= MEDIUM"
+    investigate: "consensus_score 40-50"
+    reject: "consensus_score < 40"
+
+# Hardware optimization (14-core CPU with 31.7GB RAM, 12GB VRAM)
+optimization:
+  vram_strategy: "sequential_loading"   # Load one model at a time (each ~4GB)
+  parallel_students: 1                  # Run 1 student at a time (models too large for parallel)
+  cache_strategy: "aggressive_persistent"  # Cache to SSD
+  batch_proposals: true                 # Batch results for throughput
+  use_cpu_cache: true                   # Use 16GB RAM cache for intermediate results
+  npu_acceleration: true                # Use Intel AI Boost for pattern analysis
+
+# Budget allocator integration (optimized for sequential operation)
+budget_allocator:
+  enabled: true
+  mode: "learning"
+  per_proposal_token_budget: 3000     # Max tokens per proposal
+  total_cycle_budget: 18000           # Max tokens per cycle (6 students × 3000)
+  per_student_timeout_seconds: 60     # Sequential timeout per student
+  emergency_shutdown_vram: 0.95       # Shut down if VRAM exceeds
+  aggressive_learning: true            # Faster weight updates
+
+# Logging and reporting
+logging:
+  level: "INFO"
+  save_proposals: true
+  save_validations: true
+  save_cycle_reports: true
+  save_decisions: true
+  retention_days: 30
+
+# Research parameters (optimized for sequential execution)
+research:
+  cycles_per_session: 10
+  cycle_interval_seconds: 45          # Time per cycle (6 students × 7-8s each + validation)
+  proposal_timeout_seconds: 60        # Per-proposal timeout
+  validation_timeout_seconds: 30      # Ensemble validation timeout
+  learning_checkpoint_interval: 2     # Learn every 2 cycles
+  per_student_proposal_time: 8        # Expected time per student (60s ÷ 6 + validation)
+
+# Safety features (with sequential processing)
+safety:
+  max_token_limit: 3000              # Max tokens per proposal
+  proposal_size_limit_kb: 200        # Size limit for proposals
+  rate_limit: "10_per_minute"        # Overall research rate
+  graceful_degradation: true         # Degrade gracefully if model fails
+  fallback_to_basic: true            # Use basic orchestrator if allocator fails
+  vram_monitoring: true              # Monitor VRAM between students

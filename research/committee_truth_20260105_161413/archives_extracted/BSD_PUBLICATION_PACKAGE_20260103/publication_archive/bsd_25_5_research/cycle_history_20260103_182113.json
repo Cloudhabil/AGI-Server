@@ -1,0 +1,252 @@
+[
+  {
+    "cycle": 1,
+    "block": 1,
+    "phase": "baseline",
+    "rigor_score": 0.65,
+    "rigor_delta": 0.0,
+    "unargued_claims": 13,
+    "focus": "Weierstrass models and curve isomorphisms",
+    "timestamp": "2026-01-03T18:21:13.730506"
+  },
+  {
+    "cycle": 2,
+    "block": 1,
+    "phase": "baseline",
+    "rigor_score": 0.67,
+    "rigor_delta": 0.020000000000000018,
+    "unargued_claims": 12,
+    "focus": "Group law on elliptic curves (chord-tangent addition)",
+    "timestamp": "2026-01-03T18:21:13.730520"
+  },
+  {
+    "cycle": 3,
+    "block": 1,
+    "phase": "baseline",
+    "rigor_score": 0.68,
+    "rigor_delta": 0.010000000000000009,
+    "unargued_claims": 11,
+    "focus": "Torsion subgroups and point enumeration",
+    "timestamp": "2026-01-03T18:21:13.730524"
+  },
+  {
+    "cycle": 4,
+    "block": 1,
+    "phase": "baseline",
+    "rigor_score": 0.7,
+    "rigor_delta": 0.019999999999999907,
+    "unargued_claims": 10,
+    "focus": "Endomorphisms, isogenies, and j-invariant",
+    "timestamp": "2026-01-03T18:21:13.730526"
+  },
+  {
+    "cycle": 5,
+    "block": 1,
+    "phase": "baseline",
+    "rigor_score": 0.71,
+    "rigor_delta": 0.010000000000000009,
+    "unargued_claims": 10,
+    "focus": "Discriminant, conductor, and reduction types",
+    "timestamp": "2026-01-03T18:21:13.730529"
+  },
+  {
+    "cycle": 6,
+    "block": 2,
+    "phase": "baseline",
+    "rigor_score": 0.72,
+    "rigor_delta": 0.010000000000000009,
+    "unargued_claims": 10,
+    "focus": "Modular forms and Hecke operators",
+    "timestamp": "2026-01-03T18:21:13.730548"
+  },
+  {
+    "cycle": 7,
+    "block": 2,
+    "phase": "baseline",
+    "rigor_score": 0.73,
+    "rigor_delta": 0.010000000000000009,
+    "unargued_claims": 9,
+    "focus": "Mellin transform connecting modular forms to L-functions",
+    "timestamp": "2026-01-03T18:21:13.730551"
+  },
+  {
+    "cycle": 8,
+    "block": 2,
+    "phase": "baseline",
+    "rigor_score": 0.74,
+    "rigor_delta": 0.010000000000000009,
+    "unargued_claims": 9,
+    "focus": "Modularity theorem (Wiles/Taylor-Wiles) statement",
+    "timestamp": "2026-01-03T18:21:13.730554"
+  },
+  {
+    "cycle": 9,
+    "block": 2,
+    "phase": "baseline",
+    "rigor_score": 0.75,
+    "rigor_delta": 0.010000000000000009,
+    "unargued_claims": 8,
+    "focus": "L-function Euler product and convergence",
+    "timestamp": "2026-01-03T18:21:13.730556"
+  },
+  {
+    "cycle": 10,
+    "block": 2,
+    "phase": "baseline",
+    "rigor_score": 0.76,
+    "rigor_delta": 0.010000000000000009,
+    "unargued_claims": 8,
+    "focus": "Complex analytic properties and functional equation",
+    "timestamp": "2026-01-03T18:21:13.730558"
+  },
+  {
+    "cycle": 11,
+    "block": 3,
+    "phase": "baseline",
+    "rigor_score": 0.77,
+    "rigor_delta": 0.010000000000000009,
+    "unargued_claims": 8,
+    "focus": "Heegner points and their role",
+    "timestamp": "2026-01-03T18:21:13.730581"
+  },
+  {
+    "cycle": 12,
+    "block": 3,
+    "phase": "baseline",
+    "rigor_score": 0.78,
+    "rigor_delta": 0.010000000000000009,
+    "unargued_claims": 7,
+    "focus": "Kolyvagin-Gross-Zagier theorem on analytic rank vs algebraic rank",
+    "timestamp": "2026-01-03T18:21:13.730583"
+  },
+  {
+    "cycle": 13,
+    "block": 3,
+    "phase": "baseline",
+    "rigor_score": 0.79,
+    "rigor_delta": 0.010000000000000009,
+    "unargued_claims": 7,
+    "focus": "Rank 0 case (L(E,1) \u2260 0 implies rank 0)",
+    "timestamp": "2026-01-03T18:21:13.730585"
+  },
+  {
+    "cycle": 14,
+    "block": 3,
+    "phase": "baseline",
+    "rigor_score": 0.8,
+    "rigor_delta": 0.010000000000000009,
+    "unargued_claims": 6,
+    "focus": "Rank 1 + complex multiplication case (complete proof)",
+    "timestamp": "2026-01-03T18:21:13.730588"
+  },
+  {
+    "cycle": 15,
+    "block": 3,
+    "phase": "baseline",
+    "rigor_score": 0.81,
+    "rigor_delta": 0.010000000000000009,
+    "unargued_claims": 6,
+    "focus": "Tamagawa numbers and local factors",
+    "timestamp": "2026-01-03T18:21:13.730590"
+  },
+  {
+    "cycle": 16,
+    "block": 4,
+    "phase": "baseline",
+    "rigor_score": 0.82,
+    "rigor_delta": 0.009999999999999898,
+    "unargued_claims": 6,
+    "focus": "Neron-Tate height pairing on Mordell-Weil",
+    "timestamp": "2026-01-03T18:21:13.730623"
+  },
+  {
+    "cycle": 17,
+    "block": 4,
+    "phase": "baseline",
+    "rigor_score": 0.825,
+    "rigor_delta": 0.0050000000000000044,
+    "unargued_claims": 5,
+    "focus": "Height functions: canonical vs naive heights",
+    "timestamp": "2026-01-03T18:21:13.730626"
+  },
+  {
+    "cycle": 18,
+    "block": 4,
+    "phase": "baseline",
+    "rigor_score": 0.835,
+    "rigor_delta": 0.010000000000000009,
+    "unargued_claims": 5,
+    "focus": "Regulator matrix determinant (measures generator independence)",
+    "timestamp": "2026-01-03T18:21:13.730628"
+  },
+  {
+    "cycle": 19,
+    "block": 4,
+    "phase": "baseline",
+    "rigor_score": 0.84,
+    "rigor_delta": 0.0050000000000000044,
+    "unargued_claims": 4,
+    "focus": "Heights as 'energy functional' on E(Q)",
+    "timestamp": "2026-01-03T18:21:13.730630"
+  },
+  {
+    "cycle": 20,
+    "block": 4,
+    "phase": "baseline",
+    "rigor_score": 0.845,
+    "rigor_delta": 0.0050000000000000044,
+    "unargued_claims": 4,
+    "focus": "Height bounds and descent calculations",
+    "timestamp": "2026-01-03T18:21:13.730632"
+  },
+  {
+    "cycle": 21,
+    "block": 5,
+    "phase": "baseline",
+    "rigor_score": 0.85,
+    "rigor_delta": 0.0050000000000000044,
+    "unargued_claims": 4,
+    "focus": "Critical point s=1 and its significance",
+    "timestamp": "2026-01-03T18:21:13.730644"
+  },
+  {
+    "cycle": 22,
+    "block": 5,
+    "phase": "baseline",
+    "rigor_score": 0.855,
+    "rigor_delta": 0.0050000000000000044,
+    "unargued_claims": 3,
+    "focus": "Conductor and sign of functional equation",
+    "timestamp": "2026-01-03T18:21:13.730646"
+  },
+  {
+    "cycle": 23,
+    "block": 5,
+    "phase": "baseline",
+    "rigor_score": 0.857,
+    "rigor_delta": 0.0020000000000000018,
+    "unargued_claims": 2,
+    "focus": "Bloch-Beilinson conjectures on critical values",
+    "timestamp": "2026-01-03T18:21:13.730648"
+  },
+  {
+    "cycle": 24,
+    "block": 5,
+    "phase": "baseline",
+    "rigor_score": 0.86,
+    "rigor_delta": 0.0030000000000000027,
+    "unargued_claims": 2,
+    "focus": "Vanishing order of L(E,s) at s=1",
+    "timestamp": "2026-01-03T18:21:13.730650"
+  },
+  {
+    "cycle": 25,
+    "block": 5,
+    "phase": "baseline",
+    "rigor_score": 0.85,
+    "rigor_delta": -0.010000000000000009,
+    "unargued_claims": 1,
+    "focus": "Connection to arithmetic: why ord_s=1(L) = rank",
+    "timestamp": "2026-01-03T18:21:13.730652"
+  }
+]

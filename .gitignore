@@ -96,3 +96,20 @@ tests_real_conditions_output/
 *.safetensors
 sha256-*
 todo-scan-*.txt
+
+# SECURITY: Sensitive/Confidential Data
+snowden-archive-master/
+memory/
+*.log
+*.db
+nul
+models/manifests/
+gpia/memory/
+skills/conscience/memory/store/
+agents/sessions/
+conversations/
+governor/policy_engine_v1/
+
+# Path too long issues (Windows)
+research/committee_truth_20260105_161413/archives_extracted_all/
+retrospective-research/

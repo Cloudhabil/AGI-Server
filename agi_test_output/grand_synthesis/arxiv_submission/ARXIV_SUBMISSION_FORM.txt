@@ -1,0 +1,37 @@
+ARXIV SUBMISSION FORM
+====================
+
+Title: 
+Project Alpha: The Grand Synthesis of Spectral Number Theory 
+and Fundamental Physical Constants
+
+Authors:
+Elias Oulad Brahim
+Cloudhabil, Barcelona
+
+Contact: obe@cloudhabil.com
+
+Abstract:
+We present a comprehensive study integrating spectral number theory, random matrix 
+theory, and quantum mechanics to advance Riemann Hypothesis research. Through Phase 2C 
+Hamiltonian construction with multiple potential forms (quartic, Morse, exponential), 
+we demonstrate eigenvalue convergence and extract dimensionless coupling constants from 
+spectral structures. Sub-Poissonian spacing of zeta zeros is confirmed as a fundamental 
+"spectral blueprint" for quantum mechanical systems. The discovery process is 
+documented with immutable VNAND resonance hashes (49 SHA256) enabling complete 
+reproducibility. This work establishes 2026 priority for the unified theory connecting 
+spectral number theory to fundamental physical constants.
+
+Categories (choose primary):
+PRIMARY: math.NT (Number Theory)
+SECONDARY: math-ph (Mathematical Physics), physics.quant-ph (Quantum Physics)
+
+Keywords:
+Riemann Hypothesis, Spectral Analysis, Hamiltonian Eigenvalues, 
+Random Matrix Theory, Dimensionless Constants, Berry-Keating Quantum Interpretation
+
+Funding/Support:
+None
+
+Comments:
+Complete audit trail with VNAND hashes and execution logs provided in supplementary files.

@@ -1,0 +1,42 @@
+# Genesis Self-Reflection Skill - Meta-Analysis of GPIA's Own Work
+id: "genesis-self-reflection-sbi"
+version: "1.0.0"
+name: "Genesis Self-Reflection (SBI)"
+description: "GPIA introspects on her own papers to map closed vs. open scientific fields. Validates her claims, identifies what has been resolved, and defines research frontiers."
+
+category: "reasoning"
+tags: [meta-analysis, self-reflection, science-topology, genesis, self-awareness, sbi]
+level: "expert"
+
+load_weight: "heavy"
+entry_point: "skill.py:GenesisSelfReflection"
+
+requires:
+  - skill_id: "arxiv-paper-synthesizer-sbi"
+    optional: false
+    reason: "Validates GPIA's own claims through Hunter→Dissector→Synthesizer"
+  - skill_id: "synthesized/synthesizer"
+    optional: true
+    reason: "Generates final topology documents"
+
+capabilities:
+  - capability_id: "introspect_papers"
+    description: "Analyze GPIA's own papers to identify claims and evidence"
+  - capability_id: "validate_claims"
+    description: "Run arxiv-paper-synthesizer on GPIA's work to validate arguments"
+  - capability_id: "map_closed_fields"
+    description: "Identify fields of science GPIA has definitively closed"
+  - capability_id: "map_open_frontiers"
+    description: "Identify remaining open research questions and frontiers"
+  - capability_id: "generate_science_topology"
+    description: "Synthesize complete closed/open topology document"
+  - capability_id: "self_critique"
+    description: "Generate honest assessment of GPIA's limitations and blind spots"
+
+permissions:
+  filesystem: "readwrite"
+  network: ["arxiv.org"]
+  shell: "none"
+  llm: "all"
+
+scaling: "L3"  # Meta-orchestrator level

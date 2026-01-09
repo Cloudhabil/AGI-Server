@@ -1,0 +1,21 @@
+{
+  "capsule_id": "cap_29b16dbc09a9",
+  "task": "Gap 6 Research: Infinity Folding p-adic Regulators - Cycle 18",
+  "agent_id": "gap6_infinity_folding_18",
+  "state": "active",
+  "context": {
+    "vector": "infinity_folding",
+    "cycle": 18,
+    "phase": "baseline",
+    "target": "Explicit regulator computation for rank >= 3",
+    "current_progress": 0.1
+  },
+  "assists": [],
+  "passes": [],
+  "created_at": "2026-01-05T02:42:49.330436",
+  "updated_at": "2026-01-05T02:42:49.330462",
+  "parent_capsule_id": null,
+  "attempt_count": 0,
+  "max_attempts": 3,
+  "max_depth": 5
+}

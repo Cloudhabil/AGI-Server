@@ -1,0 +1,536 @@
+{
+  "bundle": "research\\committee_truth_20260105_161413",
+  "generated_at": "2026-01-05T16:14:13.425113",
+  "pattern": "(Clay Mathematics|Clay|Millennium Prize|Millennium|Nobel|arXiv|peer review|journal|publication|manuscript|submission|scientific society|mathematical society|Royal Society|academy|committee|prize)",
+  "archive_name_pattern": "arxiv|proof|submission|package|clay|nobel|millennium|journal|paper|manuscript|prize",
+  "included_count": 225,
+  "missing_count": 0,
+  "missing": [],
+  "included_files": [
+    "arxiv_submission\\LICENSE_TUL.md",
+    "arxiv_submission\\README.md",
+    "arxiv_submission_package\\LICENSE_TUL.md",
+    "arxiv_submission_package\\MANIFEST.txt",
+    "arxiv_submission_package\\README.md",
+    "data\\bsd_25_5_research\\block_3_closure.md",
+    "data\\bsd_25_5_research\\bsd_extended_orchestrator.py",
+    "data\\bsd_25_5_research\\phase_3_report_20260103_182158.json",
+    "data\\bsd_consolidated_20260105_152522\\bsd_25_5_research\\block_3_closure.md",
+    "data\\bsd_consolidated_20260105_152522\\bsd_25_5_research\\bsd_extended_orchestrator.py",
+    "data\\bsd_consolidated_20260105_152522\\bsd_25_5_research\\phase_3_report_20260103_182158.json",
+    "data\\bsd_consolidated_20260105_152522\\bsd_gap6_crystallization\\arxiv_md\\gap6_synthesis.md",
+    "data\\bsd_consolidated_20260105_152522\\bsd_gap6_crystallization\\prize_eligibility_packet\\01_statement.tex",
+    "data\\bsd_consolidated_20260105_152522\\bsd_gap6_crystallization\\prize_eligibility_packet\\02_dependency_graph.md",
+    "data\\bsd_consolidated_20260105_152522\\bsd_gap6_crystallization\\prize_eligibility_packet\\03_gap6_closure.tex",
+    "data\\bsd_consolidated_20260105_152522\\bsd_gap6_crystallization\\prize_eligibility_packet\\03_gap6_closure_template.tex",
+    "data\\bsd_consolidated_20260105_152522\\bsd_gap6_crystallization\\prize_eligibility_packet\\04_reproducibility\\README.md",
+    "data\\bsd_consolidated_20260105_152522\\bsd_gap6_crystallization\\prize_eligibility_packet\\README.md",
+    "data\\bsd_consolidated_20260105_152522\\bsd_gap6_crystallization\\prize_eligibility_packet\\RIGOR_REVIEW.md",
+    "data\\bsd_consolidated_20260105_152522\\manifest_summary.json",
+    "data\\bsd_gap6_crystallization\\arxiv_md\\gap6_synthesis.md",
+    "data\\bsd_gap6_crystallization\\prize_eligibility_packet\\01_statement.tex",
+    "data\\bsd_gap6_crystallization\\prize_eligibility_packet\\02_dependency_graph.md",
+    "data\\bsd_gap6_crystallization\\prize_eligibility_packet\\03_gap6_closure.tex",
+    "data\\bsd_gap6_crystallization\\prize_eligibility_packet\\03_gap6_closure_template.tex",
+    "data\\bsd_gap6_crystallization\\prize_eligibility_packet\\04_reproducibility\\README.md",
+    "data\\bsd_gap6_crystallization\\prize_eligibility_packet\\README.md",
+    "data\\bsd_gap6_crystallization\\prize_eligibility_packet\\RIGOR_REVIEW.md",
+    "data\\documentation_refinement\\cycle_021\\metrics.json",
+    "data\\documentation_refinement\\cycle_022\\metrics.json",
+    "data\\documentation_refinement\\cycle_023\\metrics.json",
+    "data\\documentation_refinement\\cycle_024\\metrics.json",
+    "data\\documentation_refinement\\cycle_025\\metrics.json",
+    "data\\documentation_refinement\\cycle_026\\metrics.json",
+    "data\\documentation_refinement\\cycle_027\\metrics.json",
+    "data\\documentation_refinement\\cycle_028\\metrics.json",
+    "data\\documentation_refinement\\cycle_029\\metrics.json",
+    "data\\documentation_refinement\\cycle_030\\metrics.json",
+    "data\\documentation_refinement\\cycle_history.json",
+    "data\\documentation_refinement\\REFINEMENT_REPORT.md",
+    "data\\genesis_science_topology\\reasoning.jsonl",
+    "data\\gpia_outputs\\cap_1767526723774.md",
+    "data\\gpia_outputs\\cap_1767526773519.md",
+    "data\\gpia_outputs\\cap_1767527100565.md",
+    "data\\meta_analysis_research_program\\execution_plan_20260104_004215.json",
+    "data\\meta_analysis_research_program\\modules\\bsd_cycle_26_historical_overview.md",
+    "data\\meta_analysis_research_program\\modules\\bsd_cycle_27_major_approaches.md",
+    "data\\meta_analysis_research_program\\modules\\bsd_cycle_28_computational_evidence.md",
+    "data\\meta_analysis_research_program\\modules\\bsd_cycle_29_theoretical_knowledge.md",
+    "data\\meta_analysis_research_program\\modules\\bsd_cycle_30_historical_synthesis.md",
+    "data\\meta_analysis_research_program\\modules\\bsd_cycle_35_barrier_synthesis.md",
+    "data\\meta_analysis_research_program\\modules\\bsd_cycle_40_knowledge_synthesis.md",
+    "data\\meta_analysis_research_program\\modules\\bsd_cycle_48_rh_integration.md",
+    "data\\meta_analysis_research_program\\modules\\bsd_cycle_50_complete_synthesis.md",
+    "data\\meta_analysis_research_program\\modules\\bsd_cycle_50_final_synthesis.md",
+    "data\\meta_analysis_research_program\\modules\\riemann_cycle_1.md",
+    "data\\meta_analysis_research_program\\modules\\riemann_cycle_10_barrier_consolidation.md",
+    "data\\meta_analysis_research_program\\modules\\riemann_cycle_11_unconditional_theorems.md",
+    "data\\meta_analysis_research_program\\modules\\riemann_cycle_12_conditional_theorems.md",
+    "data\\meta_analysis_research_program\\modules\\riemann_cycle_13_numerical_evidence.md",
+    "data\\meta_analysis_research_program\\modules\\riemann_cycle_14_theoretical_understanding.md",
+    "data\\meta_analysis_research_program\\modules\\riemann_cycle_15_knowledge_synthesis.md",
+    "data\\meta_analysis_research_program\\modules\\riemann_cycle_16_location_gap.md",
+    "data\\meta_analysis_research_program\\modules\\riemann_cycle_17_mechanism_gap.md",
+    "data\\meta_analysis_research_program\\modules\\riemann_cycle_18_infinity_gap.md",
+    "data\\meta_analysis_research_program\\modules\\riemann_cycle_19_proof_strategy_gap.md",
+    "data\\meta_analysis_research_program\\modules\\riemann_cycle_2.md",
+    "data\\meta_analysis_research_program\\modules\\riemann_cycle_20_gap_synthesis.md",
+    "data\\meta_analysis_research_program\\modules\\riemann_cycle_21_new_mathematics_required.md",
+    "data\\meta_analysis_research_program\\modules\\riemann_cycle_22_existing_foundation.md",
+    "data\\meta_analysis_research_program\\modules\\riemann_cycle_23_feasibility_timeline.md",
+    "data\\meta_analysis_research_program\\modules\\riemann_cycle_24_alternative_paths.md",
+    "data\\meta_analysis_research_program\\modules\\riemann_cycle_25_complete_synthesis.md",
+    "data\\meta_analysis_research_program\\modules\\riemann_cycle_3.md",
+    "data\\meta_analysis_research_program\\modules\\riemann_cycle_4.md",
+    "data\\meta_analysis_research_program\\modules\\riemann_cycle_5_historical_synthesis.md",
+    "data\\meta_analysis_research_program\\modules\\riemann_cycle_6_coupling_problem.md",
+    "data\\meta_analysis_research_program\\modules\\riemann_cycle_7_computational_gap.md",
+    "data\\meta_analysis_research_program\\modules\\riemann_cycle_8_connection_problem.md",
+    "data\\meta_analysis_research_program\\modules\\riemann_cycle_9_obstacle_synthesis.md",
+    "data\\meta_analysis_research_program\\phi_rigorization_output\\cycle_4b_unification_research_framework.md",
+    "data\\phase_1_credibility\\cycle_history_20260104_000602.json",
+    "data\\phase_1_credibility\\cycle_history_20260104_000918.json",
+    "data\\phase_1_credibility\\cycle_history_20260104_001053.json",
+    "data\\phase_1_credibility\\cycle_history_20260104_001137.json",
+    "data\\phase_1_credibility\\cycle_history_20260104_001218.json",
+    "data\\phase_1_credibility\\cycle_history_20260104_001259.json",
+    "data\\phase_1_credibility\\cycle_history_20260104_001458.json",
+    "data\\phase_2_infrastructure\\cycle_history_20260104_002209.json",
+    "data\\smart_refinement_25_5\\SMART_REFINEMENT_REPORT.json",
+    "data\\standard_refinement\\STANDARD_REFINEMENT_REPORT.json",
+    "data\\vnand\\blocks\\block_0.bin",
+    "docs\\berry_keating_research_direction.md",
+    "docs\\DELIVERABLES_AND_STATUS.md",
+    "docs\\KEY_FINDINGS_SUMMARY.md",
+    "docs\\PHASE2_STATUS_REPORT.md",
+    "docs\\POST_SPRINT_SYNTHESIS.md",
+    "docs\\PRE_PHASE_2_VERIFICATION_RESULTS.md",
+    "docs\\STANDARD_REFINEMENT_GUIDE.md",
+    "docs\\VERIFICATION_SUMMARY.txt",
+    "gpia_riemann_150beat_sprint\\master_report_20260103_170817.json",
+    "publication_archive\\bsd_25_5_research\\phase_3_report_20260103_182158.json",
+    "publication_archive\\BSD_CONJECTURE_SPECIFICATION.md",
+    "publication_archive\\bsd_phase3_targeted_refinement.py",
+    "publication_archive\\BSD_PROOF_MANUSCRIPT.tex",
+    "publication_archive\\bsd_research_orchestrator.py",
+    "publication_archive\\BSD_VALIDATION_REPORT.md",
+    "publication_archive\\GENESIS_VALIDATION_REQUEST.md",
+    "publication_archive\\PUBLICATION_PACKAGE_README.md",
+    "research\\_archives.txt",
+    "research\\_committee_matches.txt",
+    "research\\BSD_Conjecture\\BSD_CONJECTURE_SPECIFICATION.md",
+    "research\\BSD_Conjecture\\BSD_PROOF_MANUSCRIPT.tex",
+    "research\\BSD_Conjecture\\BSD_PROOF_MANUSCRIPT.tex.backup",
+    "research\\BSD_Conjecture\\BSD_VALIDATION_REPORT.md",
+    "research\\Documentation\\AGENTS.md",
+    "research\\Documentation\\CLAUDE.md",
+    "research\\Documentation\\LICENSE_TUL.md",
+    "research\\Documentation\\PUBLICATION_PACKAGE_README.md",
+    "research\\Documentation\\PUBLICATION_STRATEGY.md",
+    "research\\Documentation\\REGISTRY_DOCUMENTATION.md",
+    "research\\Documentation\\REGISTRY_KEYS_SUMMARY.txt",
+    "research\\General_Research\\META_ANALYSIS_EXECUTION_STARTED.md",
+    "research\\General_Research\\META_ANALYSIS_RESEARCH_PROGRAM_BRIEFING.md",
+    "research\\General_Research\\META_RESEARCH_PRECALIBRATION_BRIEFING.md",
+    "research\\General_Research\\RESEARCH_COMPLETION_SUMMARY.md",
+    "research\\Hodge_Conjecture\\HODGE_CONJECTURE_ATTACK_PLAN.md",
+    "research\\Hodge_Conjecture\\HODGE_PROOF_SUMMARY.md",
+    "research\\Methodology_and_Engines\\bsd_research_orchestrator.py",
+    "research\\Methodology_and_Engines\\hodge_research_orchestrator.py",
+    "research\\Methodology_and_Engines\\integrated_rh_researcher.py",
+    "research\\Methodology_and_Engines\\meta_analysis_research_program_orchestrator.py",
+    "research\\Methodology_and_Engines\\rh_cross_validation_hub.py",
+    "research\\Methodology_and_Engines\\Sovereign_AGI_Audit.py",
+    "research\\phi_unified_framework\\cycle_4b_unification_research_framework.md",
+    "research\\Project_Management\\COMPLETION_SUMMARY.txt",
+    "research\\Project_Management\\EXPERT_REVIEWERS.md",
+    "research\\Project_Management\\FINAL_DELIVERY_STATUS.txt",
+    "research\\Project_Management\\FINAL_PROJECT_SUMMARY.md",
+    "research\\Project_Management\\GENESIS_VALIDATION_REQUEST.md",
+    "research\\Project_Management\\GPIA_CREDIBILITY_AND_RESEARCH_PLAN.md",
+    "research\\Project_Management\\GPIA_CREDIBILITY_PROJECT_COMPLETE.md",
+    "research\\Project_Management\\GPIA_REAL_POTENTIAL.md",
+    "research\\Project_Management\\GPIA_VISION_2026.md",
+    "research\\Project_Management\\IMPLEMENTATION_COMPLETE_PHASE_3_READY.md",
+    "research\\Project_Management\\MILLION_DOLLAR_ROADMAP.md",
+    "research\\Project_Management\\PHASE_1_EXECUTION_STATUS.md",
+    "research\\Project_Management\\PHASE_1_TASK_BRIEFING.md",
+    "research\\Project_Management\\PHASE_2_EXECUTION_BRIEFING.md",
+    "research\\Project_Management\\PHASE_2_INFRASTRUCTURE_BRIEFING.md",
+    "research\\Project_Management\\PHASE_2_INFRASTRUCTURE_REPORT.md",
+    "research\\Project_Management\\PROJECT_STATUS_PHASE_3_COMMENCED.md",
+    "research\\Project_Management\\PUBLICATION_COMPLETE_SUMMARY.md",
+    "research\\Project_Management\\STANDARD_REFINEMENT_SUMMARY.txt",
+    "research\\research_of_truth_20260105_160746\\gpia_riemann_150beat_sprint\\master_report_20260103_170817.json",
+    "research\\research_of_truth_20260105_160746\\Hodge_Conjecture\\HODGE_CONJECTURE_ATTACK_PLAN.md",
+    "research\\research_of_truth_20260105_160746\\Hodge_Conjecture\\HODGE_PROOF_SUMMARY.md",
+    "research\\research_of_truth_20260105_160746\\meta_analysis_research_program\\execution_plan_20260104_004215.json",
+    "research\\research_of_truth_20260105_160746\\meta_analysis_research_program\\modules\\bsd_cycle_26_historical_overview.md",
+    "research\\research_of_truth_20260105_160746\\meta_analysis_research_program\\modules\\bsd_cycle_27_major_approaches.md",
+    "research\\research_of_truth_20260105_160746\\meta_analysis_research_program\\modules\\bsd_cycle_28_computational_evidence.md",
+    "research\\research_of_truth_20260105_160746\\meta_analysis_research_program\\modules\\bsd_cycle_29_theoretical_knowledge.md",
+    "research\\research_of_truth_20260105_160746\\meta_analysis_research_program\\modules\\bsd_cycle_30_historical_synthesis.md",
+    "research\\research_of_truth_20260105_160746\\meta_analysis_research_program\\modules\\bsd_cycle_35_barrier_synthesis.md",
+    "research\\research_of_truth_20260105_160746\\meta_analysis_research_program\\modules\\bsd_cycle_40_knowledge_synthesis.md",
+    "research\\research_of_truth_20260105_160746\\meta_analysis_research_program\\modules\\bsd_cycle_48_rh_integration.md",
+    "research\\research_of_truth_20260105_160746\\meta_analysis_research_program\\modules\\bsd_cycle_50_complete_synthesis.md",
+    "research\\research_of_truth_20260105_160746\\meta_analysis_research_program\\modules\\bsd_cycle_50_final_synthesis.md",
+    "research\\research_of_truth_20260105_160746\\meta_analysis_research_program\\modules\\riemann_cycle_1.md",
+    "research\\research_of_truth_20260105_160746\\meta_analysis_research_program\\modules\\riemann_cycle_10_barrier_consolidation.md",
+    "research\\research_of_truth_20260105_160746\\meta_analysis_research_program\\modules\\riemann_cycle_11_unconditional_theorems.md",
+    "research\\research_of_truth_20260105_160746\\meta_analysis_research_program\\modules\\riemann_cycle_12_conditional_theorems.md",
+    "research\\research_of_truth_20260105_160746\\meta_analysis_research_program\\modules\\riemann_cycle_13_numerical_evidence.md",
+    "research\\research_of_truth_20260105_160746\\meta_analysis_research_program\\modules\\riemann_cycle_14_theoretical_understanding.md",
+    "research\\research_of_truth_20260105_160746\\meta_analysis_research_program\\modules\\riemann_cycle_15_knowledge_synthesis.md",
+    "research\\research_of_truth_20260105_160746\\meta_analysis_research_program\\modules\\riemann_cycle_16_location_gap.md",
+    "research\\research_of_truth_20260105_160746\\meta_analysis_research_program\\modules\\riemann_cycle_17_mechanism_gap.md",
+    "research\\research_of_truth_20260105_160746\\meta_analysis_research_program\\modules\\riemann_cycle_18_infinity_gap.md",
+    "research\\research_of_truth_20260105_160746\\meta_analysis_research_program\\modules\\riemann_cycle_19_proof_strategy_gap.md",
+    "research\\research_of_truth_20260105_160746\\meta_analysis_research_program\\modules\\riemann_cycle_2.md",
+    "research\\research_of_truth_20260105_160746\\meta_analysis_research_program\\modules\\riemann_cycle_20_gap_synthesis.md",
+    "research\\research_of_truth_20260105_160746\\meta_analysis_research_program\\modules\\riemann_cycle_21_new_mathematics_required.md",
+    "research\\research_of_truth_20260105_160746\\meta_analysis_research_program\\modules\\riemann_cycle_22_existing_foundation.md",
+    "research\\research_of_truth_20260105_160746\\meta_analysis_research_program\\modules\\riemann_cycle_23_feasibility_timeline.md",
+    "research\\research_of_truth_20260105_160746\\meta_analysis_research_program\\modules\\riemann_cycle_24_alternative_paths.md",
+    "research\\research_of_truth_20260105_160746\\meta_analysis_research_program\\modules\\riemann_cycle_25_complete_synthesis.md",
+    "research\\research_of_truth_20260105_160746\\meta_analysis_research_program\\modules\\riemann_cycle_3.md",
+    "research\\research_of_truth_20260105_160746\\meta_analysis_research_program\\modules\\riemann_cycle_4.md",
+    "research\\research_of_truth_20260105_160746\\meta_analysis_research_program\\modules\\riemann_cycle_5_historical_synthesis.md",
+    "research\\research_of_truth_20260105_160746\\meta_analysis_research_program\\modules\\riemann_cycle_6_coupling_problem.md",
+    "research\\research_of_truth_20260105_160746\\meta_analysis_research_program\\modules\\riemann_cycle_7_computational_gap.md",
+    "research\\research_of_truth_20260105_160746\\meta_analysis_research_program\\modules\\riemann_cycle_8_connection_problem.md",
+    "research\\research_of_truth_20260105_160746\\meta_analysis_research_program\\modules\\riemann_cycle_9_obstacle_synthesis.md",
+    "research\\research_of_truth_20260105_160746\\meta_analysis_research_program\\phi_rigorization_output\\cycle_4b_unification_research_framework.md",
+    "research\\research_of_truth_20260105_160746\\phi_unified_framework\\cycle_4b_unification_research_framework.md",
+    "research\\research_of_truth_20260105_160746\\Riemann_Hypothesis\\MODULE_1_RIEMANN_EXECUTION_PLAN.md",
+    "research\\research_of_truth_20260105_160746\\Riemann_Hypothesis\\RH_ENSEMBLE_QUICK_START.md",
+    "research\\research_of_truth_20260105_160746\\Riemann_Hypothesis\\RH_META_PROFESSOR_INTEGRATION.md",
+    "research\\research_of_truth_20260105_160746\\Riemann_Hypothesis\\RH_META_PROFESSOR_QUICK_START.md",
+    "research\\research_of_truth_20260105_160746\\Riemann_Hypothesis\\RIEMANN_PROJECT_INDEX.md",
+    "research\\research_of_truth_20260105_160746\\Riemann_Hypothesis\\RIEMANN_PROOF_FINAL_MANUSCRIPT.tex",
+    "research\\research_of_truth_20260105_160746\\Riemann_Hypothesis\\RIEMANN_PROOF_FINAL_MANUSCRIPT.tex.backup",
+    "research\\research_of_truth_20260105_160746\\riemann_proof_package\\FINAL_DELIVERY_STATUS.txt",
+    "research\\research_of_truth_20260105_160746\\riemann_proof_package\\gpia_energy_minimization_sprint\\master_report_20260103_171104.json",
+    "research\\research_of_truth_20260105_160746\\riemann_proof_package\\gpia_riemann_150beat_sprint\\master_report_20260103_170817.json",
+    "research\\research_of_truth_20260105_160746\\riemann_proof_package\\README.txt",
+    "research\\research_of_truth_20260105_160746\\riemann_proof_package\\RESEARCH_COMPLETION_SUMMARY.md",
+    "research\\research_of_truth_20260105_160746\\riemann_proof_package\\RIEMANN_PROJECT_INDEX.md",
+    "research\\research_of_truth_20260105_160746\\riemann_proof_package\\RIEMANN_PROOF_FINAL_MANUSCRIPT.tex",
+    "research\\research_of_truth_20260105_160746\\riemann_proof_package\\VERIFICATION_CHECKLIST.txt",
+    "research\\Riemann_Hypothesis\\MODULE_1_RIEMANN_EXECUTION_PLAN.md",
+    "research\\Riemann_Hypothesis\\RH_ENSEMBLE_QUICK_START.md",
+    "research\\Riemann_Hypothesis\\RH_META_PROFESSOR_INTEGRATION.md",
+    "research\\Riemann_Hypothesis\\RH_META_PROFESSOR_QUICK_START.md",
+    "research\\Riemann_Hypothesis\\RIEMANN_PROJECT_INDEX.md",
+    "research\\Riemann_Hypothesis\\RIEMANN_PROOF_FINAL_MANUSCRIPT.tex",
+    "research\\Riemann_Hypothesis\\RIEMANN_PROOF_FINAL_MANUSCRIPT.tex.backup",
+    "riemann_proof_package\\FINAL_DELIVERY_STATUS.txt",
+    "riemann_proof_package\\gpia_energy_minimization_sprint\\master_report_20260103_171104.json",
+    "riemann_proof_package\\gpia_riemann_150beat_sprint\\master_report_20260103_170817.json",
+    "riemann_proof_package\\README.txt",
+    "riemann_proof_package\\RESEARCH_COMPLETION_SUMMARY.md",
+    "riemann_proof_package\\RIEMANN_PROJECT_INDEX.md",
+    "riemann_proof_package\\RIEMANN_PROOF_FINAL_MANUSCRIPT.tex",
+    "riemann_proof_package\\VERIFICATION_CHECKLIST.txt"
+  ],
+  "archives_extracted": [
+    {
+      "archive": "C:\\Users\\usuario\\Business\\CLI_A1_GHR\\CLI-main\\agi_test_output\\grand_synthesis\\arxiv_submission.zip",
+      "extracted_to": "research\\committee_truth_20260105_161413\\archives_extracted\\arxiv_submission",
+      "file_count": 7
+    },
+    {
+      "archive": "C:\\Users\\usuario\\Business\\CLI_A1_GHR\\CLI-main\\research\\Archives_and_Packages\\agi_test_output.zip",
+      "extracted_to": "research\\committee_truth_20260105_161413\\archives_extracted\\agi_test_output",
+      "file_count": 20
+    },
+    {
+      "archive": "C:\\Users\\usuario\\Business\\CLI_A1_GHR\\CLI-main\\research\\Archives_and_Packages\\arxiv_submission_package.tar.gz",
+      "extracted_to": "research\\committee_truth_20260105_161413\\archives_extracted\\arxiv_submission_package",
+      "file_count": 9
+    },
+    {
+      "archive": "C:\\Users\\usuario\\Business\\CLI_A1_GHR\\CLI-main\\research\\Archives_and_Packages\\ELIAS_OULAD_BRAHIM_GENESIS_ARXIV.zip",
+      "extracted_to": "research\\committee_truth_20260105_161413\\archives_extracted\\ELIAS_OULAD_BRAHIM_GENESIS_ARXIV",
+      "file_count": 5
+    },
+    {
+      "archive": "C:\\Users\\usuario\\Business\\CLI_A1_GHR\\CLI-main\\research\\Archives_and_Packages\\ELIAS_OULAD_BRAHIM_PUBLICATION_V2.zip",
+      "extracted_to": "research\\committee_truth_20260105_161413\\archives_extracted\\ELIAS_OULAD_BRAHIM_PUBLICATION_V2",
+      "file_count": 8
+    },
+    {
+      "archive": "C:\\Users\\usuario\\Business\\CLI_A1_GHR\\CLI-main\\research\\Archives_and_Packages\\ELIAS_OULAD_BRAHIM_PUBLICATION.zip",
+      "extracted_to": "research\\committee_truth_20260105_161413\\archives_extracted\\ELIAS_OULAD_BRAHIM_PUBLICATION",
+      "file_count": 7
+    },
+    {
+      "archive": "C:\\Users\\usuario\\Business\\CLI_A1_GHR\\CLI-main\\research\\BSD_Conjecture\\BSD_PUBLICATION_PACKAGE_20260103.zip",
+      "extracted_to": "research\\committee_truth_20260105_161413\\archives_extracted\\BSD_PUBLICATION_PACKAGE_20260103",
+      "file_count": 10
+    },
+    {
+      "archive": "C:\\Users\\usuario\\Business\\CLI_A1_GHR\\CLI-main\\research\\research_of_truth_20260105_160746\\Riemann_Hypothesis\\riemann_hypothesis_proof_complete.zip",
+      "extracted_to": "research\\committee_truth_20260105_161413\\archives_extracted\\riemann_hypothesis_proof_complete",
+      "file_count": 8
+    },
+    {
+      "archive": "C:\\Users\\usuario\\Business\\CLI_A1_GHR\\CLI-main\\research\\Riemann_Hypothesis\\riemann_hypothesis_proof_complete.zip",
+      "extracted_to": "research\\committee_truth_20260105_161413\\archives_extracted\\riemann_hypothesis_proof_complete",
+      "file_count": 8
+    }
+  ],
+  "archives_skipped": [
+    {
+      "path": "C:\\Users\\usuario\\Business\\CLI_A1_GHR\\CLI-main\\build\\CloudHabil\\base_library.zip",
+      "reason": "excluded_path"
+    },
+    {
+      "path": "C:\\Users\\usuario\\Business\\CLI_A1_GHR\\CLI-main\\data\\dense_states\\genesis_1767441796\\batch_1767441796.zip",
+      "reason": "excluded_path"
+    },
+    {
+      "path": "C:\\Users\\usuario\\Business\\CLI_A1_GHR\\CLI-main\\data\\dense_states\\genesis_1767442245\\batch_1767442245.zip",
+      "reason": "excluded_path"
+    },
+    {
+      "path": "C:\\Users\\usuario\\Business\\CLI_A1_GHR\\CLI-main\\data\\dense_states\\genesis_1767443347\\batch_1767443347.zip",
+      "reason": "excluded_path"
+    },
+    {
+      "path": "C:\\Users\\usuario\\Business\\CLI_A1_GHR\\CLI-main\\data\\dense_states\\genesis_1767443507\\batch_1767443507.zip",
+      "reason": "excluded_path"
+    },
+    {
+      "path": "C:\\Users\\usuario\\Business\\CLI_A1_GHR\\CLI-main\\data\\dense_states\\genesis_1767443826\\batch_1767443827.zip",
+      "reason": "excluded_path"
+    },
+    {
+      "path": "C:\\Users\\usuario\\Business\\CLI_A1_GHR\\CLI-main\\data\\dense_states\\genesis_1767444246\\batch_1767444246.zip",
+      "reason": "excluded_path"
+    },
+    {
+      "path": "C:\\Users\\usuario\\Business\\CLI_A1_GHR\\CLI-main\\data\\dense_states\\genesis_1767444264\\batch_1767444264.zip",
+      "reason": "excluded_path"
+    },
+    {
+      "path": "C:\\Users\\usuario\\Business\\CLI_A1_GHR\\CLI-main\\data\\dense_states\\genesis_1767444380\\batch_1767444380.zip",
+      "reason": "excluded_path"
+    },
+    {
+      "path": "C:\\Users\\usuario\\Business\\CLI_A1_GHR\\CLI-main\\data\\dense_states\\genesis_1767480355\\batch_1767480355.zip",
+      "reason": "excluded_path"
+    },
+    {
+      "path": "C:\\Users\\usuario\\Business\\CLI_A1_GHR\\CLI-main\\data\\dense_states\\genesis_1767481170\\batch_1767481170.zip",
+      "reason": "excluded_path"
+    },
+    {
+      "path": "C:\\Users\\usuario\\Business\\CLI_A1_GHR\\CLI-main\\data\\dense_states\\genesis_1767504196\\batch_1767504196.zip",
+      "reason": "excluded_path"
+    },
+    {
+      "path": "C:\\Users\\usuario\\Business\\CLI_A1_GHR\\CLI-main\\data\\dense_states\\genesis_bench_1767435820\\batch_1767435820.zip",
+      "reason": "excluded_path"
+    },
+    {
+      "path": "C:\\Users\\usuario\\Business\\CLI_A1_GHR\\CLI-main\\data\\dense_states\\rh_swarm_1767438142\\batch_1767438142.zip",
+      "reason": "excluded_path"
+    },
+    {
+      "path": "C:\\Users\\usuario\\Business\\CLI_A1_GHR\\CLI-main\\data\\dense_states\\rh_swarm_1767439090\\batch_1767439090.zip",
+      "reason": "excluded_path"
+    },
+    {
+      "path": "C:\\Users\\usuario\\Business\\CLI_A1_GHR\\CLI-main\\data\\dense_states\\rh_swarm_1767439359\\batch_1767439359.zip",
+      "reason": "excluded_path"
+    },
+    {
+      "path": "C:\\Users\\usuario\\Business\\CLI_A1_GHR\\CLI-main\\research\\Methodology_and_Engines.zip",
+      "reason": "not_matching_keywords"
+    },
+    {
+      "path": "C:\\Users\\usuario\\Business\\CLI_A1_GHR\\CLI-main\\research\\Unified-Universe-Theory.zip",
+      "reason": "not_matching_keywords"
+    },
+    {
+      "path": "C:\\Users\\usuario\\Business\\CLI_A1_GHR\\CLI-main\\venv\\Lib\\site-packages\\pkg_resources\\tests\\data\\my-test-package-zip\\my-test-package.zip",
+      "reason": "excluded_path"
+    },
+    {
+      "path": "C:\\Users\\usuario\\Business\\CLI_A1_GHR\\CLI-main\\BSD_Module_Complete_20260104_125001.zip",
+      "reason": "not_matching_keywords"
+    },
+    {
+      "path": "C:\\Users\\usuario\\Business\\CLI_A1_GHR\\CLI-main\\research extended.zip",
+      "reason": "not_matching_keywords"
+    },
+    {
+      "path": "C:\\Users\\usuario\\Business\\CLI_A1_GHR\\CLI-main\\research.zip",
+      "reason": "not_matching_keywords"
+    }
+  ],
+  "archives_errors": [],
+  "archives_extracted_at": "2026-01-05T16:15:58.459726",
+  "archives_all_extracted": [
+    {
+      "archive": "C:\\Users\\usuario\\Business\\CLI_A1_GHR\\CLI-main\\agi_test_output\\grand_synthesis\\arxiv_submission.zip",
+      "extracted_to": "research\\committee_truth_20260105_161413\\archives_extracted_all\\agi_test_output\\grand_synthesis\\arxiv_submission",
+      "file_count": 7
+    },
+    {
+      "archive": "C:\\Users\\usuario\\Business\\CLI_A1_GHR\\CLI-main\\build\\CloudHabil\\base_library.zip",
+      "extracted_to": "research\\committee_truth_20260105_161413\\archives_extracted_all\\build\\CloudHabil\\base_library",
+      "file_count": 154
+    },
+    {
+      "archive": "C:\\Users\\usuario\\Business\\CLI_A1_GHR\\CLI-main\\data\\dense_states\\genesis_1767441796\\batch_1767441796.zip",
+      "extracted_to": "research\\committee_truth_20260105_161413\\archives_extracted_all\\data\\dense_states\\genesis_1767441796\\batch_1767441796",
+      "file_count": 1
+    },
+    {
+      "archive": "C:\\Users\\usuario\\Business\\CLI_A1_GHR\\CLI-main\\data\\dense_states\\genesis_1767442245\\batch_1767442245.zip",
+      "extracted_to": "research\\committee_truth_20260105_161413\\archives_extracted_all\\data\\dense_states\\genesis_1767442245\\batch_1767442245",
+      "file_count": 1
+    },
+    {
+      "archive": "C:\\Users\\usuario\\Business\\CLI_A1_GHR\\CLI-main\\data\\dense_states\\genesis_1767443347\\batch_1767443347.zip",
+      "extracted_to": "research\\committee_truth_20260105_161413\\archives_extracted_all\\data\\dense_states\\genesis_1767443347\\batch_1767443347",
+      "file_count": 2
+    },
+    {
+      "archive": "C:\\Users\\usuario\\Business\\CLI_A1_GHR\\CLI-main\\data\\dense_states\\genesis_1767443507\\batch_1767443507.zip",
+      "extracted_to": "research\\committee_truth_20260105_161413\\archives_extracted_all\\data\\dense_states\\genesis_1767443507\\batch_1767443507",
+      "file_count": 1
+    },
+    {
+      "archive": "C:\\Users\\usuario\\Business\\CLI_A1_GHR\\CLI-main\\data\\dense_states\\genesis_1767443826\\batch_1767443827.zip",
+      "extracted_to": "research\\committee_truth_20260105_161413\\archives_extracted_all\\data\\dense_states\\genesis_1767443826\\batch_1767443827",
+      "file_count": 3
+    },
+    {
+      "archive": "C:\\Users\\usuario\\Business\\CLI_A1_GHR\\CLI-main\\data\\dense_states\\genesis_1767444246\\batch_1767444246.zip",
+      "extracted_to": "research\\committee_truth_20260105_161413\\archives_extracted_all\\data\\dense_states\\genesis_1767444246\\batch_1767444246",
+      "file_count": 3
+    },
+    {
+      "archive": "C:\\Users\\usuario\\Business\\CLI_A1_GHR\\CLI-main\\data\\dense_states\\genesis_1767444264\\batch_1767444264.zip",
+      "extracted_to": "research\\committee_truth_20260105_161413\\archives_extracted_all\\data\\dense_states\\genesis_1767444264\\batch_1767444264",
+      "file_count": 15
+    },
+    {
+      "archive": "C:\\Users\\usuario\\Business\\CLI_A1_GHR\\CLI-main\\data\\dense_states\\genesis_1767444380\\batch_1767444380.zip",
+      "extracted_to": "research\\committee_truth_20260105_161413\\archives_extracted_all\\data\\dense_states\\genesis_1767444380\\batch_1767444380",
+      "file_count": 1
+    },
+    {
+      "archive": "C:\\Users\\usuario\\Business\\CLI_A1_GHR\\CLI-main\\data\\dense_states\\genesis_1767480355\\batch_1767480355.zip",
+      "extracted_to": "research\\committee_truth_20260105_161413\\archives_extracted_all\\data\\dense_states\\genesis_1767480355\\batch_1767480355",
+      "file_count": 1
+    },
+    {
+      "archive": "C:\\Users\\usuario\\Business\\CLI_A1_GHR\\CLI-main\\data\\dense_states\\genesis_1767481170\\batch_1767481170.zip",
+      "extracted_to": "research\\committee_truth_20260105_161413\\archives_extracted_all\\data\\dense_states\\genesis_1767481170\\batch_1767481170",
+      "file_count": 1
+    },
+    {
+      "archive": "C:\\Users\\usuario\\Business\\CLI_A1_GHR\\CLI-main\\data\\dense_states\\genesis_1767504196\\batch_1767504196.zip",
+      "extracted_to": "research\\committee_truth_20260105_161413\\archives_extracted_all\\data\\dense_states\\genesis_1767504196\\batch_1767504196",
+      "file_count": 2
+    },
+    {
+      "archive": "C:\\Users\\usuario\\Business\\CLI_A1_GHR\\CLI-main\\data\\dense_states\\genesis_bench_1767435820\\batch_1767435820.zip",
+      "extracted_to": "research\\committee_truth_20260105_161413\\archives_extracted_all\\data\\dense_states\\genesis_bench_1767435820\\batch_1767435820",
+      "file_count": 3
+    },
+    {
+      "archive": "C:\\Users\\usuario\\Business\\CLI_A1_GHR\\CLI-main\\data\\dense_states\\rh_swarm_1767438142\\batch_1767438142.zip",
+      "extracted_to": "research\\committee_truth_20260105_161413\\archives_extracted_all\\data\\dense_states\\rh_swarm_1767438142\\batch_1767438142",
+      "file_count": 200
+    },
+    {
+      "archive": "C:\\Users\\usuario\\Business\\CLI_A1_GHR\\CLI-main\\data\\dense_states\\rh_swarm_1767439090\\batch_1767439090.zip",
+      "extracted_to": "research\\committee_truth_20260105_161413\\archives_extracted_all\\data\\dense_states\\rh_swarm_1767439090\\batch_1767439090",
+      "file_count": 43
+    },
+    {
+      "archive": "C:\\Users\\usuario\\Business\\CLI_A1_GHR\\CLI-main\\data\\dense_states\\rh_swarm_1767439359\\batch_1767439359.zip",
+      "extracted_to": "research\\committee_truth_20260105_161413\\archives_extracted_all\\data\\dense_states\\rh_swarm_1767439359\\batch_1767439359",
+      "file_count": 37
+    },
+    {
+      "archive": "C:\\Users\\usuario\\Business\\CLI_A1_GHR\\CLI-main\\research\\Archives_and_Packages\\agi_test_output.zip",
+      "extracted_to": "research\\committee_truth_20260105_161413\\archives_extracted_all\\research\\Archives_and_Packages\\agi_test_output",
+      "file_count": 20
+    },
+    {
+      "archive": "C:\\Users\\usuario\\Business\\CLI_A1_GHR\\CLI-main\\research\\Archives_and_Packages\\arxiv_submission_package.tar.gz",
+      "extracted_to": "research\\committee_truth_20260105_161413\\archives_extracted_all\\research\\Archives_and_Packages\\arxiv_submission_package",
+      "file_count": 9
+    },
+    {
+      "archive": "C:\\Users\\usuario\\Business\\CLI_A1_GHR\\CLI-main\\research\\Archives_and_Packages\\ELIAS_OULAD_BRAHIM_GENESIS_ARXIV.zip",
+      "extracted_to": "research\\committee_truth_20260105_161413\\archives_extracted_all\\research\\Archives_and_Packages\\ELIAS_OULAD_BRAHIM_GENESIS_ARXIV",
+      "file_count": 5
+    },
+    {
+      "archive": "C:\\Users\\usuario\\Business\\CLI_A1_GHR\\CLI-main\\research\\Archives_and_Packages\\ELIAS_OULAD_BRAHIM_PUBLICATION_V2.zip",
+      "extracted_to": "research\\committee_truth_20260105_161413\\archives_extracted_all\\research\\Archives_and_Packages\\ELIAS_OULAD_BRAHIM_PUBLICATION_V2",
+      "file_count": 8
+    },
+    {
+      "archive": "C:\\Users\\usuario\\Business\\CLI_A1_GHR\\CLI-main\\research\\Archives_and_Packages\\ELIAS_OULAD_BRAHIM_PUBLICATION.zip",
+      "extracted_to": "research\\committee_truth_20260105_161413\\archives_extracted_all\\research\\Archives_and_Packages\\ELIAS_OULAD_BRAHIM_PUBLICATION",
+      "file_count": 7
+    },
+    {
+      "archive": "C:\\Users\\usuario\\Business\\CLI_A1_GHR\\CLI-main\\research\\BSD_Conjecture\\BSD_PUBLICATION_PACKAGE_20260103.zip",
+      "extracted_to": "research\\committee_truth_20260105_161413\\archives_extracted_all\\research\\BSD_Conjecture\\BSD_PUBLICATION_PACKAGE_20260103",
+      "file_count": 10
+    },
+    {
+      "archive": "C:\\Users\\usuario\\Business\\CLI_A1_GHR\\CLI-main\\research\\research_of_truth_20260105_160746\\Riemann_Hypothesis\\riemann_hypothesis_proof_complete.zip",
+      "extracted_to": "research\\committee_truth_20260105_161413\\archives_extracted_all\\research\\research_of_truth_20260105_160746\\Riemann_Hypothesis\\riemann_hypothesis_proof_complete",
+      "file_count": 8
+    },
+    {
+      "archive": "C:\\Users\\usuario\\Business\\CLI_A1_GHR\\CLI-main\\research\\Riemann_Hypothesis\\riemann_hypothesis_proof_complete.zip",
+      "extracted_to": "research\\committee_truth_20260105_161413\\archives_extracted_all\\research\\Riemann_Hypothesis\\riemann_hypothesis_proof_complete",
+      "file_count": 8
+    },
+    {
+      "archive": "C:\\Users\\usuario\\Business\\CLI_A1_GHR\\CLI-main\\research\\Methodology_and_Engines.zip",
+      "extracted_to": "research\\committee_truth_20260105_161413\\archives_extracted_all\\research\\Methodology_and_Engines",
+      "file_count": 15
+    },
+    {
+      "archive": "C:\\Users\\usuario\\Business\\CLI_A1_GHR\\CLI-main\\research\\Unified-Universe-Theory.zip",
+      "extracted_to": "research\\committee_truth_20260105_161413\\archives_extracted_all\\research\\Unified-Universe-Theory",
+      "file_count": 12
+    },
+    {
+      "archive": "C:\\Users\\usuario\\Business\\CLI_A1_GHR\\CLI-main\\venv\\Lib\\site-packages\\pkg_resources\\tests\\data\\my-test-package-zip\\my-test-package.zip",
+      "extracted_to": "research\\committee_truth_20260105_161413\\archives_extracted_all\\venv\\Lib\\site-packages\\pkg_resources\\tests\\data\\my-test-package-zip\\my-test-package",
+      "file_count": 7
+    },
+    {
+      "archive": "C:\\Users\\usuario\\Business\\CLI_A1_GHR\\CLI-main\\BSD_Module_Complete_20260104_125001.zip",
+      "extracted_to": "research\\committee_truth_20260105_161413\\archives_extracted_all\\BSD_Module_Complete_20260104_125001",
+      "file_count": 47
+    },
+    {
+      "archive": "C:\\Users\\usuario\\Business\\CLI_A1_GHR\\CLI-main\\research extended.zip",
+      "extracted_to": "research\\committee_truth_20260105_161413\\archives_extracted_all\\research extended",
+      "file_count": 120
+    }
+  ],
+  "archives_all_skipped": [
+    {
+      "archive": "C:\\Users\\usuario\\Business\\CLI_A1_GHR\\CLI-main\\research.zip",
+      "dest": "research\\committee_truth_20260105_161413\\archives_extracted_all\\research",
+      "reason": "already_extracted"
+    }
+  ],
+  "archives_all_errors": [],
+  "archives_all_extracted_at": "2026-01-05T16:19:47.746778"
+}

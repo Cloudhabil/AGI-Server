@@ -1,0 +1,145 @@
+{
+  "timestamp": "2026-01-02T18:06:51.040934",
+  "phase": "PHASE_2B_OPTIMIZATION",
+  "reference_zeros_count": 50,
+  "strategy": "Parameter sweep + linear calibration",
+  "step1_parameter_sweep": {
+    "configurations_tested": 16,
+    "results": [
+      {
+        "N": 500,
+        "L": 150,
+        "error": 78.64502636760598,
+        "zeros_extracted": 499
+      },
+      {
+        "N": 500,
+        "L": 200,
+        "error": 76.9438087808034,
+        "zeros_extracted": 499
+      },
+      {
+        "N": 500,
+        "L": 250,
+        "error": 74.83533309940135,
+        "zeros_extracted": 499
+      },
+      {
+        "N": 500,
+        "L": 300,
+        "error": 72.56065158395536,
+        "zeros_extracted": 499
+      },
+      {
+        "N": 1000,
+        "L": 150,
+        "error": 78.81589341581133,
+        "zeros_extracted": 999
+      },
+      {
+        "N": 1000,
+        "L": 200,
+        "error": 79.2258300886081,
+        "zeros_extracted": 999
+      },
+      {
+        "N": 1000,
+        "L": 250,
+        "error": 79.15574007511697,
+        "zeros_extracted": 999
+      },
+      {
+        "N": 1000,
+        "L": 300,
+        "error": 78.64900891716701,
+        "zeros_extracted": 999
+      },
+      {
+        "N": 1500,
+        "L": 150,
+        "error": 78.54081479331758,
+        "zeros_extracted": 1499
+      },
+      {
+        "N": 1500,
+        "L": 200,
+        "error": 78.70242118108924,
+        "zeros_extracted": 1499
+      },
+      {
+        "N": 1500,
+        "L": 250,
+        "error": 78.96590723055591,
+        "zeros_extracted": 1499
+      },
+      {
+        "N": 1500,
+        "L": 300,
+        "error": 79.22554637664068,
+        "zeros_extracted": 1499
+      },
+      {
+        "N": 2000,
+        "L": 150,
+        "error": 78.4611523335126,
+        "zeros_extracted": 1999
+      },
+      {
+        "N": 2000,
+        "L": 200,
+        "error": 78.54075090416877,
+        "zeros_extracted": 1999
+      },
+      {
+        "N": 2000,
+        "L": 250,
+        "error": 78.65492983553139,
+        "zeros_extracted": 1999
+      },
+      {
+        "N": 2000,
+        "L": 300,
+        "error": 78.81531666643446,
+        "zeros_extracted": 1999
+      }
+    ],
+    "best_config": {
+      "N": 500,
+      "L": 300,
+      "error": 72.56065158395536,
+      "zeros_extracted": 499
+    }
+  },
+  "step2_calibration": {
+    "parameters": {
+      "a": -22.910124752717458,
+      "b": 29.943929375885904
+    },
+    "errors": {
+      "before_calibration": 72.56065158395536,
+      "after_calibration": 340.9355840863674,
+      "improvement_factor": 0.21282803840614642
+    }
+  },
+  "step3_detailed_analysis": {
+    "zeros_analyzed": 50,
+    "error_statistics": {
+      "mean": 340.9355840863674,
+      "std": 215.5567299683077,
+      "min": 7.100920376831553,
+      "max": 718.904464740904,
+      "median": 333.1076278182901
+    },
+    "accuracy_percentages": {
+      "below_1e2": 0.0,
+      "below_1e3": 0.0,
+      "below_1e4": 0.0
+    }
+  },
+  "step4_assessment": {
+    "status": "NEEDS_IMPROVEMENT",
+    "error_after_calibration": 340.9355840863674,
+    "recommendation": "Optimize further",
+    "next_step": "Continue optimization"
+  }
+}

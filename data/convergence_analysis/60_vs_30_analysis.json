@@ -1,0 +1,16 @@
+{
+  "actual_30_cycles": {
+    "cycle_1_rigor": 0.6799,
+    "cycle_30_rigor": 0.917,
+    "improvement": 0.2371,
+    "avg_per_cycle": 0.007903333333333333,
+    "unargued_claims_start": 14,
+    "unargued_claims_end": 1
+  },
+  "projected_60_cycles": {
+    "final_rigor": 0.9193655000000002,
+    "extra_improvement": 0.0023655000000001314,
+    "gain_per_cycle": 0.00399109166666667,
+    "verdict": "Diminishing returns; not recommended"
+  }
+}

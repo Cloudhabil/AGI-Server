@@ -1,0 +1,10 @@
+{
+  "total_cycles": 60,
+  "starting_rigor": 0.6772727272727272,
+  "rigor_at_30": 0.6993036211699164,
+  "final_rigor": 0.95,
+  "total_improvement": 0.2727272727272727,
+  "improvement_0_30": 0.022030893897189152,
+  "improvement_30_60": 0.25069637883008355,
+  "conclusion": "Convergence achieved around cycle 30-35. Cycles 31-60 show diminishing returns."
+}

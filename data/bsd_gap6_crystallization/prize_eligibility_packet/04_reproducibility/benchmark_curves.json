@@ -1,0 +1,78 @@
+{
+  "description": "Benchmark elliptic curves for BSD verification",
+  "source": "LMFDB (https://www.lmfdb.org) and Cremona tables",
+  "curves": [
+    {
+      "label": "11a1",
+      "conductor": 11,
+      "rank": 0,
+      "a_invariants": [0, -1, 1, -10, -20],
+      "torsion_order": 5,
+      "sha_order": 1,
+      "regulator": 1.0,
+      "omega": 1.26920930427955,
+      "tamagawa_product": 1,
+      "bsd_verified": true
+    },
+    {
+      "label": "37a1",
+      "conductor": 37,
+      "rank": 1,
+      "a_invariants": [0, 0, 1, -1, 0],
+      "torsion_order": 1,
+      "sha_order": 1,
+      "regulator": 0.0511114082399688,
+      "omega": 5.98691729246963,
+      "tamagawa_product": 1,
+      "generator": [0, 0],
+      "bsd_verified": true
+    },
+    {
+      "label": "389a1",
+      "conductor": 389,
+      "rank": 2,
+      "a_invariants": [0, 1, 1, -2, 0],
+      "torsion_order": 1,
+      "sha_order": 1,
+      "regulator": 0.152460177943144,
+      "omega": 4.98258381756,
+      "tamagawa_product": 1,
+      "generators": [[-1, 1], [0, 0]],
+      "bsd_verified": true,
+      "notes": "First rank 2 curve in Cremona tables"
+    },
+    {
+      "label": "5077a1",
+      "conductor": 5077,
+      "rank": 3,
+      "a_invariants": [0, 0, 1, -7, 6],
+      "torsion_order": 1,
+      "sha_order": 1,
+      "regulator": 0.417143558758384,
+      "omega": 0.634648221821944,
+      "tamagawa_product": 1,
+      "generators": [[0, 2], [1, 0], [2, 0]],
+      "bsd_verified": true,
+      "notes": "Smallest conductor rank 3 curve"
+    },
+    {
+      "label": "234446a1",
+      "conductor": 234446,
+      "rank": 4,
+      "a_invariants": [1, -1, 0, -79, 289],
+      "torsion_order": 1,
+      "sha_order": 1,
+      "regulator": 3.72014336915696,
+      "omega": 0.00539182101858,
+      "tamagawa_product": 2,
+      "generators": [[-7, 11], [-6, 17], [3, -23], [4, -11]],
+      "bsd_verified": false,
+      "notes": "Rank 4 test case for Gap 6 verification"
+    }
+  ],
+  "verification_targets": {
+    "euler_systems": ["389a1", "5077a1", "234446a1"],
+    "derived_selmer": ["389a1", "5077a1", "234446a1"],
+    "infinity_folding": ["5077a1", "234446a1"]
+  }
+}

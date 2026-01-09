@@ -1,0 +1,105 @@
+{
+  "session_id": "20260104_062308",
+  "plan": [
+    {
+      "cycle": 31,
+      "phase": "Bridge",
+      "status": "EXECUTED"
+    },
+    {
+      "cycle": 32,
+      "phase": "Bridge",
+      "status": "EXECUTED"
+    },
+    {
+      "cycle": 33,
+      "phase": "Bridge",
+      "status": "EXECUTED"
+    },
+    {
+      "cycle": 34,
+      "phase": "Bridge",
+      "status": "EXECUTED"
+    },
+    {
+      "cycle": 35,
+      "phase": "Bridge",
+      "status": "EXECUTED"
+    },
+    {
+      "cycle": 36,
+      "phase": "Higher Ranks",
+      "status": "EXECUTED"
+    },
+    {
+      "cycle": 37,
+      "phase": "Higher Ranks",
+      "status": "EXECUTED"
+    },
+    {
+      "cycle": 38,
+      "phase": "Higher Ranks",
+      "status": "EXECUTED"
+    },
+    {
+      "cycle": 39,
+      "phase": "Higher Ranks",
+      "status": "EXECUTED"
+    },
+    {
+      "cycle": 40,
+      "phase": "Higher Ranks",
+      "status": "EXECUTED"
+    },
+    {
+      "cycle": 41,
+      "phase": "Higher Ranks",
+      "status": "EXECUTED"
+    },
+    {
+      "cycle": 42,
+      "phase": "Higher Ranks",
+      "status": "EXECUTED"
+    },
+    {
+      "cycle": 43,
+      "phase": "Higher Ranks",
+      "status": "EXECUTED"
+    },
+    {
+      "cycle": 44,
+      "phase": "Higher Ranks",
+      "status": "EXECUTED"
+    },
+    {
+      "cycle": 45,
+      "phase": "Higher Ranks",
+      "status": "EXECUTED"
+    },
+    {
+      "cycle": 46,
+      "phase": "Closure",
+      "status": "EXECUTED"
+    },
+    {
+      "cycle": 47,
+      "phase": "Closure",
+      "status": "EXECUTED"
+    },
+    {
+      "cycle": 48,
+      "phase": "Closure",
+      "status": "EXECUTED"
+    },
+    {
+      "cycle": 49,
+      "phase": "Closure",
+      "status": "EXECUTED"
+    },
+    {
+      "cycle": 50,
+      "phase": "Closure",
+      "status": "EXECUTED"
+    }
+  ]
+}

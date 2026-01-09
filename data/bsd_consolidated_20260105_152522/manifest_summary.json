@@ -1,0 +1,114 @@
+{
+  "bundle": "data\\bsd_consolidated_20260105_152522",
+  "generated_at": "2026-01-05T15:25:53.229351",
+  "tracks": {
+    "bsd_gap6_crystallization": {
+      "track": "bsd_gap6_crystallization",
+      "path": "data\\bsd_consolidated_20260105_152522\\bsd_gap6_crystallization",
+      "file_count": 184,
+      "total_bytes": 252284,
+      "latest_file": "data\\bsd_consolidated_20260105_152522\\bsd_gap6_crystallization\\prize_eligibility_packet\\RIGOR_REVIEW.md",
+      "latest_mtime": "2026-01-05T02:56:20.674285",
+      "cycle_summary": {
+        "cycle_files": 40,
+        "phase_counts": {
+          "refinement": 20,
+          "baseline": 20
+        },
+        "rigor_min": 0.7392,
+        "rigor_max": 0.9321,
+        "rigor_avg": 0.8278725
+      },
+      "anomalies": [
+        {
+          "type": "cycle_vector_count_mismatch",
+          "detail": {
+            "6": 1,
+            "7": 1,
+            "8": 1,
+            "9": 1,
+            "10": 1,
+            "11": 1,
+            "12": 1,
+            "13": 1,
+            "14": 1,
+            "15": 1,
+            "16": 1,
+            "17": 1,
+            "18": 1,
+            "19": 1,
+            "20": 1,
+            "21": 1,
+            "22": 1,
+            "23": 1,
+            "24": 1,
+            "25": 1,
+            "26": 1,
+            "27": 1,
+            "28": 1,
+            "29": 1,
+            "30": 1
+          }
+        }
+      ]
+    },
+    "bsd_gap_closure_dual": {
+      "track": "bsd_gap_closure_dual",
+      "path": "data\\bsd_consolidated_20260105_152522\\bsd_gap_closure_dual",
+      "file_count": 4,
+      "total_bytes": 4882,
+      "latest_file": "data\\bsd_consolidated_20260105_152522\\bsd_gap_closure_dual\\gap_closure_synthesis.tex",
+      "latest_mtime": "2026-01-05T03:29:22.977797",
+      "state": {
+        "session_id": "20260105_030022",
+        "total_cycles": 30,
+        "math_cycles": 30,
+        "reasoning_cycles": 30,
+        "cross_validations": 4,
+        "r1_progress": 0.0,
+        "r2_progress": 0.0,
+        "started_at": "2026-01-05T03:00:22.831873",
+        "last_updated": "2026-01-05T03:29:22.976994"
+      },
+      "outputs": {
+        "r1_files": [
+          "R1_1.md"
+        ],
+        "r2_files": [
+          "R2_1.md"
+        ],
+        "r1_count": 1,
+        "r2_count": 1
+      },
+      "anomalies": [
+        {
+          "type": "cycle_output_mismatch",
+          "detail": {
+            "total_cycles": 30,
+            "output_files": 2
+          }
+        }
+      ]
+    },
+    "bsd_25_5_research": {
+      "track": "bsd_25_5_research",
+      "path": "data\\bsd_consolidated_20260105_152522\\bsd_25_5_research",
+      "file_count": 13,
+      "total_bytes": 27343,
+      "latest_file": "data\\bsd_consolidated_20260105_152522\\bsd_25_5_research\\bsd_extended_plan.json",
+      "latest_mtime": "2026-01-04T06:37:31.137029",
+      "cycle_history": {
+        "entries": 25,
+        "rigor_min": 0.65,
+        "rigor_max": 0.86,
+        "rigor_last": 0.85
+      },
+      "phase3": {
+        "cycles": 5,
+        "rigor_min": 0.858,
+        "rigor_max": 0.91
+      },
+      "anomalies": []
+    }
+  }
+}

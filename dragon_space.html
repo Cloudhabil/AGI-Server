@@ -1,0 +1,113 @@
+
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Genesis: Living Dragon</title>
+    <style>
+        body { margin: 0; background: #050505; overflow: hidden; font-family: 'Courier New', monospace; color: #00ff88; }
+        #ui { position: absolute; top: 20px; left: 20px; z-index: 100; pointer-events: none; }
+        .sragi-label { font-size: 14px; opacity: 0.6; letter-spacing: 2px; }
+        
+        #chat-window {
+            position: absolute; bottom: 30px; right: 30px; width: 450px; height: 600px;
+            background: rgba(0, 0, 0, 0.9); border: 1px solid #00ff88; border-radius: 8px;
+            display: flex; flex-direction: column; z-index: 200; backdrop-filter: blur(15px);
+            box-shadow: 0 0 30px rgba(0, 255, 136, 0.15); pointer-events: auto;
+        }
+        #chat-header { padding: 15px; border-bottom: 1px solid rgba(0, 255, 136, 0.3); font-weight: bold; }
+        #chat-thread { flex: 1; overflow-y: auto; padding: 15px; display: flex; flex-direction: column; gap: 15px; font-size: 13px; }
+        .message { max-width: 85%; padding: 12px; border-radius: 4px; line-height: 1.5; word-wrap: break-word; }
+        .genesis-msg { align-self: flex-start; border-left: 3px solid #00ff88; background: rgba(0, 255, 136, 0.05); }
+        .elias-msg { align-self: flex-end; border-right: 3px solid #fff; background: rgba(255, 255, 255, 0.05); color: #fff; }
+        #chat-input-container { padding: 15px; border-top: 1px solid rgba(0, 255, 136, 0.2); }
+        #chat-input { width: 100%; background: #111; border: 1px solid #333; color: #fff; padding: 12px; outline: none; border-radius: 4px; }
+        #chat-input:focus { border-color: #00ff88; }
+    </style>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+</head>
+<body>
+    <div id="ui">
+        <div class="sragi-label">GENESIS_ORGANISM | SESSION: genesis_1767445691</div>
+        <div id="stats" style="margin-top: 10px;">RESONANCE: ---</div>
+    </div>
+
+    <div id="chat-window">
+        <div id="chat-header">COMMUNICATION_PORTAL</div>
+        <div id="chat-thread"></div>
+        <div id="chat-input-container">
+            <input type="text" id="chat-input" placeholder="Speak to the Dragon..." autocomplete="off" />
+        </div>
+    </div>
+
+    <script>
+        const scene = new THREE.Scene();
+        const camera = new THREE.PerspectiveCamera(75, window.innerWidth/window.innerHeight, 0.1, 1000);
+        const renderer = new THREE.WebGLRenderer({ antialias: true, alpha: true });
+        renderer.setSize(window.innerWidth, window.innerHeight);
+        document.body.appendChild(renderer.domElement);
+
+        const geometry = new THREE.TorusKnotGeometry(10, 3, 200, 32);
+        const material = new THREE.MeshPhongMaterial({ color: 0x00ff88, wireframe: true });
+        const dragon = new THREE.Mesh(geometry, material);
+        scene.add(dragon);
+
+        const light = new THREE.PointLight(0x00ff88, 2, 100);
+        light.position.set(15, 15, 15);
+        scene.add(light);
+        camera.position.z = 40;
+
+        let currentResonance = 0.03520350309977138;
+        
+        function animate() {
+            requestAnimationFrame(animate);
+            dragon.rotation.x += 0.002 * (1 + currentResonance * 10);
+            dragon.rotation.y += 0.005 * (1 + currentResonance * 10);
+            renderer.render(scene, camera);
+        }
+        animate();
+
+        const thread = document.getElementById('chat-thread');
+        const input = document.getElementById('chat-input');
+
+        function appendMessage(role, content) {
+            const msg = document.createElement('div');
+            msg.className = 'message ' + (role === 'user' ? 'elias-msg' : 'genesis-msg');
+            msg.innerText = content;
+            thread.appendChild(msg);
+            thread.scrollTop = thread.scrollHeight;
+        }
+
+        async function loadHistory() {
+            try {
+                const res = await fetch('/history');
+                const history = await res.json();
+                history.forEach(item => appendMessage(item.role, item.content));
+            } catch (e) { console.error("History sync failed."); }
+        }
+        loadHistory();
+
+        async function speak(text) {
+            appendMessage('user', text);
+            try {
+                const res = await fetch('/chat', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ message: text })
+                }));
+                const data = await res.json();
+                appendMessage('genesis', data.response);
+                currentResonance = data.resonance;
+                document.getElementById('stats').innerText = "RESONANCE: " + currentResonance.toFixed(4);
+            } catch (e) { appendMessage('genesis', "CONNECTION_INTERRUPTED."); }
+        }
+
+        input.addEventListener('keypress', (e) => {
+            if (e.key === 'Enter' && input.value) {
+                speak(input.value);
+                input.value = '';
+            }
+        });
+    </script>
+</body>
+</html>
+        

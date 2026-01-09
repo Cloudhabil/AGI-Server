@@ -1,0 +1,241 @@
+% BSD Gap 6 Closure Document
+% Prize-Eligibility Packet Document 3
+% STATUS: TEMPLATE - To be filled by crystallization cycles
+
+\documentclass{article}
+\usepackage{amsmath, amssymb, amsthm}
+\usepackage{hyperref}
+
+\newtheorem{theorem}{Theorem}
+\newtheorem{lemma}[theorem]{Lemma}
+\newtheorem{proposition}[theorem]{Proposition}
+\newtheorem{corollary}[theorem]{Corollary}
+\newtheorem{definition}[theorem]{Definition}
+\newtheorem{conjecture}[theorem]{Conjecture}
+
+\theoremstyle{remark}
+\newtheorem{remark}[theorem]{Remark}
+
+\title{BSD Conjecture: Gap 6 (Higher Rank) Closure}
+\author{GPIA Meta-Analysis Research Framework}
+\date{Draft - \today}
+
+\begin{document}
+\maketitle
+
+\begin{abstract}
+This document contains the core mathematical argument for resolving Gap 6
+(Higher Rank case, $r \geq 2$) of the Birch and Swinnerton-Dyer Conjecture.
+The argument proceeds via three attack vectors: Higher-Rank Euler Systems,
+Derived Algebraic Geometry, and Infinity Folding. \textbf{STATUS: IN PROGRESS}
+\end{abstract}
+
+\tableofcontents
+
+\section{Introduction}
+
+\subsection{The Higher Rank Problem}
+
+For elliptic curves $E/\mathbb{Q}$ with algebraic rank $r \geq 2$, the BSD conjecture
+remains unproven. The fundamental difficulty is:
+
+\begin{itemize}
+    \item No ``Heegner-like'' points for higher ranks
+    \item Kolyvagin's method fails for $r > 1$
+    \item The $L$-function vanishing is of order $r$, creating a ``thick'' singularity
+\end{itemize}
+
+\subsection{Our Approach}
+
+We pursue three parallel attack vectors, any one of which, if completed,
+would resolve Gap 6.
+
+%=============================================================================
+\section{Vector 1: Higher-Rank Euler Systems}
+%=============================================================================
+
+\subsection{Statement}
+
+\begin{conjecture}[Higher-Rank Euler System Existence]
+For an elliptic curve $E/\mathbb{Q}$ with rank $r$, there exists an Euler system
+$\mathbf{c} = (c_K)_K$ indexed by abelian extensions $K/\mathbb{Q}$ such that:
+\begin{enumerate}
+    \item $c_K \in \bigwedge^r H^1(K, T_p E)$
+    \item The system satisfies a norm-compatibility relation
+    \item A control theorem bounds the Selmer group
+\end{enumerate}
+\end{conjecture}
+
+\subsection{Construction}
+
+\textbf{[TO BE FILLED BY CRYSTALLIZATION CYCLES]}
+
+% Placeholder for the actual construction
+\begin{remark}
+The construction should generalize Kato's Euler system (which works for $r=1$)
+to systems indexed by $r$-tuples of Galois representations.
+\end{remark}
+
+\subsection{Control Theorem}
+
+\begin{theorem}[Control Theorem - Template]
+Let $\mathbf{c}$ be a higher-rank Euler system for $E$. Then:
+\[
+\text{length}_{\mathbb{Z}_p} \text{Sel}_{p^\infty}(E/\mathbb{Q}) \leq
+\text{ord}_p(\text{some explicit quantity involving } \mathbf{c})
+\]
+\end{theorem}
+
+\begin{proof}
+\textbf{[PROOF TO BE COMPLETED]}
+\end{proof}
+
+%=============================================================================
+\section{Vector 2: Derived Algebraic Geometry}
+%=============================================================================
+
+\subsection{The Derived Selmer Complex}
+
+\begin{definition}[Derived Selmer Complex]
+Define the Selmer complex as an object in the derived category:
+\[
+R\Gamma_f(E, \mathbb{Q}_p) \in D^b(\text{Mod}_{\mathbb{Z}_p})
+\]
+This complex has:
+\begin{itemize}
+    \item $H^0 = 0$
+    \item $H^1 = \text{Sel}_{p^\infty}(E/\mathbb{Q})$
+    \item $H^2 = $ dual Selmer
+\end{itemize}
+\end{definition}
+
+\subsection{Virtual Dimension}
+
+\begin{proposition}[Rank as Virtual Dimension]
+The virtual dimension of the derived Selmer complex equals the rank:
+\[
+\text{vdim}(R\Gamma_f(E, \mathbb{Q}_p)) = \text{rank}_\mathbb{Z} E(\mathbb{Q})
+\]
+\end{proposition}
+
+\begin{proof}
+\textbf{[PROOF TO BE COMPLETED]}
+
+The key steps are:
+\begin{enumerate}
+    \item Define virtual dimension via Euler characteristic
+    \item Use Tate duality to relate $H^1$ and $H^2$
+    \item Show $\chi = $ rank via Mordell-Weil
+\end{enumerate}
+\end{proof}
+
+\subsection{Connection to $L$-function}
+
+\begin{theorem}[Order = Virtual Dimension]
+\[
+\text{ord}_{s=1} L(E,s) = \text{vdim}(R\Gamma_f(E, \mathbb{Q}_p))
+\]
+\end{theorem}
+
+\begin{proof}
+\textbf{[PROOF TO BE COMPLETED]}
+
+Requires the comparison morphism $\varphi$ from Cycle 46.
+\end{proof}
+
+%=============================================================================
+\section{Vector 3: Infinity Folding}
+%=============================================================================
+
+\subsection{The Divergence Problem}
+
+For $r \geq 2$, the height pairing series can diverge in classical terms.
+The infinity folding technique re-expresses these as convergent $p$-adic series.
+
+\subsection{Algorithm}
+
+\begin{definition}[Infinity Folding Transform]
+For a divergent real series $\sum a_n$ arising from height computations,
+define the $p$-adic folded series:
+\[
+\mathcal{F}_p\left(\sum a_n\right) = \sum_{n=0}^\infty a_n \cdot \omega_p(n)
+\]
+where $\omega_p(n)$ is a $p$-adic weight function ensuring convergence.
+\end{definition}
+
+\subsection{Convergence}
+
+\begin{theorem}[Infinity Folding Convergence]
+The folded series converges in $\mathbb{Q}_p$ and equals the $p$-adic regulator.
+\end{theorem}
+
+\begin{proof}
+\textbf{[PROOF TO BE COMPLETED]}
+\end{proof}
+
+\subsection{Computational Verification}
+
+\begin{remark}
+Scripts in \texttt{04\_reproducibility.md} verify this for curves with $r = 3, 4$.
+\end{remark}
+
+%=============================================================================
+\section{Synthesis: Gap 6 Closure}
+%=============================================================================
+
+\subsection{Main Theorem}
+
+\begin{theorem}[BSD for Higher Rank]
+For any elliptic curve $E/\mathbb{Q}$ with rank $r \geq 2$:
+\[
+\text{rank}_\mathbb{Z} E(\mathbb{Q}) = \text{ord}_{s=1} L(E,s)
+\]
+\end{theorem}
+
+\begin{proof}
+\textbf{[SYNTHESIS PROOF TO BE COMPLETED]}
+
+The proof combines:
+\begin{enumerate}
+    \item Vector 1 (Euler Systems) OR Vector 2 (Derived AG)
+    \item Vector 3 (Infinity Folding) for explicit computation
+    \item The Comparison Morphism $\varphi$ as the bridge
+\end{enumerate}
+\end{proof}
+
+%=============================================================================
+\section{Sha Finiteness}
+%=============================================================================
+
+\begin{theorem}[Sha Finiteness for All Ranks]
+$\#\text{Ш}(E/\mathbb{Q}) < \infty$ for all $E/\mathbb{Q}$.
+\end{theorem}
+
+\begin{proof}
+\textbf{[PROOF TO BE COMPLETED]}
+
+This follows from Gap 6 closure via the control theorem.
+\end{proof}
+
+%=============================================================================
+\section{Conclusion}
+%=============================================================================
+
+This document will be complete when at least one vector achieves full proof status
+and the synthesis theorem is established. Current progress is tracked in the
+crystallization cycles.
+
+\appendix
+
+\section{Notation Index}
+\begin{itemize}
+    \item $E$: Elliptic curve over $\mathbb{Q}$
+    \item $r$: Algebraic rank $= \text{rank}_\mathbb{Z} E(\mathbb{Q})$
+    \item $L(E,s)$: Hasse-Weil $L$-function
+    \item $T_p E$: $p$-adic Tate module
+    \item $\text{Sel}_{p^\infty}$: $p^\infty$-Selmer group
+    \item $R\Gamma_f$: Derived Selmer complex
+    \item $\varphi$: Comparison morphism
+\end{itemize}
+
+\end{document}

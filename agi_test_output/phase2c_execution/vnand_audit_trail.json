@@ -1,0 +1,647 @@
+[
+  {
+    "phase": "quartic_a0.050_b0.010",
+    "hash": "0eff60dd06f15a83b0480bad03f7dded8c9026aff02fd8d12f0b5a86c97b7ff1",
+    "timestamp": "2026-01-03T00:31:27.097594",
+    "state_summary": {
+      "potential_type": "quartic",
+      "parameters": {
+        "a": 0.05,
+        "b": 0.01
+      },
+      "eigenvalue_error": 5915.86899686724
+    }
+  },
+  {
+    "phase": "quartic_a0.050_b0.033",
+    "hash": "03a783237cf94cddb754ac17ff90ecb77786923fb18db169153366df02021e7d",
+    "timestamp": "2026-01-03T00:31:27.515755",
+    "state_summary": {
+      "potential_type": "quartic",
+      "parameters": {
+        "a": 0.05,
+        "b": 0.0325
+      },
+      "eigenvalue_error": 5872.140136387289
+    }
+  },
+  {
+    "phase": "quartic_a0.050_b0.055",
+    "hash": "4f3eb03815836dbe534ffb858997c20e15e2d75bebf50344e6bf6838a8644c3c",
+    "timestamp": "2026-01-03T00:31:27.985029",
+    "state_summary": {
+      "potential_type": "quartic",
+      "parameters": {
+        "a": 0.05,
+        "b": 0.05500000000000001
+      },
+      "eigenvalue_error": 5846.274075766513
+    }
+  },
+  {
+    "phase": "quartic_a0.050_b0.077",
+    "hash": "abe3e7abee87a1b1195bf8444e2b09423ab65fccc61b24420e1c672d43066751",
+    "timestamp": "2026-01-03T00:31:28.477159",
+    "state_summary": {
+      "potential_type": "quartic",
+      "parameters": {
+        "a": 0.05,
+        "b": 0.0775
+      },
+      "eigenvalue_error": 5826.8057583266955
+    }
+  },
+  {
+    "phase": "quartic_a0.050_b0.100",
+    "hash": "504beba6956c01d94036d77b6c9568c55225e1a82546c4342457dc6cb46aa8af",
+    "timestamp": "2026-01-03T00:31:28.959233",
+    "state_summary": {
+      "potential_type": "quartic",
+      "parameters": {
+        "a": 0.05,
+        "b": 0.1
+      },
+      "eigenvalue_error": 5810.836258734166
+    }
+  },
+  {
+    "phase": "quartic_a0.163_b0.010",
+    "hash": "76cc17f1406a6c6b698fb97550eb4d66c9b0f80a7551b6d9d4ca124df0387869",
+    "timestamp": "2026-01-03T00:31:29.387519",
+    "state_summary": {
+      "potential_type": "quartic",
+      "parameters": {
+        "a": 0.1625,
+        "b": 0.01
+      },
+      "eigenvalue_error": 5911.4845848701525
+    }
+  },
+  {
+    "phase": "quartic_a0.163_b0.033",
+    "hash": "6315d91c01ca11afadbee411b2ac8d92bf0cd5cdacff9dc5e9cda781c8e26772",
+    "timestamp": "2026-01-03T00:31:29.808548",
+    "state_summary": {
+      "potential_type": "quartic",
+      "parameters": {
+        "a": 0.1625,
+        "b": 0.0325
+      },
+      "eigenvalue_error": 5869.148973602614
+    }
+  },
+  {
+    "phase": "quartic_a0.163_b0.055",
+    "hash": "35ec09a7c521f5b7bac99eb31619cb456d1cee00660b6efe06dfcafb97999264",
+    "timestamp": "2026-01-03T00:31:30.270056",
+    "state_summary": {
+      "potential_type": "quartic",
+      "parameters": {
+        "a": 0.1625,
+        "b": 0.05500000000000001
+      },
+      "eigenvalue_error": 5843.759514597404
+    }
+  },
+  {
+    "phase": "quartic_a0.163_b0.077",
+    "hash": "37aa9078de2509d61798b7d9abcfab9a22ccf6a5b18fecc3656bc6474c9856a7",
+    "timestamp": "2026-01-03T00:31:30.689254",
+    "state_summary": {
+      "potential_type": "quartic",
+      "parameters": {
+        "a": 0.1625,
+        "b": 0.0775
+      },
+      "eigenvalue_error": 5824.561720587855
+    }
+  },
+  {
+    "phase": "quartic_a0.163_b0.100",
+    "hash": "7161da729d3ed194e8e7ac294c4aa632ab348cd183e581a7c83a93bd1ab6af09",
+    "timestamp": "2026-01-03T00:31:31.135898",
+    "state_summary": {
+      "potential_type": "quartic",
+      "parameters": {
+        "a": 0.1625,
+        "b": 0.1
+      },
+      "eigenvalue_error": 5808.774869298532
+    }
+  },
+  {
+    "phase": "quartic_a0.275_b0.010",
+    "hash": "6e7963e1b9b318d9ac2ec904d977e68e59b7a62845412f510cfed1acd0c21060",
+    "timestamp": "2026-01-03T00:31:31.466811",
+    "state_summary": {
+      "potential_type": "quartic",
+      "parameters": {
+        "a": 0.275,
+        "b": 0.01
+      },
+      "eigenvalue_error": 5907.207416519244
+    }
+  },
+  {
+    "phase": "quartic_a0.275_b0.033",
+    "hash": "d51593ec4c3ef0a445af1f5028dd2b2f93b1f15640a258ee7e76676252e9983d",
+    "timestamp": "2026-01-03T00:31:31.854965",
+    "state_summary": {
+      "potential_type": "quartic",
+      "parameters": {
+        "a": 0.275,
+        "b": 0.0325
+      },
+      "eigenvalue_error": 5866.192389628854
+    }
+  },
+  {
+    "phase": "quartic_a0.275_b0.055",
+    "hash": "aba4a8b1d3dbaf5d6d5b72d5520c7cd215b6fd16aca619b5eafaf14025eb51cd",
+    "timestamp": "2026-01-03T00:31:32.317616",
+    "state_summary": {
+      "potential_type": "quartic",
+      "parameters": {
+        "a": 0.275,
+        "b": 0.05500000000000001
+      },
+      "eigenvalue_error": 5841.2656461380575
+    }
+  },
+  {
+    "phase": "quartic_a0.275_b0.077",
+    "hash": "5de29ac95b5a32227f5eab8412169a0094056943553a8c9abfa22146ef6b405a",
+    "timestamp": "2026-01-03T00:31:32.810570",
+    "state_summary": {
+      "potential_type": "quartic",
+      "parameters": {
+        "a": 0.275,
+        "b": 0.0775
+      },
+      "eigenvalue_error": 5822.332464901563
+    }
+  },
+  {
+    "phase": "quartic_a0.275_b0.100",
+    "hash": "0a74e18c43e75516873420fc928f5b6872ebee88ef47d03a0cb30c1257142f19",
+    "timestamp": "2026-01-03T00:31:33.268617",
+    "state_summary": {
+      "potential_type": "quartic",
+      "parameters": {
+        "a": 0.275,
+        "b": 0.1
+      },
+      "eigenvalue_error": 5806.72498480447
+    }
+  },
+  {
+    "phase": "quartic_a0.388_b0.010",
+    "hash": "6f76e8334b64104494d54b86aff1a1730a46159aad98a8cb3a7d703c30769afe",
+    "timestamp": "2026-01-03T00:31:33.640152",
+    "state_summary": {
+      "potential_type": "quartic",
+      "parameters": {
+        "a": 0.3875,
+        "b": 0.01
+      },
+      "eigenvalue_error": 5903.031694450127
+    }
+  },
+  {
+    "phase": "quartic_a0.388_b0.033",
+    "hash": "e417be787a8c0aac0c360948f177c9e9f668c0ad0d043fd8074e61f07786b8c0",
+    "timestamp": "2026-01-03T00:31:34.068440",
+    "state_summary": {
+      "potential_type": "quartic",
+      "parameters": {
+        "a": 0.3875,
+        "b": 0.0325
+      },
+      "eigenvalue_error": 5863.269497984523
+    }
+  },
+  {
+    "phase": "quartic_a0.388_b0.055",
+    "hash": "f3710776494cfdea3dee43d8d3ac899a321a65fbd6283b260a301187ee0d7795",
+    "timestamp": "2026-01-03T00:31:34.502923",
+    "state_summary": {
+      "potential_type": "quartic",
+      "parameters": {
+        "a": 0.3875,
+        "b": 0.05500000000000001
+      },
+      "eigenvalue_error": 5838.792092911168
+    }
+  },
+  {
+    "phase": "quartic_a0.388_b0.077",
+    "hash": "c5f7b0bd2396a6bbe1c96e4465ffa627c13185e3a1a7b98bf28acd22619ed842",
+    "timestamp": "2026-01-03T00:31:34.978635",
+    "state_summary": {
+      "potential_type": "quartic",
+      "parameters": {
+        "a": 0.3875,
+        "b": 0.0775
+      },
+      "eigenvalue_error": 5820.117775604068
+    }
+  },
+  {
+    "phase": "quartic_a0.388_b0.100",
+    "hash": "3117a034a6858182f2158c38420eb5fa2b868621f95bc5e2d4069343240e98ff",
+    "timestamp": "2026-01-03T00:31:35.469130",
+    "state_summary": {
+      "potential_type": "quartic",
+      "parameters": {
+        "a": 0.3875,
+        "b": 0.1
+      },
+      "eigenvalue_error": 5804.686463173788
+    }
+  },
+  {
+    "phase": "quartic_a0.500_b0.010",
+    "hash": "ccbbb603f898933334450e2aa6ec694391efddeb263168cd35c6b33b3e86b4bb",
+    "timestamp": "2026-01-03T00:31:35.879119",
+    "state_summary": {
+      "potential_type": "quartic",
+      "parameters": {
+        "a": 0.5,
+        "b": 0.01
+      },
+      "eigenvalue_error": 5898.952051777297
+    }
+  },
+  {
+    "phase": "quartic_a0.500_b0.033",
+    "hash": "54471ef929e1fa7c578aaa2854260f1a4ca996ccbda7ae3e76fc5843d2751138",
+    "timestamp": "2026-01-03T00:31:36.280498",
+    "state_summary": {
+      "potential_type": "quartic",
+      "parameters": {
+        "a": 0.5,
+        "b": 0.0325
+      },
+      "eigenvalue_error": 5860.379444215616
+    }
+  },
+  {
+    "phase": "quartic_a0.500_b0.055",
+    "hash": "9441bcfc1840b2abef61410c4b0d86cb98bfe640f0905718410a1869bcfb0069",
+    "timestamp": "2026-01-03T00:31:36.721221",
+    "state_summary": {
+      "potential_type": "quartic",
+      "parameters": {
+        "a": 0.5,
+        "b": 0.05500000000000001
+      },
+      "eigenvalue_error": 5836.338487224633
+    }
+  },
+  {
+    "phase": "quartic_a0.500_b0.077",
+    "hash": "bae5389ffa622e560974fa74c8b9d8ee09ffc10bd5a135c3fc05b8d1a0543775",
+    "timestamp": "2026-01-03T00:31:37.221306",
+    "state_summary": {
+      "potential_type": "quartic",
+      "parameters": {
+        "a": 0.5,
+        "b": 0.0775
+      },
+      "eigenvalue_error": 5817.9174415221005
+    }
+  },
+  {
+    "phase": "quartic_a0.500_b0.100",
+    "hash": "ca968329b23f9964531acf29936061ccb7de7a331f4d45e71ca252db62267492",
+    "timestamp": "2026-01-03T00:31:37.703779",
+    "state_summary": {
+      "potential_type": "quartic",
+      "parameters": {
+        "a": 0.5,
+        "b": 0.1
+      },
+      "eigenvalue_error": 5802.659164839025
+    }
+  },
+  {
+    "phase": "morse_De1.00_a0.50",
+    "hash": "2162f8ef4766e754f0ef0a4e336056c59b5e6f69a9a6236ff396a6b00c158d81",
+    "timestamp": "2026-01-03T00:31:38.003192",
+    "state_summary": {
+      "potential_type": "morse",
+      "parameters": {
+        "De": 1.0,
+        "alpha": 0.5
+      },
+      "eigenvalue_error": 5989.124225301655
+    }
+  },
+  {
+    "phase": "morse_De1.00_a1.00",
+    "hash": "34a4f1d4283898e2e97222317bf1d5bfa6a98d85abd9b69cb39b1086760bb988",
+    "timestamp": "2026-01-03T00:31:38.314164",
+    "state_summary": {
+      "potential_type": "morse",
+      "parameters": {
+        "De": 1.0,
+        "alpha": 1.0
+      },
+      "eigenvalue_error": 5989.050292209083
+    }
+  },
+  {
+    "phase": "morse_De1.00_a1.50",
+    "hash": "fce8a35e853affc661f3d4178111ae220e798ff66d4e11b3ede922ce352e7a3a",
+    "timestamp": "2026-01-03T00:31:38.680959",
+    "state_summary": {
+      "potential_type": "morse",
+      "parameters": {
+        "De": 1.0,
+        "alpha": 1.5
+      },
+      "eigenvalue_error": 5989.0256616276165
+    }
+  },
+  {
+    "phase": "morse_De1.00_a2.00",
+    "hash": "d988e3ded1fd23d169c8d878e9f57c154fb4ef895c33036a6b39c175eb28dad7",
+    "timestamp": "2026-01-03T00:31:39.031327",
+    "state_summary": {
+      "potential_type": "morse",
+      "parameters": {
+        "De": 1.0,
+        "alpha": 2.0
+      },
+      "eigenvalue_error": 5989.013372139566
+    }
+  },
+  {
+    "phase": "morse_De2.33_a0.50",
+    "hash": "776d5b7b91a7ccfdcd2a632e6eb70896ab5fae8fdac3d14254d41b3f94f53ace",
+    "timestamp": "2026-01-03T00:31:39.352252",
+    "state_summary": {
+      "potential_type": "morse",
+      "parameters": {
+        "De": 2.333333333333333,
+        "alpha": 0.5
+      },
+      "eigenvalue_error": 5988.016122826987
+    }
+  },
+  {
+    "phase": "morse_De2.33_a1.00",
+    "hash": "a947e96329e5cd6e0fb510de4e0781bd5dc43eb2bdc3bf6af1e9e454e7265fd0",
+    "timestamp": "2026-01-03T00:31:39.651742",
+    "state_summary": {
+      "potential_type": "morse",
+      "parameters": {
+        "De": 2.333333333333333,
+        "alpha": 1.0
+      },
+      "eigenvalue_error": 5987.843046057001
+    }
+  },
+  {
+    "phase": "morse_De2.33_a1.50",
+    "hash": "369b8a5fb4dc85c4f589b76f1e8d2cff54894f5dd819f8b259291aceac9a64f9",
+    "timestamp": "2026-01-03T00:31:39.957559",
+    "state_summary": {
+      "potential_type": "morse",
+      "parameters": {
+        "De": 2.333333333333333,
+        "alpha": 1.5
+      },
+      "eigenvalue_error": 5987.785301091949
+    }
+  },
+  {
+    "phase": "morse_De2.33_a2.00",
+    "hash": "7d2547f76f33d7ba57275e8a40ea32809dde25cf93aa1dd0135a4b15a0730b9b",
+    "timestamp": "2026-01-03T00:31:40.255951",
+    "state_summary": {
+      "potential_type": "morse",
+      "parameters": {
+        "De": 2.333333333333333,
+        "alpha": 2.0
+      },
+      "eigenvalue_error": 5987.756472866831
+    }
+  },
+  {
+    "phase": "morse_De3.67_a0.50",
+    "hash": "f2f379013320048fb4e8b90b3050456aaaef59ad9fa98e1f00706d0c01eea666",
+    "timestamp": "2026-01-03T00:31:40.556276",
+    "state_summary": {
+      "potential_type": "morse",
+      "parameters": {
+        "De": 3.6666666666666665,
+        "alpha": 0.5
+      },
+      "eigenvalue_error": 5986.90934074614
+    }
+  },
+  {
+    "phase": "morse_De3.67_a1.00",
+    "hash": "0bc3bdb307a47e536eb39fc017543dfc031aba77a009c0cdfebf81e65e6ba73e",
+    "timestamp": "2026-01-03T00:31:40.873145",
+    "state_summary": {
+      "potential_type": "morse",
+      "parameters": {
+        "De": 3.6666666666666665,
+        "alpha": 1.0
+      },
+      "eigenvalue_error": 5986.63654174565
+    }
+  },
+  {
+    "phase": "morse_De3.67_a1.50",
+    "hash": "90e528f237c4309d48deaa4a8b701333def21cf80de8faa6e1a3745ebd07e9cd",
+    "timestamp": "2026-01-03T00:31:41.176586",
+    "state_summary": {
+      "potential_type": "morse",
+      "parameters": {
+        "De": 3.6666666666666665,
+        "alpha": 1.5
+      },
+      "eigenvalue_error": 5986.545443780887
+    }
+  },
+  {
+    "phase": "morse_De3.67_a2.00",
+    "hash": "5f4c30f87842a33c9d23d89b4d14e9c8c3b92d03dc8adbcc4204e7ee379e1ce2",
+    "timestamp": "2026-01-03T00:31:41.487515",
+    "state_summary": {
+      "potential_type": "morse",
+      "parameters": {
+        "De": 3.6666666666666665,
+        "alpha": 2.0
+      },
+      "eigenvalue_error": 5986.499908456616
+    }
+  },
+  {
+    "phase": "morse_De5.00_a0.50",
+    "hash": "1adb9c28c777d7c2eeb1bf4fbf160369cfc924dd53fba139421d37ce68ef306f",
+    "timestamp": "2026-01-03T00:31:41.797173",
+    "state_summary": {
+      "potential_type": "morse",
+      "parameters": {
+        "De": 5.0,
+        "alpha": 0.5
+      },
+      "eigenvalue_error": 5985.803804569314
+    }
+  },
+  {
+    "phase": "morse_De5.00_a1.00",
+    "hash": "47cbd9bdc5c1a6e44ef3e31e46484c6902fce5aa986f0d6e123b60e1b7263914",
+    "timestamp": "2026-01-03T00:31:42.081141",
+    "state_summary": {
+      "potential_type": "morse",
+      "parameters": {
+        "De": 5.0,
+        "alpha": 1.0
+      },
+      "eigenvalue_error": 5985.430731577728
+    }
+  },
+  {
+    "phase": "morse_De5.00_a1.50",
+    "hash": "7c38261f9e98714cb528f887eb81963696a121d58a4775ad3c2ea78b51dc9f58",
+    "timestamp": "2026-01-03T00:31:42.387324",
+    "state_summary": {
+      "potential_type": "morse",
+      "parameters": {
+        "De": 5.0,
+        "alpha": 1.5
+      },
+      "eigenvalue_error": 5985.306080604767
+    }
+  },
+  {
+    "phase": "morse_De5.00_a2.00",
+    "hash": "164f5f5d923612482badfca4107896d1454a10d2aaba407b22bac3a3be864ee1",
+    "timestamp": "2026-01-03T00:31:42.719946",
+    "state_summary": {
+      "potential_type": "morse",
+      "parameters": {
+        "De": 5.0,
+        "alpha": 2.0
+      },
+      "eigenvalue_error": 5985.243707095622
+    }
+  },
+  {
+    "phase": "exp_a0.050_b1.00_c0.10",
+    "hash": "5c50b981029090fc6ea51a71e9c7b010be51e9e3f38446286257f05601448e73",
+    "timestamp": "2026-01-03T00:31:43.050473",
+    "state_summary": {
+      "potential_type": "exponential_hybrid",
+      "parameters": {
+        "a": 0.05,
+        "b": 1.0,
+        "c": 0.1
+      },
+      "eigenvalue_error": 5983.457159575304
+    }
+  },
+  {
+    "phase": "exp_a0.050_b1.00_c0.23",
+    "hash": "32121fb549fbc2959bb76b8dfe1886559d1d48b115a96101aa82af1142073c67",
+    "timestamp": "2026-01-03T00:31:43.347420",
+    "state_summary": {
+      "potential_type": "exponential_hybrid",
+      "parameters": {
+        "a": 0.05,
+        "b": 1.0,
+        "c": 0.23333333333333334
+      },
+      "eigenvalue_error": 5983.507030707352
+    }
+  },
+  {
+    "phase": "exp_a0.050_b2.33_c0.10",
+    "hash": "40fe2675c7309315cf8d0cfce107e1a0c140a0656b0f733ca81d940b3ce62d43",
+    "timestamp": "2026-01-03T00:31:43.670445",
+    "state_summary": {
+      "potential_type": "exponential_hybrid",
+      "parameters": {
+        "a": 0.05,
+        "b": 2.333333333333333,
+        "c": 0.1
+      },
+      "eigenvalue_error": 5983.265347795349
+    }
+  },
+  {
+    "phase": "exp_a0.050_b2.33_c0.23",
+    "hash": "73bfc6539607c2257972c07458d96c25dbe1a346de98060c9c56b27edc4171c8",
+    "timestamp": "2026-01-03T00:31:43.958889",
+    "state_summary": {
+      "potential_type": "exponential_hybrid",
+      "parameters": {
+        "a": 0.05,
+        "b": 2.333333333333333,
+        "c": 0.23333333333333334
+      },
+      "eigenvalue_error": 5983.381405494148
+    }
+  },
+  {
+    "phase": "exp_a0.133_b1.00_c0.10",
+    "hash": "a3450e28a7c66a0a5dc3093b84a956bdcf6a69c888268128905c613db0215f3d",
+    "timestamp": "2026-01-03T00:31:44.281188",
+    "state_summary": {
+      "potential_type": "exponential_hybrid",
+      "parameters": {
+        "a": 0.13333333333333333,
+        "b": 1.0,
+        "c": 0.1
+      },
+      "eigenvalue_error": 5973.435626717639
+    }
+  },
+  {
+    "phase": "exp_a0.133_b1.00_c0.23",
+    "hash": "be7609944145c25e63872b24eb43cb65692eccbd8e72dc6389237df1fb1b5f92",
+    "timestamp": "2026-01-03T00:31:44.604068",
+    "state_summary": {
+      "potential_type": "exponential_hybrid",
+      "parameters": {
+        "a": 0.13333333333333333,
+        "b": 1.0,
+        "c": 0.23333333333333334
+      },
+      "eigenvalue_error": 5973.489245393462
+    }
+  },
+  {
+    "phase": "exp_a0.133_b2.33_c0.10",
+    "hash": "5bb5a8f6599de22f5f2dee5179dbdbbce8026c91ee6f7cacf50de23d2ad4b200",
+    "timestamp": "2026-01-03T00:31:44.917043",
+    "state_summary": {
+      "potential_type": "exponential_hybrid",
+      "parameters": {
+        "a": 0.13333333333333333,
+        "b": 2.333333333333333,
+        "c": 0.1
+      },
+      "eigenvalue_error": 5973.2285491149305
+    }
+  },
+  {
+    "phase": "exp_a0.133_b2.33_c0.23",
+    "hash": "4f22de4380588b7df15a5e41b58acdbd566d7d3e133096efee7a72f9cd890469",
+    "timestamp": "2026-01-03T00:31:45.234280",
+    "state_summary": {
+      "potential_type": "exponential_hybrid",
+      "parameters": {
+        "a": 0.13333333333333333,
+        "b": 2.333333333333333,
+        "c": 0.23333333333333334
+      },
+      "eigenvalue_error": 5973.353381338026
+    }
+  }
+]

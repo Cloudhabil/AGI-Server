@@ -1,0 +1,34 @@
+# BSD Comparison Morphism Skill
+id: "research/bsd_comparison_morphism"
+version: "1.0.0"
+name: "BSD Comparison Morphism"
+description: "Knowledge skill for BSD conjecture comparison morphism design"
+
+category: research
+tags: [bsd, mathematics, number-theory, millennium-prize]
+level: advanced
+
+load_weight: light
+entry_point: "skill.py:BSDComparisonMorphismSkill"
+
+requires: []
+
+capabilities:
+  - capability_id: "explain"
+    description: "Explain the comparison morphism design"
+  - capability_id: "components"
+    description: "List components: L_A, tau_alg, tau_an, phi"
+  - capability_id: "gap6"
+    description: "Explain connection to Gap 6 (higher rank)"
+
+permissions:
+  filesystem: none
+  network: []
+  shell: none
+
+# Knowledge source
+source:
+  cycle: 46
+  module: BSD
+  generated_by: "GPIA + nous-hermes:7b"
+  date: "2026-01-04"
