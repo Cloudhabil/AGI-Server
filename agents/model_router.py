@@ -20,6 +20,22 @@ from enum import Enum
 from core.dynamic_budget_orchestrator import apply_dynamic_budget
 
 OLLAMA_URL = os.getenv("OLLAMA_URL", "http://localhost:11434/api/generate")
+ROUTER_MODEL_ID = os.getenv("ROUTER_MODEL_ID", "gpia-router:latest")
+USE_NEURONIC_ROUTER = os.getenv("USE_NEURONIC_ROUTER", "").strip().lower() in ("1", "true", "yes", "on")
+
+# Map external model IDs to internal registry keys where they differ
+MODEL_ID_TO_NAME = {
+    "gpia-codegemma:latest": "codegemma",
+    "codegemma:latest": "codegemma",
+    "gpia-qwen3:latest": "qwen3",
+    "gpia-deepseek-r1:latest": "deepseek_r1",
+    "gpia-gpt-oss:20b": "gpt_oss_20b",
+    "gpia-gpt-oss:latest": "gpt_oss_20b",
+    "gpia-llama3:8b": "gpt_oss_20b",  # fallback
+    "gpia-master:latest": "gpia_core",
+    "gpia-llava:latest": "llava",
+    "qwen2-math:7b": "qwen3",  # not in MODELS; fall back to qwen3 unless added
+}
 
 
 class ModelRole(Enum):
@@ -159,12 +175,16 @@ class ModelRouter:
         """Query an LLM with automatic model selection."""
 
         # Determine which model to use
+        model_obj = None
         if model:
-            model_obj = self.models.get(model, self.models["qwen3"])
+            model_obj = self.models.get(model)
         elif task:
             model_obj = self.get_model_for_task(task)
-        else:
-            model_obj = self.models["qwen3"]
+
+        # Router override: ask gpia-router to pick when we don't have an explicit model
+        if model_obj is None:
+            routed_id = self._route_via_router_model(prompt)
+            model_obj = self._model_from_id(routed_id) or self.models["qwen3"]
 
         effective_max = self._adjust_max_tokens(prompt, max_tokens, model_obj.ollama_id)
 
@@ -349,6 +369,48 @@ Keep response under 300 words."""
 
         return ""
 
+    def _model_from_id(self, model_id: str) -> Optional[Model]:
+        # Direct match on ollama_id
+        for m in self.models.values():
+            if m.ollama_id == model_id:
+                return m
+        # Map external id to internal name
+        mapped = MODEL_ID_TO_NAME.get(model_id)
+        if mapped and mapped in self.models:
+            return self.models[mapped]
+        # Fallback by name
+        return self.models.get(model_id)
+
+    def _route_via_router_model(self, prompt: str) -> str:
+        """Call the gpia-router model to get a route."""
+        try:
+            payload = {
+                "model": ROUTER_MODEL_ID,
+                "prompt": prompt,
+                "stream": False,
+                "options": {
+                    "temperature": 0.0,
+                    "num_predict": 100,
+                },
+            }
+            resp = requests.post(OLLAMA_URL, json=payload, timeout=30)
+            if resp.status_code == 200:
+                data = resp.json()
+                raw = (data.get("response") or "").strip()
+                # Expect JSON: {"route": "<id>", "reason": "..."}
+                import json
+                try:
+                    obj = json.loads(raw)
+                    routed = obj.get("route")
+                    if routed:
+                        return routed
+                except Exception:
+                    pass
+        except Exception as e:
+            print(f"Router Error ({ROUTER_MODEL_ID}): {e}")
+        # Fallback
+        return "gpia-qwen3:latest"
+
     def _adjust_max_tokens(self, prompt: str, max_tokens: int, model_id: str) -> int:
         try:
             return apply_dynamic_budget(prompt, max_tokens, model_id=model_id)
@@ -409,6 +471,34 @@ def query_gpia_core(prompt: str, **kwargs) -> str:
 def query_council(prompt: str, **kwargs) -> Dict[str, str]:
     """Query all models."""
     return get_router().query_council(prompt, **kwargs)
+
+
+# Active router selector (Neuronic -> base)
+_active_router = None
+
+
+def get_active_router():
+    """Return neuronic router if enabled, else base router."""
+    global _active_router
+    if _active_router is None:
+        if USE_NEURONIC_ROUTER:
+            try:
+                from agents.neuronic_router import get_neuronic_router
+                _active_router = get_neuronic_router()
+            except Exception as e:
+                print(f"[Router] Failed to init NeuronicRouter, falling back: {e}")
+                _active_router = get_router()
+        else:
+            _active_router = get_router()
+    return _active_router
+
+
+def query_active(prompt: str, task: str = None, model: str = None, **kwargs) -> str:
+    """Query via neuronic router when enabled, else base router."""
+    router = get_active_router()
+    if hasattr(router, "query"):
+        return router.query(prompt=prompt, task=task, model=model, **kwargs)
+    return get_router().query(prompt, task, model, **kwargs)
 
 
 if __name__ == "__main__":

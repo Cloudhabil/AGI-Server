@@ -152,8 +152,13 @@ class SovereignLoopMode(BaseAgent):
             # Non-blocking: dense-state logging failure doesn't stop execution
             self.ctx.telemetry.emit("dense_state.log_error", {"error": str(e)})
 
-        # Process the command (stub: just echo it back for now)
-        self.ctx.perception.write(f"[Sovereign] Processing: {cmd}\n")
+        # Process the command via active router (PASS-aware when enabled)
+        try:
+            from agents.model_router import query_active
+            result = query_active(cmd, task=None, model=None, max_tokens=256)
+            self.ctx.perception.write(f"[Sovereign] {result}\n")
+        except Exception as e:
+            self.ctx.perception.write(f"[Sovereign] Error: {e}\n")
 
         return None
 

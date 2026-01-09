@@ -32,18 +32,17 @@ def build_config() -> Dict[str, Any]:
     Build kernel configuration with service factories.
 
     Maps to actual implementations in the codebase.
-    Replace stubs with your real constructors.
-
-    Returns:
-        Config dict with factory functions
     """
-    # Import stub factories (will be replaced with real ones)
-    from core.stubs import make_ledger, make_perception, make_telemetry
+    from core.production_services import (
+        make_production_ledger,
+        make_production_perception,
+        make_production_telemetry
+    )
 
     return {
-        "ledger_factory": make_ledger,
-        "perception_factory": make_perception,
-        "telemetry_factory": make_telemetry,
+        "ledger_factory": make_production_ledger,
+        "perception_factory": make_production_perception,
+        "telemetry_factory": make_production_telemetry,
     }
 
 
@@ -147,11 +146,15 @@ def main() -> int:
         return 2
 
     # Create shared agent context
+    from core.kernel.substrate import KernelSubstrate
+    substrate = KernelSubstrate()
+
     ctx = AgentContext(
         identity=identity,
         telemetry=services.telemetry,
         ledger=services.ledger,
         perception=services.perception,
+        kernel=substrate,
         state={
             "boot_mode": args.mode,
             "kernel": "UnifiedRuntimeKernel",

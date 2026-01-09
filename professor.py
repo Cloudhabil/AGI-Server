@@ -25,7 +25,8 @@ from datetime import datetime
 from pathlib import Path
 from typing import Any, Dict, List, Optional
 
-sys.stdout = io.TextIOWrapper(sys.stdout.buffer, encoding='utf-8')
+if __name__ == "__main__":
+    sys.stdout = io.TextIOWrapper(sys.stdout.buffer, encoding='utf-8')
 
 REPO_ROOT = Path(__file__).resolve().parent
 
