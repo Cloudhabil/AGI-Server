@@ -113,3 +113,4 @@ governor/policy_engine_v1/
 # Path too long issues (Windows)
 research/committee_truth_20260105_161413/archives_extracted_all/
 retrospective-research/
+gpia_agi_server.egg-info/
