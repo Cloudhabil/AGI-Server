@@ -12,11 +12,12 @@ COPY pyproject.toml ./
 COPY skills/ ./skills/
 COPY core/ ./core/
 COPY configs/ ./configs/
-COPY models/ ./models/
+COPY agents/ ./agents/
+COPY governor/ ./governor/
+COPY hnet/ ./hnet/
 COPY templates/ ./templates/
 COPY static/ ./static/
-COPY main.py interface.py run.py ./
-COPY data/ ./data/
+COPY main.py interface.py run.py boot.py ./
 
 # Install dependencies
 RUN pip install --no-cache-dir .

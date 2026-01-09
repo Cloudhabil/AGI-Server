@@ -57,3 +57,43 @@ data/npu_models/
 
 # Runs and patches
 runs/
+
+# LARGE DIRECTORIES - Exclude from Docker
+snowden-archive-master/
+models/
+memory/
+agents/sessions/
+conversations/
+research/
+data/
+agi_test_output/
+gpia/
+reflexes/
+publication_archive/
+riemann_proof_package/
+arxiv_submission/
+arxiv_submission_package/
+retrospective-research/
+gpia_energy_minimization_sprint/
+gpia_riemann_150beat_sprint/
+gpia_riemann_reasoning/
+
+# Build artifacts
+dist/
+build/
+*.egg-info/
+*.exe
+*.whl
+*.tar.gz
+
+# Database files
+*.db
+*.sqlite
+*.sqlite3
+
+# Large misc
+*.pdf
+*.zip
+1-AGI-Ready-Website/
+ASCII/
+Math-probles-with-award/
