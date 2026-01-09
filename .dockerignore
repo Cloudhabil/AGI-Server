@@ -59,7 +59,6 @@ data/npu_models/
 runs/
 
 # LARGE DIRECTORIES - Exclude from Docker
-snowden-archive-master/
 models/
 memory/
 agents/sessions/
