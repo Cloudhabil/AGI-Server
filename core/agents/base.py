@@ -54,12 +54,14 @@ class AgentContext:
     - telemetry: Heartbeat and event emission
     - ledger: Append-only event log
     - perception: I/O boundary (CLI, network, sensors)
+    - kernel: Access to major systems (Safety, Budget, Archiver, etc)
     - state: Cross-mode continuity payload
     """
     identity: Dict[str, Any]
     telemetry: SupportsTelemetry
     ledger: SupportsLedger
     perception: SupportsPerception
+    kernel: Any = None
     state: Dict[str, Any] = field(default_factory=dict)
 
 

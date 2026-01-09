@@ -16,7 +16,8 @@ class CognitiveAffect:
             "STEADY_FLOW": {"rigor": 0.5, "exploration": 0.2, "safety": 0.3},
             "HYPER_FOCUS": {"rigor": 0.9, "exploration": 0.0, "safety": 0.1},
             "CREATIVE_LEAP": {"rigor": 0.2, "exploration": 0.7, "safety": 0.1},
-            "RECOVERY_STASIS": {"rigor": 0.1, "exploration": 0.1, "safety": 0.8}
+            "RECOVERY_STASIS": {"rigor": 0.1, "exploration": 0.1, "safety": 0.8},
+            "REFLEX": {"rigor": 0.8, "exploration": 0.0, "safety": 1.0}
         }
 
     def imagine_better_mood(self, current_stress: float, energy: float) -> str:
@@ -25,6 +26,10 @@ class CognitiveAffect:
         Instead of getting stressed, the system imagines which Mood-Skill 
         will best resolve the current energy state.
         """
+        # CRITICAL SURVIVAL: Instant Reflex
+        if current_stress > 0.9:
+            return "REFLEX"
+
         # AGI Logic: If stress is high, don't die. RECOVER.
         if current_stress > 0.7:
             return "RECOVERY_STASIS"

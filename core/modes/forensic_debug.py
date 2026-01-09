@@ -88,9 +88,14 @@ class ForensicDebugMode(BaseAgent):
         if not cmd:
             return None
 
-        # Unknown command
-        self.ctx.perception.write(f"[Forensic] Unknown command: '{cmd}'\n")
-        self.ctx.perception.write(f"[Forensic] Type 'help' for available commands\n")
+        # Unknown command: attempt routed processing (PASS-aware when enabled)
+        try:
+            from agents.model_router import query_active
+            result = query_active(cmd, task="debug", model=None, max_tokens=256)
+            self.ctx.perception.write(f"[Forensic Routed] {result}\n")
+        except Exception as e:
+            self.ctx.perception.write(f"[Forensic] Error: {e}\n")
+            self.ctx.perception.write(f"[Forensic] Type 'help' for available commands\n")
         self.ctx.telemetry.emit("forensic.unknown_command", {"cmd": cmd})
 
         return None

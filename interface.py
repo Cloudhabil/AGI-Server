@@ -20,7 +20,13 @@ import uvicorn
 from skills.conscience.memory.skill import MemoryStore, MemorySkill
 from skills.base import SkillCategory, SkillContext
 from alpha import AlphaAgent
+from core.kernel.substrate import KernelSubstrate
 
+# Import Livelink API if available
+try:
+    from livelink_api import router as livelink_router
+except ImportError:
+    livelink_router = None
 
 REPO_ROOT = Path(__file__).resolve().parent
 DB_PATH = REPO_ROOT / "skills" / "conscience" / "memory" / "store" / "memories.db"
@@ -29,7 +35,13 @@ STATIC_DIR = REPO_ROOT / "static"
 PAUSE_FLAG = REPO_ROOT / "runs" / "heartbeat.pause"
 SKILL_INDEXER = REPO_ROOT / "skills" / "system" / "skill-indexer" / "scripts" / "index_skills.py"
 
+# Initialize AGI Kernel
+_substrate = KernelSubstrate(str(REPO_ROOT))
+
 app = FastAPI(title="Cognitive Interface", version="1.0.0")
+
+if livelink_router:
+    app.include_router(livelink_router)
 
 # CORS for development
 app.add_middleware(
@@ -941,24 +953,13 @@ async def api_goals_reorder(req: GoalsReorderRequest) -> JSONResponse:
 
 @app.post("/api/chat")
 async def api_chat(req: ChatRequest) -> JSONResponse:
-    """Return a full chat response using local LLMs."""
-    import httpx
-
+    """Return a full chat response using the AGI Neuronic Router."""
     try:
-        async with httpx.AsyncClient() as client:
-            response = await client.post(
-                "http://localhost:11434/api/generate",
-                json={
-                    "model": "qwen3:latest",
-                    "prompt": req.message,
-                    "stream": False,
-                    "keep_alive": -1,
-                },
-                timeout=120.0,
-            )
-            response.raise_for_status()
-            data = response.json()
-            return JSONResponse({"reply": data.get("response", "")})
+        # Use the Substrate's brain
+        router = _substrate.neuronic_router or _substrate.router
+        response = router.query(req.message)
+        
+        return JSONResponse({"reply": response})
     except Exception as e:
         return JSONResponse({"error": str(e)}, status_code=500)
 

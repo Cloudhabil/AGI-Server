@@ -96,9 +96,13 @@ class TeachingMode(BaseAgent):
         except Exception as e:
             self.ctx.telemetry.emit("dense_state.log_error", {"error": str(e)})
 
-        # Provide teaching-oriented response (stub for now)
-        response = self._create_teaching_response(cmd)
-        self.ctx.perception.write(response)
+        # Provide teaching-oriented response via active router (PASS-aware when enabled)
+        try:
+            from agents.model_router import query_active
+            result = query_active(cmd, task="lesson_creation", model=None, max_tokens=256)
+            self.ctx.perception.write(f"{result}\n")
+        except Exception as e:
+            self.ctx.perception.write(f"[Teaching] Error: {e}\n")
 
         return None
 

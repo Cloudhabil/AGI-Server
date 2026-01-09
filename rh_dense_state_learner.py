@@ -172,6 +172,42 @@ class RHDenseStateLearner:
 
         return voxel_grid
 
+    def calculate_grid_resonance(self, voxel_grid: np.ndarray) -> float:
+        """
+        Calculate the Resonance Score from the 8x8x8 Voxel Grid.
+        Restores the 'V-Nand Resonance State' logic.
+        
+        Resonance = Strength of crystallized patterns (Active Voxels).
+        """
+        if voxel_grid is None:
+            return 0.0
+            
+        # Filter for active voxels (above noise floor)
+        active_voxels = voxel_grid[voxel_grid > 0.1]
+        
+        if len(active_voxels) == 0:
+            return 0.0
+            
+        # Metric: Mean strength of active patterns + Coherence bonus
+        # High resonance means we have strong, distinct correlations.
+        base_strength = float(np.mean(active_voxels))
+        peak_strength = float(np.max(active_voxels))
+        
+        # Weighted resonance
+        resonance = (base_strength * 0.7) + (peak_strength * 0.3)
+        return resonance
+
+    def check_resonance_gate(self, voxel_grid: np.ndarray, threshold: float = 0.95) -> Tuple[bool, float, str]:
+        """
+        Apply the Resonance Gate to the V-Nand State.
+        """
+        resonance = self.calculate_grid_resonance(voxel_grid)
+        
+        if resonance >= threshold:
+            return True, resonance, "GATE_OPEN: Resonance Critical Mass Achieved"
+        else:
+            return False, resonance, f"GATE_CLOSED: Resonance {resonance:.4f} < {threshold}"
+
     def compute_resonance_hash(self, patterns: Dict) -> str:
         """Compute resonance hash of current pattern state."""
         pattern_str = json.dumps(patterns, sort_keys=True, default=str)
@@ -249,6 +285,10 @@ class RHDenseStateLearner:
 
         # Encode to voxel space
         voxel_grid = self.encode_patterns_to_voxel_space(correlations)
+
+        # Check Resonance Gate
+        gate_open, resonance_score, gate_msg = self.check_resonance_gate(voxel_grid)
+        print(f"   [V-Nand] {gate_msg}")
 
         # Compute resonance hash
         resonance_hash = self.compute_resonance_hash(correlations)
