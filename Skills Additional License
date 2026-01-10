@@ -1,0 +1,104 @@
+# Cloudhabil Skills Additional License (CSAL)
+SPDX-License-Identifier: LicenseRef-Cloudhabil-Skills
+
+Version: 1.1  
+Effective date: 2026-01-10
+
+This Cloudhabil Skills Additional License (the "License") governs use of Cloudhabil skill packs and related non-code content.
+
+This License applies only to the Skills Materials (defined below). Any source code in this repository that is explicitly licensed under the Apache License, Version 2.0 remains governed by Apache-2.0 and is not changed by this License.
+
+## 1. Definitions
+1.1 **Cloudhabil**: The licensor of the Skills Materials.
+
+1.2 **You / Licensee**: The individual or entity using the Skills Materials.
+
+1.3 **Skills Materials**: Any non-code assets designated by Cloudhabil as subject to this License, including skill packs, skill datasets, manifests, specifications, templates, prompts, evaluation fixtures, and documentation intended to be executed or consumed as skills. Skills Materials are typically located under `/skills`, `/skillpacks`, `/datasets/skills`, or any path explicitly marked with the SPDX identifier `LicenseRef-Cloudhabil-Skills`.
+
+1.4 **Authorized Users**: Your employees and contractors who access the Skills Materials solely for your Internal Use.
+
+1.5 **Internal Use**: Use within your organization for your own internal operations and internal products, excluding redistribution or third-party service delivery.
+
+1.6 **Third Party**: Any person or entity that is not You or an Authorized User.
+
+1.7 **Derivative Skills**: Any modifications, adaptations, translations, re-arrangements, or extensions of the Skills Materials, including any work that is substantially similar in structure, sequencing, manifests, identifiers, tests, evaluation vectors, or unique selection logic, whether or not it is a literal copy.
+
+1.8 **Hosted Offering / Service Bureau Use**: Providing access to, operating, running, or exposing the Skills Materials (or Derivative Skills) for the benefit of a Third Party, including via SaaS, API, managed service, consulting deliverables where the Skills Materials are a primary value component, or any environment where a Third Party receives outputs generated from the Skills Materials as a service.
+
+1.9 **Model Training / Extraction**: Using Skills Materials (directly or indirectly) for training, fine-tuning, distillation, reinforcement learning, synthetic dataset generation, embedding, feature extraction, rule extraction, or building a substitute library or model behavior derived from the Skills Materials.
+
+## 2. Acceptance
+By accessing, copying, modifying, or using the Skills Materials, You agree to this License. If You do not agree, do not use the Skills Materials.
+
+## 3. License grant
+Subject to Your compliance with this License and any applicable written commercial agreement or order form, Cloudhabil grants You a limited, non-exclusive, non-transferable, non-sublicensable, revocable license to:
+a) use the Skills Materials for Internal Use, and  
+b) allow Authorized Users to use the Skills Materials for Internal Use, and  
+c) create Derivative Skills for Internal Use.
+
+No other rights are granted.
+
+## 4. Restrictions
+Unless Cloudhabil explicitly grants permission in writing, You must not, and must not allow any Third Party to:
+
+4.1 **Redistribute or publish** the Skills Materials or Derivative Skills, in whole or in part, including by sharing source files, manifests, evaluation fixtures, or substantially similar libraries.
+
+4.2 **Sublicense, sell, rent, lease, or transfer** the Skills Materials or Derivative Skills to any Third Party.
+
+4.3 **Provide a Hosted Offering / Service Bureau Use** where the Skills Materials or Derivative Skills are used for the benefit of a Third Party, whether or not the Skills Materials are redistributed. This includes offering "skills library as a service" or embedding the Skills Materials as a primary value component of a commercial service.
+
+4.4 **Use for Model Training / Extraction**, except as explicitly authorized in a written agreement with Cloudhabil. For clarity: You may not use the Skills Materials to train or shape a model, dataset, ruleset, or automated system intended to replicate or replace the Skills Materials.
+
+4.5 **Compete by cloning**: create, market, or distribute a competing skill library or substantially similar catalog based on the Skills Materials.
+
+4.6 **Remove or alter notices**: remove, obscure, or alter license notices, attribution, identifiers, watermarks, or provenance metadata included in the Skills Materials.
+
+4.7 **Misuse**: use the Skills Materials in violation of law, regulation, or Third Party rights, or to facilitate unlawful access, surveillance, or other prohibited activities.
+
+## 5. Ownership and feedback
+5.1 The Skills Materials are licensed, not sold. Cloudhabil retains all right, title, and interest in the Skills Materials.
+
+5.2 You retain ownership of Your original contributions in Derivative Skills that do not include Skills Materials. However, any Derivative Skills that incorporate or are based on Skills Materials remain subject to this License, including the restrictions in Section 4.
+
+5.3 **Feedback**: If You provide feedback or suggestions to Cloudhabil, You grant Cloudhabil a perpetual, worldwide, royalty-free right to use and incorporate that feedback without obligation.
+
+## 6. Third-party content and provenance
+6.1 The Skills Materials may reference Third Party tools, APIs, or content. Cloudhabil does not grant rights to Third Party materials.
+
+6.2 If You contribute any content that is incorporated into Skills Materials (by PR, patch, upload, or otherwise), You represent that You have the rights to do so and that it does not violate Third Party rights.
+
+## 7. Trademarks
+No trademark rights are granted. "Cloudhabil" and related marks are trademarks of Cloudhabil. You may not use Cloudhabil trademarks in marketing, product names, or public claims without written permission, except for truthful statements that You use the Skills Materials internally.
+
+## 8. Confidentiality (if applicable)
+If Cloudhabil provides Skills Materials marked as confidential, or provides Skills Materials via a private channel, You must protect them as confidential information using reasonable security measures and limit access to Authorized Users.
+
+## 9. Support and updates
+Support, updates, SLAs, and commercial terms (including seats, deployments, usage limits, or payment) are governed by a separate written agreement or order form, if any. If no such agreement exists, Cloudhabil has no obligation to provide support or updates.
+
+## 10. Warranty disclaimer
+THE SKILLS MATERIALS ARE PROVIDED "AS IS" WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND. CLOUDHABIL DISCLAIMS ALL WARRANTIES, EXPRESS OR IMPLIED, INCLUDING MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE, AND NON-INFRINGEMENT.
+
+## 11. Limitation of liability
+TO THE MAXIMUM EXTENT PERMITTED BY LAW, CLOUDHABIL WILL NOT BE LIABLE FOR ANY INDIRECT, INCIDENTAL, SPECIAL, CONSEQUENTIAL, OR PUNITIVE DAMAGES, OR FOR ANY LOSS OF PROFITS, REVENUE, DATA, OR BUSINESS INTERRUPTION, ARISING OUT OF OR RELATED TO THIS LICENSE OR THE SKILLS MATERIALS, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGES.
+
+IN NO EVENT WILL CLOUDHABIL'S TOTAL LIABILITY FOR ALL CLAIMS EXCEED THE AMOUNT YOU PAID TO CLOUDHABIL FOR THE SKILLS MATERIALS IN THE 12 MONTHS BEFORE THE EVENT GIVING RISE TO THE CLAIM, OR EUR 100 IF NO FEES WERE PAID.
+
+## 12. Term and termination
+12.1 This License is effective until terminated.
+
+12.2 Cloudhabil may terminate this License immediately if You breach Section 4 (Restrictions), Section 6 (Third Party rights), Section 7 (Trademarks), or Section 8 (Confidentiality).
+
+12.3 Upon termination, You must stop using the Skills Materials and delete all copies in Your possession or control, including copies held by Authorized Users.
+
+12.4 Sections 4, 5, 6, 7, 10, 11, and 12 survive termination.
+
+## 13. Compliance and export
+You are responsible for compliance with applicable laws and regulations, including export controls and sanctions. You must not use the Skills Materials where prohibited.
+
+## 14. Governing law and venue
+This License is governed by the laws of Spain, without regard to conflict of laws principles. The courts of Barcelona, Spain will have exclusive jurisdiction for any dispute arising out of or relating to this License or the Skills Materials.
+
+## 15. Contact
+Cloudhabil  
+Email: info@cloudhabil.com
