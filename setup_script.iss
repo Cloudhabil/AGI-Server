@@ -2,13 +2,13 @@
 ; SEE THE DOCUMENTATION FOR DETAILS ON CREATING INNO SETUP SCRIPT FILES!
 ; Non-commercial use only
 
-#define MyAppName "CloudHabil"
-#define MyAppVersion "0.1.0"
-#define MyAppPublisher "Cloudhabil by OBE"
+#define MyAppName "ASI-OS"
+#define MyAppVersion "0.2.0"
+#define MyAppPublisher "Cloudhabil contributors"
 #define MyAppURL "cloudhabil.com"
-#define MyAppExeName "CloudHabil.exe"
+#define MyAppExeName "ASI-OS.exe"
 #define MyAppAssocName MyAppName + " File"
-#define MyAppAssocExt ".myp"
+#define MyAppAssocExt ".cliai"
 #define MyAppAssocKey StringChange(MyAppAssocName, " ", "") + MyAppAssocExt
 
 [Setup]
@@ -17,31 +17,22 @@
 AppId={{FDEE7DE9-5E36-4737-86F3-B3ECE14B6B5B}
 AppName={#MyAppName}
 AppVersion={#MyAppVersion}
-;AppVerName={#MyAppName} {#MyAppVersion}
 AppPublisher={#MyAppPublisher}
 AppPublisherURL={#MyAppURL}
 AppSupportURL={#MyAppURL}
 AppUpdatesURL={#MyAppURL}
 DefaultDirName={autopf}\{#MyAppName}
 UninstallDisplayIcon={app}\{#MyAppExeName}
-; "ArchitecturesAllowed=x64compatible" specifies that Setup cannot run
-; on anything but x64 and Windows 11 on Arm.
 ArchitecturesAllowed=x64compatible
-; "ArchitecturesInstallIn64BitMode=x64compatible" requests that the
-; install be done in "64-bit mode" on x64 or Windows 11 on Arm,
-; meaning it should use the native 64-bit Program Files directory and
-; the 64-bit view of the registry.
 ArchitecturesInstallIn64BitMode=x64compatible
 ChangesAssociations=yes
 DisableProgramGroupPage=yes
 LicenseFile=C:\Users\usuario\Business\CLI_A1_GHR\CLI-main\LICENSE
-InfoBeforeFile=C:\Users\usuario\Business\CLI_A1_GHR\CLI-main\PRE_INSTALL.md
-InfoAfterFile=C:\Users\usuario\Business\CLI_A1_GHR\CLI-main\POST_INSTALL.md
-; Uncomment the following line to run in non administrative install mode (install for current user only).
-;PrivilegesRequired=lowest
+InfoBeforeFile=C:\Users\usuario\Business\CLI_A1_GHR\CLI-main\docs\pre_install.md
+InfoAfterFile=C:\Users\usuario\Business\CLI_A1_GHR\CLI-main\docs\post_install.md
 PrivilegesRequiredOverridesAllowed=commandline
-OutputDir=C:\Users\usuario\Business\CLI_A1_GHR\CLI-main
-OutputBaseFilename=CloudHabil_Installer_v1
+OutputDir=C:\Users\usuario\Business\CLI_A1_GHR\CLI-main\dist
+OutputBaseFilename=ASI-OS_Installer_v0.2.0
 SolidCompression=yes
 WizardStyle=modern dynamic windows11
 
@@ -54,7 +45,7 @@ Name: "spanish"; MessagesFile: "compiler:Languages\Spanish.isl"
 Name: "desktopicon"; Description: "{cm:CreateDesktopIcon}"; GroupDescription: "{cm:AdditionalIcons}"; Flags: unchecked
 
 [Files]
-Source: "C:\Users\usuario\Business\CLI_A1_GHR\CLI-main\dist\{#MyAppExeName}"; DestDir: "{app}"; Flags: ignoreversion
+Source: "C:\Users\usuario\Business\CLI_A1_GHR\CLI-main\dist\ASI-OS\*"; DestDir: "{app}"; Flags: ignoreversion recursesubdirs createallsubdirs
 ; NOTE: Don't use "Flags: ignoreversion" on any shared system files
 
 [Registry]
