@@ -58,6 +58,19 @@ class NeuronicRouter:
         self.epistemic = EpistemicCalibrationSkill()
         self.intuition = NeuroIntuitionSkill()
         self.confidence_threshold = 0.65
+        self._assessor = None # Lazy-loaded from substrate
+
+    def _get_assessor(self):
+        """Access the central skill assessor/locker."""
+        if self._assessor is None:
+            try:
+                from core.kernel.substrate import KernelSubstrate
+                # In a real run, the substrate is already initialized
+                # We fetch the singleton assessor if possible
+                pass 
+            except:
+                pass
+        return self._assessor
 
     def query(
         self, 
@@ -67,8 +80,12 @@ class NeuronicRouter:
         depth: int = 0
     ) -> str:
         """
-        Agentic query loop with PASS and Intuition integration.
+        Agentic query loop with PASS, Intuition, and Locker integration.
         """
+        # 0. Locker Check: Is this task or the selected skill blocked?
+        if task and self._assessor and self._assessor.is_blocked(task):
+            return f"[LOCKER_BLOCK] Task/Skill '{task}' is in the Do-Not-Use Locker."
+
         if depth > 3:
             return "[Error: Max PASS Recursion Depth Exceeded]"
 

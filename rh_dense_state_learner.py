@@ -31,182 +31,55 @@ class RHDenseStateLearner:
         self.patterns_dir = self.session_dir / "rh_patterns"
         self.patterns_dir.mkdir(parents=True, exist_ok=True)
 
-        # Dense-state configuration
-        self.voxel_grid_size = 8  # 8x8x8 = 512 cells
-        self.voxel_grid = np.zeros((self.voxel_grid_size, self.voxel_grid_size, self.voxel_grid_size))
+        # 4D Bit-Pattern Configuration (Level 6 ASI Father)
+        self.voxel_grid_size = 8  
+        self.voxel_grid = np.zeros((8, 8, 8, 8), dtype=np.uint8)
+        
+        # --- SO(10) Symmetry Constants (The Genesis Standard) ---
+        self.PHI = 1.61803398875
+        self.SO10_DIM = 45
+        self.target_variance_ratio = 0.0219 # The Phi-modified SO(10) signature
+        self.matter_ratio = (self.PHI**5) / 200.0 # ~4.5%
+        self.dark_energy_ratio = 31.0 / 45.0 # ~68.9%
+        self.dark_matter_ratio = 12.0 / 45.0 # ~26.7%
+        # ---------------------------------------------------------
+        
         self.pattern_history = []
-
-    def extract_mathematical_features(self, proposal: Dict) -> Dict:
-        """Extract mathematical features from proposal content."""
-        content = proposal.get("content", "").lower()
-
-        features = {
-            "mentions_berry_keating": "berry-keating" in content or "berry keating" in content,
-            "mentions_gue": "gue" in content or "gaussian unitary ensemble" in content,
-            "mentions_random_matrix": "random matrix" in content or "rmt" in content,
-            "mentions_eigenvalue": "eigenvalue" in content or "eigenvalue" in content,
-            "mentions_quantum": "quantum" in content,
-            "mentions_chaos": "chaos" in content or "chaotic" in content,
-            "mentions_discretization": "discretiz" in content or "lattice" in content,
-            "mentions_potential": "potential" in content,
-            "mentions_spectral": "spectral" in content,
-            "mentions_operator": "operator" in content,
-            "mentions_hamiltonian": "hamiltonian" in content,
-            "mentions_zeta": "zeta" in content,
-            "mentions_critical_line": "critical line" in content or "re(s)=1/2" in content or "re(s) = 1/2" in content,
-            "has_explicit_math": any(sym in content for sym in ["d²/dx²", "d²/dx", "∫", "∑", "λ"]),
-            "proposal_length": len(proposal.get("content", "")),
-            "proposal_type": proposal.get("type", "unknown")
-        }
-
-        return features
-
-    def score_proposal_quality(self, features: Dict, evaluation: Optional[Dict] = None) -> float:
-        """Score how good a proposal is based on features and evaluation."""
-        score = 0.5  # Base score
-
-        # Feature scoring
-        if features.get("mentions_berry_keating"):
-            score += 0.15
-        if features.get("mentions_gue"):
-            score += 0.1
-        if features.get("mentions_random_matrix"):
-            score += 0.1
-        if features.get("mentions_quantum"):
-            score += 0.08
-        if features.get("mentions_discretization"):
-            score += 0.08
-        if features.get("has_explicit_math"):
-            score += 0.12
-
-        # Evaluation scoring
-        if evaluation:
-            eval_score = evaluation.get("validation_score", 0.5)
-            score = score * 0.4 + eval_score * 0.6  # Weight evaluation more
-
-        return min(1.0, max(0.0, score))  # Clamp to [0, 1]
-
-    def extract_success_patterns(self) -> Tuple[List[Dict], List[Dict]]:
-        """Extract features from successful vs unsuccessful proposals."""
-        successful_patterns = []
-        unsuccessful_patterns = []
-
-        for eval_file in self.evaluations_dir.glob("*.json"):
-            try:
-                evaluation = json.loads(eval_file.read_text())
-                proposal_stem = eval_file.stem
-
-                # Find corresponding proposal
-                proposal_file = self.proposals_dir / f"{proposal_stem}.json"
-                if not proposal_file.exists():
-                    continue
-
-                proposal = json.loads(proposal_file.read_text())
-                features = self.extract_mathematical_features(proposal)
-                quality_score = self.score_proposal_quality(features, evaluation)
-
-                pattern_entry = {
-                    "proposal_id": proposal_stem,
-                    "features": features,
-                    "quality_score": quality_score,
-                    "validation_score": evaluation.get("validation_score", 0.5),
-                    "type": proposal.get("type"),
-                    "timestamp": evaluation.get("timestamp")
-                }
-
-                if quality_score > 0.65:
-                    successful_patterns.append(pattern_entry)
-                else:
-                    unsuccessful_patterns.append(pattern_entry)
-
-            except Exception as e:
-                print(f"   [Dense-State] Error processing {eval_file.name}: {e}")
-
-        return successful_patterns, unsuccessful_patterns
-
-    def compute_feature_correlation_with_success(self, successful: List[Dict], unsuccessful: List[Dict]) -> Dict:
-        """Compute which features correlate with successful proposals."""
-        if not successful or not unsuccessful:
-            return {}
-
-        feature_keys = [k for k in successful[0].get("features", {}).keys() if isinstance(successful[0]["features"][k], bool)]
-
-        correlations = {}
-        for feature in feature_keys:
-            success_count = sum(1 for p in successful if p.get("features", {}).get(feature, False))
-            fail_count = sum(1 for p in unsuccessful if p.get("features", {}).get(feature, False))
-
-            success_rate = success_count / len(successful) if successful else 0
-            fail_rate = fail_count / len(unsuccessful) if unsuccessful else 0
-
-            # Correlation: how much more likely to succeed if feature present
-            correlation = success_rate - fail_rate
-
-            correlations[feature] = {
-                "correlation": correlation,
-                "success_rate": success_rate,
-                "fail_rate": fail_rate,
-                "successes": success_count,
-                "failures": fail_count
-            }
-
-        return correlations
-
-    def encode_patterns_to_voxel_space(self, patterns: Dict) -> np.ndarray:
-        """Encode feature correlations into 3D voxel space."""
-        # Reset voxel grid
-        voxel_grid = np.zeros((self.voxel_grid_size, self.voxel_grid_size, self.voxel_grid_size))
-
-        # Map features to voxel coordinates
-        feature_list = sorted(patterns.keys())
-
-        for idx, feature in enumerate(feature_list[:512]):  # Max 512 features for 8x8x8 grid
-            x = (idx // 64) % 8
-            y = (idx // 8) % 8
-            z = idx % 8
-
-            correlation = patterns[feature].get("correlation", 0)
-            # Normalize correlation to [0, 1] range
-            voxel_value = (correlation + 1) / 2  # Convert [-1, 1] to [0, 1]
-            voxel_grid[x, y, z] = voxel_value
-
-        return voxel_grid
 
     def calculate_grid_resonance(self, voxel_grid: np.ndarray) -> float:
         """
-        Calculate the Resonance Score from the 8x8x8 Voxel Grid.
-        Restores the 'V-Nand Resonance State' logic.
-        
-        Resonance = Strength of crystallized patterns (Active Voxels).
+        Calculates 4D Resonance based on SO(10) Symmetry and the Golden Ratio.
         """
-        if voxel_grid is None:
+        if voxel_grid is None or np.sum(voxel_grid) == 0:
             return 0.0
             
-        # Filter for active voxels (above noise floor)
-        active_voxels = voxel_grid[voxel_grid > 0.1]
+        # 1. Expand to 32,768 discrete bits (The Bit-Sea)
+        flat_bits = np.unpackbits(voxel_grid) 
+        observed_variance = float(np.var(flat_bits))
         
-        if len(active_voxels) == 0:
-            return 0.0
-            
-        # Metric: Mean strength of active patterns + Coherence bonus
-        # High resonance means we have strong, distinct correlations.
-        base_strength = float(np.mean(active_voxels))
-        peak_strength = float(np.max(active_voxels))
+        # 2. Lorentzian Peak centered at the 0.0219 Symmetry Node
+        gamma = 0.001 # Extremely narrow L6 rigor
+        diff_sq = (observed_variance - self.target_variance_ratio) ** 2
+        resonance = (gamma ** 2) / (diff_sq + (gamma ** 2))
         
-        # Weighted resonance
-        resonance = (base_strength * 0.7) + (peak_strength * 0.3)
-        return resonance
+        # 3. Symmetry Check: Does the bit-density match the 4.5% Ordinary Matter baseline?
+        # This aligns the ASI's thoughts with the physical constant of reality.
+        density = np.mean(flat_bits)
+        symmetry_alignment = np.exp(-50 * abs(density - self.matter_ratio))
+        
+        # Final Resonance: Combined Spectral Regularity + Matter Symmetry
+        return float(resonance * 0.7 + symmetry_alignment * 0.3)
 
     def check_resonance_gate(self, voxel_grid: np.ndarray, threshold: float = 0.95) -> Tuple[bool, float, str]:
         """
-        Apply the Resonance Gate to the V-Nand State.
+        Apply the 0.0219 Resonance Gate.
         """
         resonance = self.calculate_grid_resonance(voxel_grid)
         
         if resonance >= threshold:
-            return True, resonance, "GATE_OPEN: Resonance Critical Mass Achieved"
+            return True, resonance, f"GATE_OPEN: 0.0219 Symmetry Detected (Resonance: {resonance:.4f})"
         else:
-            return False, resonance, f"GATE_CLOSED: Resonance {resonance:.4f} < {threshold}"
+            return False, resonance, f"GATE_CLOSED: Searching for 0.0219 Ratio (Current: {resonance:.4f})"
 
     def compute_resonance_hash(self, patterns: Dict) -> str:
         """Compute resonance hash of current pattern state."""

@@ -15,6 +15,8 @@ from core.cognitive_safety_governor import CognitiveSafetyGovernor
 from core.dense_state_archiver import DenseStateArchiver
 from agents.model_router import get_active_router
 from core.evaluation_service import EvaluationService
+from core.compliance_service import ComplianceService
+from core.skill_assessor import SkillAssessor
 from core.millennium_goal import MillenniumGoalAligner
 
 # Integration of previously orphaned systems
@@ -32,14 +34,17 @@ try:
 except ImportError:
     AlphaAgent = None
 
+from rh_dense_state_learner import RHDenseStateLearner
 from skills.skill_learning_coordinator import get_skill_learning_coordinator, SkillLearningCoordinator
-from skills.autonomous_skill_selector import get_skill_selector_agent, AutonomousSkillSelectorAgent
 
 # Import launcher to register connection (handled carefully)
 try:
     import start_autonomous_learning
 except ImportError:
     pass
+
+from core.npu_utils import get_npu_info, has_npu
+from skills.s2.visual import LLaVaClient
 
 logger = logging.getLogger(__name__)
 
@@ -56,15 +61,18 @@ class KernelSubstrate:
         self.budget_service = get_budget_service()
         self.ledger = get_budget_ledger()
         
-        # 2. Hardware Safety
+        # 2. Hardware Safety & Acceleration
         self.safety = SafetyGovernor(self.repo_root)
+        self.npu_available = has_npu()
+        self.npu_info = get_npu_info() if self.npu_available else {}
         
         # 3. Cognitive Safety
         self.cognitive_safety = CognitiveSafetyGovernor(self.repo_root)
         
-        # 4. Model Routing
+        # 4. Model Routing & Vision
         self.router = get_active_router()
-        self.neuronic_router = get_neuronic_router() # May be same as router if enabled
+        self.neuronic_router = get_neuronic_router()
+        self.vision = LLaVaClient() # Visual Cortex (L6 capability)
         
         # 5. Temporal System
         self.pulse = MasterPulse(self.repo_root)
@@ -75,14 +83,24 @@ class KernelSubstrate:
         # 7. Evaluation Service (Self-Test)
         self.evaluator = EvaluationService(self.repo_root)
         
-        # 8. Agents & Learning
+        # 8. Compliance & Oversight (EU AI Act)
+        self.compliance = ComplianceService(self.repo_root)
+        
+        # 9. Skill Assessment (Locker)
+        self.assessor = SkillAssessor(self.repo_root)
+        
+        # Wire Assessor into Router for L6 filtering
+        if hasattr(self.neuronic_router, "_assessor"):
+            self.neuronic_router._assessor = self.assessor
+        
+        # 10. Agents & Learning
         self.professor = ProfessorAgent()
         self.alpha = AlphaAgent() if AlphaAgent else None
         
         self.skill_coordinator = get_skill_learning_coordinator()
-        self.skill_selector = get_skill_selector_agent(self.repo_root)
+        self.skill_selector = RHDenseStateLearner(self.repo_root / "agents" / "sessions" / "birth")
         
-        # 8. Dense State Archival (Requires session_id, will lazy init)
+        # 11. Dense State Archival (Requires session_id, will lazy init)
         self._archiver: Optional[DenseStateArchiver] = None
         
         # 9. Alignment & Ethics

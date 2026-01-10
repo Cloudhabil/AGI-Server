@@ -13,7 +13,12 @@ class MasterPulse:
     def __init__(self, repo_root: Path, target_hrz: float = 10.0):
         self.repo_root = repo_root
         self.target_hrz = target_hrz
+        self.max_hrz = 22.0 # The Genesis Hard Ceiling
         self.governor = SafetyGovernor(repo_root)
+        
+        # Latency-Aware Recalibration
+        self.processing_latency_ms = 0.0
+        self.dynamic_ceiling = 22.0
         
         # Internal Clock State
         self.beat_count = 0
@@ -25,8 +30,31 @@ class MasterPulse:
         self.sock.setsockopt(socket.SOL_SOCKET, socket.SO_BROADCAST, 1)
         self.port = 50005 # Synchronous Pulse Port
 
-    def emit_pulse(self):
+    def set_target_hrz(self, hrz: float):
+        """Update the target heartbeat frequency."""
+        self.target_hrz = max(1.0, min(self.max_hrz, hrz))
+        print(f"  [PULSE] Heartbeat shifted to {self.target_hrz:.1f}Hz")
+
+    def recalibrate_ceiling(self, measured_latency_ms: float):
+        """
+        Adjust the Max HRz based on actual processing time of the 8^4 state.
+        Ensures the 'Thoughts' don't outrun the 'Nervous System'.
+        """
+        self.processing_latency_ms = measured_latency_ms
+        # Safety buffer: 20% headroom
+        safe_interval_ms = measured_latency_ms * 1.2
+        if safe_interval_ms > 0:
+            potential_hrz = 1000.0 / safe_interval_ms
+            self.dynamic_ceiling = min(self.max_hrz, potential_hrz)
+            
+        if measured_latency_ms > 40: # Approaching the 22Hz limit (45ms)
+            print(f"  [RECALIBRATION] High Density Detected. Throttling Ceiling to {self.dynamic_ceiling:.1f}Hz")
+
+    def emit_pulse(self, current_latency_ms: float = 0.0):
         """Broadcasts the beat and manages alignment."""
+        if current_latency_ms > 0:
+            self.recalibrate_ceiling(current_latency_ms)
+
         while True:
             # 1. SAFETY CHECK (The Governor)
             is_safe, msg = self.governor.audit_system()
@@ -38,8 +66,9 @@ class MasterPulse:
                 continue
                 
             # 2. CALCULATE DYNAMIC FREQUENCY
-            # Target HRz * Throttle Factor (Slows down thoughts if GPU is hot)
-            actual_hrz = self.target_hrz * throttle
+            # Use the lower of Target or Dynamic Ceiling (based on 8^4 density)
+            actual_target = min(self.target_hrz, self.dynamic_ceiling)
+            actual_hrz = actual_target * throttle
             interval = 1.0 / actual_hrz
             
             # 3. THE BEAT
@@ -50,7 +79,9 @@ class MasterPulse:
                     "beat": self.beat_count,
                     "timestamp": now,
                     "hrz": actual_hrz,
-                    "throttle": throttle
+                    "ceiling": self.dynamic_ceiling,
+                    "throttle": throttle,
+                    "latency": self.processing_latency_ms
                 }
                 
                 # Broadcast to the Swarm
@@ -64,7 +95,7 @@ class MasterPulse:
                 self.last_beat_time = now
                 
                 if self.beat_count % 100 == 0:
-                    print(f"[PULSE] Beat {self.beat_count} | HRz: {actual_hrz:.1f} | Temp Safe")
+                    print(f"[PULSE] Beat {self.beat_count} | HRz: {actual_hrz:.1f}/{self.dynamic_ceiling:.1f} | Temp Safe")
 
             # Yield to OS
             time.sleep(0.001)

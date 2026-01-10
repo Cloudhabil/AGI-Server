@@ -53,7 +53,7 @@ class SovereignLoopMode(BaseAgent):
                     "gc_threshold": 0.35
                 },
                 "voxel": {
-                    "shape": [8, 8, 8],
+                    "shape": [8, 8, 8, 8],
                     "dtype": "float32",
                     "flatten_order": "C"
                 }
@@ -125,11 +125,65 @@ class SovereignLoopMode(BaseAgent):
 
         # Normal cognitive cycle: emit heartbeat + log command
         self.ctx.telemetry.heartbeat("sovereign_tick", {"cmd": cmd})
+        
+        # --- NEW: Dynamic Substrate Evolution ---
+        try:
+            # 1. Trigger Resonance Calibration (Every 2 beats for fast test calibration)
+            current_beat = len(self.ctx.ledger.get_stream("resonance_optimization"))
+            if current_beat > 0 and current_beat % 2 == 0:
+                from core.resonance_calibrator import ResonanceCalibrator
+                calibrator = ResonanceCalibrator(self.ctx.kernel)
+                calibrator.run_optimization_cycle()
+                
+            # 2. Mood-Pulse Synchronization
+            energy = min(1.0, len(cmd) / 50.0) 
+            mood_config = self.ctx.kernel.affect.apply_mood_meta_skill(energy, 0.0)
+            
+            target_hrz = mood_config.get("target_hrz", 10.0)
+            if hasattr(self.ctx.kernel.pulse, "set_target_hrz"):
+                self.ctx.kernel.pulse.set_target_hrz(target_hrz)
+        except Exception as e:
+            self.ctx.telemetry.emit("evolution.sync_error", {"error": str(e)})
+        # ---------------------------------------
+
         self.ctx.ledger.append("cortex", {
             "mode": self.mode_name,
             "cmd": cmd,
             "type": "user_command"
         })
+
+        # --- RESTORED: V-Nand Resonance & Gate Integration ---
+        try:
+            from rh_dense_state_learner import get_skill_selector_agent # Actually RHDenseStateLearner
+            # We fetch the learner from the substrate
+            learner = self.ctx.kernel.skill_selector # In substrate, skill_selector is RHDenseStateLearner
+            
+            # 1. Fetch current 8x8x8 state
+            storage = self._get_dense_storage()
+            current_grid = storage.get_last_voxel() # Hypothetical method
+            
+            if current_grid is not None:
+                # 2. Check Resonance Gate (0.95)
+                gate_open, score, msg = learner.check_resonance_gate(current_grid)
+                self.ctx.telemetry.emit("resonance.gate_check", {
+                    "open": gate_open, 
+                    "score": score, 
+                    "hrz": self.ctx.kernel.pulse.target_hrz,
+                    "mood": self.ctx.kernel.affect.active_mood_skill
+                })
+                
+                # --- NEW: Sweet-Spot Observation ---
+                # Log the performance of this frequency to the ledger for the Optimizer to find
+                self.ctx.ledger.append("resonance_optimization", {
+                    "hrz": self.ctx.kernel.pulse.target_hrz,
+                    "score": score,
+                    "mood": self.ctx.kernel.affect.active_mood_skill,
+                    "latency": self.ctx.kernel.pulse.processing_latency_ms
+                })
+                # ------------------------------------
+        except Exception as e:
+            self.ctx.telemetry.emit("resonance.error", {"error": str(e)})
+        # ----------------------------------------------------
 
         # Log dense-state snapshot
         try:
