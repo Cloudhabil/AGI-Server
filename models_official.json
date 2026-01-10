@@ -1,0 +1,13 @@
+{
+  "endpoint": "http://localhost:11434",
+  "models": [
+    "gpia-codegemma:latest",
+    "codegemma:latest",
+    "gpia-gpt-oss:20b",
+    "gpia-master:latest",
+    "gpia-qwen3:latest",
+    "gpia-llama3:8b",
+    "qwen2-math:7b",
+    "gpia-deepseek-r1:latest"
+  ]
+}

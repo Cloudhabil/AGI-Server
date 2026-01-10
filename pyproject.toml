@@ -88,8 +88,8 @@ gpia-server = "boot:main"
 gpia-ecosystem = "gpia_cognitive_ecosystem:main"
 
 [tool.setuptools.packages.find]
-where = ["."]
-include = ["core*", "agents*", "skills*", "hnet*", "governor*"]
+where = ["src"]
+include = ["*"]
 
 [tool.mypy]
 python_version = "3.11"
@@ -106,5 +106,5 @@ target-version = "py311"
 
 [tool.pytest.ini_options]
 addopts = "-q"
-pythonpath = "."
+pythonpath = "src"
 testpaths = ["tests"]

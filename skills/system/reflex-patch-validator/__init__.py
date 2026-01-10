@@ -1,1 +1,0 @@
-"""Reflex patch validator skill."""

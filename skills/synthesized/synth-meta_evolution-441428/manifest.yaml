@@ -1,8 +1,0 @@
-id: synthesized/synth-meta_evolution-441428
-name: Unknown
-description: Synthesized skill
-version: 0.1.0
-category: synthesized
-level: advanced
-tags: [synthesized, meta_evolution, auto-generated]
-requires_model: qwen3

@@ -1,5 +1,0 @@
-# Preferred backend order
-order:
-  - npu_openvino
-  - ollama_embeddings
-  - sentence_transformers_cpu

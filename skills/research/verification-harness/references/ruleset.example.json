@@ -1,7 +1,0 @@
-{
-  "must_contain": ["PASS"],
-  "must_not_contain": ["ERROR"],
-  "regex": ["VERDICT:.*"],
-  "min_len": 10,
-  "max_len": 20000
-}

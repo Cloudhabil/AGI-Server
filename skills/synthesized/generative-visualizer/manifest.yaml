@@ -1,7 +1,0 @@
-id: synthesized/generative-visualizer
-name: Generative Visualizer
-description: Convert telemetry-anomaly data into visual patterns for instant diagnostics
-version: 1.0.0
-category: synthesized
-level: advanced
-tags: [visualization, telemetry, diagnostics, generative]

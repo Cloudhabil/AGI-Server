@@ -1,14 +1,14 @@
 {
   "mode": "vector",
   "voxel": {
-    "shape": [8, 8, 8],
-    "dtype": "float32",
+    "shape": [8, 8, 8, 8],
+    "dtype": "uint8",
     "flatten_order": "C",
     "stats_mode": "flattened"
   },
   "experimental": false,
   "vnand": {
-    "enabled": false,
+    "enabled": true,
     "root_dir": "data/vnand",
     "page_bytes": 4096,
     "block_pages": 256,

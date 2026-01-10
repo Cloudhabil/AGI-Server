@@ -10,7 +10,7 @@ from pathlib import Path
 import logging
 
 # Add project root to path
-sys.path.append(str(Path(__file__).resolve().parent.parent))
+sys.path.append(str(Path(__file__).resolve().parent.parent / "src"))
 
 from skills.loader import SkillLoader
 from integrations.openvino_embedder import get_embeddings  # The discovered embedding function

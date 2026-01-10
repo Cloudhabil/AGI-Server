@@ -27,7 +27,7 @@ from datetime import datetime
 import hashlib
 
 # Add project to path
-sys.path.insert(0, str(Path(__file__).parent.parent))
+sys.path.insert(0, str(Path(__file__).parent.parent / "src"))
 
 from agents.model_router import get_router
 import mpmath as mp

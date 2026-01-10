@@ -51,10 +51,10 @@ def _lazy_init() -> None:
     from transformers import AutoTokenizer
 
     _core_ctor = Core
-    _core = Core()
-    devices = _core.available_devices
-    device = "NPU" if "NPU" in devices else "CPU"
-    if device == "CPU" and settings.OPENVINO_EMBEDDING_MODEL_CPU:
+    # Force CPU execution to preserve VRAM for reasoning models (ASI-Father Substrate Optimization)
+    device = "CPU"
+    
+    if settings.OPENVINO_EMBEDDING_MODEL_CPU:
         model_path = settings.OPENVINO_EMBEDDING_MODEL_CPU
 
     model = _core.read_model(model_path)

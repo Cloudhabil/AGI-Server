@@ -1,8 +1,0 @@
-{
-  "sensors": ["cpu_mem", "disk", "gpu", "processes"],
-  "actions": [
-    {"type": "list_dir", "path": "."},
-    {"type": "read_file_head", "path": "README.md", "lines": 5},
-    {"type": "ping_http", "url": "http://localhost:11434/api/tags"}
-  ]
-}

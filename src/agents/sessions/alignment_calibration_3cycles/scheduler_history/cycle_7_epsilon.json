@@ -1,0 +1,10 @@
+{
+  "student_name": "epsilon",
+  "model_name": "rh-epsilon:latest",
+  "vram_used_mb": 1215,
+  "time_seconds": 2.0002431869506836,
+  "tokens_generated": 3000,
+  "tokens_per_second": 1499.817631961751,
+  "success": true,
+  "timestamp": 1767429651.0928848
+}

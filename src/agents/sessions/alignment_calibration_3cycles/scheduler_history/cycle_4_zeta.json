@@ -1,0 +1,10 @@
+{
+  "student_name": "zeta",
+  "model_name": "rh-zeta:latest",
+  "vram_used_mb": 1268,
+  "time_seconds": 2.0005435943603516,
+  "tokens_generated": 3000,
+  "tokens_per_second": 1499.5924150101873,
+  "success": true,
+  "timestamp": 1767429798.4431148
+}

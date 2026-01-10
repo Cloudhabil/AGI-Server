@@ -1,0 +1,9 @@
+{
+  "endpoint": "http://localhost:11434",
+  "models": [
+    "gpia-deepseek-r1:latest",
+    "gpia-master:latest",
+    "gpia-qwen3:latest",
+    "gpia-llama3:8b"
+  ]
+}

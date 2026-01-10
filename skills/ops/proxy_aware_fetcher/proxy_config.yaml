@@ -1,6 +1,0 @@
-# Proxy configuration placeholder
-proxy_url: ""
-no_proxy: ""
-auth:
-  username: ""
-  password: ""

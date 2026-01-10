@@ -1,0 +1,10 @@
+{
+  "student_name": "alpha",
+  "model_name": "rh-alpha:latest",
+  "vram_used_mb": 7240,
+  "time_seconds": 3.7318966388702393,
+  "tokens_generated": 162,
+  "tokens_per_second": 43.40956239587665,
+  "success": true,
+  "timestamp": 1767430156.517951
+}

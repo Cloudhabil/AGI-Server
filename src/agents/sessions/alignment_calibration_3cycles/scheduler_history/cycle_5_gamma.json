@@ -1,0 +1,10 @@
+{
+  "student_name": "gamma",
+  "model_name": "rh-gamma:latest",
+  "vram_used_mb": 1268,
+  "time_seconds": 2.0002856254577637,
+  "tokens_generated": 3000,
+  "tokens_per_second": 1499.785811495522,
+  "success": true,
+  "timestamp": 1767429822.7788792
+}

@@ -87,6 +87,33 @@ bench_test_*.txt
 test_file.task
 AGI_TEST_HARD_PHYSICS_output/
 tests_real_conditions_output/
+artifacts_archive/
+evals/
+experiments/
+agi_test_output/
+tmp_ledger/
+1-AGI-Ready-Website/
+Math-probles-with-award/
+archive/
+archivecodex_enterprise/
+artifacts/
+arxiv_submission/
+arxiv_submission_package/
+publication_archive/
+data/archives/
+data/dense_state/
+data/ipc/
+data/ledger/
+data/locker/
+
+# PROPRIETARY SKILLS (Income Source Protection)
+src/skills/
+!src/skills/__init__.py
+!src/skills/base.py
+!src/skills/loader.py
+!src/skills/registry.py
+# If you have specific public skills, we can un-ignore them here with !
+# e.g., !src/skills/public_skill.py
 
 # CRITICAL: Ignore Large Files
 *.exe
@@ -119,10 +146,13 @@ gpia_agi_server.egg-info/
 *.reg
 REGISTRY_KEYS_SUMMARY.txt
 INSTALL_INFO.txt
+ChatWithRTX_Installer_8_25/
 
 # Generated reports/logs
 *_Report.md
 REDACTION_LOG.md
+*_Report.md
+out/
 
 # Temporary renamed assets
 CH_Logo (1).ico

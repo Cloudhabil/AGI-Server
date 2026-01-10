@@ -1,9 +1,0 @@
-{
-  "min_free_ram_ratio": 0.25,
-  "min_free_vram_ratio": 0.2,
-  "min_free_disk_ratio": 0.05,
-  "min_free_ram_mb": 4096,
-  "min_free_vram_mb": 2048,
-  "min_free_disk_mb": 102400,
-  "max_disk_write_mbps_default": 50
-}

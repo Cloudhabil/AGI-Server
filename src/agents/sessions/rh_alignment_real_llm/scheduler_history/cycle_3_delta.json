@@ -1,0 +1,10 @@
+{
+  "student_name": "delta",
+  "model_name": "rh-delta:latest",
+  "vram_used_mb": 7240,
+  "time_seconds": 4.243389129638672,
+  "tokens_generated": 232,
+  "tokens_per_second": 54.67327952073889,
+  "success": true,
+  "timestamp": 1767430228.9489117
+}

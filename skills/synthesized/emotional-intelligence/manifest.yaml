@@ -1,8 +1,0 @@
-id: synthesized/emotional-intelligence
-name: Emotional Intelligence
-description: Understand feeling, predict human irrationality, decode intent with high fidelity
-version: 1.0.0
-category: synthesized
-level: advanced
-tags: [emotion, psychology, prediction, intent]
-requires_model: qwen3

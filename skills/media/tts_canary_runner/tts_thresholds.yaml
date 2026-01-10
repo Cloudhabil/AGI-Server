@@ -1,3 +1,0 @@
-# Thresholds for TTS canaries
-latency_ms: 2000
-quality: 0.8

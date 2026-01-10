@@ -77,7 +77,7 @@ AFTER TEST:
     print("\nStarting orchestrator...\n")
 
     # Import and run
-    sys.path.insert(0, str(Path(__file__).parent.parent))
+    sys.path.insert(0, str(Path(__file__).parent.parent / "src"))
 
     from start_rh_adaptive_ensemble import RHAdaptiveEnsemble
 
