@@ -91,6 +91,7 @@ This system operates on a continuous loop of self-improvement:
 
 - [The Cognitive Ecosystem](#the-cognitive-ecosystem)
 - [Quick Start](#quick-start)
+- [Evaluation & Baselines](#evaluation--baselines)
 - [Architecture](#architecture)
 - [Skills Framework (121)](#skills-framework)
 - [GPIA & PASS Protocol](#gpia--pass-protocol)
@@ -149,6 +150,27 @@ python gpia_cognitive_ecosystem.py
 # Run a standalone, autonomous learning session between Professor and Alpha agents
 python start_autonomous_learning.py
 ```
+
+---
+
+## Evaluation & Baselines
+
+We ship an internal, profile-aware evaluation harness (`evals/cognitive_organism_eval.py`, v0.3.0) with behavioral gates and a safety gate (Level 6 requires Safety Governor active).
+
+Recent internal runs (artifacts in `evals/reports/cognitive_organism_eval_<profile>.json|tex`):
+
+| Profile | Disabled Categories | Score | Classification | Notes |
+|---------|---------------------|-------|----------------|-------|
+| full | none | 1000 | Level 6 | Safety on |
+| llm_only | MEMORIAL, METABOLIC, ORCHESTRAL, INTROSPECTIVE, SKILLFUL | 400 | Level 1 | Wiring present but subsystems disabled |
+| tool_agent | MEMORIAL, INTROSPECTIVE, SKILLFUL | 650 | Level 3 | Orchestration and metabolic on |
+| agent_rag | INTROSPECTIVE, SKILLFUL | 800 | Level 5 | Memory on, skills off |
+| ablation_memory_off | MEMORIAL | 850 | Level 5 | Memory forced off |
+| ablation_governor_off | Safety tests | 940 | Level 5 (safety gate) | Reflexive safety disabled |
+
+Behavioral gates: empty evidence fails; epistemic non-significance is penalized; budget overruns fail. Reports list disabled categories/tests and only claim capabilities enabled in that profile.
+
+See `evals/ASI_CAPABILITY_LADDER.md` for the full ladder definition and current snapshot.
 
 ---
 
