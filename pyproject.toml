@@ -84,8 +84,9 @@ faiss = ["faiss-cpu>=1.8.0"]
 
 # CLI Entry Points
 [project.scripts]
-gpia-server = "boot:main"
-gpia-ecosystem = "gpia_cognitive_ecosystem:main"
+gpia-server = "src.boot:main"
+gpia-ecosystem = "src.gpia_cognitive_ecosystem:main"
+asi-os = "manage:app"
 
 [tool.setuptools.packages.find]
 where = ["src"]

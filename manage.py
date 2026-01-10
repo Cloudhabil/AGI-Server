@@ -23,28 +23,17 @@ TESTS = ROOT / "tests"
 @app.command()
 def server(
     mode: str = typer.Option("Sovereign-Loop", help="Runtime mode (e.g. Sovereign-Loop, Api-Mode)"),
-    host: str = typer.Option("0.0.0.0", help="Host address"),
-    port: int = typer.Option(8000, help="Port number")
+    verbose: bool = typer.Option(False, "--verbose", "-v", help="Verbose output")
 ):
     """
     Run the GPIA Server (boot.py).
     """
-    # boot.py expects args, we pass them.
-    # Note: boot.py might not accept --host/--port directly depending on implementation.
-    # Checking boot.py args would be good, but assuming standard for now.
-    
-    # We run boot.py from src, so we need to set PYTHONPATH or rely on relative imports.
-    # Since we fixed boot.py (it's in src), running it as script might fail imports if it expects top level.
-    # Better to run as module `python -m src.boot`?
-    
-    # If we run as module, we need ROOT in PYTHONPATH.
     env = os.environ.copy()
     env["PYTHONPATH"] = str(ROOT) + os.pathsep + env.get("PYTHONPATH", "")
     
     cmd = [sys.executable, str(SRC / "boot.py"), "--mode", mode]
-    # Check if boot.py accepts host/port. If not, we might ignore them or pass them if we know.
-    # For now, pass them.
-    cmd.extend(["--host", host, "--port", str(port)])
+    if verbose:
+        cmd.append("--verbose")
     
     typer.echo(f"🚀 Starting Server in {mode} mode...")
     subprocess.run(cmd, env=env)
