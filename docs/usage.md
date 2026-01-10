@@ -3,13 +3,13 @@
 ## Creating a Task
 
 ```bash
-python ch_cli.py new --name "my-first-task" --task "Refactor auth logic"
+python scripts/ch_cli.py new --name "my-first-task" --task "Refactor auth logic"
 ```
 
 You can optionally provide initial context and constraints:
 
 ```bash
-python ch_cli.py new \
+python scripts/ch_cli.py new \
   --name "my-first-task" \
   --context "Repo X, branch main" \
   --task "Refactor auth logic" \
@@ -23,10 +23,10 @@ This creates `tasks/my-first-task/inputs/` with `context.md`, `tarea.md`, and `r
 Generate a solution using routing (auto) or a specific model:
 
 ```bash
-python ch_cli.py run --name "my-first-task" --model auto
+python scripts/ch_cli.py run --name "my-first-task" --model auto
 # or force a model
-python ch_cli.py run --name "my-first-task" --model qwen3
-python ch_cli.py run --name "my-first-task" --model deepseek_r1
+python scripts/ch_cli.py run --name "my-first-task" --model qwen3
+python scripts/ch_cli.py run --name "my-first-task" --model deepseek_r1
 ```
 
 If `inputs/` files exist for the task, they are used; otherwise you may pass `--task` and `--constraints` inline. Outputs are written under `tasks/<slug>/outputs/` with a timestamp. If the model returns a fenced ```diff block, a `.patch` file is also saved.
@@ -36,13 +36,13 @@ If `inputs/` files exist for the task, they are used; otherwise you may pass `--
 Review the latest output with the QA assistant and save a refined suggestion:
 
 ```bash
-python ch_cli.py qa --slug my-first-task
+python scripts/ch_cli.py qa --slug my-first-task
 ```
 
 If a `.patch` was extracted, you can apply it in your target repo:
 
 ```bash
-python ch_cli.py apply --slug my-first-task
+python scripts/ch_cli.py apply --slug my-first-task
 # prints: git apply ".../tasks/my-first-task/outputs/<timestamp>.patch"
 ```
 
@@ -51,7 +51,7 @@ python ch_cli.py apply --slug my-first-task
 Check router/subserver availability and configuration hints:
 
 ```bash
-python ch_cli.py doctor
+python scripts/ch_cli.py doctor
 ```
 
 ## Benchmark Guardrails

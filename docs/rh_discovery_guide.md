@@ -19,13 +19,13 @@ Alpha (Generates) → Professor (Validates) → Dense-State (Learns) → Next Cy
 
 ```bash
 # Run for 20 minutes (default)
-python rh_discovery_orchestrator.py
+python src/rh_discovery_orchestrator.py
 
 # Run for custom duration (in minutes)
-python rh_discovery_orchestrator.py 30
+python src/rh_discovery_orchestrator.py 30
 
 # Run with custom session name
-python rh_discovery_orchestrator.py 20 rh_session_v2
+python src/rh_discovery_orchestrator.py 20 rh_session_v2
 ```
 
 This runs the complete pipeline:
@@ -38,13 +38,13 @@ This runs the complete pipeline:
 
 **Alpha only (proposal generation):**
 ```bash
-python rh_alpha_professor_framework.py
+python src/rh_alpha_professor_framework.py
 ```
 (Will run both Alpha and Professor by default)
 
 **Dense-state learner only (pattern analysis):**
 ```bash
-python rh_dense_state_learner.py
+python src/rh_dense_state_learner.py
 ```
 
 ## What Each Component Does
@@ -57,7 +57,7 @@ python rh_dense_state_learner.py
 - **Proof sketches**: High-level proof strategies for RH
 - **Spectral analysis**: Alternative spectral characterizations of zeros
 
-Each proposal is saved to `agents/rh_session/rh_proposals/`
+Each proposal is saved to `src/agents/rh_session/rh_proposals/`
 
 ### Professor Agent
 
@@ -70,7 +70,7 @@ Each proposal is saved to `agents/rh_session/rh_proposals/`
 
 High-promise proposals (score > 0.65) are marked for deeper investigation.
 
-Evaluations saved to `agents/rh_session/rh_evaluations/`
+Evaluations saved to `src/agents/rh_session/rh_evaluations/`
 
 ### Dense-State Learner
 
@@ -86,14 +86,14 @@ Evaluations saved to `agents/rh_session/rh_evaluations/`
 - Resonance hash: Fingerprint of current pattern state
 - Pattern stability: Whether learning has converged
 
-Learning output saved to `agents/rh_session/rh_patterns/`
+Learning output saved to `src/agents/rh_session/rh_patterns/`
 
 ## Understanding Output
 
 ### Session Directory Structure
 
 ```
-agents/rh_session/
+src/agents/rh_session/
 ├── rh_proposals/           # Alpha-generated proposals
 │   ├── cycle1_proposal0.json
 │   ├── cycle1_proposal1.json
@@ -286,8 +286,8 @@ If hash repeats across cycles → pattern convergence detected
 
 ## Next Steps
 
-1. **Run initial session**: `python rh_discovery_orchestrator.py 20`
-2. **Examine results**: Check `agents/rh_session/` directory
+1. **Run initial session**: `python scripts/rh_discovery_orchestrator.py 20`
+2. **Examine results**: Check `src/agents/rh_session/` directory
 3. **Analyze patterns**: Read learnings files to understand what works
 4. **Iterate**: Run more sessions with discovered patterns in mind
 5. **Deep dive**: For high-promise proposals, run dedicated analysis

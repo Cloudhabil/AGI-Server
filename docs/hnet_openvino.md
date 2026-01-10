@@ -1,6 +1,6 @@
 # H-Net and OpenVINO Integration
 
-The system uses **H-Net** to maintain long-horizon context with dynamic chunking and hierarchical summaries. Chunking logic lives in `hnet/dynamic_chunker.py` and the indices are stored under `data/hier_mem/`.
+The system uses **H-Net** to maintain long-horizon context with dynamic chunking and hierarchical summaries. Chunking logic lives in `src/hnet/dynamic_chunker.py` and the indices are stored under `data/hier_mem/`.
 
 OpenVINO accelerates embedding generation when enabled:
 

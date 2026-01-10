@@ -145,7 +145,7 @@ These are CONSTANTS, not configuration options.
 
 ```bash
 # Run the standard refinement on all papers
-python core/standard_refinement_engine.py
+python src/core/standard_refinement_engine.py
 
 # Output:
 #   data/standard_refinement/STANDARD_REFINEMENT_REPORT.json
@@ -178,7 +178,7 @@ elif args.mode == "refine-papers":
     engine.run()
 ```
 
-Usage: `python boot.py --mode refine-papers`
+Usage: `python manage.py server --mode refine-papers`
 
 ## When to Use This
 
@@ -249,7 +249,7 @@ Do NOT use for:
 
 ### Implementation
 
-Located in: `core/standard_refinement_engine.py`
+Located in: `src/core/standard_refinement_engine.py`
 
 Main class: `StandardRefinementEngine`
 

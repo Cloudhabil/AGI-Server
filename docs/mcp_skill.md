@@ -1,5 +1,5 @@
 Design note: The MCP orchestration pipeline is invoked from the CLI flow in
-`core/modes/sovereign_loop.py` when a command starts with `mcp ` or `mcp:`.
+`src/core/modes/sovereign_loop.py` when a command starts with `mcp ` or `mcp:`.
 If no MCP servers are available, planning is not configured, or a policy blocks
 the call, the pipeline returns `DEGRADED` or `BLOCKED` and emits an audit trace
 without invoking any tools.
@@ -31,7 +31,7 @@ States:
 
 Transitions are driven by events such as `servers_listed`, `auth_ok`,
 `tool_schema_loaded`, `plan_ready`, `call_ok`, `call_error`, and `policy_block`.
-Retry budgets and timeouts are configured in `core/mcp_skill/state_machine.py`.
+Retry budgets and timeouts are configured in `src/core/mcp_skill/state_machine.py`.
 
 The LLM planner response is validated against a strict key set; extra keys
 cause the plan to be rejected.
@@ -53,7 +53,7 @@ expose servers, tools, and schemas:
 - `get_tool_schema(server, tool)`
 
 Supply the registry when creating the skill instance, or replace the default
-registry in `get_default_mcp_skill()` in `core/mcp_skill/mcp_skill.py`.
+registry in `get_default_mcp_skill()` in `src/core/mcp_skill/mcp_skill.py`.
 
 ## Planner and Verifier Configuration
 

@@ -28,7 +28,7 @@ This document defines the governance contract for provisioning agents.
 
 Each provisioning attempt is recorded to:
 
-- `data/gpia/agents/agent_creator_audit.jsonl`
+- `data/gpia/src/agents/agent_creator_audit.jsonl`
 
 The log includes:
 - decision: `allowed` | `blocked`

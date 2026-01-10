@@ -93,7 +93,7 @@ MetaProfessor.initialization_phase()
 ## File Structure
 
 ```
-agents/
+src/agents/
 ├── rh_meta_research_v1/              (Session root)
 │   ├── rh_proposals/                 (All proposals from all students)
 │   ├── rh_results/                   (Eigenvalue computation results)
@@ -180,7 +180,7 @@ cd /path/to/CLI-main
 python rh_meta_professor.py
 
 # Output will appear in:
-# agents/rh_meta_research_v1/
+# src/agents/rh_meta_research_v1/
 ```
 
 ### Full Integration with Boot
@@ -202,16 +202,16 @@ meta_prof.run_research_session(duration_minutes=60)
 ### Monitor Progress
 ```bash
 # Watch real-time:
-watch -n 5 'ls -la agents/rh_meta_research_v1/'
+watch -n 5 'ls -la src/agents/rh_meta_research_v1/'
 
 # Check latest cycle:
-cat agents/rh_meta_research_v1/cycle_N_summary.json
+cat src/agents/rh_meta_research_v1/cycle_N_summary.json
 
 # View gap report:
-cat agents/rh_meta_research_v1/gap_detection_report.json
+cat src/agents/rh_meta_research_v1/gap_detection_report.json
 
 # Check synthesized students:
-ls agents/rh_meta_research_v1/synthesized_students/
+ls src/agents/rh_meta_research_v1/synthesized_students/
 ```
 
 ## Example Scenario: How Synthesis Happens

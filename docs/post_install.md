@@ -16,7 +16,7 @@ python --version
 ### 2. Verify CLI AI Installation
 
 ```bash
-python ch_cli.py --help
+python scripts/ch_cli.py --help
 # Should display CLI AI help information
 ```
 
@@ -77,7 +77,7 @@ The knowledge base is automatically created on first run, but you can verify:
 
 ```bash
 # This will create data/kb.db if it doesn't exist
-python ch_cli.py new --name "test" --task "Hello world"
+python scripts/ch_cli.py new --name "test" --task "Hello world"
 ```
 
 ## Quick Start
@@ -87,7 +87,7 @@ python ch_cli.py new --name "test" --task "Hello world"
 Run your first task:
 
 ```bash
-python ch_cli.py new --name "my-first-task" --task "Explain what you can do"
+python scripts/ch_cli.py new --name "my-first-task" --task "Explain what you can do"
 ```
 
 ### Full Orchestrator Mode
@@ -168,7 +168,7 @@ make check
 Ensure everything is working:
 
 - [ ] Python 3.11+ installed and accessible
-- [ ] CLI AI responds to `python ch_cli.py --help`
+- [ ] CLI AI responds to `python scripts/ch_cli.py --help`
 - [ ] Environment file (`.env`) configured
 - [ ] Required LLM models downloaded (via Ollama or other)
 - [ ] Redis running (if using full orchestrator)

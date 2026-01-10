@@ -15,15 +15,15 @@ This file provides guidance to Claude Code (claude.ai/code) when working with th
 ## Core Directives for Claude
 
 1.  **Respect the Architecture**: Understand the difference between the live agent (`boot.py` and its modes) and the offline skill generator (`gpia_cognitive_ecosystem.py`). Do not try to run evolution commands in the live agent.
-2.  **Bio-Mimetic Design**: When refactoring, think in terms of "organs" (specialized agent modes or skills) and "DNA" (the permanent skills in the `skills/` directory).
-3.  **Model Routing**: The system uses standard Ollama model tags (e.g., `codegemma:latest`, `deepseek-r1:latest`). Do not use or assume custom `gpia-*` aliases. See `agents/model_router.py` for the definitive mapping.
+2.  **Bio-Mimetic Design**: When refactoring, think in terms of "organs" (specialized agent modes or skills) and "DNA" (the permanent skills in the `src/skills/` directory).
+3.  **Model Routing**: The system uses standard Ollama model tags (e.g., `codegemma:latest`, `deepseek-r1:latest`). Do not use or assume custom `gpia-*` aliases. See `src/agents/model_router.py` for the definitive mapping.
 4.  **Token Ecology**: Be mindful of token consumption. Use `codegemma` for reflexes and `deepseek-r1` for deep thought, as configured in the model router.
 
 ## System Architecture
 
 ### The Runtime Kernel (`boot.py`)
-- **Entry Point**: `python boot.py --mode <mode_name>`
-- **Orchestration**: `core/kernel/switchboard.py` manages transitions between different behavioral modes.
+- **Entry Point**: `python manage.py server --mode <mode_name>`
+- **Orchestration**: `src/core/kernel/switchboard.py` manages transitions between different behavioral modes.
 - **Default Mode**: `Sovereign-Loop` is the main interactive CLI for the agent.
 
 ### The Cognitive Ecosystem (`gpia_cognitive_ecosystem.py`)
@@ -33,20 +33,20 @@ This is a standalone tool for developers.
 - **Synthesizer**: A class that uses the weights to write the final Python code for a new skill.
 
 ### Core Agent Concepts
-- **Alpha & Professor**: A teacher-student simulation for autonomous learning, run via `start_autonomous_learning.py`. They interact via files in `agents/session_lessons/`.
+- **Alpha & Professor**: A teacher-student simulation for autonomous learning, run via `start_autonomous_learning.py`. They interact via files in `src/agents/session_lessons/`.
 - **Arbiter**: A conceptual role, not a file. The `gpt-oss:20b` model is used for this synthesis task.
 
 ## Developer Quick Start
 
 ```bash
 # Launch the main agent's interactive CLI
-python boot.py --mode Sovereign-Loop
+python manage.py server --mode Sovereign-Loop
 
 # Run the interactive tool to evolve new skills
-python gpia_cognitive_ecosystem.py
+python scripts/gpia_cognitive_ecosystem.py
 
 # Run a standalone learning simulation
-python start_autonomous_learning.py
+python manage.py learn
 
 # Run tests
 pytest --maxfail=1
@@ -85,7 +85,7 @@ python evals/cognitive_organism_eval.py
 8. **SKILLFUL** (10%): Skills Registry (121+ skills), Skill Learning Coordinator
 
 ### Kernel Substrate (31 Components)
-The `core/kernel/substrate.py` holds all 31 major system components across 22 tiers. Key components:
+The `src/core/kernel/substrate.py` holds all 31 major system components across 22 tiers. Key components:
 - **EpistemicEngine**: Information-theoretic truth evaluation + Genesis signals
 - **VerificationEngine**: RMT/GUE mathematical benchmarks
 - **MetabolicOptimizer**: Autonomous learning cycle discovery
@@ -98,7 +98,7 @@ The `core/kernel/substrate.py` holds all 31 major system components across 22 ti
 
 ## Skills Framework
 
-The system possesses a growing library of skills found in the `skills/` directory, organized into subdirectories like `synthesized`, `auto_learned`, and `conscience`. The `SkillRegistry` handles lazy-loading them.
+The system possesses a growing library of skills found in the `src/skills/` directory, organized into subdirectories like `synthesized`, `auto_learned`, and `conscience`. The `SkillRegistry` handles lazy-loading them.
 
 ### Using Skills in Code
 

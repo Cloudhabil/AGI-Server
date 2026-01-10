@@ -24,7 +24,7 @@ A **three-component intelligent orchestration system** for Riemann Hypothesis re
 - **Result**: Each model optimized for RH research with specialized reasoning
 
 ### 2. Adaptive Scheduler ✅
-- **File**: `core/adaptive_student_scheduler.py`
+- **File**: `src/core/adaptive_student_scheduler.py`
 - **Tracks**: VRAM, execution time, tokens per student
 - **Database**: SQLite with `student_runs` and `hardware_snapshots` tables
 - **Intelligence**: Learns actual resource consumption, adapts scheduling each cycle
@@ -66,7 +66,7 @@ ORCHESTRATOR LAYER
          ↓
 
 ADAPTIVE SCHEDULER LAYER
-  core/adaptive_student_scheduler.py
+  src/core/adaptive_student_scheduler.py
   - Tracks resource consumption per student
   - Maintains SQLite database
   - Learns from historical metrics
@@ -89,7 +89,7 @@ STUDENT EXECUTION LAYER (Sequential)
          ↓
 
 DATABASE LAYER
-  agents/sessions/{session_id}/scheduler_history/student_profiles.db
+  src/agents/sessions/{session_id}/scheduler_history/student_profiles.db
   - Stores all metrics for learning
   - Enables cycle-to-cycle optimization
   - Records VRAM/time/tokens per student
@@ -142,7 +142,7 @@ VRAM Utilization:
 | File | Size | Purpose |
 |------|------|---------|
 | `scripts/finetune_rh_models.py` | 8.6 KB | Creates RH-specialized model variants |
-| `core/adaptive_student_scheduler.py` | 11 KB | Intelligent scheduler with learning |
+| `src/core/adaptive_student_scheduler.py` | 11 KB | Intelligent scheduler with learning |
 | `start_rh_adaptive_ensemble.py` | 9.6 KB | Main orchestrator |
 
 ### Documentation
@@ -258,11 +258,11 @@ Keep monitor running in separate terminal.
 ## System Integration Points
 
 ### Where It Hooks In
-1. **BudgetService** (`core/kernel/budget_service.py`)
+1. **BudgetService** (`src/core/kernel/budget_service.py`)
    - Provides real-time VRAM/RAM/CPU monitoring
    - Enforces safety limits before running students
 
-2. **Model Router** (`agents/model_router.py`)
+2. **Model Router** (`src/agents/model_router.py`)
    - Resolves model names (gpia- prefix handling)
    - Can be updated to use budget allocator
 
@@ -319,7 +319,7 @@ System uses learned data to make better decisions.
 ### Observable Learning
 ```bash
 # Query optimization progress
-sqlite3 agents/sessions/rh_production/scheduler_history/student_profiles.db
+sqlite3 src/agents/sessions/rh_production/scheduler_history/student_profiles.db
 
 # See how many proposals per cycle increase
 SELECT cycle, COUNT(*) FROM student_runs GROUP BY cycle ORDER BY cycle;
@@ -426,7 +426,7 @@ FROM student_runs GROUP BY student ORDER BY efficiency DESC;
 ### Immediate (Next 1 hour)
 1. Run verification script: `python scripts/verify_adaptive_ensemble_setup.py`
 2. Create fine-tuned models: `python scripts/finetune_rh_models.py`
-3. Test 5 minutes: `python start_rh_adaptive_ensemble.py --duration 5 --session test`
+3. Test 5 minutes: `python scripts/start_rh_adaptive_ensemble.py --duration 5 --session test`
 4. Verify database: Query SQLite for metrics
 
 ### Short-term (Next 1 week)
@@ -459,7 +459,7 @@ python scripts/monitor_budget_system.py
 
 ```bash
 # Analyze results after 8 hours
-sqlite3 agents/sessions/rh_production/scheduler_history/student_profiles.db ".tables"
+sqlite3 src/agents/sessions/rh_production/scheduler_history/student_profiles.db ".tables"
 ```
 
 ---

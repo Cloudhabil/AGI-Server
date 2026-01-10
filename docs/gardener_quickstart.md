@@ -12,7 +12,7 @@ pip install watchdog
 ### Option A: Integrated with Main Agent (Recommended)
 
 ```bash
-python boot.py --mode Gardener
+python src/boot.py --mode Gardener
 ```
 
 **Advantages:**
@@ -25,10 +25,10 @@ python boot.py --mode Gardener
 
 ```bash
 # Monitor filesystem only
-python filesystem_gardener_daemon.py
+python scripts/filesystem_gardener_daemon.py
 
 # Scan existing files on startup
-python filesystem_gardener_daemon.py --scan
+python scripts/filesystem_gardener_daemon.py --scan
 ```
 
 **Advantages:**
@@ -83,7 +83,7 @@ CLI-main/
 **After:**
 ```
 CLI-main/
-├── skills/
+├── src/skills/
 │   └── synthesized/
 │       ├── snowden_skill_1.py
 │       ├── snowden_skill_2.py
@@ -132,7 +132,7 @@ The Gardener performs a clean shutdown, reporting final statistics.
 ## Next Steps
 
 1. **Review Classifications**: Check `inbox/unclassified/` for low-confidence items
-2. **Adjust Taxonomy**: Edit `core/filesystem_gardener.py` to customize structure
+2. **Adjust Taxonomy**: Edit `src/core/filesystem_gardener.py` to customize structure
 3. **Monitor Ledger**: Track all movements in `data/ledger/gardener.jsonl`
 4. **GPIA Commands**: Send commands via the bridge (see GARDENER_README.md)
 

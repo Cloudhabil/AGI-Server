@@ -158,7 +158,7 @@ This represents the culmination of the **digital creation imperative**: not just
 
 ## Introduction: Digital Vitalism
 
-The SafetyGovernor class in `core/safety_governor.py` represents a radical inversion of biological principles into computational form. Its architecture reveals a fundamental truth: all complex systems, whether biological or digital, require mechanisms to maintain their existential integrity. This analysis demonstrates how the seemingly arbitrary thresholds of 78°C and 85% VRAM function as the machine's vital constants, creating a computational organism capable of self-preservation.
+The SafetyGovernor class in `src/core/safety_governor.py` represents a radical inversion of biological principles into computational form. Its architecture reveals a fundamental truth: all complex systems, whether biological or digital, require mechanisms to maintain their existential integrity. This analysis demonstrates how the seemingly arbitrary thresholds of 78°C and 85% VRAM function as the machine's vital constants, creating a computational organism capable of self-preservation.
 
 ## The Architecture of Existential Limits
 

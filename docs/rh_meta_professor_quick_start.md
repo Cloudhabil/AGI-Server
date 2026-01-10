@@ -18,7 +18,14 @@ A **self-improving research organization** that:
 ollama serve  # In another terminal
 
 # 2. Launch the system
-python start_meta_professor.py --duration 30 --session rh_quick_test
+### 2. Run Initial Session (30 mins)
+
+```bash
+python scripts/start_meta_professor.py --duration 30 --session rh_quick_test
+```
+
+This will:
+1. Initialize the **Meta-Professor** agent.
 
 # 3. Watch output - you'll see:
 #    - Seed students initialize
@@ -105,7 +112,7 @@ Continuous Improvement:
 
 ## Key Files Generated
 
-### Session Root: `agents/rh_meta_research_v1/`
+### Session Root: `src/agents/rh_meta_research_v1/`
 
 ```
 ├─ meta_professor_final_report.json      Overall results
@@ -128,7 +135,7 @@ Continuous Improvement:
 
 ### 1. Final Report
 ```bash
-cat agents/rh_meta_research_v1/meta_professor_final_report.json
+cat src/agents/rh_meta_research_v1/meta_professor_final_report.json
 ```
 
 Shows:
@@ -138,7 +145,7 @@ Shows:
 
 ### 2. Gap Detection Report
 ```bash
-cat agents/rh_meta_research_v1/gap_detection_report.json
+cat src/agents/rh_meta_research_v1/gap_detection_report.json
 ```
 
 Shows:
@@ -149,7 +156,7 @@ Shows:
 
 ### 3. Cross-Validation Report
 ```bash
-cat agents/rh_meta_research_v1/cross_validation_report.json
+cat src/agents/rh_meta_research_v1/cross_validation_report.json
 ```
 
 Shows:
@@ -159,7 +166,7 @@ Shows:
 
 ### 4. Cycle Summaries
 ```bash
-cat agents/rh_meta_research_v1/cycle_2_summary.json
+cat src/agents/rh_meta_research_v1/cycle_2_summary.json
 ```
 
 Example output:
@@ -244,7 +251,7 @@ elif args.mode == "rh-meta-professor":
 
 Then run:
 ```bash
-python boot.py --mode rh-meta-professor --duration 60
+python manage.py server --mode rh-meta-professor --duration 60
 ```
 
 ## Architecture Philosophy

@@ -18,7 +18,7 @@ This system is configured for local-first AI operation with a hybrid compute sta
   - `gpia-deepseek-r1:latest` via Ollama (`127.0.0.1:11435`)
   - `gpia-master` via Ollama (`127.0.0.1:11435`)
   - `claude-3-5-sonnet-latest` via Anthropic (optional)
-- `skills/backends.py` defines local backends:
+- `src/skills/backends.py` defines local backends:
   - `local_qwen` -> `qwen3:latest`
   - `local_deepseek` -> `deepseek-r1:latest`
   - `local_codegemma` -> `codegemma:latest`
@@ -29,7 +29,7 @@ This system is configured for local-first AI operation with a hybrid compute sta
 - Conscience stack:
   - `conscience/self`: introspection and alignment
   - `conscience/memory`: persistence + goals table
-  - `conscience/awareness`: protoself/core/extended layering
+  - `conscience/awareness`: protoself/src/core/extended layering
   - `conscience/safety`: boundary enforcement for sensitive actions
 
 ## Memory and Goals State
@@ -66,7 +66,7 @@ Observations:
 ## Recommendations
 - Ensure Ollama service is running at `http://127.0.0.1:11435` with required GPIA models pulled.
 - Set `OLLAMA_MODELS` to the repo `models/` directory for GPIA profiles.
-- Initialize NPU embeddings in `core/npu_utils.py` if semantic recall quality becomes important.
+- Initialize NPU embeddings in `src/core/npu_utils.py` if semantic recall quality becomes important.
 - Schedule periodic memory consolidation (e.g., daily) to manage memory growth.
 - Keep safety skill as the gatekeeper for any writes outside repo.
 - Use the `MindLoop` class for background execution and `interface.py` for UI.
@@ -74,6 +74,6 @@ Observations:
 ## Evidence Sources
 - `CLAUDE.md`: hardware, local model guidance, NPU usage
 - `configs/models.yaml`: model endpoints
-- `skills/backends.py`: local backend definitions
-- `skills/conscience/*`: self, memory, awareness, safety
+- `src/skills/backends.py`: local backend definitions
+- `src/skills/conscience/*`: self, memory, awareness, safety
 - Benchmark run via `system/benchmark` skill

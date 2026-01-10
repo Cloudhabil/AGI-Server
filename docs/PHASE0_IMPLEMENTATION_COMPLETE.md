@@ -15,7 +15,7 @@ Phase 0 of the RH HyperVoxel Integration + Memory Optimization has been successf
 ### 1. Memory Cold-Start Optimization
 
 **Files Modified:**
-- `skills/conscience/memory/skill.py`
+- `src/skills/conscience/memory/skill.py`
 
 **Changes:**
 - Added `_mshr_built` flag to track lazy initialization state (line 476)
@@ -133,7 +133,7 @@ Results saved to artifacts/memory_benchmark_coldstart.json
 ### Syntax Validation ✓
 ```bash
 python -m py_compile \
-  skills/conscience/memory/skill.py \
+  src/skills/conscience/memory/skill.py \
   rh_dense_state_learner.py \
   scripts/benchmark_memory_coldstart.py
 ```
@@ -163,7 +163,7 @@ python -c "from skills.conscience.memory.skill import MemorySkill"
 If any component fails:
 
 1. **Memory Optimization:**
-   - Edit `skills/conscience/memory/skill.py`
+   - Edit `src/skills/conscience/memory/skill.py`
    - Restore `self._init_mshr()` call in `__init__`
    - Remove `self._ensure_mshr_built()` call from `_recall()`
 
@@ -213,7 +213,7 @@ If any component fails:
 
 | File | Type | Changes |
 |------|------|---------|
-| `skills/conscience/memory/skill.py` | Modified | Lazy MSHR init (-4 lines, +3 lines) |
+| `src/skills/conscience/memory/skill.py` | Modified | Lazy MSHR init (-4 lines, +3 lines) |
 | `rh_dense_state_learner.py` | Modified | HyperVoxelContract integration (+100 lines) |
 | `config/dense_state.json` | Modified | Enable voxel mode + V-NAND (2 config changes) |
 | `scripts/benchmark_memory_coldstart.py` | Created | New benchmark tool (150 lines) |

@@ -36,7 +36,7 @@ A complete autonomous file organization system with real-time GPIA integration.
 
 ### Core Components
 
-1. **`core/filesystem_gardener.py`** (500+ lines)
+1. **`src/core/filesystem_gardener.py`** (500+ lines)
    - `FilesystemGardener`: Main orchestrator
    - `FilesystemWatcher`: Real-time monitoring (watchdog)
    - `ClassificationEngine`: GPIA + heuristic classification
@@ -45,14 +45,14 @@ A complete autonomous file organization system with real-time GPIA integration.
    - `FileArtifact`: Data model for discovered files
    - `ArtifactType`: Classification taxonomy enum
 
-2. **`core/gpia_bridge.py`** (400+ lines)
+2. **`src/core/gpia_bridge.py`** (400+ lines)
    - `GPIABridge`: Bidirectional IPC manager
    - `MessageQueue`: Lock-free file-based queue
    - `Message`: IPC message data structure
    - `MessageType`: Message type enum
    - Helper functions for common operations
 
-3. **`core/modes/gardener.py`** (200+ lines)
+3. **`src/core/modes/gardener.py`** (200+ lines)
    - `GardenerMode`: Integration with boot.py
    - Inherits from `BaseAgent`
    - Full kernel integration
@@ -73,7 +73,7 @@ A complete autonomous file organization system with real-time GPIA integration.
 
 ### Integration
 
-6. **`core/kernel/switchboard.py`** (MODIFIED)
+6. **`src/core/kernel/switchboard.py`** (MODIFIED)
    - Added `GardenerMode` to `MODE_REGISTRY`
    - Now available as `--mode Gardener`
 
@@ -130,7 +130,7 @@ A complete autonomous file organization system with real-time GPIA integration.
 - Background listener threads
 
 ### ✓ Multiple Deployment Modes
-1. **Integrated** (`python boot.py --mode Gardener`)
+1. **Integrated** (`python manage.py server --mode Gardener`)
    - Full kernel integration
    - GPIA intelligence
    - Unified telemetry
@@ -184,7 +184,7 @@ Result: ~400 untracked files organized into taxonomy
 
 ```bash
 # Start integrated mode
-python boot.py --mode Gardener
+python manage.py server --mode Gardener
 
 # Or standalone daemon
 python filesystem_gardener_daemon.py
@@ -284,11 +284,11 @@ grep "execute_final_victory.py" data/ledger/gardener.jsonl
 
 ### With Existing Systems
 
-1. **Kernel Substrate** (`core/kernel/substrate.py`)
+1. **Kernel Substrate** (`src/core/kernel/substrate.py`)
    - Uses `kernel.router` for classification
    - Accesses model routing intelligence
 
-2. **Mode Registry** (`core/kernel/switchboard.py`)
+2. **Mode Registry** (`src/core/kernel/switchboard.py`)
    - Registered as "Gardener" mode
    - Full BaseAgent lifecycle
 
@@ -328,6 +328,6 @@ All components tested and verified:
 
 1. Install dependency: `pip install watchdog`
 2. Run tests: `python test_gardener.py`
-3. Start gardener: `python boot.py --mode Gardener` OR `python filesystem_gardener_daemon.py --scan`
+3. Start gardener: `python manage.py server --mode Gardener` OR `python filesystem_gardener_daemon.py --scan`
 4. Monitor: `tail -f data/ledger/gardener.jsonl`
 5. Enjoy organized codebase! 🌱

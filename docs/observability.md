@@ -23,5 +23,5 @@ Track these signals during benchmarks or long runs:
 - **Sovereignty + Resonance traces**: episodic memory entries include `sovereignty_trace` and `resonance_trace` for gating visibility.
 - **Disk write bursts**: sustained high writes imply memory spill or logging loops.
 - **Ollama host health**: ensure `127.0.0.1:11435` responds for GPIA profiles.
-- **Skill error rate**: monitor failures in `skills/INDEX.json` executions and pass/fail ratios.
+- **Skill error rate**: monitor failures in `src/skills/INDEX.json` executions and pass/fail ratios.
 - **Rollback signals**: `memory/agent_state_v1/rollback_required.json` indicates a blocked rollback request.

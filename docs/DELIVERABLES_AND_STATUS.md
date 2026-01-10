@@ -14,19 +14,19 @@
 **Status**: All objectives achieved
 
 #### Deliverable 1.1: Mathematical Skills (3 skills, 690+ lines)
-- `skills/compute/sympy-symbolic/skill.py` (240 lines) ✓
+- `src/skills/compute/sympy-symbolic/skill.py` (240 lines) ✓
   - Symbolic zeta function manipulation
   - Functional equation verification
   - Series expansion computation
   - Status: Tested, working, registered
 
-- `skills/compute/numerical-analysis/skill.py` (250 lines) ✓
+- `src/skills/compute/numerical-analysis/skill.py` (250 lines) ✓
   - High-precision zero verification (50+ digits)
   - Riemann-Siegel formula
   - Zero spacing analysis
   - Status: Verified on 100 zeros, working
 
-- `skills/research/math-literature/skill.py` (200 lines) ✓
+- `src/skills/research/math-literature/skill.py` (200 lines) ✓
   - ArXiv paper search
   - Metadata extraction
   - Riemann Hypothesis specific search
@@ -40,7 +40,7 @@
   - Added: arxiv>=2.0.0
   - Status: Dependencies installed, verified
 
-- `skills/INDEX.json` updated ✓
+- `src/skills/INDEX.json` updated ✓
   - All 3 new skills registered
   - Status: Verified in system
 
@@ -279,7 +279,7 @@ New Scripts Created:                   2
 
 Configuration Changes:                 2
   - pyproject.toml                      updated ✓
-  - skills/INDEX.json                   updated ✓
+  - src/skills/INDEX.json                   updated ✓
 
 Total Code Written:                    ~1,600 lines ✓
 ```

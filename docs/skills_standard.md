@@ -13,7 +13,7 @@ This standard defines the expected layout for skills in this repository. Code-fi
 Example tree:
 
 ```
-skills/<category>/<skill_name>/
+src/skills/<category>/<skill_name>/
   manifest.yaml
   schema.json
   skill.py
@@ -26,7 +26,7 @@ skills/<category>/<skill_name>/
 Some skills are instruction-led and ship as a `SKILL.md` with supporting scripts:
 
 ```
-skills/<category>/<skill_name>/
+src/skills/<category>/<skill_name>/
   SKILL.md
   scripts/
   templates/
@@ -40,4 +40,4 @@ skills/<category>/<skill_name>/
 
 ## Minimal Example
 
-See `skills/examples/hello_counter` for a working code skill template.
+See `src/skills/examples/hello_counter` for a working code skill template.

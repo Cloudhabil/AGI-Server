@@ -47,7 +47,7 @@ The Filesystem Gardener is an autonomous agent that transforms chaos into order 
 The Gardener organizes files into this hierarchy:
 
 ```
-skills/
+src/skills/
   ├── synthesized/       # Auto-generated skills (e.g., Snowden corpus)
   ├── auto_learned/      # Skills learned through agent training
   ├── ops/               # Operational utility skills
@@ -88,16 +88,16 @@ The Gardener uses the `watchdog` library for filesystem monitoring. All other de
 
 ## Usage
 
-### Option 1: Integrated Mode (via boot.py)
+### Option 1: Integrated Mode (via manage.py or src/boot.py)
 
 Run the Gardener as an operational mode within the main agent:
 
 ```bash
-# Start in Gardener mode
-python boot.py --mode Gardener
+# Start in Gardener mode via Unified CLI
+python manage.py server --mode Gardener
 
-# With verbose logging
-python boot.py --mode Gardener --verbose
+# Or directly via source
+python src/boot.py --mode Gardener --verbose
 ```
 
 This approach provides full GPIA integration and bidirectional communication.
@@ -108,16 +108,16 @@ Run the Gardener as an independent daemon:
 
 ```bash
 # Start daemon (monitoring only)
-python filesystem_gardener_daemon.py
+python scripts/filesystem_gardener_daemon.py
 
 # Start with initial scan of existing files
-python filesystem_gardener_daemon.py --scan
+python scripts/filesystem_gardener_daemon.py --scan
 
 # Run without GPIA integration (heuristics only)
-python filesystem_gardener_daemon.py --no-gpia
+python scripts/filesystem_gardener_daemon.py --no-gpia
 
 # Custom root directory
-python filesystem_gardener_daemon.py --root /path/to/project
+python scripts/filesystem_gardener_daemon.py --root /path/to/project
 ```
 
 ### Option 3: Programmatic Usage
@@ -161,7 +161,7 @@ print(f"Processed: {stats['artifacts_processed']}")
    ```json
    {
      "source": "new_skill.py",
-     "destination": "skills/synthesized/new_skill.py",
+     "destination": "src/skills/synthesized/new_skill.py",
      "classification": "SKILL_SYNTHESIZED"
    }
    ```
@@ -211,7 +211,7 @@ Every file movement is recorded in the ledger:
   "timestamp": "2025-01-10T12:00:00",
   "artifact_path": "snowden_skill.py",
   "source_path": "/root/snowden_skill.py",
-  "destination_path": "/root/skills/synthesized/snowden_skill.py",
+  "destination_path": "/root/src/skills/synthesized/snowden_skill.py",
   "classification": "SKILL_SYNTHESIZED",
   "confidence": 0.95,
   "reason": "Snowden skill pattern"
@@ -228,7 +228,7 @@ When the kernel is available, the Gardener uses the model router to classify fil
 
 When GPIA is unavailable, heuristics are used:
 
-- **Snowden Skills**: Files matching `snowden_*.py` → `skills/synthesized/`
+- **Snowden Skills**: Files matching `snowden_*.py` → `src/skills/synthesized/`
 - **Evaluations**: Files with `eval`, `benchmark`, `test_` → `evals/`
 - **Experiments**: Files with `execute_`, `hunt_`, `probe_` → `experiments/active/`
 - **Configs**: JSON/YAML/TOML files with "config" → `configs/`
@@ -303,7 +303,7 @@ If the queue size keeps growing, the Gardener may be processing slower than file
 
 ### Custom Taxonomy
 
-Edit `core/filesystem_gardener.py` to modify the `ArtifactType` enum:
+Edit `src/core/filesystem_gardener.py` to modify the `ArtifactType` enum:
 
 ```python
 class ArtifactType(Enum):
@@ -342,7 +342,7 @@ def _build_heuristics(self):
 
 See the main `CLAUDE.md` for overall project architecture or inspect the source:
 
-- `core/filesystem_gardener.py` - Main gardener logic
-- `core/gpia_bridge.py` - Communication protocol
-- `core/modes/gardener.py` - Boot.py integration
+- `src/core/filesystem_gardener.py` - Main gardener logic
+- `src/core/gpia_bridge.py` - Communication protocol
+- `src/core/modes/gardener.py` - Boot.py integration
 - `filesystem_gardener_daemon.py` - Standalone daemon

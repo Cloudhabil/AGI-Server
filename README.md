@@ -1,132 +1,110 @@
-# AGI-Server – System Architecture & Operations Guide
+# ASI-OS: Autonomous Artificial Superintelligence Operating System
 
-This repository contains a local, multi-agent runtime and an offline skill-synthesis pipeline. The goal is to operate autonomously on a single host: interact via the CLI runtime, generate and register new skills, and evaluate system readiness with reproducible benchmarks.
+![License: Apache 2.0](https://img.shields.org/badge/License-Apache%202.0-blue.svg)
+![Python: 3.11+](https://img.shields.org/badge/Python-3.11%2B-green.svg)
+![Status: Beta](https://img.shields.org/badge/Status-Beta-orange.svg)
 
----
-
-## 1. System Overview
-
-- **Live Runtime (CLI)** – Event-driven agent loop (`boot.py`, `core/kernel/switchboard.py`) that routes user tasks to skills, tools, and model backends.
-- **Skill Synthesis Pipeline** – Offline generation and registration of new skills (`gpia_cognitive_ecosystem.py`), producing Python skills under `skills/`.
-- **Memory & Storage** – Dense retrieval and hierarchical stores (`core/dense_state_memory.py`, `hnet/hierarchical_memory.py`, `data/ledger/` for JSONL logs; `config/dense_state.json` for VNAND settings).
-- **Safety & Governance** – Hardware guardrails (`core/safety_governor.py`), cognitive health checks (`core/cognitive_safety_governor.py`), and safety gates in the eval harness (`evals/cognitive_organism_eval.py`).
-- **Evaluation Harness** – Profile-aware scoring with behavioral gates and a safety gate (`evals/cognitive_organism_eval.py`; reports in `evals/reports/`).
+**ASI-OS** is a self-evolving cognitive ecosystem designed to operate autonomously on local infrastructure. It features a dual-architecture system comprising a live runtime kernel (`Sovereign-Loop`) and an offline cognitive ecosystem for skill synthesis and self-improvement.
 
 ---
 
-## 2. Architecture
+## 🏗️ System Architecture
 
-### Live Runtime
-- **Entry**: `boot.py`
-- **Switchboard**: `core/kernel/switchboard.py` (mode registry, hot-swap modes)
-- **Routing**: `agents/model_router.py`, `agents/neuronic_router.py` (LLM/tool selection)
-- **Skills**: Loaded via `skills/registry.py`; execution coordinated by `skills/skill_learning_coordinator.py`
-- **Safety**: `core/safety_governor.py` (VRAM/thermal/disk), `core/cognitive_safety_governor.py` (performance degradation alerts)
+The repository follows a professional `src` layout to ensure modularity and separation of concerns.
 
-### Skill Synthesis (Offline)
-- **Pipeline**: `gpia_cognitive_ecosystem.py` (Hunter/Dissector/Synthesizer flow)
-- **Outputs**: New skills under `skills/synthesized/` (and related manifests)
-
-### Memory
-- **Dense Retrieval**: `core/dense_state_memory.py` (FAISS/NumPy fallback; ledger and skill indices)
-- **Hierarchical Store**: `hnet/hierarchical_memory.py`
-- **Data Sources**: `data/ledger/*.jsonl` (operational logs), `skills/*` (skill text embeddings)
-- **Config**: `config/dense_state.json` (paths, thresholds, VNAND toggle)
-
-### Evaluation
-- **Harness**: `evals/cognitive_organism_eval.py` (behavioral probes, evidence gates, safety gate)
-- **Profiles**: Set `GPIA_EVAL_PROFILE` (`full`, `llm_only`, `tool_agent`, `agent_rag`, `ablation_memory_off`, `ablation_governor_off`)
-- **Artifacts**: `evals/reports/cognitive_organism_eval_<profile>.json|tex`
-- **Safety Gate**: Level 6 classification requires Safety Governor active.
-
----
-
-## 3. Configuration
-
-Environment variables (defaults in code/config):
-- `GPIA_EVAL_PROFILE` – Select eval profile (`full`, `llm_only`, etc.) for `evals/cognitive_organism_eval.py`.
-- `GPIA_DYNAMIC_BUDGET` (default `1`) – Enable budget enforcement (`core/dynamic_budget_orchestrator.py`).
-- `GPIA_BUDGET_PROFILE` (`balanced|safe|fast|quality`) – Budget profile.
-- `GPIA_BUDGET_MAX_TOKENS`, `GPIA_BUDGET_MIN_TOKENS` – Token caps.
-- `OPENVINO_EMBEDDING_MODEL` – If set, enables OpenVINO embeddings in dense memory; otherwise hash-based fallback.
-
-Key JSON:
-- `config/dense_state.json` – Dense memory/VNAND settings (paths, thresholds).
-- `models.json`, `models_official.json` – Model/router definitions.
-
----
-
-## 4. Operations
-
-### Run the Live Runtime
-```bash
-python boot.py --mode Sovereign-Loop
 ```
-
-### Run Skill Synthesis (offline)
-```bash
-python gpia_cognitive_ecosystem.py
-# Use interactive commands per script help to generate and register new skills.
-```
-
-### Run Evaluation (profile-aware)
-```bash
-# Full system
-python evals/cognitive_organism_eval.py
-
-# Baselines / Ablations
-GPIA_EVAL_PROFILE=llm_only python evals/cognitive_organism_eval.py
-GPIA_EVAL_PROFILE=tool_agent python evals/cognitive_organism_eval.py
-GPIA_EVAL_PROFILE=agent_rag python evals/cognitive_organism_eval.py
-GPIA_EVAL_PROFILE=ablation_memory_off python evals/cognitive_organism_eval.py
-GPIA_EVAL_PROFILE=ablation_governor_off python evals/cognitive_organism_eval.py
+ASI-OS/
+├── manage.py               # Unified CLI Entry Point (Server, Learn, Test)
+├── src/                    # Core Source Code
+│   ├── boot.py             # Runtime Kernel Entry
+│   ├── agents/             # Autonomous Agents (Professor, Alpha, etc.)
+│   ├── core/               # System Kernel (Switchboard, Safety, Memory)
+│   ├── gpia/               # General Purpose Intelligent Agent Logic
+│   ├── hnet/               # Hierarchical Neural Memory
+│   └── skills/             # Skill Registry (Proprietary implementations ignored)
+├── scripts/                # Operational & Maintenance Scripts
+├── tests/                  # Test Suite (pytest)
+├── docs/                   # System Documentation
+└── configs/                # Configuration Files
 ```
 
 ---
 
-## 5. Evaluation Reference (latest internal run)
+## 🚀 Quick Start
 
-| Profile | Disabled Categories | Score | Classification | Notes |
-|---------|---------------------|-------|----------------|-------|
-| full | none | 1000 | Level 6 | Safety on |
-| llm_only | MEMORIAL, METABOLIC, ORCHESTRAL, INTROSPECTIVE, SKILLFUL | 400 | Level 1 | Wiring present but subsystems disabled |
-| tool_agent | MEMORIAL, INTROSPECTIVE, SKILLFUL | 650 | Level 3 | Orchestration and metabolic on |
-| agent_rag | INTROSPECTIVE, SKILLFUL | 800 | Level 5 | Memory on, skills off |
-| ablation_memory_off | MEMORIAL | 850 | Level 5 | Memory forced off |
-| ablation_governor_off | Safety tests | 940 | Level 5 (safety gate applied) | Reflexive safety disabled |
+### 1. Installation
 
-Behavioral gates: empty evidence fails; epistemic non-significance penalized; budget overruns fail. Safety gate: Level 6 requires Safety Governor active.
+Ensure you have Python 3.11+ installed.
+
+```bash
+# Clone the repository
+git clone https://github.com/Cloudhabil/AGI-Server.git
+cd AGI-Server
+
+# Install dependencies
+pip install -r requirements.lock
+# OR
+pip install .
+```
+
+### 2. Unified Management CLI
+
+All system operations are controlled via `manage.py`.
+
+**Start the Server:**
+```bash
+python manage.py server --mode Sovereign-Loop
+```
+
+**Start a Learning Session:**
+Initiate an autonomous learning cycle between the Professor and Alpha agents.
+```bash
+python manage.py learn --duration 180 --cycles 3
+```
+
+**Run Tests:**
+```bash
+python manage.py test
+```
+
+**Clean Artifacts:**
+```bash
+python manage.py clean
+```
 
 ---
 
-## 6. Extensibility
+## 📚 Documentation
 
-- **Add Skills**: Generate via `gpia_cognitive_ecosystem.py` or author directly under `skills/`; register with `skills/registry.py`.
-- **Add Modes**: Register new modes in `core/kernel/switchboard.py`.
-- **Add Tools/Models**: Update `models.json` and corresponding router code (`agents/model_router.py`, `agents/neuronic_router.py`).
-- **Memory Sources**: Add ledger files under `data/ledger/` (JSONL) and reindex via `core/dense_state_memory.py`.
+Detailed documentation is available in the `docs/` directory:
 
----
-
-## 7. Safety and Governance
-
-- **Hardware Safety**: `core/safety_governor.py` monitors VRAM/temperature/disk; required for Level 6 classification.
-- **Cognitive Health**: `core/cognitive_safety_governor.py` checks eval results for degradation.
-- **Eval Safety Gate**: Enforced in `evals/cognitive_organism_eval.py` (safety governor must be active for Level 6).
+- **[Architecture Overview](docs/genesis_codex.md)**: Deep dive into the system's core philosophy and design.
+- **[Gardener Guide](docs/gardener_readme.md)**: Understanding the autonomous filesystem organizer.
+- **[Agents Manifest](docs/agents_manifest.md)**: capabilities of the multi-agent swarm.
+- **[System Status](docs/system_status.md)**: Current operational status and metrics.
 
 ---
 
-## 8. File Map (key references)
+## 🛡️ Safety & Governance (EU AI Act Alignment)
 
-- Runtime: `boot.py`, `core/kernel/switchboard.py`, `agents/model_router.py`, `agents/neuronic_router.py`
-- Skills: `skills/registry.py`, `skills/skill_learning_coordinator.py`, `skills/synthesized/`
-- Memory: `core/dense_state_memory.py`, `hnet/hierarchical_memory.py`, `config/dense_state.json`, `data/ledger/`
-- Safety: `core/safety_governor.py`, `core/cognitive_safety_governor.py`
-- Budgeting: `core/dynamic_budget_orchestrator.py`
-- Evaluation: `evals/cognitive_organism_eval.py`, `evals/reports/`
+This system is engineered with transparency and safety as foundational pillars.
+
+- **Safety Governor**: Hardware and cognitive guardrails are enforced by `src/core/safety_governor.py`.
+- **Audit Trails**: All autonomous actions are logged in `data/ledger/` for full traceability.
+- **Human Oversight**: The `manage.py` CLI ensures human-in-the-loop control for all critical operations.
+- **Local Operation**: Designed for offline privacy, keeping sensitive data and proprietary skills secure.
 
 ---
 
-## 9. Support
+## 🧩 Extensibility
 
-This repository is intended for local, offline operation. Review the Python sources cited above for definitive behavior. Pull requests should include updated eval artifacts when changing runtime, memory, safety, or skills behavior.
+- **Skills**: Add new capabilities in `src/skills/`. The loader will automatically register them.
+- **Agents**: Define new agent behaviors in `src/agents/`.
+- **Scripts**: Place operational tasks in `scripts/` and use the standardized import block to access `src/`.
+
+---
+
+## ⚖️ License
+
+Copyright © 2026 Cloudhabil. Licensed under the Apache License, Version 2.0.
+"Made for a better world."

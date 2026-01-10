@@ -264,13 +264,13 @@ def store_multi_scale(memory_entry):
 
 ## Files to Modify
 
-1. `skills/base.py` - Add scale_level to SkillManifest
-2. `skills/loader.py` - Multi-scale lazy loading
-3. `skills/INDEX.json` - Add scale metadata
-4. `skills/conscience/memory/mshr.py` - Multi-scale embeddings
-5. `skills/backends.py` - Scale-aware model routing
-6. New: `skills/transforms.py` - Linear scale projectors
-7. New: `skills/context_stack.py` - Hierarchical context
+1. `src/skills/base.py` - Add scale_level to SkillManifest
+2. `src/skills/loader.py` - Multi-scale lazy loading
+3. `src/skills/INDEX.json` - Add scale metadata
+4. `src/skills/conscience/memory/mshr.py` - Multi-scale embeddings
+5. `src/skills/backends.py` - Scale-aware model routing
+6. New: `src/skills/transforms.py` - Linear scale projectors
+7. New: `src/skills/context_stack.py` - Hierarchical context
 
 ---
 

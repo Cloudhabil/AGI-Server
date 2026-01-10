@@ -384,7 +384,7 @@ Just as LL.model learns from training data to make better predictions, our agent
 
 ### Code Shows Autonomous Learning
 
-**File: `skills/autonomous_skill_selector.py`**
+**File: `src/skills/autonomous_skill_selector.py`**
 ```python
 def select_skill(self, model: str, task: str):
     """Autonomously select best skill (NOT static routing)"""

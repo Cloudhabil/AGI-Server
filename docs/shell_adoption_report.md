@@ -19,4 +19,4 @@ Document the GPIA-native shell so that developers, users, and business stakehold
 - `scripts/adoption_coordinator.py`
 - `runs/shell_adoption/summary.md` (generated after script execution)
 - `docs/shell_cli_usage.md`, `docs/shell_cli_guardrails.md`, `docs/shell_cli_telemetry.md`
-- `skills/automation/shell-operations` (new skill entry)
+- `src/skills/automation/shell-operations` (new skill entry)

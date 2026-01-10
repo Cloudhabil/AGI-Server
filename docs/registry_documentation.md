@@ -353,7 +353,7 @@ cli_version = os.environ.get('CLI_AI_VERSION')
 
 - [Microsoft Registry Documentation](https://docs.microsoft.com/windows/win32/sysinfo/registry)
 - [REG Command Reference](https://docs.microsoft.com/windows-server/administration/windows-commands/reg)
-- [PowerShell Registry Provider](https://docs.microsoft.com/powershell/module/microsoft.powershell.core/about/about_registry)
+- [PowerShell Registry Provider](https://docs.microsoft.com/powershell/module/microsoft.powershell.src/core/about/about_registry)
 
 ---
 

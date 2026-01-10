@@ -47,17 +47,17 @@ sequenceDiagram
 
 The heartbeat runs through a mandatory middleware gate before any planning:
 
-1) **Identity Filter**: `core/sovereignty_v2/identity_checker.py` validates `queue.json` against core values in `memory/agent_state_v1/ledger.json`. Refusals are logged to `refusal_log.jsonl` and the heartbeat halts for that cycle.
-2) **Telemetry Constraint**: `core/sovereignty_v2/telemetry_observer.py` samples CPU/RAM/VRAM/Network and enforces budget thresholds. If VRAM >= 85%, the wrapper returns a lighter-model hint.
+1) **Identity Filter**: `src/core/sovereignty_v2/identity_checker.py` validates `queue.json` against core values in `memory/agent_state_v1/ledger.json`. Refusals are logged to `refusal_log.jsonl` and the heartbeat halts for that cycle.
+2) **Telemetry Constraint**: `src/core/sovereignty_v2/telemetry_observer.py` samples CPU/RAM/VRAM/Network and enforces budget thresholds. If VRAM >= 85%, the wrapper returns a lighter-model hint.
 3) **Handoff**: The sanitized context is injected into the heartbeat observations so the planner can act with explicit constraints.
 
-Wrapper entrypoint: `core/sovereignty_v2/sovereignty_wrapper.py`
+Wrapper entrypoint: `src/core/sovereignty_v2/sovereignty_wrapper.py`
 
 Heartbeat audit: each cycle stores a structured `sovereignty_trace` in episodic memory for refusal/shed visibility and regression baselines.
 
 ## Resonance Gate (Temporal Formalism)
 
-`run.py` evaluates each heartbeat against the Temporal Formalism contract (`core/resonant_kernel/interface.py`). If the resonance score drops below the configured threshold, the cycle is blocked and a structured `resonance_trace` is written to episodic memory.
+`run.py` evaluates each heartbeat against the Temporal Formalism contract (`src/core/resonant_kernel/interface.py`). If the resonance score drops below the configured threshold, the cycle is blocked and a structured `resonance_trace` is written to episodic memory.
 
 ## Control Plane Budgets
 
@@ -65,4 +65,4 @@ Heartbeat audit: each cycle stores a structured `sovereignty_trace` in episodic 
 
 ## Rollback Gate
 
-`core/sovereignty_v2/rollback_gate.py` runs regression checks before updates when `GPIA_ROLLBACK_GATE=1`. Failing checks can block writes and trigger a rollback request.
+`src/core/sovereignty_v2/rollback_gate.py` runs regression checks before updates when `GPIA_ROLLBACK_GATE=1`. Failing checks can block writes and trigger a rollback request.

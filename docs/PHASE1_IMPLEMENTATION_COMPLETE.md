@@ -236,13 +236,13 @@ python -c "from rh_discovery_orchestrator import RHDiscoveryOrchestrator"
 python rh_discovery_orchestrator.py 30 rh_session_phase1
 
 # 2. Monitor convergence in logs
-grep "Voxel spatial variance" agents/rh_session_phase1/*.json
+grep "Voxel spatial variance" src/agents/rh_session_phase1/*.json
 
 # 3. Verify voxel persistence
 ls data/vnand/blocks/block_*.bin  # Should have files after cycle 1
 
 # 4. Check Alpha bias injection
-grep "LEARNED PATTERNS" agents/rh_session_phase1/rh_proposals/*.json
+grep "LEARNED PATTERNS" src/agents/rh_session_phase1/rh_proposals/*.json
 
 # 5. Run full test suite
 python -m pytest tests/ -v --tb=short

@@ -6,18 +6,18 @@ This document details the different classes of agents and components that consti
 
 ## 1. Runtime Agents (Behavioral Modes)
 
-The primary "live" agent operates via a mode-based architecture, orchestrated by the `CortexSwitchboard` (`core/kernel/switchboard.py`). These are not separate processes but different behavioral states of the main agent, which is launched via `boot.py`.
+The primary "live" agent operates via a mode-based architecture, orchestrated by the `CortexSwitchboard` (`src/core/kernel/switchboard.py`). These are not separate processes but different behavioral states of the main agent, which is launched via `boot.py`.
 
 ### GPIA (General Purpose Intelligent Agent)
-- **Implementation**: `core/modes/sovereign_loop.py`
+- **Implementation**: `src/core/modes/sovereign_loop.py`
 - **Role**: The default interactive mode of the agent. This is the "GPIA" that listens to and processes user commands, utilizing the skill system to perform tasks.
 
 ### Teaching Agent
-- **Implementation**: `core/modes/teaching.py`
+- **Implementation**: `src/core/modes/teaching.py`
 - **Role**: A personality mode where the agent acts as a tutor, demonstrating the system's ability to adopt different functional roles.
 
 ### Forensic Debug Agent
-- **Implementation**: `core/modes/forensic_debug.py`
+- **Implementation**: `src/core/modes/forensic_debug.py`
 - **Role**: A diagnostic mode that allows developers to inspect the agent's internal state and memory, crucial for debugging and maintenance.
 
 ---
@@ -36,7 +36,7 @@ This is a standalone, asynchronous learning simulation that runs via `start_auto
 
 ### The Arbiter (Conceptual Role)
 - **Role**: The Judge / Synthesizer
-- **Implementation**: This is not a separate agent file but a conceptual role assigned to the `gpt-oss:20b` model within the `agents/model_router.py`. It is invoked for tasks requiring the synthesis of multiple conflicting viewpoints or for making a final judgment call.
+- **Implementation**: This is not a separate agent file but a conceptual role assigned to the `gpt-oss:20b` model within the `src/agents/model_router.py`. It is invoked for tasks requiring the synthesis of multiple conflicting viewpoints or for making a final judgment call.
 
 ---
 
@@ -51,7 +51,7 @@ This is an offline, interactive tool (`gpia_cognitive_ecosystem.py`) used by a d
 - **Role**: Takes the LLM-generated responses and uses another LLM call to extract reusable patterns and "cognitive weights."
 
 ### The Synthesizer (Component)
-- **Role**: Takes the extracted weights and uses a final set of LLM prompts to write the Python code for a new, complete skill, saving it as a `.py` file in the `skills/synthesized` directory.
+- **Role**: Takes the extracted weights and uses a final set of LLM prompts to write the Python code for a new, complete skill, saving it as a `.py` file in the `src/skills/synthesized` directory.
 
 ---
 

@@ -78,7 +78,7 @@ Successfully implemented a comprehensive three-layer cognitive system architectu
   - V-NAND write: **6.09 ms** (10 pages)
   - V-NAND read: **8.47 ms** (10 pages)
 
-**Status:** core/benchmarks.py created and verified
+**Status:** src/core/benchmarks.py created and verified
 
 #### 5c: Full System Test
 - 7 comprehensive system tests
@@ -92,7 +92,7 @@ Successfully implemented a comprehensive three-layer cognitive system architectu
   6. Mode system (instantiation)
   7. Dense-state + V-NAND integration
 
-**Status:** core/system_test.py created, all tests passing
+**Status:** src/core/system_test.py created, all tests passing
 
 ---
 
@@ -100,22 +100,22 @@ Successfully implemented a comprehensive three-layer cognitive system architectu
 
 ### Core System (8 files)
 ```
-core/agents/base.py                      # AgentContext, BaseAgent, ModeTransition
-core/kernel/services.py                  # KernelServices, init_services()
-core/kernel/preflight.py                 # sovereignty_preflight_check()
-core/kernel/switchboard.py               # CortexSwitchboard mode orchestration
-core/stubs.py                            # Default service implementations
+src/core/src/agents/base.py                      # AgentContext, BaseAgent, ModeTransition
+src/core/kernel/services.py                  # KernelServices, init_services()
+src/core/kernel/preflight.py                 # sovereignty_preflight_check()
+src/core/kernel/switchboard.py               # CortexSwitchboard mode orchestration
+src/core/stubs.py                            # Default service implementations
 boot.py                                  # Unified entry point
-core/benchmarks.py                       # BenchmarkSuite (5 test categories)
-core/system_test.py                      # SystemTest (7 comprehensive tests)
+src/core/benchmarks.py                       # BenchmarkSuite (5 test categories)
+src/core/system_test.py                      # SystemTest (7 comprehensive tests)
 ```
 
 ### Modes (4 files)
 ```
-core/modes/__init__.py                   # Mode exports
-core/modes/sovereign_loop.py             # Primary mode + dense-state logging
-core/modes/teaching.py                   # Pedagogical mode + dense-state logging
-core/modes/forensic_debug.py             # Inspection mode
+src/core/modes/__init__.py                   # Mode exports
+src/core/modes/sovereign_loop.py             # Primary mode + dense-state logging
+src/core/modes/teaching.py                   # Pedagogical mode + dense-state logging
+src/core/modes/forensic_debug.py             # Inspection mode
 ```
 
 ### Dense-State (7 files)
@@ -222,12 +222,12 @@ All new features are controlled via `config/dense_state.json`:
 
 ### 1. Boot with Sovereign-Loop mode (default)
 ```bash
-python boot.py --mode Sovereign-Loop
+python manage.py server --mode Sovereign-Loop
 ```
 
 ### 2. Boot with Teaching mode
 ```bash
-python boot.py --mode Teaching
+python manage.py server --mode Teaching
 ```
 
 ### 3. Enable V-NAND storage
@@ -237,18 +237,18 @@ Edit `config/dense_state.json`:
 ```
 Then run:
 ```bash
-python boot.py --mode Sovereign-Loop
+python manage.py server --mode Sovereign-Loop
 ```
 
 ### 4. Run system test
 ```bash
-python core/system_test.py
+python src/core/system_test.py
 ```
 Expected: 7/7 tests passing
 
 ### 5. Run benchmarks
 ```bash
-python core/benchmarks.py
+python src/core/benchmarks.py
 ```
 Results saved to: `benchmarks/results.json`
 
@@ -358,8 +358,8 @@ Results saved to: `benchmarks/results.json`
 - **Inline docstrings**: All public APIs documented
 
 ### Testing
-- **core/system_test.py**: Full system verification (7 tests)
-- **core/benchmarks.py**: Performance characterization (5 benchmarks)
+- **src/core/system_test.py**: Full system verification (7 tests)
+- **src/core/benchmarks.py**: Performance characterization (5 benchmarks)
 
 ### Future Enhancements (Optional)
 1. Integration with existing MindLoop instances
@@ -389,8 +389,8 @@ Ready for production deployment or further evolution.
 ## Files to Review
 
 1. **IMPLEMENTATION_SUMMARY.md** - Detailed technical specification
-2. **core/system_test.py** - Comprehensive system verification
-3. **core/benchmarks.py** - Performance characterization
+2. **src/core/system_test.py** - Comprehensive system verification
+3. **src/core/benchmarks.py** - Performance characterization
 4. **config/dense_state.json** - Configuration reference
 5. **boot.py** - Unified entry point
 6. **gpia/memory/dense_state/** - Core dense-state implementation

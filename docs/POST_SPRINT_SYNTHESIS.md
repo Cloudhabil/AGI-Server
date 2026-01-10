@@ -132,17 +132,17 @@ This 0.0219 ratio is extraordinarily small—random processes don't exhibit such
 
 ### Code & Skills
 ```
-skills/compute/sympy-symbolic/
+src/skills/compute/sympy-symbolic/
   - manifest.yaml: 25 lines
   - skill.py: 240 lines
   - schema.json: 55 lines
 
-skills/compute/numerical-analysis/
+src/skills/compute/numerical-analysis/
   - manifest.yaml: 30 lines
   - skill.py: 250 lines
   - schema.json: 60 lines
 
-skills/research/math-literature/
+src/skills/research/math-literature/
   - manifest.yaml: 32 lines
   - skill.py: 200 lines
   - schema.json: 55 lines

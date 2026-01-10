@@ -15,9 +15,9 @@ The Filesystem Gardener has successfully transformed the chaotic codebase into a
 #### 1. Infrastructure Deployed
 
 **5 Core Components Built:**
-- `core/filesystem_gardener.py` (500+ lines) - Main orchestrator
-- `core/gpia_bridge.py` (400+ lines) - Bidirectional IPC
-- `core/modes/gardener.py` (200+ lines) - Boot.py integration
+- `src/core/filesystem_gardener.py` (500+ lines) - Main orchestrator
+- `src/core/gpia_bridge.py` (400+ lines) - Bidirectional IPC
+- `src/core/modes/gardener.py` (200+ lines) - Boot.py integration
 - `filesystem_gardener_daemon.py` (200+ lines) - Standalone daemon
 - `test_gardener.py` (150+ lines) - Verification suite
 
@@ -37,10 +37,10 @@ The Filesystem Gardener has successfully transformed the chaotic codebase into a
 
 | Category | Files | Description |
 |----------|-------|-------------|
-| `skills/synthesized/` | 515 | Snowden intelligence corpus + auto-generated |
-| `skills/auto_learned/` | 172 | Skills learned through agent training |
-| `skills/ops/` | 6 | Operational utilities |
-| `skills/conscience/` | 45 | Ethical oversight |
+| `src/skills/synthesized/` | 515 | Snowden intelligence corpus + auto-generated |
+| `src/skills/auto_learned/` | 172 | Skills learned through agent training |
+| `src/skills/ops/` | 6 | Operational utilities |
+| `src/skills/conscience/` | 45 | Ethical oversight |
 | `evals/benchmarks/` | 729 | Performance benchmarks & tests |
 | `experiments/active/` | 9 | Active experimental programs |
 | `data/ledger/` | 2 | Persistent ledger data |
@@ -66,7 +66,7 @@ The Filesystem Gardener has successfully transformed the chaotic codebase into a
 - `custom_benchmark_sequence.py` (0.85 confidence)
 - 87 total test and benchmark files
 
-**Snowden Intelligence Archive → `skills/synthesized/`:**
+**Snowden Intelligence Archive → `src/skills/synthesized/`:**
 - 473 Snowden-derived skill modules
 - Comprehensive NSA/GCHQ capability knowledge base
 - Organized and indexed for skill synthesis
@@ -114,10 +114,10 @@ The Filesystem Gardener has successfully transformed the chaotic codebase into a
 The taxonomy reflects the "Agents are fuel. Skills are fire. GPIA is the furnace" philosophy:
 
 ### Cognitive Components (Skills)
-1. **skills/synthesized/** - Auto-generated from external intelligence
-2. **skills/auto_learned/** - Learned through agent training loops
-3. **skills/ops/** - Operational utilities and reflexes
-4. **skills/conscience/** - Ethical oversight and safety
+1. **src/skills/synthesized/** - Auto-generated from external intelligence
+2. **src/skills/auto_learned/** - Learned through agent training loops
+3. **src/skills/ops/** - Operational utilities and reflexes
+4. **src/skills/conscience/** - Ethical oversight and safety
 
 ### Testing & Evolution (Evals)
 5. **evals/benchmarks/** - Performance measurement and testing
@@ -139,7 +139,7 @@ The taxonomy reflects the "Agents are fuel. Skills are fire. GPIA is the furnace
 
 ### Mode 1: Integrated (via boot.py)
 ```bash
-python boot.py --mode Gardener
+python manage.py server --mode Gardener
 ```
 - Full GPIA intelligence (when Ollama running)
 - Bidirectional communication with main agent
@@ -180,7 +180,7 @@ gardener.start()
 2. **Review Low-Confidence Files**
    - 728 files need manual review or GPIA intelligence
    - Check `inbox/unclassified/` for categorization candidates
-   - Update heuristics in `core/filesystem_gardener.py`
+   - Update heuristics in `src/core/filesystem_gardener.py`
 
 3. **Enable Ollama for GPIA Intelligence**
    ```bash

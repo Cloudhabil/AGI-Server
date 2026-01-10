@@ -191,17 +191,17 @@ Verify they match known zeta zeros ± numerical error
 **Create new GPIA skills for this direction**:
 
 ```python
-# 1. skills/quantum/berry-keating-hamiltonian/
+# 1. src/skills/quantum/berry-keating-hamiltonian/
 #    - construct_hamiltonian()
 #    - compute_eigenvalues()
 #    - verify_spectral_properties()
 
-# 2. skills/quantum/semiclassical-analysis/
+# 2. src/skills/quantum/semiclassical-analysis/
 #    - wkb_quantization_condition()
 #    - periodic_orbit_sum()
 #    - bohr_sommerfeld_spectrum()
 
-# 3. skills/verification/spectral-analysis/
+# 3. src/skills/verification/spectral-analysis/
 #    - compute_pair_correlation()
 #    - eigenvalue_spacing_statistics()
 #    - compare_to_rmt_predictions()
