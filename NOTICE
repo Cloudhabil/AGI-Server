@@ -1,10 +1,35 @@
-CLI AI - Cognitive Multi-Agent AGI Learning Organism
-Copyright 2025-2026 CLI AI contributors
+ASI-OS: Artificial Superintelligence Operating System
+Copyright 2026 Elias Oulad Brahim (Cloudhabil)
 
 This product includes software developed by Cloudhabil (https://github.com/Cloudhabil/AGI-Server).
 
-IMPORTANT SAFETY DISCLOSURE:
-This software is a self-evolving cognitive system. It is designed to autonomously 
-synthesize skills and reasoning patterns. Users are advised that the "Active 
-Immune System" and "Sovereignty Wrapper" are runtime protections and do not 
-constitute a guarantee of safety for all possible evolved behaviors.
+-------------------------------------------------------------------------------
+1. CORE ENGINE & KERNEL LICENSE
+-------------------------------------------------------------------------------
+The core engine, management CLI, and system kernel logic are licensed under 
+the Apache License, Version 2.0.
+
+-------------------------------------------------------------------------------
+2. PROPRIETARY SKILLS & DATASETS
+-------------------------------------------------------------------------------
+The "Skills Materials" (found under /src/skills/ and associated datasets), 
+including skill packs, manifests, prompts, and synthesized reasoning data, 
+are NOT licensed under Apache 2.0.
+
+Use of these materials is governed by the "Cloudhabil Skills Additional 
+License (CSAL)" found in /src/skills/LICENSE-PROPRIETARY.md. Accessing or 
+integrating these skills constitutes acceptance of those commercial terms.
+
+-------------------------------------------------------------------------------
+3. EU AI ACT & SAFETY DISCLOSURE
+-------------------------------------------------------------------------------
+Licensor Elias Oulad Brahim acknowledges obligations under the European 
+Union's laws to ensure transparency and availability of General Purpose AI 
+(GPAI) systems.
+
+IMPORTANT SAFETY NOTICE:
+This software is a self-evolving cognitive system. It is designed to 
+autonomously synthesize skills and reasoning patterns. Users are advised 
+that the "Active Immune System" and "Sovereignty Wrapper" are runtime 
+protections and do not constitute a guarantee of safety for all possible 
+evolved behaviors.
