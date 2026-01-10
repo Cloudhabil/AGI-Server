@@ -114,3 +114,15 @@ governor/policy_engine_v1/
 research/committee_truth_20260105_161413/archives_extracted_all/
 retrospective-research/
 gpia_agi_server.egg-info/
+
+# Windows registry/install artifacts
+*.reg
+REGISTRY_KEYS_SUMMARY.txt
+INSTALL_INFO.txt
+
+# Generated reports/logs
+*_Report.md
+REDACTION_LOG.md
+
+# Temporary renamed assets
+CH_Logo (1).ico
