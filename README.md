@@ -1,8 +1,14 @@
 # ASI-OS: Autonomous Artificial Superintelligence Operating System
 
-![License: Apache 2.0](https://img.shields.org/badge/License-Apache%202.0-blue.svg)
-![Python: 3.11+](https://img.shields.org/badge/Python-3.11%2B-green.svg)
-![Status: Beta](https://img.shields.org/badge/Status-Beta-orange.svg)
+[![License: CC BY Cloudhabil 0.2.0](https://licensebuttons.net/l/by/4.0/80x15.png)](https://creativecommons.org/licenses/by/4.0/)
+[![License](https://img.shields.io/badge/License-Apache%202.0-blue.svg)](https://opensource.org/licenses/Apache-2.0)
+![Python](https://img.shields.io/badge/python-3670A0?style=for-the-badge&logo=python&logoColor=ffdd54)
+![Claude](https://img.shields.io/badge/Claude-D97757?style=for-the-badge&logo=claude&logoColor=white)
+![Dependabot](https://img.shields.io/badge/dependabot-025E8C?style=for-the-badge&logo=dependabot&logoColor=white)
+![HuggingFace](https://img.shields.io/badge/huggingface-%23FFD21E.svg?style=for-the-badge&logo=huggingface&logoColor=white)
+![Ollama](https://img.shields.io/badge/ollama-%23000000.svg?style=for-the-badge&logo=ollama&logoColor=white)
+![nVIDIA](https://img.shields.io/badge/nVIDIA-%2376B900.svg?style=for-the-badge&logo=nVIDIA&logoColor=white)
+![Windows](https://img.shields.io/badge/Windows-0078D6?style=for-the-badge&logo=windows&logoColor=white)
 
 **ASI-OS** is a self-evolving cognitive ecosystem designed to operate autonomously on local infrastructure. It features a dual-architecture system comprising a live runtime kernel (`Sovereign-Loop`) and an offline cognitive ecosystem for skill synthesis and self-improvement.
 
