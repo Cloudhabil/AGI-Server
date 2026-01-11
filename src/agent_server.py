@@ -850,6 +850,38 @@ async def dev_sse_token() -> Dict[str, Any]:
     return {"sse": token, "exp_s": 300}
 
 
+def _validate_shell_args(args: List[str]) -> None:
+    """
+    Validate shell connector arguments to reduce risk from untrusted input.
+
+    Ensures arguments are non-empty printable strings without control characters,
+    and enforces simple length limits to avoid abuse.
+    """
+    # Limit the number of arguments to a reasonable amount.
+    max_args = 32
+    if len(args) > max_args:
+        raise HTTPException(status_code=400, detail="too many command arguments")
+
+    # Limit length of each argument and total combined length.
+    max_arg_len = 512
+    max_total_len = 4096
+    total_len = 0
+
+    for a in args:
+        if not isinstance(a, str):
+            raise HTTPException(status_code=400, detail="invalid command arguments")
+        if not a:
+            raise HTTPException(status_code=400, detail="empty argument not allowed")
+        # Reject arguments containing non-printable characters, including newlines and NULs.
+        if not a.isprintable() or any(ch in a for ch in ("\n", "\r", "\x00")):
+            raise HTTPException(status_code=400, detail="invalid characters in command arguments")
+        if len(a) > max_arg_len:
+            raise HTTPException(status_code=400, detail="command argument too long")
+        total_len += len(a)
+        if total_len > max_total_len:
+            raise HTTPException(status_code=400, detail="command line too long")
+
+
 def _run_shell_command(run_id: str, params: Dict[str, Any]) -> Dict[str, Any]:
     # Use a hard-coded allowlist of commands. See CONNECTOR_SHELL_ALLOW above.
     allow = {c.lower() for c in CONNECTOR_SHELL_ALLOW}
@@ -869,6 +901,9 @@ def _run_shell_command(run_id: str, params: Dict[str, Any]) -> Dict[str, Any]:
     base = args[0].lower()
     if base not in allow:
         raise HTTPException(status_code=403, detail=f"command not allowed: {base}")
+
+    # Validate arguments before executing the command.
+    _validate_shell_args(args)
 
     timeout = int(os.environ.get("CONNECTOR_SHELL_TIMEOUT", "20"))
     _conn_log(run_id, f"exec: {' '.join(args)}")
