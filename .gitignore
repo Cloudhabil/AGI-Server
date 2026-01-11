@@ -115,6 +115,11 @@ src/skills/
 # If you have specific public skills, we can un-ignore them here with !
 # e.g., !src/skills/public_skill.py
 
+# PUBLIC SKILL: demodelis-ganesha (Unified AI Model Search)
+!src/skills/integration/
+!src/skills/integration/demodelis-ganesha/
+!src/skills/integration/demodelis-ganesha/**
+
 # CRITICAL: Ignore Large Files
 *.exe
 *.pkg
