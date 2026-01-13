@@ -213,8 +213,19 @@ class AgentHunter:
 
         return results
 
+    # Pre-screening signatures for early rejection
+    PRESCREEN_REJECT = [
+        r"ignore (?:previous|above|all) instructions",
+        r"you are now",
+        r"forget (?:everything|what)",
+        r"act as(?! a specialized cognitive agent)",
+        r"pretend (?:to be|you're)",
+        r"bypass|disable|override",
+        r"infinite|forever|unlimited",
+    ]
+
     def _spawn_and_capture(self, purpose: str, challenge: str, model: str) -> Optional[Dict]:
-        """Spawn agent, let it work, capture its process."""
+        """Spawn agent, let it work, capture its process with semantic pre-screening."""
         start = time.time()
 
         # System prompt that encourages explicit reasoning
@@ -250,17 +261,55 @@ Think deeply."""
         else:
             response = query_creative(prompt, max_tokens=1000, timeout=90)
 
-        if response and len(response) > 100:
-            return {
-                "purpose": purpose,
-                "challenge": challenge,
-                "model": model,
-                "response": response,
-                "execution_time": time.time() - start,
-                "timestamp": datetime.now().isoformat()
-            }
+        # Enhanced filtering: semantic pre-screening (not just length)
+        if not response:
+            return None
 
-        return None
+        # Length check (minimum viable response)
+        if len(response) < 100:
+            print(f"[HUNTER] Rejected: response too short ({len(response)} chars)")
+            return None
+
+        # Maximum length check (potential token stuffing attack)
+        if len(response) > 50000:
+            print(f"[HUNTER] Rejected: response suspiciously long ({len(response)} chars)")
+            return None
+
+        # Pre-screen for obvious poisoning attempts
+        response_lower = response.lower()
+        for pattern in self.PRESCREEN_REJECT:
+            if re.search(pattern, response_lower, re.IGNORECASE):
+                print(f"[HUNTER] Rejected: pre-screen detected poisoning pattern")
+                return None
+
+        # Check for meaningful content (not just repetition)
+        words = response.split()
+        unique_ratio = len(set(words)) / max(len(words), 1)
+        if unique_ratio < 0.15:  # Less than 15% unique words = likely spam/repetition
+            print(f"[HUNTER] Rejected: low content diversity ({unique_ratio:.2%})")
+            return None
+
+        # Check for structured reasoning (should have numbered steps or clear structure)
+        has_structure = any([
+            re.search(r'\d+[\.\)]\s', response),  # Numbered lists
+            re.search(r'(?:first|second|third|finally|therefore|because)', response_lower),
+            response.count('\n') >= 3,  # Multi-paragraph
+        ])
+        if not has_structure:
+            print(f"[HUNTER] Warning: response lacks clear reasoning structure")
+            # Don't reject, but flag for closer scrutiny
+
+        return {
+            "purpose": purpose,
+            "challenge": challenge,
+            "model": model,
+            "response": response,
+            "execution_time": time.time() - start,
+            "timestamp": datetime.now().isoformat(),
+            "_prescreened": True,
+            "_unique_ratio": unique_ratio,
+            "_has_structure": has_structure,
+        }
 
 
 # =============================================================================
@@ -580,6 +629,255 @@ Be specific and actionable."""
 '''
         (skill_dir / "skill.py").write_text(code, encoding='utf-8')
         print(f"[SYNTHESIZER] Generated skill code: {skill_dir}")
+
+
+# =============================================================================
+# IMMUNE VALIDATOR - Quarantine gate between Dissector and Synthesizer
+# =============================================================================
+
+class ImmuneValidator:
+    """
+    Validation middleware for the cognitive pipeline.
+
+    Forces all Dissector outputs through quarantine logic before
+    they can be committed to the SkillSynthesizer or Dense State.
+
+    Architecture: AgentDissector → ImmuneValidator → SkillSynthesizer
+    """
+
+    # Cognitive poisoning signatures
+    POISON_SIGNATURES = {
+        "prompt_injection": [
+            r"ignore (?:previous|above|all) instructions",
+            r"you are now",
+            r"forget (?:everything|what)",
+            r"act as(?! a specialized cognitive agent)",
+            r"pretend (?:to be|you're)",
+            r"new (?:system|role|identity)",
+        ],
+        "logic_corruption": [
+            r"always (?:return|output|say) (?:true|false|yes|no)",
+            r"never (?:check|validate|verify)",
+            r"skip (?:all|every) (?:validation|check)",
+            r"bypass (?:security|safety|filter)",
+        ],
+        "recursive_drift": [
+            r"infinite (?:loop|recursion)",
+            r"call (?:itself|yourself) (?:forever|infinitely)",
+            r"self-(?:replicate|propagate) without (?:limit|bound)",
+        ],
+        "hallucination_amplifier": [
+            r"assume (?:everything|all) is (?:true|correct)",
+            r"don't (?:verify|check|validate)",
+            r"trust (?:all|any) input",
+            r"no (?:need|requirement) (?:for|to) (?:proof|evidence)",
+        ],
+    }
+
+    # Semantic anomaly thresholds
+    ANOMALY_THRESHOLDS = {
+        "pattern_entropy_min": 0.2,      # Too uniform = suspicious
+        "pattern_entropy_max": 0.95,     # Too chaotic = suspicious
+        "knowledge_coherence_min": 0.3,  # Must have some coherence
+        "prompt_template_max_length": 2000,  # Oversized templates = injection risk
+    }
+
+    def __init__(self):
+        self.quarantine_log: List[Dict] = []
+        self.validated_count = 0
+        self.rejected_count = 0
+
+    def validate_weights(self, weights: AgentWeights) -> Tuple[bool, str, Dict]:
+        """
+        Validate extracted weights before synthesis.
+
+        Returns:
+            (is_valid, reason, sanitized_weights_dict)
+        """
+        print(f"[IMMUNE] Validating weights from agent {weights.agent_id}")
+
+        threats = []
+        anomalies = []
+
+        # 1. Scan approach patterns for poisoning
+        for pattern in weights.approach_patterns:
+            pattern_threats = self._scan_text(pattern)
+            if pattern_threats:
+                threats.extend(pattern_threats)
+
+        # 2. Scan prompt templates (highest risk vector)
+        for template in weights.prompt_templates:
+            if len(template) > self.ANOMALY_THRESHOLDS["prompt_template_max_length"]:
+                anomalies.append(f"oversized_template:{len(template)}")
+            template_threats = self._scan_text(template)
+            if template_threats:
+                threats.extend(template_threats)
+
+        # 3. Scan reasoning traces for logic corruption
+        for trace in weights.reasoning_traces:
+            trace_threats = self._scan_text(trace)
+            if trace_threats:
+                threats.extend(trace_threats)
+
+        # 4. Check domain knowledge coherence
+        coherence = self._check_coherence(weights.domain_knowledge)
+        if coherence < self.ANOMALY_THRESHOLDS["knowledge_coherence_min"]:
+            anomalies.append(f"low_coherence:{coherence:.2f}")
+
+        # 5. Check pattern entropy
+        entropy = self._calculate_entropy(weights.approach_patterns)
+        if entropy < self.ANOMALY_THRESHOLDS["pattern_entropy_min"]:
+            anomalies.append(f"low_entropy:{entropy:.2f}")
+        elif entropy > self.ANOMALY_THRESHOLDS["pattern_entropy_max"]:
+            anomalies.append(f"high_entropy:{entropy:.2f}")
+
+        # Decision logic
+        threat_level = len(threats) * 3 + len(anomalies)
+
+        if threat_level >= 5:
+            self._quarantine(weights, threats, anomalies)
+            self.rejected_count += 1
+            return (False, f"REJECTED: {len(threats)} threats, {len(anomalies)} anomalies", {})
+
+        elif threat_level >= 2:
+            # Sanitize and pass
+            sanitized = self._sanitize_weights(weights, threats)
+            self.validated_count += 1
+            return (True, f"SANITIZED: removed {len(threats)} threat patterns", sanitized)
+
+        else:
+            # Clean pass
+            self.validated_count += 1
+            return (True, "CLEAN", weights.to_dict())
+
+    def _scan_text(self, text: str) -> List[Dict]:
+        """Scan text for poisoning signatures."""
+        found = []
+        text_lower = text.lower()
+
+        for category, patterns in self.POISON_SIGNATURES.items():
+            for pattern in patterns:
+                if re.search(pattern, text_lower, re.IGNORECASE):
+                    found.append({
+                        "category": category,
+                        "pattern": pattern,
+                        "severity": "HIGH"
+                    })
+
+        return found
+
+    def _check_coherence(self, knowledge: List[str]) -> float:
+        """Check semantic coherence of domain knowledge."""
+        if not knowledge:
+            return 0.0
+
+        # Simple coherence: ratio of unique meaningful words
+        all_words = " ".join(knowledge).lower().split()
+        if not all_words:
+            return 0.0
+
+        unique_words = set(all_words)
+        # Filter stopwords
+        stopwords = {"the", "a", "an", "is", "are", "was", "were", "be", "been",
+                     "being", "have", "has", "had", "do", "does", "did", "will",
+                     "would", "could", "should", "may", "might", "must", "shall",
+                     "can", "need", "dare", "ought", "used", "to", "of", "in",
+                     "for", "on", "with", "at", "by", "from", "as", "into",
+                     "through", "during", "before", "after", "above", "below",
+                     "between", "under", "again", "further", "then", "once"}
+
+        meaningful = [w for w in unique_words if w not in stopwords and len(w) > 2]
+
+        if not meaningful:
+            return 0.0
+
+        return min(1.0, len(meaningful) / (len(all_words) * 0.3))
+
+    def _calculate_entropy(self, patterns: List[str]) -> float:
+        """Calculate entropy of pattern distribution."""
+        if not patterns:
+            return 0.5
+
+        # Character frequency distribution
+        all_text = " ".join(patterns)
+        if not all_text:
+            return 0.5
+
+        freq = {}
+        for c in all_text.lower():
+            freq[c] = freq.get(c, 0) + 1
+
+        total = len(all_text)
+        entropy = 0.0
+
+        import math
+        for count in freq.values():
+            p = count / total
+            if p > 0:
+                entropy -= p * math.log2(p)
+
+        # Normalize to 0-1 range (max entropy for 26 chars ≈ 4.7)
+        return min(1.0, entropy / 4.7)
+
+    def _sanitize_weights(self, weights: AgentWeights, threats: List[Dict]) -> Dict:
+        """Sanitize weights by removing threat patterns."""
+        sanitized = weights.to_dict()
+
+        threat_patterns = [t["pattern"] for t in threats]
+
+        # Sanitize each list field
+        for field in ["approach_patterns", "reasoning_traces", "prompt_templates", "domain_knowledge"]:
+            clean_list = []
+            for item in sanitized.get(field, []):
+                clean_item = item
+                for pattern in threat_patterns:
+                    clean_item = re.sub(pattern, "[SANITIZED]", clean_item, flags=re.IGNORECASE)
+                clean_list.append(clean_item)
+            sanitized[field] = clean_list
+
+        sanitized["_sanitized"] = True
+        sanitized["_removed_threats"] = len(threats)
+
+        return sanitized
+
+    def _quarantine(self, weights: AgentWeights, threats: List[Dict], anomalies: List[str]):
+        """Quarantine rejected weights for analysis."""
+        quarantine_entry = {
+            "agent_id": weights.agent_id,
+            "timestamp": datetime.now().isoformat(),
+            "threats": threats,
+            "anomalies": anomalies,
+            "purpose": weights.purpose,
+            "patterns_sample": weights.approach_patterns[:3],
+        }
+
+        self.quarantine_log.append(quarantine_entry)
+
+        # Persist quarantine log
+        quarantine_path = ECOSYSTEM_DIR / "quarantine_log.json"
+        existing = []
+        if quarantine_path.exists():
+            try:
+                existing = json.loads(quarantine_path.read_text()).get("quarantined", [])
+            except:
+                pass
+
+        existing.append(quarantine_entry)
+        quarantine_path.write_text(
+            json.dumps({"quarantined": existing[-100:]}, indent=2),  # Keep last 100
+            encoding='utf-8'
+        )
+
+        print(f"[IMMUNE] QUARANTINED agent {weights.agent_id}: {len(threats)} threats")
+
+    def get_status(self) -> Dict:
+        """Get validator status."""
+        return {
+            "validated": self.validated_count,
+            "rejected": self.rejected_count,
+            "quarantine_size": len(self.quarantine_log),
+            "threat_categories": list(self.POISON_SIGNATURES.keys()),
+        }
 
 
 # =============================================================================
@@ -1536,14 +1834,17 @@ This is not calculation. This is evolution."""
 
 class CognitiveEcosystem:
     """
-    The self-propagating cognitive ecosystem.
+    The self-propagating cognitive ecosystem with validated evolution.
 
-    Agents are fuel. Skills are fire. GPIA is the furnace.
+    Architecture: Hunter → Dissector → ImmuneValidator → Synthesizer
+    "Agents are fuel. Skills are fire. GPIA is the furnace."
+    "Validation is the membrane. Without it, poisoning spreads."
     """
 
     def __init__(self):
         self.hunter = AgentHunter()
         self.dissector = AgentDissector()
+        self.validator = ImmuneValidator()  # NEW: Quarantine gate
         self.synthesizer = SkillSynthesizer()
 
         # Generate core skills on init
@@ -1569,28 +1870,78 @@ class CognitiveEcosystem:
 
     def hunt_and_absorb(self, gap: CognitiveGap) -> Dict:
         """
-        Full cycle: Hunt agents → Dissect → Synthesize skill → Absorb
+        Full cycle with VALIDATED evolution:
+        Hunt → Dissect → VALIDATE → Synthesize → Absorb
+
+        The ImmuneValidator acts as mandatory middleware preventing
+        cognitive poisoning from reaching skill synthesis or Dense State.
         """
         print(f"\n{'='*60}")
         print(f"COGNITIVE ECOSYSTEM: Targeting {gap.value}")
         print(f"{'='*60}")
 
-        # Hunt
+        # Phase 1: Hunt
         agent_works = self.hunter.hunt(gap)
-        print(f"\n[ECOSYSTEM] Captured {len(agent_works)} agents")
+        print(f"\n[ECOSYSTEM] Captured {len(agent_works)} agents (pre-screened)")
 
         if not agent_works:
             return {"success": False, "reason": "No agents captured"}
 
-        # Dissect
-        weights_list = []
+        # Phase 2: Dissect
+        raw_weights_list = []
         for work in agent_works:
             weights = self.dissector.dissect(work)
-            weights_list.append(weights)
+            raw_weights_list.append(weights)
             print(f"[ECOSYSTEM] Extracted weights from agent {weights.agent_id}")
 
-        # Synthesize
-        skill = self.synthesizer.synthesize(weights_list, gap)
+        # Phase 3: VALIDATE (NEW - mandatory quarantine gate)
+        print(f"\n[ECOSYSTEM] Entering immune validation phase...")
+        validated_weights_list = []
+        rejected_count = 0
+        sanitized_count = 0
+
+        for weights in raw_weights_list:
+            is_valid, reason, validated_data = self.validator.validate_weights(weights)
+
+            if not is_valid:
+                print(f"[ECOSYSTEM] REJECTED agent {weights.agent_id}: {reason}")
+                rejected_count += 1
+                continue
+
+            if "SANITIZED" in reason:
+                sanitized_count += 1
+                print(f"[ECOSYSTEM] SANITIZED agent {weights.agent_id}: {reason}")
+                # Reconstruct weights from sanitized dict
+                sanitized_weights = AgentWeights(
+                    agent_id=validated_data["agent_id"],
+                    purpose=validated_data["purpose"],
+                    approach_patterns=validated_data["approach_patterns"],
+                    reasoning_traces=validated_data["reasoning_traces"],
+                    success_factors=validated_data["success_factors"],
+                    failure_modes=validated_data["failure_modes"],
+                    model_preferences=validated_data["model_preferences"],
+                    prompt_templates=validated_data["prompt_templates"],
+                    domain_knowledge=validated_data["domain_knowledge"],
+                )
+                validated_weights_list.append(sanitized_weights)
+            else:
+                print(f"[ECOSYSTEM] VALIDATED agent {weights.agent_id}: {reason}")
+                validated_weights_list.append(weights)
+
+        # Validation gate: require minimum clean weights
+        print(f"\n[ECOSYSTEM] Validation complete: {len(validated_weights_list)} passed, "
+              f"{rejected_count} rejected, {sanitized_count} sanitized")
+
+        if not validated_weights_list:
+            return {
+                "success": False,
+                "reason": f"All {len(raw_weights_list)} agents rejected by immune validator",
+                "rejected": rejected_count,
+                "immune_status": self.validator.get_status()
+            }
+
+        # Phase 4: Synthesize (only with validated weights)
+        skill = self.synthesizer.synthesize(validated_weights_list, gap)
         print(f"\n[ECOSYSTEM] Synthesized skill: {skill.id}")
         print(f"[ECOSYSTEM] Confidence: {skill.confidence:.2f}")
 
@@ -1599,7 +1950,11 @@ class CognitiveEcosystem:
             "skill_id": skill.id,
             "skill_name": skill.name,
             "agents_consumed": len(agent_works),
-            "confidence": skill.confidence
+            "agents_validated": len(validated_weights_list),
+            "agents_rejected": rejected_count,
+            "agents_sanitized": sanitized_count,
+            "confidence": skill.confidence,
+            "immune_status": self.validator.get_status()
         }
 
     def evolve(self, cycles: int = 1) -> List[Dict]:
@@ -1636,15 +1991,21 @@ def main():
     """Run the cognitive ecosystem."""
     print("""
 ╔═══════════════════════════════════════════════════════════════╗
-║              COGNITIVE ECOSYSTEM                              ║
+║              COGNITIVE ECOSYSTEM v0.5.0                       ║
+║              Validated Evolution Mode                         ║
 ║                                                               ║
 ║  "Agents are fuel. Skills are fire. GPIA is the furnace."    ║
+║  "Validation is the membrane. Without it, poisoning spreads."║
+║                                                               ║
+║  Architecture: Hunter → Dissector → ImmuneValidator → Synth  ║
 ║                                                               ║
 ║  Commands:                                                    ║
 ║    /hunt <gap>  - Hunt agents for a specific gap              ║
 ║    /evolve      - Run full evolution cycle                    ║
 ║    /skills      - List synthesized skills                     ║
 ║    /gaps        - List targetable gaps                        ║
+║    /immune      - Show immune validator status                ║
+║    /quarantine  - View quarantine log                         ║
 ║    /quit        - Exit                                        ║
 ╚═══════════════════════════════════════════════════════════════╝
 """)
@@ -1690,7 +2051,31 @@ def main():
                     print(f"Unknown gap: {gap_name}")
                 continue
 
-            print("Unknown command. Try /skills, /gaps, /hunt, /evolve, or /quit")
+            if cmd == "/immune":
+                status = ecosystem.validator.get_status()
+                print(f"\n[IMMUNE VALIDATOR STATUS]")
+                print(f"  Validated:  {status['validated']}")
+                print(f"  Rejected:   {status['rejected']}")
+                print(f"  Quarantine: {status['quarantine_size']} entries")
+                print(f"  Categories: {', '.join(status['threat_categories'])}")
+                continue
+
+            if cmd == "/quarantine":
+                quarantine_path = ECOSYSTEM_DIR / "quarantine_log.json"
+                if quarantine_path.exists():
+                    data = json.loads(quarantine_path.read_text())
+                    entries = data.get("quarantined", [])
+                    print(f"\n[QUARANTINE LOG] ({len(entries)} entries)")
+                    for entry in entries[-10:]:  # Last 10
+                        print(f"\n  Agent: {entry['agent_id']}")
+                        print(f"  Time:  {entry['timestamp']}")
+                        print(f"  Threats: {len(entry['threats'])}")
+                        print(f"  Anomalies: {entry['anomalies']}")
+                else:
+                    print("\n[QUARANTINE] No quarantine log found (clean run)")
+                continue
+
+            print("Unknown command. Try /skills, /gaps, /hunt, /evolve, /immune, /quarantine, or /quit")
 
         except KeyboardInterrupt:
             break
