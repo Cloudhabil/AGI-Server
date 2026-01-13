@@ -183,3 +183,9 @@ out/
 
 # Temporary renamed assets
 CH_Logo (1).ico
+
+# Local-only files (not for public)
+skills.md
+skills/
+substrate_manifold.html
+*.lnk
