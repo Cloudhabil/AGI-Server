@@ -1,14 +1,50 @@
 # Cognitive Orchestration Configuration
 # Based on benchmark results from 2025-12-29
+# Updated: 2026-01-13 (Substrate Equilibrium v0.5.0)
+
+# =============================================================================
+# SUBSTRATE EQUILIBRIUM MODE (v0.5.0)
+# =============================================================================
+# When enabled, enforces hardware sovereignty constraints:
+# - VRAM cliff at 9750MB (prevents DWM contention)
+# - NPU locked for all embedding tasks (frees PCIe bus)
+# - System refuses to violate these physical laws
+#
+# Enable via: python manage.py local --substrate-equilibrium
+# Or set environment: SUBSTRATE_EQUILIBRIUM=1
+# =============================================================================
+
+equilibrium:
+  enabled: true  # HARDWARE SOVEREIGNTY - do not disable
+
+  vram:
+    cliff_mb: 9750           # Hard ceiling - DO NOT EXCEED
+    cliff_pct: 81.25         # 9750/12000 = 81.25%
+    dwm_reserve_mb: 1700     # Windows Desktop Window Manager
+    safety_buffer_mb: 850    # Driver stability margin
+    total_mb: 12288          # RTX 4070 SUPER
+
+  npu:
+    lock_embeddings: true    # Force all embeddings to NPU
+    lock_vision: true        # Force vision preprocessing to NPU
+    lock_audio: true         # Force audio preprocessing to NPU
+    bypass_pcie: true        # NPU uses direct RAM path
+
+  enforcement:
+    refuse_violations: true  # System will refuse to exceed limits
+    emergency_shutdown: true # Trigger shutdown on cliff breach
+    log_breaches: true       # Log all limit breaches
 
 compute:
   embeddings:
-    primary: gpu  # 4782 texts/sec (RTX 4070 SUPER)
-    background: npu  # 254 texts/sec (Intel AI Boost) - frees GPU for LLM
-    fallback: cpu  # 1301 texts/sec
-  
+    # SUBSTRATE EQUILIBRIUM: NPU is now primary (frees PCIe for GPU)
+    primary: npu   # Intel AI Boost - bypasses PCIe bus entirely
+    fallback: cpu  # 1301 texts/sec - preserves VRAM
+    # gpu: DISABLED for embeddings (conflicts with LLM inference)
+
   llm:
     device: gpu  # All models run on RTX 4070 SUPER via Ollama
+    vram_limit_mb: 9750  # HARDWARE SOVEREIGNTY
 
 models:
   codegemma:

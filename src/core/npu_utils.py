@@ -120,11 +120,21 @@ def _ensure_npu_model_exported(model_id: str, max_length: int = 128) -> Optional
         )
 
         # Convert to OpenVINO IR
-        core = get_openvino_core()
-        ov_model = core.read_model(str(onnx_path))
-        save_model(ov_model, str(ir_path))
-
-        logger.info(f"Model exported to: {ir_path}")
+        import openvino as ov
+        core = ov.Core()
+        
+        print(f"[NPU] Converting {onnx_path} to OpenVINO IR...")
+        ov_model = ov.convert_model(str(onnx_path))
+        
+        # Set static shapes explicitly for NPU
+        ov_model.reshape({
+            "input_ids": [1, max_length],
+            "attention_mask": [1, max_length],
+            "token_type_ids": [1, max_length]
+        })
+        
+        ov.save_model(ov_model, str(ir_path))
+        print(f"[NPU] Model saved to: {ir_path}")
         return ir_path
 
     except Exception as e:
@@ -194,27 +204,38 @@ class NPUEmbedder:
         """Load model directly via OpenVINO for true NPU acceleration."""
         try:
             from transformers import AutoTokenizer
+            import openvino as ov
+            from openvino.runtime import AsyncInferQueue
 
             # Ensure model is exported
             ir_path = _ensure_npu_model_exported(model_id, self._max_length)
             if ir_path is None:
+                print("[NPU] Export failed, cannot load direct.")
                 return False
 
             # Load tokenizer
             self._tokenizer = AutoTokenizer.from_pretrained(model_id)
 
-            # Compile for NPU
-            core = get_openvino_core()
+            # Compile for NPU with high-throughput configuration
+            core = ov.Core()
             ov_model = core.read_model(str(ir_path))
-            self._compiled_model = core.compile_model(ov_model, "NPU")
+            
+            print(f"[NPU] Compiling model for {self.device}...")
+            config = {
+                "PERFORMANCE_HINT": "THROUGHPUT",
+                "NUM_STREAMS": "1" # Start with 1 for stability
+            }
+            self._compiled_model = core.compile_model(ov_model, self.device, config)
+            self._infer_queue = AsyncInferQueue(self._compiled_model, 1)
 
             self._backend = "openvino-direct"
-            self.device = "NPU"
-            logger.info(f"Loaded embedding model on NPU via direct OpenVINO")
+            print(f"[NPU] SUCCESS: Loaded on {self.device}")
             return True
 
         except Exception as e:
-            logger.debug(f"Direct OpenVINO load failed: {e}")
+            print(f"[NPU] Direct load failed: {e}")
+            import traceback
+            traceback.print_exc()
             return False
 
     def _try_load_sentence_transformers(self, model_id: str) -> bool:
@@ -267,10 +288,26 @@ class NPUEmbedder:
             raise RuntimeError(f"Unknown backend: {self._backend}")
 
     def _embed_openvino_direct(self, texts: List[str]) -> np.ndarray:
-        """Embed using direct OpenVINO on NPU (batch=1 sequential)."""
-        all_embeddings = []
+        """Embed using direct OpenVINO on NPU with Async Queue."""
+        all_embeddings = [None] * len(texts)
+        
+        # Local inputs capture for callback
+        tokenized_data = []
+        
+        def completion_callback(infer_request, userdata):
+            idx = userdata
+            hidden_states = infer_request.get_output_tensor(0).data
+            attention_mask = tokenized_data[idx]["attention_mask"]
+            
+            # Mean pooling (Optimized NumPy)
+            mask_expanded = np.expand_dims(attention_mask, axis=-1)
+            sum_embeddings = np.sum(hidden_states * mask_expanded, axis=1)
+            sum_mask = np.clip(np.sum(mask_expanded, axis=1), a_min=1e-9, a_max=None)
+            all_embeddings[idx] = (sum_embeddings / sum_mask)[0]
 
-        for text in texts:
+        self._infer_queue.set_callback(completion_callback)
+        
+        for i, text in enumerate(texts):
             inputs = self._tokenizer(
                 text,
                 padding="max_length",
@@ -278,27 +315,17 @@ class NPUEmbedder:
                 max_length=self._max_length,
                 return_tensors="np",
             )
-
-            result = self._compiled_model({
+            tokenized_data.append(inputs)
+            
+            ov_inputs = {
                 "input_ids": inputs["input_ids"].astype(np.int64),
                 "attention_mask": inputs["attention_mask"].astype(np.int64),
-                "token_type_ids": inputs.get(
-                    "token_type_ids",
-                    np.zeros_like(inputs["input_ids"])
-                ).astype(np.int64),
-            })
-
-            hidden_states = result[self._compiled_model.output(0)]
-            attention_mask = inputs["attention_mask"]
-
-            # Mean pooling
-            mask_expanded = np.expand_dims(attention_mask, axis=-1)
-            sum_embeddings = np.sum(hidden_states * mask_expanded, axis=1)
-            sum_mask = np.clip(np.sum(mask_expanded, axis=1), a_min=1e-9, a_max=None)
-            embedding = (sum_embeddings / sum_mask)[0]
-
-            all_embeddings.append(embedding)
-
+                "token_type_ids": inputs.get("token_type_ids", np.zeros_like(inputs["input_ids"])).astype(np.int64),
+            }
+            # Start async inference
+            self._infer_queue.start_async(ov_inputs, i)
+            
+        self._infer_queue.wait_all()
         return np.array(all_embeddings)
 
     def _embed_sentence_transformers(self, texts: List[str]) -> np.ndarray:
@@ -422,6 +449,106 @@ class NPUClassifier:
         # Return highest scoring label
         results.sort(key=lambda x: x[1], reverse=True)
         return results[0]
+
+
+# =============================================================================
+# SUBSTRATE EQUILIBRIUM - Environment-aware embedding router
+# =============================================================================
+
+_substrate_embedder: Optional[NPUEmbedder] = None
+
+
+def get_substrate_embedder() -> NPUEmbedder:
+    """
+    Get the substrate-optimized embedder based on environment configuration.
+
+    Checks USE_NPU_EMBEDDINGS and EMBEDDING_DEVICE environment variables
+    to route embeddings to the optimal silicon (NPU vs GPU vs CPU).
+
+    This is the entry point for Substrate Equilibrium mode.
+    """
+    global _substrate_embedder
+
+    if _substrate_embedder is not None:
+        return _substrate_embedder
+
+    use_npu = os.getenv("USE_NPU_EMBEDDINGS", "0") == "1"
+    device = os.getenv("EMBEDDING_DEVICE", "NPU" if use_npu else "CPU")
+
+    logger.info(f"[SUBSTRATE] Initializing embedder: device={device}, npu_requested={use_npu}")
+
+    _substrate_embedder = NPUEmbedder(device=device)
+    if _substrate_embedder.load_model():
+        logger.info(f"[SUBSTRATE] Embedder ready: {_substrate_embedder.backend_info}")
+    else:
+        logger.warning("[SUBSTRATE] Embedder failed to load, will retry on first use")
+
+    return _substrate_embedder
+
+
+def get_substrate_embedding(text: str) -> List[float]:
+    """
+    Get embedding for a single text using substrate-optimized embedder.
+
+    This is the drop-in replacement for _simple_hash_embedder when
+    Substrate Equilibrium mode is active.
+    """
+    embedder = get_substrate_embedder()
+    try:
+        embeddings = embedder.embed([text])
+        return embeddings[0].tolist()
+    except Exception as e:
+        logger.error(f"[SUBSTRATE] Embedding failed: {e}")
+        # Fallback to simple hash
+        return _fallback_hash_embedding(text)
+
+
+def get_substrate_embeddings_batch(texts: List[str]) -> List[List[float]]:
+    """
+    Get embeddings for multiple texts in a single batch (more efficient).
+    """
+    embedder = get_substrate_embedder()
+    try:
+        embeddings = embedder.embed(texts)
+        return [e.tolist() for e in embeddings]
+    except Exception as e:
+        logger.error(f"[SUBSTRATE] Batch embedding failed: {e}")
+        return [_fallback_hash_embedding(t) for t in texts]
+
+
+def _fallback_hash_embedding(text: str, dim: int = 384) -> List[float]:
+    """Deterministic hash-based fallback (no external dependencies)."""
+    import hashlib
+    hash_bytes = hashlib.sha384(text.encode()).digest()
+    embedding = []
+    for i in range(0, len(hash_bytes), 2):
+        if len(embedding) >= dim:
+            break
+        val = int.from_bytes(hash_bytes[i:i+2], 'little')
+        embedding.append((val / 65535.0) * 2 - 1)  # Normalize to [-1, 1]
+    return embedding[:dim]
+
+
+def get_substrate_status() -> dict:
+    """
+    Get current substrate equilibrium status.
+
+    Returns information about which silicon is handling which tasks.
+    """
+    npu_available = has_npu()
+    embedder = get_substrate_embedder() if os.getenv("USE_NPU_EMBEDDINGS") else None
+
+    offload_tasks = os.getenv("NPU_OFFLOAD_TASKS", "").split(",")
+    vram_limit = os.getenv("VRAM_LIMIT_MB")
+
+    return {
+        "npu_available": npu_available,
+        "npu_info": get_npu_info() if npu_available else None,
+        "embedder": embedder.backend_info if embedder else None,
+        "offload_tasks": [t for t in offload_tasks if t],
+        "vram_limit_mb": int(vram_limit) if vram_limit else None,
+        "equilibrium_active": bool(vram_limit or offload_tasks[0] if offload_tasks else False),
+    }
 
 
 # Quick test function

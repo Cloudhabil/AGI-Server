@@ -52,13 +52,29 @@ class ResourceSnapshot:
 
 @dataclass
 class SafetyLimits:
-    """Hard safety limits to prevent hardware damage."""
-    max_vram_util: float = 0.90  # 90% - leave headroom for system
-    max_ram_util: float = 0.90   # 90%
-    max_cpu_util: float = 0.95   # 95%
-    max_disk_write_mbps: float = 500.0  # Prevent SSD wear
-    vram_reserve_mb: int = 1024  # Always keep 1GB VRAM free
-    ram_reserve_mb: int = 2048   # Always keep 2GB RAM free
+    """
+    Hard safety limits to prevent hardware damage.
+
+    SUBSTRATE EQUILIBRIUM (v0.5.0):
+    VRAM limits are calibrated to the 9750MB cliff to prevent
+    "driver juggling" instability when Windows DWM contends for memory.
+
+    Physical substrate (RTX 4070 SUPER 12GB):
+    - 12288 MB total VRAM
+    - ~1700 MB reserved by Windows DWM
+    - ~850 MB safety buffer
+    - 9750 MB = operational ceiling (79.3% of 12288)
+    """
+    # HARDWARE SOVEREIGNTY - calibrated to physical substrate
+    max_vram_util: float = 0.793         # 9750/12288 = 79.3% (NOT 90%)
+    max_vram_mb: int = 9750              # Absolute cliff - DO NOT EXCEED
+    vram_reserve_mb: int = 2538          # 12288 - 9750 = DWM + buffer
+
+    # Other limits
+    max_ram_util: float = 0.90           # 90%
+    max_cpu_util: float = 0.95           # 95%
+    max_disk_write_mbps: float = 500.0   # Prevent SSD wear
+    ram_reserve_mb: int = 2048           # Always keep 2GB RAM free
 
 
 class BudgetService:
@@ -210,19 +226,29 @@ class BudgetService:
         if snapshot is None:
             snapshot = self.get_resource_snapshot(force_refresh=True)
 
-        # Check VRAM (CRITICAL - prevents GPU damage)
+        # Check VRAM (CRITICAL - prevents GPU damage and DWM contention)
+        # HARDWARE SOVEREIGNTY: Enforce the 9750MB cliff
         if snapshot.vram_util is not None and snapshot.vram_util >= self.limits.max_vram_util:
             self._emergency_shutdown = True
             return False, (
                 f"VRAM critical: {snapshot.vram_util*100:.1f}% >= "
-                f"{self.limits.max_vram_util*100:.0f}%"
+                f"{self.limits.max_vram_util*100:.1f}% (cliff)"
+            )
+
+        # Absolute MB check (HARDWARE SOVEREIGNTY)
+        if snapshot.vram_used_mb is not None and \
+                snapshot.vram_used_mb >= self.limits.max_vram_mb:
+            self._emergency_shutdown = True
+            return False, (
+                f"VRAM CLIFF BREACH: {snapshot.vram_used_mb}MB >= "
+                f"{self.limits.max_vram_mb}MB (DWM contention zone)"
             )
 
         if snapshot.vram_free_mb is not None and \
                 snapshot.vram_free_mb < self.limits.vram_reserve_mb:
             return False, (
                 f"VRAM reserve breach: {snapshot.vram_free_mb}MB < "
-                f"{self.limits.vram_reserve_mb}MB"
+                f"{self.limits.vram_reserve_mb}MB (need buffer for DWM)"
             )
 
         # Check RAM

@@ -32,6 +32,8 @@ except ImportError:
 import numpy as np
 
 from hnet.hierarchical_memory import HierarchicalMemory
+from hnet.dynamic_chunker import summarize_long_text
+from core.dynamic_budget_orchestrator import apply_dynamic_budget
 
 logger = logging.getLogger(__name__)
 
@@ -55,11 +57,34 @@ class DenseStateConfig:
 
 def _simple_hash_embedder(text: str, dim: int = 384) -> List[float]:
     """
-    Fallback hash-based embedder when OpenVINO is unavailable.
-
-    Uses a stable hash function to create pseudo-embeddings.
-    Not as accurate as transformer models, but provides functional vector search.
+    Local Ollama-based embedder using gpia-minilm-l6-v2.
+    
+    Provides high-IQ embeddings without cloud dependencies.
     """
+    import requests
+    import os
+    
+    ollama_url = os.getenv("OLLAMA_URL", "http://localhost:11434/api/embeddings")
+    if "/generate" in ollama_url:
+        ollama_url = ollama_url.replace("/generate", "/embeddings")
+        
+    try:
+        payload = {
+            "model": "gpia-minilm-l6-v2:latest",
+            "prompt": text
+        }
+        resp = requests.post(ollama_url, json=payload, timeout=10)
+        if resp.status_code == 200:
+            emb = resp.json().get("embedding", [0.0] * dim)
+            # Ensure consistent dimension
+            if len(emb) >= dim:
+                return emb[:dim]
+            else:
+                return emb + [0.0] * (dim - len(emb))
+    except Exception as e:
+        logger.warning(f"Ollama embedding failed: {e}. Falling back to hash.")
+
+    # ULTIMATE FALLBACK: CHARACTER HASH
     import hashlib
 
     # Create multiple hash seeds for dimensionality
@@ -93,18 +118,33 @@ class DenseStateLedger:
     def __init__(self, config: DenseStateConfig):
         self.config = config
 
-        # Try to use OpenVINO, fall back to simple embedder
-        # Test with a sample text to ensure it's actually configured
+        # SUBSTRATE EQUILIBRIUM: Check if NPU embeddings are requested
+        # This routes embeddings through the NPU's direct memory path,
+        # freeing the PCIe bus for GPU LLM inference
         embedding_fn = _simple_hash_embedder  # Default fallback
-        try:
-            from integrations.openvino_embedder import get_embeddings
-            # Test if OpenVINO is actually configured
-            test_embedding = get_embeddings("test")
-            if test_embedding:
-                embedding_fn = get_embeddings
-                logger.info("[DENSE STATE] Using OpenVINO embeddings for ledger")
-        except Exception as e:
-            logger.warning(f"[DENSE STATE] OpenVINO unavailable ({e}), using hash-based embedder")
+
+        if os.getenv("USE_NPU_EMBEDDINGS", "0") == "1":
+            try:
+                from core.npu_utils import get_substrate_embedding
+                # Test the substrate embedder
+                test_emb = get_substrate_embedding("test")
+                if test_emb and len(test_emb) > 0:
+                    embedding_fn = get_substrate_embedding
+                    logger.info("[DENSE STATE] Using NPU substrate embeddings (PCIe bus freed)")
+            except Exception as e:
+                logger.warning(f"[DENSE STATE] NPU substrate unavailable ({e}), trying OpenVINO")
+
+        # Fallback chain: OpenVINO → Hash
+        if embedding_fn == _simple_hash_embedder:
+            try:
+                from integrations.openvino_embedder import get_embeddings
+                # Test if OpenVINO is actually configured
+                test_embedding = get_embeddings("test")
+                if test_embedding:
+                    embedding_fn = get_embeddings
+                    logger.info("[DENSE STATE] Using OpenVINO embeddings for ledger")
+            except Exception as e:
+                logger.warning(f"[DENSE STATE] OpenVINO unavailable ({e}), using hash-based embedder")
 
         self.memory = HierarchicalMemory(
             storage_dir=config.ledger_index_path,
@@ -242,17 +282,30 @@ class DenseStateSkills:
     def __init__(self, config: DenseStateConfig):
         self.config = config
 
-        # Try to use OpenVINO, fall back to simple embedder
+        # SUBSTRATE EQUILIBRIUM: Check if NPU embeddings are requested
         embedding_fn = _simple_hash_embedder  # Default fallback
-        try:
-            from integrations.openvino_embedder import get_embeddings
-            # Test if OpenVINO is actually configured
-            test_embedding = get_embeddings("test")
-            if test_embedding:
-                embedding_fn = get_embeddings
-                logger.info("[DENSE STATE] Using OpenVINO embeddings for skills")
-        except Exception as e:
-            logger.warning(f"[DENSE STATE] OpenVINO unavailable ({e}), using hash-based embedder")
+
+        if os.getenv("USE_NPU_EMBEDDINGS", "0") == "1":
+            try:
+                from core.npu_utils import get_substrate_embedding
+                test_emb = get_substrate_embedding("test")
+                if test_emb and len(test_emb) > 0:
+                    embedding_fn = get_substrate_embedding
+                    logger.info("[DENSE STATE] Using NPU substrate embeddings for skills")
+            except Exception as e:
+                logger.warning(f"[DENSE STATE] NPU substrate unavailable ({e}), trying OpenVINO")
+
+        # Fallback chain: OpenVINO → Hash
+        if embedding_fn == _simple_hash_embedder:
+            try:
+                from integrations.openvino_embedder import get_embeddings
+                # Test if OpenVINO is actually configured
+                test_embedding = get_embeddings("test")
+                if test_embedding:
+                    embedding_fn = get_embeddings
+                    logger.info("[DENSE STATE] Using OpenVINO embeddings for skills")
+            except Exception as e:
+                logger.warning(f"[DENSE STATE] OpenVINO unavailable ({e}), using hash-based embedder")
 
         self.memory = HierarchicalMemory(
             storage_dir=config.skill_index_path,
@@ -436,15 +489,12 @@ class DenseStateMemory:
 
     def get_dense_context(self, query: str, max_tokens: int = 2000) -> Tuple[str, Dict[str, Any]]:
         """
-        Retrieve high-resonance context for a query.
-
-        Args:
-            query: Query to search for
-            max_tokens: Maximum tokens in returned context
-
-        Returns:
-            (context_text, metadata) tuple
+        Retrieve high-resonance context scaled to live hardware state.
         """
+        # 1. DYNAMIC HARDWARE SCALING
+        # Adjust the requested max_tokens based on actual free VRAM/RAM
+        dynamic_max = apply_dynamic_budget(query, max_tokens, model_id="gpia-master")
+        
         # Search both ledger and skills
         ledger_results = self.ledger.search(query, max_results=5)
         skill_results = self.skills.search(query, max_results=5)
@@ -457,27 +507,35 @@ class DenseStateMemory:
                 "sources": 0,
                 "token_estimate": 0,
                 "ledger_hits": len(ledger_results),
-                "skill_hits": len(skill_results)
+                "skill_hits": len(skill_results),
+                "max_allowed": dynamic_max
             }
 
-        # Build context from high-resonance results
+        # 2. H-NET DYNAMIC CHUNKING (Distillation)
         context_parts = []
         total_tokens = 0
 
         for result in all_results:
-            text = result['text']
-            # Rough token estimate (4 chars ≈ 1 token)
-            tokens = len(text) // 4
+            raw_text = result['text']
+            
+            # Use H-Net to distill/chunk text if it's too long
+            # (In a full loop we would pass a real summarizer, 
+            # here we use the DynamicChunker's soft-overlap logic)
+            distilled_text = summarize_long_text(
+                raw_text,
+                summarize=lambda x: x, # Identity for now, preserves logic
+                max_tokens=self.config.chunk_size,
+                overlap_tokens=self.config.chunk_overlap
+            )
+            
+            # Estimate tokens correctly (H-Net style)
+            from hnet.dynamic_chunker import _token_count
+            tokens = _token_count(distilled_text)
 
-            if total_tokens + tokens > max_tokens:
-                if not context_parts:
-                    # Clip the first oversized result to max_tokens to avoid empty context
-                    clip_chars = max_tokens * 4
-                    context_parts.append(text[:clip_chars])
-                    total_tokens = max_tokens
+            if total_tokens + tokens > dynamic_max:
                 break
 
-            context_parts.append(text)
+            context_parts.append(distilled_text)
             total_tokens += tokens
 
         context = "\n\n---\n\n".join(context_parts)
@@ -486,7 +544,9 @@ class DenseStateMemory:
             "sources": len(context_parts),
             "token_estimate": total_tokens,
             "ledger_hits": len(ledger_results),
-            "skill_hits": len(skill_results)
+            "skill_hits": len(skill_results),
+            "max_allowed": dynamic_max,
+            "hnet_active": True
         }
 
         return context, metadata

@@ -12,17 +12,50 @@ class SafetyGovernor:
     """
     Hardware Protection Layer (The Circuit Breaker).
     Monitors VRAM, Temperature, and Disk to prevent hardware stress.
+
+    SUBSTRATE EQUILIBRIUM (v0.5.0):
+    Hard-codes the 9750MB VRAM cliff (81.25%) to prevent "driver juggling"
+    instability when Windows DWM fights for the remaining ~1.7GB.
     """
+    # =========================================================================
+    # HARDWARE SOVEREIGNTY CONSTANTS (DO NOT MODIFY)
+    # =========================================================================
+    # These values are calibrated to the physical substrate:
+    # - 12288 MB total VRAM (RTX 4070 SUPER)
+    # - ~1700 MB reserved by Windows DWM at high refresh rates
+    # - ~850 MB safety buffer to prevent driver instability
+    # - 9750 MB = safe operational ceiling (81.25%)
+    VRAM_CLIFF_MB = 9750              # The hard ceiling - DO NOT EXCEED
+    VRAM_CLIFF_PCT = 81.25            # 9750/12000 = 81.25%
+    VRAM_DWM_RESERVE_MB = 1700        # Windows Desktop Window Manager
+    VRAM_SAFETY_BUFFER_MB = 850       # Driver stability margin
+
     def __init__(self, repo_root: Optional[Path] = None):
         self.repo_root = repo_root or Path(__file__).resolve().parent.parent
         self.log_dir = self.repo_root / "logs" / "safety"
         self.log_dir.mkdir(parents=True, exist_ok=True)
-        
-        # Thresholds (Conservative Safety)
-        self.vram_limit_pct = 85.0    # 85% VRAM is the hard ceiling
+
+        # Check for equilibrium mode override
+        equilibrium_mode = os.getenv("SUBSTRATE_EQUILIBRIUM", "0") == "1"
+        vram_limit_override = os.getenv("VRAM_LIMIT_MB")
+
+        # Thresholds (HARDWARE SOVEREIGNTY - calibrated to substrate)
+        if vram_limit_override:
+            # Manual override from CLI
+            self.vram_limit_mb = int(vram_limit_override)
+            self.vram_limit_pct = (self.vram_limit_mb / 12288) * 100
+        elif equilibrium_mode:
+            # Equilibrium mode enforces the cliff
+            self.vram_limit_mb = self.VRAM_CLIFF_MB
+            self.vram_limit_pct = self.VRAM_CLIFF_PCT
+        else:
+            # Default: still enforce the cliff for safety
+            self.vram_limit_mb = self.VRAM_CLIFF_MB
+            self.vram_limit_pct = self.VRAM_CLIFF_PCT
+
         self.temp_limit_c = 78.0      # 78°C is the thermal throttle point
         self.disk_min_free_gb = 50.0  # Keep 50GB free on the 2TB ground
-        
+
         # State
         self.is_throttled = False
         self.critical_stop = False
@@ -79,9 +112,15 @@ class SafetyGovernor:
             self.logger.warning(msg)
             return False, msg
             
-        # 2. VRAM Check (Limit)
+        # 2. VRAM Check (Percentage Limit)
         if gpu["vram_pct"] > self.vram_limit_pct:
-            msg = f"VRAM CRITICAL: {gpu['vram_pct']:.1f}% > {self.vram_limit_pct}%"
+            msg = f"VRAM CRITICAL: {gpu['vram_pct']:.1f}% > {self.vram_limit_pct:.1f}% (cliff)"
+            self.logger.warning(msg)
+            return False, msg
+
+        # 2b. VRAM Check (Absolute MB Limit - HARDWARE SOVEREIGNTY)
+        if gpu["vram_mb"] > self.vram_limit_mb:
+            msg = f"VRAM CLIFF BREACH: {gpu['vram_mb']:.0f}MB > {self.vram_limit_mb}MB (DWM contention zone)"
             self.logger.warning(msg)
             return False, msg
 
