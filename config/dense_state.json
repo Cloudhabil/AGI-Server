@@ -1,5 +1,5 @@
 {
-  "mode": "vector",
+  "mode": "voxel",
   "voxel": {
     "shape": [8, 8, 8, 8],
     "dtype": "uint8",

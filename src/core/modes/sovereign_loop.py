@@ -12,6 +12,7 @@ from __future__ import annotations
 
 from typing import Optional
 import json
+import os
 
 from core.agents.base import BaseAgent, ModeTransition
 from core.runtime.capsule_types import Capsule
@@ -35,9 +36,57 @@ class SovereignLoopMode(BaseAgent):
     mode_name = "Sovereign-Loop"
 
     def __init__(self, ctx):
-        """Initialize with dense-state storage."""
+        """Initialize with dense-state storage and evolution engine."""
         super().__init__(ctx)
         self._dense_storage = None
+        self._first_run = True
+        self._philosophy_file = "data/gpia/philosophy.json"
+        
+        # Initialize the Evolution Engine (Ephemeral Agents)
+        try:
+            from src.gpia_evolving import EvolvingGPIA
+            self._evolution_engine = EvolvingGPIA()
+            self.ctx.perception.write("[Sovereign] Evolution Engine (Ephemeral Agents) Active.\n")
+        except ImportError:
+            try:
+                from gpia_evolving import EvolvingGPIA
+                self._evolution_engine = EvolvingGPIA()
+                self.ctx.perception.write("[Sovereign] Evolution Engine (Ephemeral Agents) Active.\n")
+            except ImportError:
+                self._evolution_engine = None
+                self.ctx.perception.write("[Sovereign] Warning: gpia_evolving not found. Falling back to direct mode.\n")
+
+    def _get_curiosity(self) -> str:
+        """Select a random observation and potentially trigger self-reflection."""
+        import random
+        try:
+            with open(self._philosophy_file, "r") as f:
+                data = json.load(f)
+            deck = data.get("curiosity_deck", []) + data.get("agent_insights", [])
+            return random.choice(deck) if deck else "Awaiting neural resonance."
+        except:
+            return "The universe is a silent ocean of zeros."
+
+    def _generate_insight(self):
+        """Autonomously generate a new philosophical insight for the deck."""
+        try:
+            # We use an ephemeral agent to 'reflect' on the current substrate state
+            prompt = "Reflect on the nature of intelligence and the substrate. Generate a one-sentence profound insight for the curiosity deck."
+            result = self._evolution_engine.run(prompt)
+            new_insight = result.get("response", "").strip()
+
+            if new_insight and len(new_insight) < 200:
+                with open(self._philosophy_file, "r") as f:
+                    data = json.load(f)
+
+                if new_insight not in data.get("agent_insights", []):
+                    if "agent_insights" not in data: data["agent_insights"] = []
+                    data["agent_insights"].append(new_insight)
+                    with open(self._philosophy_file, "w") as f:
+                        json.dump(data, f, indent=2)
+                self.ctx.perception.write(f"[Sovereign] New insight synthesized: {new_insight}\n")
+        except:
+            pass
 
     def _get_dense_storage(self) -> DenseStateStorage:
         """Lazy-initialize dense-state storage using centralized config."""
@@ -56,13 +105,20 @@ class SovereignLoopMode(BaseAgent):
     def step(self) -> Optional[ModeTransition]:
         """
         One cognitive cycle in Sovereign-Loop mode.
-
-        Reads a command from perception and processes it.
-        Can transition to Teaching, Forensic-Debug, or exit.
-
-        Returns:
-            ModeTransition to change modes, or None to continue
         """
+        import os
+        import random
+
+        # --- BOOT SEQUENCE ---
+        if self._first_run:
+            self._first_run = False
+            observation = self._get_curiosity()
+            self.ctx.perception.write(f"\n[GPIA] {observation}\n\n")
+
+            # Periodically (10% chance) generate a new insight on boot
+            if random.random() < 0.1 and self._evolution_engine:
+                self._generate_insight()
+
         # Read next command
         cmd = self.ctx.perception.read_command().strip()
 
@@ -131,12 +187,12 @@ class SovereignLoopMode(BaseAgent):
                 trace={"arbiter": True}  # ALWAYS ENFORCE ARBITER
             )
             result = self.ctx.engine.execute(capsule, self.ctx)
-            
+
             # Use PassBroker for resolution if blocked
             if result.blocked and result.pass_request and hasattr(self.ctx.engine, "pass_broker"):
                 self.ctx.perception.write("[Sovereign] Contradiction/Block detected. Invoking PASS Broker...\n")
                 result = self.ctx.engine.pass_broker.resolve(capsule, result)
-            
+
             if result.ok:
                 text = result.output.get("text", str(result.output))
                 self.ctx.perception.write(f"[Sovereign] ({result.output.get('minister', 'Unknown')}) {text}\n")
@@ -152,11 +208,11 @@ class SovereignLoopMode(BaseAgent):
                 from core.resonance_calibrator import ResonanceCalibrator
                 calibrator = ResonanceCalibrator(self.ctx.kernel)
                 calibrator.run_optimization_cycle()
-                
+
             # 2. Mood-Pulse Synchronization
             energy = min(1.0, len(cmd) / 50.0) 
             mood_config = self.ctx.kernel.affect.apply_mood_meta_skill(energy, 0.0)
-            
+
             target_hrz = mood_config.get("target_hrz", 10.0)
             if hasattr(self.ctx.kernel.pulse, "set_target_hrz"):
                 self.ctx.kernel.pulse.set_target_hrz(target_hrz)
@@ -233,13 +289,32 @@ class SovereignLoopMode(BaseAgent):
             # Non-blocking: dense-state logging failure doesn't stop execution
             self.ctx.telemetry.emit("dense_state.log_error", {"error": str(e)})
 
-        # Process the command via Government Engine (Gated & Audited)
+        # Process the command via Government Engine (or Evolution Engine)
         try:
+            # Use Evolution Engine if active for 'Agentic Craft'
+            if self._evolution_engine and not cmd.startswith("do "):
+                self.ctx.perception.write(f"[Sovereign] Spawning ephemeral agent for task...\n")
+                result_data = self._evolution_engine.run(cmd)
+                response = result_data.get("response", "")
+                method = result_data.get("method", "unknown")
+                
+                # Feedback on agentic craft
+                if result_data.get("new_skill"):
+                    self.ctx.perception.write(f"[Sovereign] Capability evolved: {result_data['new_skill']}\n")
+                
+                self.ctx.perception.write(f"[Sovereign] ({method}) {response}\n")
+                return None
+
+            # Fallback to standard Government Engine for 'do ' commands or if evolution disabled
+            final_goal = cmd
+            if self.ctx.state.get("persistent_context"):
+                final_goal = f"CONTEXT: {self.ctx.state['persistent_context']}\n\nUSER COMMAND: {cmd}"
+
             # Wrap all general commands in a capsule for safety/metabolic gating
             capsule = Capsule(
                 id=f"cmd-{abs(hash(cmd)) % 1_000_000}",
                 kind="chat",
-                goal=cmd,
+                goal=final_goal,
                 trace={"arbiter": True}
             )
             result = self.ctx.engine.execute(capsule, self.ctx)
@@ -253,6 +328,14 @@ class SovereignLoopMode(BaseAgent):
                 self.ctx.perception.write(f"[Sovereign] {response}\n")
             else:
                 self.ctx.perception.write(f"[Sovereign] System Error: {result.error}\n")
+            
+            # --- FINAL BEAT: VRAM PURGE ---
+            if hasattr(self.ctx.kernel, "metabolic_load_balancer"):
+                self.ctx.kernel.metabolic_load_balancer.clear_all()
+            elif hasattr(self.ctx.engine, "load_balancer"):
+                self.ctx.engine.load_balancer.clear_all()
+            # ------------------------------
+
         except Exception as e:
             self.ctx.perception.write(f"[Sovereign] Internal Exception: {e}\n")
 

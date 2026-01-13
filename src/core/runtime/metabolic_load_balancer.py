@@ -5,6 +5,7 @@ Manages model loading and active eviction to prevent substrate exhaustion.
 Ensures sequential execution when cumulative VRAM requirements exceed 85%.
 """
 
+import os
 import time
 import requests
 from typing import List, Dict, Optional, Tuple
@@ -29,14 +30,21 @@ class MetabolicLoadBalancer:
         return vitals["vram_free_mb"], vitals["vram_total_mb"]
 
     def evict_model(self, model_id: str, url: Optional[str] = None) -> bool:
-        """Force Ollama to unload a model."""
-        target_url = url or self.base_url
+        """Force Ollama to unload a model instantly."""
+        # Use env OLLAMA_URL if available, else default
+        env_url = os.getenv("OLLAMA_URL", self.base_url).replace("/api/generate", "")
+        target_url = url or env_url
         try:
-            print(f"[LOAD BALANCER] Evicting model {model_id} from {target_url}...")
-            payload = {"model": model_id, "keep_alive": 0}
-            resp = requests.post(f"{target_url}/api/generate", json=payload, timeout=5)
+            print(f"[LOAD BALANCER] Force Unloading {model_id}...")
+            # Sending an empty chat with 0 keep_alive forces immediate VRAM release
+            payload = {
+                "model": model_id, 
+                "messages": [], 
+                "keep_alive": 0
+            }
+            resp = requests.post(f"{target_url.rstrip('/')}/api/chat", json=payload, timeout=5)
             return resp.status_code == 200
-        except Exception:
+        except Exception as e:
             return False
 
     def request_load(self, model_id: str, required_mb: float) -> Tuple[bool, str]:
@@ -81,8 +89,10 @@ class MetabolicLoadBalancer:
         return False, self.base_url
 
     def clear_all(self):
-        """Emergency purge of all models from VRAM."""
-        print("[LOAD BALANCER] EMERGENCY PURGE: Unloading all models...")
-        for m in list(self.active_models):
+        """Emergency purge of all models from VRAM, including the master."""
+        print("[LOAD BALANCER] FINAL PURGE: Unloading all models to zero-state...")
+        # Get all models that might be loaded
+        all_possible = ["gpia-master:latest", "gpia-deepseek-r1:latest", "gpia-qwen3:latest", "gpia-llava:latest", "gpia-gpt-oss:latest"]
+        for m in all_possible:
             self.evict_model(m)
         self.active_models = []

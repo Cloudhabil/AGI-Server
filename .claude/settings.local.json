@@ -5,7 +5,10 @@
       "Bash(npm run build:*)",
       "Bash(python:*)",
       "Bash(ls:*)",
-      "Bash(dir:*)"
+      "Bash(dir:*)",
+      "Bash(cat:*)",
+      "Bash(mkdir:*)",
+      "Bash(find:*)"
     ]
   },
   "outputStyle": "default"

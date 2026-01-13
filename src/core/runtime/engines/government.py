@@ -83,6 +83,9 @@ class GovernmentCapsuleEngine(CapsuleEngine):
                 temperature=0.1,
                 bypass_gov=True
             )
+            # RELEASE THE ARBITER
+            self.load_balancer.evict_model(arbiter.model_id)
+
             if "VERDICT: CLEAR" in critique.upper():
                 return CapsuleResult(
                     ok=True,
@@ -252,25 +255,32 @@ class GovernmentCapsuleEngine(CapsuleEngine):
             # 4. Primary Execution
             temp = 0.1 if any(c in minister.capabilities for c in ["logic", "arbiter", "code"]) else 0.3
             
-            if target_url == self.router.ollama_url:
-                reply = self.router.query(
-                    prompt=capsule.goal,
-                    model=minister.model_id,
-                    max_tokens=800,
-                    temperature=temp,
-                    bypass_gov=True
-                )
-            else:
-                # REDIRECTED to Docker Student
-                reply = self._query_with_url(
-                    prompt=capsule.goal, 
-                    model_id=minister.model_id, 
-                    url=target_url, 
-                    temperature=temp
-                )
+            try:
+                if target_url == self.router.ollama_url:
+                    reply = self.router.query(
+                        prompt=capsule.goal,
+                        model=minister.model_id,
+                        max_tokens=800,
+                        temperature=temp,
+                        bypass_gov=True
+                    )
+                else:
+                    # REDIRECTED to Docker Student
+                    reply = self._query_with_url(
+                        prompt=capsule.goal, 
+                        model_id=minister.model_id, 
+                        url=target_url, 
+                        temperature=temp
+                    )
+            finally:
+                # RELEASE THE BALL: Evict the minister model immediately after inference
+                self.load_balancer.evict_model(minister.model_id, target_url)
 
             # 5. Output Confidence Audit
             out_confidence = self._evaluate_output_confidence(capsule, minister, reply)
+            # Ensure President is evicted after confidence check
+            self.load_balancer.evict_model(self.gov.president.model_id)
+
             if out_confidence < self.output_confidence_threshold:
                 res = CapsuleResult(
                     ok=False,

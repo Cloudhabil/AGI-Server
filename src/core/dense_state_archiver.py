@@ -54,9 +54,17 @@ class DenseStateArchiver:
 
     def archive_image(self, state_data: np.ndarray, state_type: str = "hamiltonian"):
         """
-        Archive only if the state is 'significant' compared to the last one.
+        Archive only if significant. Normalizes to uint8 for 16MB density.
         """
-        energy_level = float(np.mean(np.abs(state_data)))
+        # Ensure uint8 for 64^4 efficiency (16MB ground target)
+        if state_data.dtype != np.uint8:
+            # Scale to 0-255 range if float
+            if state_data.dtype in [np.float32, np.float64]:
+                state_data = (state_data * 255).astype(np.uint8)
+            else:
+                state_data = state_data.astype(np.uint8)
+
+        energy_level = float(np.mean(state_data)) / 255.0
         
         # CALCULATE SIGNIFICANCE (The Delta)
         delta = abs(energy_level - self.last_energy)

@@ -19,12 +19,16 @@ class OllamaChat(BaseChatClient):
         self.model = model
 
     def chat(self, messages: List[Dict[str, str]]) -> str:
+        # ZERO-KEEP-ALIVE PROTOCOL (Pass the Ball)
+        # 0 = Unload immediately after response
+        keep_alive = os.getenv("OLLAMA_KEEP_ALIVE", "0")
+        
         payload = {
             "model": self.model,
             "messages": messages,
-            "keep_alive": -1,  # Keep model loaded in VRAM (prevents thrashing)
+            "keep_alive": keep_alive,
         }
-        r = requests.post(self.endpoint, json=payload, timeout=120)
+        r = requests.post(self.endpoint, json=payload, timeout=300) # Increased for loading time
         r.raise_for_status()
         data = r.json()
         if isinstance(data, dict):
@@ -52,7 +56,27 @@ class OpenAIChat(BaseChatClient):
         return data.get("choices", [{}])[0].get("message", {}).get("content", "")
 
 
- 
+class CustomChat(BaseChatClient):
+    """Client for custom OpenAI-compatible endpoints (e.g. vLLM, LM Studio, LocalAI).
+    
+    Does not enforce API key presence, allowing for local servers that don't require auth.
+    """
+    def __init__(self, endpoint: str, model: str, api_key: str = "dummy"):
+        self.endpoint = endpoint
+        self.model = model
+        self.api_key = api_key or "dummy"
+
+    def chat(self, messages: List[Dict[str, str]]) -> str:
+        headers = {
+            "Authorization": f"Bearer {self.api_key}",
+            "Content-Type": "application/json",
+        }
+        payload = {"model": self.model, "messages": messages}
+        # Increase timeout for local inference
+        r = requests.post(self.endpoint, headers=headers, json=payload, timeout=300)
+        r.raise_for_status()
+        data = r.json()
+        return data.get("choices", [{}])[0].get("message", {}).get("content", "")
 
 
 class AnthropicChat(BaseChatClient):
@@ -88,8 +112,8 @@ class AnthropicChat(BaseChatClient):
             if role == "system":
                 system_content = (system_content + "\n" if system_content else "") + content
                 continue
-            converted.append({"role": role, "content": [{"type": "text", "text": content}]})
-
+            converted.append({"role": role, "content": [{"type": "text", "text": content}]}
+        
         headers = {
             "x-api-key": self.api_key,
             "anthropic-version": self.api_version,
@@ -120,6 +144,8 @@ def make_client(kind: str, endpoint: str, model: str):
         return OllamaChat(endpoint, model)
     if kind == "openai":
         return OpenAIChat(endpoint, model)
+    if kind == "custom":
+        return CustomChat(endpoint, model)
     if kind == "anthropic":
         # Anthropic ignores the OpenAI-style endpoint; pass endpoint if overridden
         return AnthropicChat(model=model, endpoint=endpoint or None)

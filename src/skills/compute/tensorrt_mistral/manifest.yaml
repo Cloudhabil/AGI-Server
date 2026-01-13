@@ -1,0 +1,9 @@
+id: compute/tensorrt-mistral
+name: tensorrt-mistral
+version: 0.1.0
+description: High-performance INT4 inference engine for Mistral 7B using NVIDIA TensorRT-LLM.
+category: compute
+level: advanced
+tags: [nvidia, tensorrt, mistral, fast-inference, sidecar]
+estimated_tokens: 0
+requires_tools: ["tensorrt_llm", "cuda"]

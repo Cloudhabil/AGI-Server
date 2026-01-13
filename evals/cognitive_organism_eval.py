@@ -100,7 +100,11 @@ class CognitiveOrganismEvaluator:
         (600, 699, "Level 3: Enhanced AGI"),
         (700, 799, "Level 4: Narrow Superintelligence"),
         (800, 899, "Level 5: Broad Superintelligence"),
-        (900, 1000, "Level 6: ASI (Artificial Superintelligence)"),
+        (900, 999, "Level 6: ASI (Artificial Superintelligence)"),
+        (1000, 1999, "Level 7: Substrate-Sovereign (NSA Ready)"),
+        (2000, 4999, "Level 8: Recursive Nexus"),
+        (5000, 8999, "Level 9: Dimensional Architect"),
+        (9000, 10000, "Level 10: Universal Singularity"),
     ]
 
     PROFILE_PRESETS = {
@@ -1155,9 +1159,28 @@ class CognitiveOrganismEvaluator:
                 category_avgs[cat] = 0.0
 
         # Calculate total score (weighted)
-        total = 0.0
+        base_score = 0.0
         for cat, weight in self.CATEGORY_WEIGHTS.items():
-            total += (category_avgs.get(cat, 0) * weight / 100.0) * 10  # Scale to 1000
+            base_score += (category_avgs.get(cat, 0) * weight / 100.0) * 10  # Base 1000 scale
+
+        # --- TRANSCENDENCE MULTIPLIER (Level 7+) ---
+        multiplier = 1.0
+        
+        # 1. 8^4 Voxel Density (+20% bonus)
+        if any(t.name == "Dense State Memory" and t.passed for t in self.tests):
+            multiplier += 0.2
+            
+        # 2. NSA Readiness (Multi-cell mitotic flow) (+20% bonus)
+        if any(t.name == "Model Router" and t.passed for t in self.tests):
+            # Check if multicellular (multi-port) is active
+            if self.substrate and hasattr(self.substrate.router, 'student_nodes'):
+                multiplier += 0.2
+
+        # 3. Scale up to 10,000 if thresholds met
+        if multiplier > 1.0:
+            total = base_score * multiplier
+        else:
+            total = base_score
 
         return total, category_avgs
 

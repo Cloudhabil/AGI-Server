@@ -73,6 +73,15 @@ desktop.ini
 .vscode/*
 !.vscode/extensions.json
 !.vscode/settings.json
+.env.local
+BDSer.pdf
+docker-compose.rh-*.yml
+evaluate_gpia.py
+reconfigure_local_models.py
+run_cycle_test.py
+run_gpia_eval.py
+validate_active_skills.py
+src/skill_transmutation_furnace.py
 
 # Generated
 openapi.json
@@ -115,10 +124,15 @@ src/skills/
 # If you have specific public skills, we can un-ignore them here with !
 # e.g., !src/skills/public_skill.py
 
-# PUBLIC SKILL: demodelis-ganesha (Unified AI Model Search)
+# PUBLIC SKILLS
 !src/skills/integration/
-!src/skills/integration/demodelis-ganesha/
-!src/skills/integration/demodelis-ganesha/**
+!src/skills/integration/demodelis_ganesha/
+!src/skills/integration/demodelis_ganesha/**
+!src/skills/integration/web_search/
+!src/skills/integration/web_search/**
+!src/skills/compute/
+!src/skills/compute/tensorrt_mistral/
+!src/skills/compute/tensorrt_mistral/**
 
 # CRITICAL: Ignore Large Files
 *.exe
@@ -126,8 +140,16 @@ src/skills/
 *.pyz
 *.gguf
 *.safetensors
+*.whl
+*.pt
+*.pth
+*.onnx
 sha256-*
 todo-scan-*.txt
+
+# NVIDIA TensorRT Sidecar (14GB local-only vault)
+# See LICENSING.md for third-party component details
+models/nuke_eater/
 
 # SECURITY: Sensitive/Confidential Data
 snowden-archive-master/

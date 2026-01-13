@@ -194,16 +194,27 @@ class ModelRouter:
         self.routing = TASK_ROUTING
         self._hf_clients: Dict[str, Any] = {}
         self._gov_engine: Optional[Any] = None
+        
+        # MULTICELLULAR DISCOVERY: Detect dedicated student nodes
+        self.student_nodes = {
+            "gpia-master": "http://localhost:11435/api/generate",
+            "gpia-deepseek-r1": "http://localhost:11436/api/generate",
+            "gpia-qwen3": "http://localhost:11437/api/generate"
+        }
 
-    def _get_gov_engine(self):
-        """Lazy-load GovernmentCapsuleEngine to avoid circular imports."""
-        if self._gov_engine is None:
+    def _get_target_url(self, model_id: str) -> str:
+        """Find the optimal node for the requested model."""
+        base_id = model_id.split(":")[0]
+        if base_id in self.student_nodes:
+            # Check if student node is alive
             try:
-                from core.runtime.engines.government import GovernmentCapsuleEngine
-                self._gov_engine = GovernmentCapsuleEngine()
-            except Exception as e:
-                print(f"[Router] Failed to load Government Engine: {e}")
-        return self._gov_engine
+                node_url = self.student_nodes[base_id]
+                resp = requests.get(node_url.replace("/generate", "/tags"), timeout=1)
+                if resp.status_code == 200:
+                    return node_url
+            except:
+                pass
+        return self.ollama_url
 
     def get_model_for_task(self, task: str) -> Model:
         """Get the appropriate model for a task."""
@@ -351,6 +362,20 @@ class ModelRouter:
         """
         Choose model based on hint + load; defaults to existing task routing when unspecified.
         """
+        # GLOBAL LOCAL OVERRIDE (For local-only operation)
+        local_override = os.getenv("GPIA_LOCAL_OVERRIDE")
+        if local_override:
+            # Route all tasks to the user-specified local model
+            return Model(
+                name="local_master",
+                ollama_id=local_override,
+                role=ModelRole.REASONING,
+                speed="local",
+                size="custom",
+                strengths=["local intelligence override"],
+                backend="ollama"
+            )
+
         # Explicit override wins
         if model and model in self.models:
             return self.models[model]
@@ -580,6 +605,7 @@ Keep response under 300 words."""
         timeout: int
     ) -> str:
         """Internal method to query Ollama API."""
+        target_url = self._get_target_url(model_id)
         try:
             payload = {
                 "model": model_id,
@@ -593,7 +619,7 @@ Keep response under 300 words."""
                     "repeat_penalty": 1.1  # Prevent logical loops
                 },
             }
-            response = requests.post(self.ollama_url, json=payload, timeout=timeout)
+            response = requests.post(target_url, json=payload, timeout=timeout)
             if response.status_code == 200:
                 data = response.json()
                 result = (data.get("response") or "").strip()
@@ -612,13 +638,13 @@ Keep response under 300 words."""
                             "temperature": temperature,
                         },
                     }
-                    retry = requests.post(self.ollama_url, json=retry_payload, timeout=timeout)
+                    retry = requests.post(target_url, json=retry_payload, timeout=timeout)
                     if retry.status_code == 200:
                         result = (retry.json().get("response") or "").strip()
 
                 return result
         except Exception as e:
-            print(f"LLM Error ({model_id}): {e}")
+            print(f"LLM Error ({model_id} on {target_url}): {e}")
 
         return ""
 
