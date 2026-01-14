@@ -4,7 +4,7 @@ build-backend = "setuptools.build_meta"
 
 [project]
 name = "gpia-agi-server"
-version = "0.2.0"
+version = "0.6.1"
 description = "A self-evolving cognitive AGI server with active immunity and Dense-State memory."
 authors = [
     {name = "Cloudhabil Contributors", email = "obe@cloudhabil.com"}
