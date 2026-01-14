@@ -30,3 +30,9 @@ reflexes:
     priority: 95
     layer: "L4"
     version_tag: "1.0.0"
+  - id: "research/biomedical_precision"
+    path: "reflexes/research/biomedical_precision"
+    enabled: true
+    priority: 5
+    layer: "L1"
+    version_tag: "1.0.0"
