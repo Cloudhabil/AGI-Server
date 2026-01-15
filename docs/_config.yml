@@ -3,7 +3,6 @@ description: Documentation hub for the GPIA cognitive ecosystem
 url: "https://asios.github.io/"
 baseurl: ""
 # theme: jekyll-theme-slate # Disabled for custom Tailwind setup
-source: docs
 permalink: /:basename
 
 plugins:
