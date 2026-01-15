@@ -1,0 +1,4 @@
+id: biomedical_precision
+version: 1.0.0
+description: "Injects precision filters for biomedical queries to avoid cross-domain noise (e.g., astrophysics)."
+entry_point: "execute.py:run"

@@ -1,0 +1,12 @@
+{
+  "name": "cli-ai-docs",
+  "version": "1.0.0",
+  "description": "Documentation for CLI AI",
+  "scripts": {
+    "build:css": "tailwindcss -i ./docs/assets/css/input.css -o ./docs/assets/css/style.css --minify"
+  },
+  "devDependencies": {
+    "tailwindcss": "^3.4.1",
+    "@tailwindcss/typography": "^0.5.10"
+  }
+}

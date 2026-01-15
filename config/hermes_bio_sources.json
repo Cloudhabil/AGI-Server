@@ -1,0 +1,45 @@
+{
+  "sources": [
+    {
+      "name": "arXiv",
+      "type": "preprint",
+      "license": "open",
+      "status": "allowed"
+    },
+    {
+      "name": "PubMed Central OA",
+      "type": "journal",
+      "license": "open",
+      "status": "allowed"
+    },
+    {
+      "name": "bioRxiv/medRxiv",
+      "type": "preprint",
+      "license": "check-per-article",
+      "status": "allowed_with_checks"
+    },
+    {
+      "name": "ChEMBL",
+      "type": "database",
+      "license": "open",
+      "status": "allowed"
+    },
+    {
+      "name": "Open Targets",
+      "type": "database",
+      "license": "open",
+      "status": "allowed"
+    },
+    {
+      "name": "AlphaFold DB",
+      "type": "structure",
+      "license": "open",
+      "status": "allowed"
+    }
+  ],
+  "policies": {
+    "data_residency": "local-only",
+    "pii_phi": "disallow",
+    "not_for_clinical_use": true
+  }
+}

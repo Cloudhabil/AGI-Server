@@ -1,0 +1,6 @@
+reflexes:
+  - id: biomedical_precision
+    path: core/reflexes/biomedical_precision
+    enabled: true
+    priority: 50
+    layer: L3

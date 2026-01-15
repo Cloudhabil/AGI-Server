@@ -18,10 +18,20 @@ from dataclasses import dataclass
 from enum import Enum
 
 from core.dynamic_budget_orchestrator import apply_dynamic_budget, compute_budget
+from integrations.trt_llm_client import TensorRTClient
 
 OLLAMA_URL = os.getenv("OLLAMA_URL", "http://localhost:11434/api/generate")
 ROUTER_MODEL_ID = os.getenv("ROUTER_MODEL_ID", "gpia-router:latest")
 USE_NEURONIC_ROUTER = os.getenv("USE_NEURONIC_ROUTER", "").strip().lower() in ("1", "true", "yes", "on")
+
+# SUBSTRATE EQUILIBRIUM: TensorRT Sidecar Client
+_trt_client = None
+
+def get_trt_client():
+    global _trt_client
+    if _trt_client is None:
+        _trt_client = TensorRTClient()
+    return _trt_client
 
 # Metabolic throttling thresholds (env configurable)
 EXPANSION_MAX_PROMPT_TOKENS = int(os.getenv("METABOLIC_EXPANSION_MAX_PROMPT_TOKENS", "3000"))
@@ -184,6 +194,18 @@ def _env_bool(name: str, default: str = "1") -> bool:
 
 # Global Enforcement Toggle
 USE_GOVERNMENT_ENGINE = _env_bool("GPIA_ENFORCE_GOVERNMENT", "1")
+USE_TENSORRT_ROUTING = _env_bool("GPIA_USE_TENSORRT", "1")
+TRT_ELIGIBLE_ROLES = {ModelRole.REASONING, ModelRole.SYNTHESIS}
+TRT_HEAVY_TASKS = {
+    "reasoning",
+    "professor_analysis",
+    "professor_grading",
+    "debug",
+    "final_synthesis",
+    "dispute_resolution",
+    "complex",
+    "arbiter",
+}
 
 class ModelRouter:
     """Routes tasks to appropriate models and handles LLM queries."""
@@ -351,6 +373,27 @@ class ModelRouter:
                 "ram_free_mb": None,
             }
 
+    def _should_route_tensorrt(self, model_obj: Optional[Model], task: Optional[str]) -> bool:
+        """Determine whether to offload to the TensorRT sidecar."""
+        if not USE_TENSORRT_ROUTING or not model_obj:
+            return False
+        if model_obj.role in TRT_ELIGIBLE_ROLES:
+            return True
+        return (task or "") in TRT_HEAVY_TASKS
+
+    def _query_tensorrt(self, prompt: str, max_tokens: int, temperature: float) -> Optional[str]:
+        """Query the TensorRT sidecar; return None if unavailable or failed."""
+        try:
+            client = get_trt_client()
+            result = client.query(prompt=prompt, max_tokens=max_tokens, temperature=temperature)
+            if result and not str(result).startswith("[Error]"):
+                return result
+            if result:
+                print(f"[Router] TensorRT returned error, falling back: {result}")
+        except Exception as e:
+            print(f"[Router] TensorRT query failed: {e}")
+        return None
+
     def _select_model(
         self,
         prompt: str,
@@ -445,6 +488,14 @@ class ModelRouter:
             routed_id = self._route_via_router_model(prompt)
             model_obj = self._model_from_id(routed_id) or self.models["qwen3"]
 
+        effective_max = self._adjust_max_tokens(prompt, max_tokens, model_obj.ollama_id)
+
+        # Prefer TensorRT sidecar for heavy reasoning/synthesis when available
+        if self._should_route_tensorrt(model_obj, task):
+            trt_response = self._query_tensorrt(prompt, effective_max, temperature)
+            if trt_response:
+                return trt_response
+
         # Health guard per backend
         if model_obj.backend == "ollama":
             if not self._ensure_ollama_ready():
@@ -452,8 +503,6 @@ class ModelRouter:
         else:  # hf
             if not self._ensure_hf_ready(model_obj.hf_id or model_obj.name):
                 return f"[Router] HF model '{model_obj.hf_id or model_obj.name}' unavailable. Ensure transformers is installed and the model exists locally."
-
-        effective_max = self._adjust_max_tokens(prompt, max_tokens, model_obj.ollama_id)
 
         if model_obj.backend == "hf":
             return self._query_hf(

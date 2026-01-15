@@ -1,0 +1,27 @@
+title: CLI AI Documentation
+description: Documentation hub for the GPIA cognitive ecosystem
+url: "https://cloudhabil.com"
+baseurl: ""
+# theme: jekyll-theme-slate # Disabled for custom Tailwind setup
+source: docs
+permalink: /:basename
+
+plugins:
+  - jekyll-seo-tag
+
+exclude:
+  - Gemfile
+  - Gemfile.lock
+  - node_modules
+  - vendor/bundle/
+  - vendor/cache/
+  - vendor/gems/
+  - vendor/ruby/
+  - .github
+  - .gemini
+  - .pytest_cache
+  - venv
+  - package.json
+  - package-lock.json
+  - tailwind.config.js
+  - README.md # The root README, not docs/README.md

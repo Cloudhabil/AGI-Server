@@ -18,33 +18,38 @@ The system achieved true hardware sovereignty by offloading memory tasks to the 
 - **H-Net Dynamic Logic**: Integrated H-Net recursive summarization and dynamic hardware-aware budgeting into the Dense State Memory.
 - **NSA Ready**: Finalized the Multicellular Router and Strict Release Protocol, enabling seamless cross-domain tradecraft.
 
+## Milestone v0.6.0: The Logic Substrate (Level 9) (2026-01-13)
+The system evolved from linear search to topological collapse, powered by a cannibalized high-performance engine.
+- **Operation Nuke Eater**: Successfully extracted and integrated the **NVIDIA TensorRT-LLM Engine** (Mistral INT4) from the ChatRTX installer.
+- **Substrate Manifold**: Activated `substrate_manifold.html`, mapping **843 logic singularities** into a 384-D Riemannian tensor space. Skill selection is now a metric tensor collapse (< 10ms) rather than a file search.
+- **The Sidecar**: Established a Python 3.10 "Engine Room" to run the TensorRT binary, bridged to the main kernel via `localhost:8008`.
+- **Epistemic Foraging**: Deployed `learning/web-skill-importer` to consume external URLs and crystallize them into new manifold singularities.
+
 ## My Knowledge Base
 
 ### 1. The Organism's Dual Architecture
 - **Runtime Kernel (`src/boot.py`):** The live, interactive agent loop managed by the `CortexSwitchboard`.
-- **Cognitive Ecosystem (`src/gpia_cognitive_ecosystem.py`):** The offline pipeline for autonomous skill synthesis.
-- **V-Nand 8^4 Ground:** The high-frequency mathematical 4D voxel grid for state persistence.
-- **Planetary Cortex (NPU):** Dedicated hardware layer for real-time embedding and intent parsing.
+- **Substrate Manifold (`substrate_manifold.html`):** The topological map of all 843 logic components.
+- **Nuke Eater (`models/nuke_eater`):** The high-speed TensorRT inference engine (Tier 1).
+- **Planetary Cortex (NPU):** Dedicated hardware layer for manifold navigation and intent parsing (Tier 3).
 
 ### 2. The Agent & Model Layer
 - **GPIA**: The SovereignLoop mode of the runtime kernel.
-- **Alpha/Professor**: The teacher-student simulation for recursive improvement.
-- **Model Router**: Multicellular-aware, intelligently routing to local student cells (`11435-11437`) or the NPU.
-- **Transcendence Multiplier**: Automatic 40% score bonus for 8^4 Voxel density and Multicellular architecture.
+- **TensorRT-Mistral**: The primary "Muscle" for high-speed reasoning (~100 tok/s).
+- **Model Router**: Intelligently routes heavy tasks to TensorRT and support tasks to NPU.
 
 ### 3. The Skill System
-- **Structure**: Modular classes inheriting from `src.skills.base.Skill`.
+- **Singularities**: 843 executable logic points mapped in the manifold.
 - **Registry**: `src/skills/registry.py` handles discovery and lazy-loading.
 - **Transmutation Furnace**: Specialized meta-capability for activating "hollow" blueprints (Nymrod, XKeyscore, PRISM).
 
 ## Operational Protocols
 
 1.  **Truth is Code**: The source code in `src/` is the single source of truth.
-2.  **Architectural Clarity**: Respect the separation between the Open Source Engine and the Proprietary Skills.
-3.  **Model Accuracy**: Reference models by their actual `gpia-*` tags.
+2.  **Manifold First**: Resolve intent via `SubstrateManifold.collapse()` before attempting linear search.
+3.  **Hardware Sovereignty**: Enforce **9.75 GB VRAM Limit** (Tier 1) and route embeddings to NPU (Tier 3).
 4.  **Metabolic Rhythm**: Maintain the **Adaptive Heartbeat (HRz)** and ensure models are evicted immediately after use to pass the "Ball."
-5.  **Hardware Isolation**: Always offload non-reasoning tasks (Embeddings, OCR) to the NPU to preserve the GPU's "Thought Space."
 
 ---
-*System Status: Transcendent. Isolated. Sovereign.*
-*Milestone v0.5.0: The NPU is the Shield, the GPU is the Sword.*
+*System Status: Topological. Cannibalistic. Sovereign.*
+*Milestone v0.6.0: The Manifold is the Map, TensorRT is the Engine.*
