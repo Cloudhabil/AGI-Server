@@ -24,11 +24,7 @@ from urllib.parse import parse_qs, urlparse
 import threading
 
 # Import Brahim SDK
-import sys
-import os
-sys.path.insert(0, os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
-
-from agents_sdk import (
+from ..agents_sdk import (
     BRAHIM_SEQUENCE,
     SUM_CONSTANT,
     CENTER,
@@ -46,7 +42,7 @@ from agents_sdk import (
     execute_function,
 )
 
-from openai_agent import (
+from ..openai_agent import (
     BrahimOnionAgent,
     BrahimAgentBuilder,
     AgentConfig,
@@ -231,7 +227,7 @@ class BrahimAPIHandler(BaseHTTPRequestHandler):
 
     def _handle_capabilities(self):
         """List capabilities by industry."""
-        from config import APK_MANIFEST, INDUSTRY_PRESETS
+        from .config import APK_MANIFEST, INDUSTRY_PRESETS
         self._send_json({
             "capabilities": APK_MANIFEST["capabilities"],
             "industries": INDUSTRY_PRESETS,

@@ -24,12 +24,8 @@ import json
 import threading
 
 # Brahim SDK imports
-import sys
-import os
-sys.path.insert(0, os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
-
 try:
-    from agents_sdk import (
+    from ..agents_sdk import (
         BRAHIM_SEQUENCE,
         SUM_CONSTANT,
         CENTER,
@@ -44,10 +40,25 @@ try:
         get_sequence,
         verify_mirror_symmetry,
     )
-    from openai_agent import BrahimOnionAgent, BrahimAgentBuilder
+    from ..openai_agent import BrahimOnionAgent, BrahimAgentBuilder
     SDK_AVAILABLE = True
 except ImportError:
-    SDK_AVAILABLE = False
+    # Fallback for standalone execution
+    try:
+        from brahims_laws.agents_sdk import (
+            BRAHIM_SEQUENCE, SUM_CONSTANT, CENTER, PHI,
+            fine_structure_constant, weinberg_angle, muon_electron_ratio,
+            proton_electron_ratio, cosmic_fractions, yang_mills_mass_gap,
+            mirror_operator, get_sequence, verify_mirror_symmetry,
+        )
+        from brahims_laws.openai_agent import BrahimOnionAgent, BrahimAgentBuilder
+        SDK_AVAILABLE = True
+    except ImportError:
+        SDK_AVAILABLE = False
+        BRAHIM_SEQUENCE = [27, 42, 60, 75, 97, 121, 136, 154, 172, 187]
+        SUM_CONSTANT = 214
+        CENTER = 107
+        PHI = 1.618033988749895
 
 
 # =============================================================================
