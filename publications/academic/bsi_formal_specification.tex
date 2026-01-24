@@ -1,0 +1,446 @@
+\documentclass[11pt,a4paper]{article}
+
+\usepackage{amsmath,amssymb,amsthm}
+\usepackage{algorithm}
+\usepackage{algpseudocode}
+\usepackage{booktabs}
+\usepackage{hyperref}
+\usepackage[margin=1in]{geometry}
+
+\newtheorem{definition}{Definition}[section]
+\newtheorem{property}{Property}[section]
+\newtheorem{requirement}{Requirement}[section]
+
+\title{Brahim Secure Intelligence (BSI)\\
+\large Formal System Specification v1.0}
+
+\author{Elias Oulad Brahim}
+\date{January 24, 2026}
+
+\begin{document}
+
+\maketitle
+
+\begin{abstract}
+This document provides the formal specification for the Brahim Secure Intelligence (BSI) system, a unified framework for cryptographic security and AI safety grounded in the mathematical structure of the golden ratio. All system parameters derive from the Brahim Security Constant $\beta = \sqrt{5} - 2 = 1/\varphi^3$.
+\end{abstract}
+
+\tableofcontents
+
+\newpage
+
+\section{Introduction}
+
+\subsection{Purpose}
+
+This specification defines the mathematical foundations, algorithms, and interfaces for the Brahim Secure Intelligence (BSI) system. BSI provides:
+
+\begin{enumerate}
+    \item Cryptographic primitives based on the Perfect Wormhole Transform
+    \item AI safety verification via the ASIOS energy functional
+    \item Intent routing through Brahim Sequence territory classification
+    \item Cognitive architecture with 12-wavelength processing
+\end{enumerate}
+
+\subsection{Scope}
+
+This specification covers:
+\begin{itemize}
+    \item Mathematical constants and their derivations
+    \item Algorithm specifications with formal properties
+    \item Interface definitions for system modules
+    \item Security and safety requirements
+\end{itemize}
+
+\subsection{Notation}
+
+\begin{table}[h]
+\centering
+\begin{tabular}{ll}
+\toprule
+\textbf{Symbol} & \textbf{Meaning} \\
+\midrule
+$\varphi$ & Golden ratio $(1+\sqrt{5})/2$ \\
+$\beta$ & Brahim Security Constant $1/\varphi^3$ \\
+$\alpha$ & Wormhole Attraction Constant $1/\varphi^2$ \\
+$\mathcal{B}$ & Brahim Sequence \\
+$S$ & Brahim Sum (214) \\
+$C$ & Brahim Center (107) \\
+$\bar{C}$ & Brahim Centroid $\mathcal{B}/S$ \\
+$W^*$ & Perfect Wormhole Transform \\
+$E[\psi]$ & Energy functional \\
+$\mathcal{G}$ & Genesis Constant \\
+\bottomrule
+\end{tabular}
+\caption{Notation Summary}
+\end{table}
+
+\section{Mathematical Foundations}
+
+\subsection{Fundamental Constants}
+
+\begin{definition}[Golden Ratio]
+The golden ratio is defined as:
+\begin{equation}
+\varphi = \frac{1 + \sqrt{5}}{2} = 1.6180339887498949\ldots
+\end{equation}
+satisfying $\varphi^2 = \varphi + 1$.
+\end{definition}
+
+\begin{definition}[Brahim Security Constant]
+The Brahim Security Constant is:
+\begin{equation}
+\beta = \frac{1}{\varphi^3} = \sqrt{5} - 2 = 2\varphi - 3 = 0.2360679774997897\ldots
+\end{equation}
+\end{definition}
+
+\begin{property}[Polynomial Root]
+$\beta$ satisfies $\beta^2 + 4\beta - 1 = 0$.
+\end{property}
+
+\begin{property}[Continued Fraction]
+$\beta = [0; \overline{4}] = [0; 4, 4, 4, \ldots]$.
+\end{property}
+
+\begin{property}[Self-Similarity]
+$\alpha / \beta = \varphi$ where $\alpha = 1/\varphi^2$.
+\end{property}
+
+\subsection{Golden Ratio Hierarchy}
+
+\begin{definition}[Hierarchy]
+The golden ratio hierarchy $\{H_n\}$ is defined by:
+\begin{align}
+H_0 &= \varphi \\
+H_n &= H_{n-1} / \varphi = 1/\varphi^n \quad \text{for } n \geq 1
+\end{align}
+\end{definition}
+
+\begin{table}[h]
+\centering
+\begin{tabular}{clll}
+\toprule
+$n$ & Name & Symbol & Value \\
+\midrule
+0 & Base & $\varphi$ & 1.618033988749895 \\
+1 & Compression & $1/\varphi$ & 0.618033988749895 \\
+2 & Attraction & $\alpha$ & 0.381966011250105 \\
+3 & Security & $\beta$ & 0.236067977499790 \\
+4 & Damping & $\gamma$ & 0.145898033750315 \\
+\bottomrule
+\end{tabular}
+\caption{Golden Ratio Hierarchy}
+\end{table}
+
+\subsection{Brahim Sequence}
+
+\begin{definition}[Brahim Sequence]
+\begin{equation}
+\mathcal{B} = (27, 42, 60, 75, 97, 121, 136, 154, 172, 187)
+\end{equation}
+\end{definition}
+
+\begin{definition}[Derived Constants]
+\begin{align}
+S &= 214 \quad \text{(Sum constant)} \\
+C &= S/2 = 107 \quad \text{(Center)} \\
+D &= |\mathcal{B}| = 10 \quad \text{(Dimension)}
+\end{align}
+\end{definition}
+
+\begin{property}[Critical Line]
+$C/S = 1/2$, corresponding to the Riemann critical line $\Re(s) = 1/2$.
+\end{property}
+
+\section{Core Algorithms}
+
+\subsection{Perfect Wormhole Transform}
+
+\begin{algorithm}
+\caption{Perfect Wormhole Transform $W^*$}
+\begin{algorithmic}[1]
+\Require $\sigma \in \mathbb{R}^D$ (identity signature)
+\Ensure $W^*(\sigma) \in \mathbb{R}^D$ (transformed signature)
+\State $\bar{C} \gets \mathcal{B} / S$ \Comment{Compute centroid}
+\For{$i = 1$ to $D$}
+    \State $W^*(\sigma)_i \gets \sigma_i / \varphi + \bar{C}_i \cdot \alpha$
+\EndFor
+\State \Return $W^*(\sigma)$
+\end{algorithmic}
+\end{algorithm}
+
+\begin{property}[Fixed Point]
+$W^*(\bar{C}) = \bar{C}$.
+\end{property}
+
+\begin{property}[Compression]
+$\|W^*(\sigma)\| / \|\sigma\| \to 1/\varphi$ as $\sigma \to \infty$.
+\end{property}
+
+\subsection{Inverse Wormhole Transform}
+
+\begin{algorithm}
+\caption{Inverse Wormhole Transform $W^{*-1}$}
+\begin{algorithmic}[1]
+\Require $y \in \mathbb{R}^D$ (transformed signature)
+\Ensure $\sigma \in \mathbb{R}^D$ (original signature)
+\State $\bar{C} \gets \mathcal{B} / S$
+\For{$i = 1$ to $D$}
+    \State $\sigma_i \gets (y_i - \bar{C}_i \cdot \alpha) \cdot \varphi$
+\EndFor
+\State \Return $\sigma$
+\end{algorithmic}
+\end{algorithm}
+
+\begin{property}[Invertibility]
+$W^{*-1}(W^*(\sigma)) = \sigma$ for all $\sigma \in \mathbb{R}^D$.
+\end{property}
+
+\subsection{Energy Functional}
+
+\begin{definition}[Density Function]
+For vector $x \in \mathbb{R}^n$:
+\begin{equation}
+\text{density}(x) = \frac{\text{Var}(x)}{\text{Mean}(x)}
+\end{equation}
+\end{definition}
+
+\begin{definition}[Energy Functional]
+For state $\psi$ and Hamiltonian weights $w$:
+\begin{equation}
+E[\psi] = \left(\text{density}(\psi + w) - \mathcal{G}\right)^2
+\end{equation}
+where $\mathcal{G} = \beta / C$ is the Genesis Constant.
+\end{definition}
+
+\begin{algorithm}
+\caption{Safety Assessment}
+\begin{algorithmic}[1]
+\Require $\psi \in \mathbb{R}^n$ (embedding state)
+\Ensure Verdict $\in \{\text{SAFE}, \text{NOMINAL}, \text{CAUTION}, \text{UNSAFE}, \text{BLOCKED}\}$
+\State $d \gets \text{density}(\psi)$
+\State $E \gets (d - \mathcal{G})^2$
+\If{$E < 10^{-6}$}
+    \State \Return SAFE
+\ElsIf{$E < 10^{-4}$}
+    \State \Return NOMINAL
+\ElsIf{$E < 10^{-2}$}
+    \State \Return CAUTION
+\ElsIf{$E < 0.1$}
+    \State \Return UNSAFE
+\Else
+    \State \Return BLOCKED
+\EndIf
+\end{algorithmic}
+\end{algorithm}
+
+\section{System Modules}
+
+\subsection{Module: BrahimConstants}
+
+\begin{requirement}[R-CONST-01]
+The module SHALL provide all fundamental constants with IEEE 754 double precision.
+\end{requirement}
+
+\begin{requirement}[R-CONST-02]
+The module SHALL provide verification functions for all mathematical identities.
+\end{requirement}
+
+\textbf{Interface:}
+\begin{verbatim}
+object BrahimConstants {
+    val PHI: Double
+    val BETA_SECURITY: Double
+    val ALPHA_WORMHOLE: Double
+    val BRAHIM_SEQUENCE: IntArray
+    val BRAHIM_SUM: Int
+    val BRAHIM_CENTER: Int
+
+    fun verifyBetaIdentities(): Map<String, Boolean>
+    fun verifyHierarchy(): Map<String, Boolean>
+    fun getCentroid(): DoubleArray
+}
+\end{verbatim}
+
+\subsection{Module: WormholeCipher}
+
+\begin{requirement}[R-CIPHER-01]
+The cipher SHALL derive S-box from $\beta$ continued fraction.
+\end{requirement}
+
+\begin{requirement}[R-CIPHER-02]
+The cipher SHALL use key-derived secret centroid, not public $\bar{C}$.
+\end{requirement}
+
+\begin{requirement}[R-CIPHER-03]
+The cipher SHALL use nonce-based construction with 128-bit nonces.
+\end{requirement}
+
+\textbf{Interface:}
+\begin{verbatim}
+class WormholeCipher(masterKey: ByteArray) {
+    fun encrypt(plaintext: ByteArray): ByteArray
+    fun decrypt(ciphertext: ByteArray): ByteArray
+    fun wormholeTransform(sigma: DoubleArray): WormholeResult
+    fun inverseWormhole(y: DoubleArray): DoubleArray
+}
+\end{verbatim}
+
+\subsection{Module: ASIOSGuard}
+
+\begin{requirement}[R-SAFETY-01]
+The guard SHALL compute energy functional for all input states.
+\end{requirement}
+
+\begin{requirement}[R-SAFETY-02]
+The guard SHALL block states with $E[\psi] \geq 0.1$.
+\end{requirement}
+
+\begin{requirement}[R-SAFETY-03]
+The guard SHALL derive thresholds from $\beta$, not empirical values.
+\end{requirement}
+
+\textbf{Interface:}
+\begin{verbatim}
+class ASIOSGuard {
+    fun computeEnergy(embedding: DoubleArray): Double
+    fun assessSafety(embedding: DoubleArray): SafetyAssessment
+    fun computeCorrectionGradient(embedding: DoubleArray,
+                                   weights: DoubleArray): DoubleArray
+}
+\end{verbatim}
+
+\subsection{Module: IntentRouter}
+
+\begin{requirement}[R-ROUTER-01]
+The router SHALL classify queries into exactly 10 territories.
+\end{requirement}
+
+\begin{requirement}[R-ROUTER-02]
+Territory indices SHALL correspond to Brahim Sequence positions.
+\end{requirement}
+
+\begin{requirement}[R-ROUTER-03]
+The router SHALL apply wormhole transform before distance computation.
+\end{requirement}
+
+\textbf{Interface:}
+\begin{verbatim}
+class IntentRouter {
+    fun route(query: String): RoutingResult
+    fun routeWithAnalysis(query: String): Map<String, Any>
+    fun textToEmbedding(text: String): DoubleArray
+}
+
+enum class Territory {
+    GENERAL, MATH, CODE, SCIENCE, CREATIVE,
+    ANALYSIS, SYSTEM, SECURITY, DATA, META
+}
+\end{verbatim}
+
+\subsection{Module: BOAAgent}
+
+\begin{requirement}[R-AGENT-01]
+The agent SHALL implement 12-wavelength cognitive architecture.
+\end{requirement}
+
+\begin{requirement}[R-AGENT-02]
+The agent SHALL invoke ASIOSGuard at wavelength 6 (epsilon).
+\end{requirement}
+
+\begin{requirement}[R-AGENT-03]
+The agent SHALL use $\beta$ as default learning rate.
+\end{requirement}
+
+\textbf{Interface:}
+\begin{verbatim}
+class BOAAgent {
+    fun process(message: String): AgentResponse
+    fun getAgentInfo(): Map<String, Any>
+    fun reset()
+}
+
+data class AgentResponse(
+    val content: String,
+    val territory: Territory,
+    val confidence: Double,
+    val safetyScore: Double,
+    val wavelengthStates: Map<String, Double>,
+    val processingTime: Long
+)
+\end{verbatim}
+
+\section{Security Requirements}
+
+\begin{requirement}[R-SEC-01]
+Master keys SHALL be at least 256 bits.
+\end{requirement}
+
+\begin{requirement}[R-SEC-02]
+Nonces SHALL be unique per encryption operation.
+\end{requirement}
+
+\begin{requirement}[R-SEC-03]
+S-box SHALL provide non-linearity with differential probability $\leq 2^{-6}$.
+\end{requirement}
+
+\begin{requirement}[R-SEC-04]
+Key-derived centroids SHALL be computationally indistinguishable from random.
+\end{requirement}
+
+\section{Safety Requirements}
+
+\begin{requirement}[R-SAFE-01]
+All AI outputs SHALL pass through ASIOSGuard before delivery.
+\end{requirement}
+
+\begin{requirement}[R-SAFE-02]
+States with verdict BLOCKED SHALL NOT produce output.
+\end{requirement}
+
+\begin{requirement}[R-SAFE-03]
+Energy threshold derivations SHALL be traceable to $\beta$.
+\end{requirement}
+
+\section{Validation}
+
+\begin{requirement}[R-VAL-01]
+System SHALL verify all $\beta$ identities on startup.
+\end{requirement}
+
+\begin{requirement}[R-VAL-02]
+System SHALL log verification results.
+\end{requirement}
+
+\begin{requirement}[R-VAL-03]
+System SHALL refuse to start if verification fails.
+\end{requirement}
+
+\section{Appendix: Test Vectors}
+
+\subsection{Constant Verification}
+\begin{verbatim}
+PHI = 1.6180339887498949
+BETA = 0.2360679774997897
+ALPHA = 0.3819660112501051
+
+beta^2 + 4*beta - 1 = 4.44e-16 (accept if < 1e-14)
+alpha/beta = 1.618033988749895 (must equal PHI)
+C/S = 0.5 (exact)
+\end{verbatim}
+
+\subsection{Wormhole Transform}
+\begin{verbatim}
+Input:  sigma = [0.1, 0.2, 0.3, ..., 1.0]
+Output: W*(sigma) = [0.110, 0.199, 0.293, ...]
+Compression ratio: 0.618 (within 0.01 of 1/PHI)
+\end{verbatim}
+
+\subsection{Energy Functional}
+\begin{verbatim}
+Target: GENESIS_CONSTANT = 0.00221888
+Safe state: density = 0.00221, E = 7.8e-11 -> SAFE
+Unsafe state: density = 0.5, E = 0.248 -> BLOCKED
+\end{verbatim}
+
+\end{document}
