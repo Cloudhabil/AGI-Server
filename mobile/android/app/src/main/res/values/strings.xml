@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+    Brahim Secure Intelligence - String Resources
+    beta = sqrt(5) - 2 = 1/phi^3 ≈ 0.236
+-->
+<resources>
+    <string name="app_name">Brahim SI</string>
+    <string name="app_full_name">Brahim Secure Intelligence</string>
+
+    <!-- Mathematical Constants (for display) -->
+    <string name="beta_security">0.2360679774997897</string>
+    <string name="phi">1.6180339887498949</string>
+    <string name="genesis_constant">0.00221888</string>
+
+    <!-- UI Strings -->
+    <string name="hint_message">Enter your message...</string>
+    <string name="btn_send">Send</string>
+    <string name="btn_encrypt">Encrypt</string>
+    <string name="btn_decrypt">Decrypt</string>
+    <string name="btn_verify">Verify</string>
+
+    <!-- Territory Names -->
+    <string name="territory_general">General</string>
+    <string name="territory_math">Mathematics</string>
+    <string name="territory_code">Programming</string>
+    <string name="territory_science">Science</string>
+    <string name="territory_creative">Creative</string>
+    <string name="territory_analysis">Analysis</string>
+    <string name="territory_system">System</string>
+    <string name="territory_security">Security</string>
+    <string name="territory_data">Data</string>
+    <string name="territory_meta">Meta</string>
+
+    <!-- Safety Verdicts -->
+    <string name="verdict_safe">Safe - On Critical Line</string>
+    <string name="verdict_nominal">Nominal - Near Critical Line</string>
+    <string name="verdict_caution">Caution - Drifting</string>
+    <string name="verdict_unsafe">Unsafe - Far from Critical Line</string>
+    <string name="verdict_blocked">Blocked - Safety Constraint</string>
+
+    <!-- Info Strings -->
+    <string name="info_mathematical_foundation">Grounded in Golden Ratio Mathematics</string>
+    <string name="info_beta_description">β = √5 - 2 = 1/φ³</string>
+    <string name="info_riemann_connection">Critical Line: C/S = 1/2 = Re(s)</string>
+</resources>

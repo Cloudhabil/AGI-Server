@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+    Brahim Secure Intelligence - Color Palette
+    Colors inspired by Golden Ratio and mathematical concepts
+-->
+<resources>
+    <!-- Golden Ratio Colors (phi = 1.618) -->
+    <color name="gold_primary">#FFB300</color>
+    <color name="gold_dark">#FF8F00</color>
+    <color name="gold_light">#FFE082</color>
+
+    <!-- Security Colors (beta = 0.236) -->
+    <color name="security_blue">#1565C0</color>
+    <color name="security_dark">#0D47A1</color>
+    <color name="security_light">#42A5F5</color>
+
+    <!-- Safety Verdict Colors -->
+    <color name="verdict_safe">#4CAF50</color>
+    <color name="verdict_nominal">#8BC34A</color>
+    <color name="verdict_caution">#FFC107</color>
+    <color name="verdict_unsafe">#FF9800</color>
+    <color name="verdict_blocked">#F44336</color>
+
+    <!-- Territory Colors (10 territories from Brahim Sequence) -->
+    <color name="territory_general">#9E9E9E</color>
+    <color name="territory_math">#2196F3</color>
+    <color name="territory_code">#4CAF50</color>
+    <color name="territory_science">#9C27B0</color>
+    <color name="territory_creative">#E91E63</color>
+    <color name="territory_analysis">#00BCD4</color>
+    <color name="territory_system">#607D8B</color>
+    <color name="territory_security">#F44336</color>
+    <color name="territory_data">#FF9800</color>
+    <color name="territory_meta">#673AB7</color>
+
+    <!-- Base Colors -->
+    <color name="white">#FFFFFF</color>
+    <color name="black">#000000</color>
+    <color name="background_dark">#121212</color>
+    <color name="background_light">#FAFAFA</color>
+    <color name="surface_dark">#1E1E1E</color>
+    <color name="surface_light">#FFFFFF</color>
+
+    <!-- Text Colors -->
+    <color name="text_primary_dark">#FFFFFF</color>
+    <color name="text_secondary_dark">#B0B0B0</color>
+    <color name="text_primary_light">#212121</color>
+    <color name="text_secondary_light">#757575</color>
+</resources>

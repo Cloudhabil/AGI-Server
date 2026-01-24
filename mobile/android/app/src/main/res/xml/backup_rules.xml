@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<full-backup-content>
+    <!-- Exclude sensitive encryption keys -->
+    <exclude domain="sharedpref" path="encryption_keys.xml"/>
+    <exclude domain="file" path="keys/"/>
+</full-backup-content>
