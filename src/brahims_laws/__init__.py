@@ -16,6 +16,7 @@ Includes:
     - Brahim Mechanics: Discrete framework for physics constants derivation
     - Brahim Geometry: Axiom-based framework connecting number theory and gauge theory
     - Brahim Agents SDK: OpenAI-compatible function calling for AI agents
+    - Brahim Onion Agent: Multi-layer computational agent (AgentKit compatible)
 
 Usage:
     from brahims_laws import BrahimLawsEngine, EllipticCurveData
@@ -52,7 +53,7 @@ License: TUL (Technology Unified License)
 DOI: 10.5281/zenodo.18352681
 """
 
-__version__ = "1.2.0"
+__version__ = "1.3.0"
 __author__ = "Elias Oulad Brahim"
 
 from .core.brahim_laws import BrahimLawsEngine
@@ -99,6 +100,21 @@ from .agents_sdk import (
     verify_mirror_symmetry,
 )
 
+# Brahim Onion Agent (OpenAI Agents SDK / AgentKit compatible)
+from .openai_agent import (
+    BrahimOnionAgent,
+    BrahimAgentBuilder,
+    AgentConfig,
+    AgentResponse,
+    LayerPacket,
+    LayerID,
+    Intent,
+    ModelType,
+    BRAHIM_AGENT_TOOLS,
+    HANDOFF_DEFINITIONS,
+    BrahimGuardrails,
+)
+
 __all__ = [
     # Core Brahim Laws (Elliptic Curves)
     "BrahimLawsEngine",
@@ -138,4 +154,16 @@ __all__ = [
     "mirror_operator",
     "get_sequence",
     "verify_mirror_symmetry",
+    # Brahim Onion Agent (OpenAI Agents SDK / AgentKit)
+    "BrahimOnionAgent",
+    "BrahimAgentBuilder",
+    "AgentConfig",
+    "AgentResponse",
+    "LayerPacket",
+    "LayerID",
+    "Intent",
+    "ModelType",
+    "BRAHIM_AGENT_TOOLS",
+    "HANDOFF_DEFINITIONS",
+    "BrahimGuardrails",
 ]
