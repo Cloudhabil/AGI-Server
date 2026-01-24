@@ -53,7 +53,7 @@ License: TUL (Technology Unified License)
 DOI: 10.5281/zenodo.18352681
 """
 
-__version__ = "1.3.0"
+__version__ = "1.4.0"
 __author__ = "Elias Oulad Brahim"
 
 from .core.brahim_laws import BrahimLawsEngine
@@ -115,6 +115,26 @@ from .openai_agent import (
     BrahimGuardrails,
 )
 
+# 12-Wavelength ML Integration
+from .ml.wavelength_integration import (
+    WavelengthPipeline,
+    SubstrateState,
+    ConvergenceResult,
+    get_pipeline,
+    process_with_wavelengths,
+    BRAHIM_SEQUENCE,
+    SUM_CONSTANT,
+    CENTER,
+    PHI,
+)
+
+# BOA Wavelength Agent (12-Wave + 3-Layer Onion)
+from .boa_wavelength_agent import (
+    BOAWavelengthAgent,
+    BOAResponse,
+    BOA_WAVELENGTH_TOOLS,
+)
+
 __all__ = [
     # Core Brahim Laws (Elliptic Curves)
     "BrahimLawsEngine",
@@ -166,4 +186,18 @@ __all__ = [
     "BRAHIM_AGENT_TOOLS",
     "HANDOFF_DEFINITIONS",
     "BrahimGuardrails",
+    # 12-Wavelength ML Integration
+    "WavelengthPipeline",
+    "SubstrateState",
+    "ConvergenceResult",
+    "get_pipeline",
+    "process_with_wavelengths",
+    "BRAHIM_SEQUENCE",
+    "SUM_CONSTANT",
+    "CENTER",
+    "PHI",
+    # BOA Wavelength Agent (12-Wave + 3-Layer Onion)
+    "BOAWavelengthAgent",
+    "BOAResponse",
+    "BOA_WAVELENGTH_TOOLS",
 ]
