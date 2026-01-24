@@ -1,14 +1,19 @@
-# Brahim Secure Intelligence (BSI) - Mobile APK
+# Brahim Secure Intelligence (BSI)
 
-**Author**: Elias Oulad Brahim
-**Date**: 2026-01-24
-**Mathematical Foundation**: β = √5 - 2 = 1/φ³
+**Version:** 1.0.0
+**Author:** Elias Oulad Brahim
+**Date:** January 2026
+**Mathematical Foundation:** β = √5 - 2 = 1/φ³ = 0.2360679774997897
 
 ---
 
 ## Overview
 
-A unified Android application that brings together all Brahim Framework modules:
+BSI is a unified application that brings together all Brahim Framework modules, available as:
+- **Python Standalone** (`python_standalone/`) - Cross-platform executable
+- **Android APK** (`android/`) - Native Kotlin application
+
+Core modules included:
 
 - **Wormhole Cipher**: End-to-end encryption using golden ratio mathematics
 - **ASIOS Guard**: AI safety layer based on Berry-Keating energy functional
@@ -162,9 +167,39 @@ C/S = 1/2 (critical line)
 
 ---
 
+## Documentation
+
+Comprehensive documentation available in `docs/`:
+
+| Document | Description |
+|----------|-------------|
+| [ARCHITECTURE_GUIDE.md](docs/ARCHITECTURE_GUIDE.md) | Step-by-step implementation guide |
+| [API_REFERENCE.md](docs/API_REFERENCE.md) | Complete API documentation |
+| [INTEGRATION_GUIDE.md](docs/INTEGRATION_GUIDE.md) | Integration patterns |
+
+---
+
+## Python Standalone
+
+For systems without Android SDK, use the Python standalone:
+
+```bash
+cd mobile/python_standalone
+
+# Run directly
+python bsi_app.py --verify
+python bsi_app.py --chat
+
+# Build executable
+python build_executable.py
+dist/BrahimSecureIntelligence.exe --verify
+```
+
+---
+
 ## License
 
-Intellectual Property of Elias Oulad Brahim
+Temporal Use License (TUL) - Intellectual Property of Elias Oulad Brahim
 
 ---
 
@@ -174,3 +209,4 @@ Intellectual Property of Elias Oulad Brahim
 2. ASIOS Safety Framework
 3. Berry-Keating Hamiltonian
 4. Riemann Hypothesis Connection
+5. Golden Ratio Mathematics
