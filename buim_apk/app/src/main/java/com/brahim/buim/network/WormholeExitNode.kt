@@ -143,13 +143,13 @@ class WormholeExitNode(
                     }
                 } catch (e: SocketTimeoutException) {
                     // Normal timeout, continue
-                } catch (e: Exception) {
+                } catch (e: IOException)  // TODO: catch specific type {
                     if (_state.value.isRunning) {
                         println("[UDP] Error: ${e.message}")
                     }
                 }
             }
-        } catch (e: Exception) {
+        } catch (e: IOException)  // TODO: catch specific type {
             println("[UDP] Failed to start: ${e.message}")
             _state.value = _state.value.copy(lastError = e.message)
         }
@@ -189,13 +189,13 @@ class WormholeExitNode(
                     scope.launch {
                         handleTcpConnection(clientSocket)
                     }
-                } catch (e: Exception) {
+                } catch (e: IOException)  // TODO: catch specific type {
                     if (_state.value.isRunning) {
                         println("[TCP] Error: ${e.message}")
                     }
                 }
             }
-        } catch (e: Exception) {
+        } catch (e: IOException)  // TODO: catch specific type {
             println("[TCP] Failed to start: ${e.message}")
             _state.value = _state.value.copy(lastError = e.message)
         }
@@ -222,7 +222,7 @@ class WormholeExitNode(
             }
 
             clientSocket.close()
-        } catch (e: Exception) {
+        } catch (e: IOException)  // TODO: catch specific type {
             println("[TCP] Connection error: ${e.message}")
         }
     }
@@ -309,7 +309,7 @@ class WormholeExitNode(
             // Build wormhole response
             createWormholeResponse(encryptedResponse)
 
-        } catch (e: Exception) {
+        } catch (e: IOException)  // TODO: catch specific type {
             println("[ERROR] Processing wormhole request: ${e.message}")
             createErrorResponse(e.message ?: "Unknown error")
         }

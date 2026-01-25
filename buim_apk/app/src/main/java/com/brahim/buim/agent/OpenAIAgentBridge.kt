@@ -363,7 +363,7 @@ object OpenAIAgentBridge {
                     error = "Tool '$name' not found"
                 )
             }
-        } catch (e: Exception) {
+        } catch (e: IOException)  // TODO: catch specific type {
             ToolResult(
                 success = false,
                 tool = name,
@@ -676,7 +676,7 @@ object OpenAIAgentBridge {
 
         val missionType = try {
             MissionType.valueOf(missionTypeStr.uppercase())
-        } catch (e: Exception) {
+        } catch (e: IOException)  // TODO: catch specific type {
             MissionType.DIRECT_HOHMANN
         }
 

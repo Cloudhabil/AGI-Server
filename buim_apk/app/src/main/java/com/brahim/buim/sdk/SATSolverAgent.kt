@@ -139,7 +139,7 @@ class SATSolverAgent : BaseBOAAgent() {
                     error = null,
                     executionTime = System.currentTimeMillis() - startTime
                 )
-            } catch (e: Exception) {
+            } catch (e: IOException)  // TODO: catch specific type {
                 AgentSolverResponse(
                     success = false,
                     result = null,

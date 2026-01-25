@@ -186,7 +186,7 @@ object WormholeRelay {
                 latencyMs = System.currentTimeMillis() - _state.value.routeStartTime
             )
 
-        } catch (e: Exception) {
+        } catch (e: IOException)  // TODO: catch specific type {
             _state.value = _state.value.copy(
                 isRouting = false,
                 failedRoutes = _state.value.failedRoutes + 1,
@@ -261,7 +261,7 @@ object WormholeRelay {
                 latencyMs = latency
             )
 
-        } catch (e: Exception) {
+        } catch (e: IOException)  // TODO: catch specific type {
             DnsWormholeResult(
                 success = false,
                 domain = domain,
@@ -468,7 +468,7 @@ object WormholeRelay {
                         success = response != null,
                         latencyMs = latency
                     )
-                } catch (e: Exception) {
+                } catch (e: IOException)  // TODO: catch specific type {
                     RelayTestResult(
                         relay = relay,
                         targetIp = targetIp,
@@ -596,7 +596,7 @@ object WormholeRelay {
 
                 offset += dataLen
             }
-        } catch (e: Exception) {
+        } catch (e: IOException)  // TODO: catch specific type {
             // Parse error, return what we have
         }
 

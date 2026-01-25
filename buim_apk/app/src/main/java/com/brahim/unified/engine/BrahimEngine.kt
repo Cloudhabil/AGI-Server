@@ -102,6 +102,11 @@ object BrahimEngine {
         fun normalMatterPercent(): Double = PHI.pow(5) / 200          // ~5.5%
         fun universeAgeGyr(): Double = 977.8 / Physics.hubbleConstant()
 
+        // Aliases for compatibility
+        fun matterFraction(): Double = 0.315  // Total matter (dark + baryonic)
+        fun darkEnergyFraction(): Double = darkEnergyPercent()
+        fun hubbleConstant(): Double = Physics.hubbleConstant()
+
         /** Critical density parameter */
         fun omegaCritical(): Double = darkMatterPercent() + darkEnergyPercent() + normalMatterPercent()
     }

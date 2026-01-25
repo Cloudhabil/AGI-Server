@@ -121,7 +121,7 @@ class TransportBridge {
             )
 
             true
-        } catch (e: Exception) {
+        } catch (e: IOException)  // TODO: catch specific type {
             _state.value = _state.value.copy(
                 isConnected = false,
                 lastError = e.message
@@ -451,7 +451,7 @@ class TransportBridge {
                         ?: System.currentTimeMillis()
                 )
             }
-        } catch (e: Exception) {
+        } catch (e: IOException)  // TODO: catch specific type {
             // Parse error
         }
 
@@ -476,7 +476,7 @@ class TransportBridge {
                         bestRelay = relay
                     }
                 }
-            } catch (e: Exception) {
+            } catch (e: IOException)  // TODO: catch specific type {
                 // Skip this relay
             }
         }

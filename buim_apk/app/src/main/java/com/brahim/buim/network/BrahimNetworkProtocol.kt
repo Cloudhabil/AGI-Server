@@ -197,7 +197,7 @@ object BrahimNetworkProtocol {
             val pseudo_lon = (octets[2] * 256 + octets[3]).toDouble() / 65535 * 360 - 180
 
             return createAddress(pseudo_lat, pseudo_lon, NetworkLayer.NETWORK, serviceType)
-        } catch (e: Exception) {
+        } catch (e: IOException)  // TODO: catch specific type {
             return null
         }
     }
@@ -215,7 +215,7 @@ object BrahimNetworkProtocol {
             val pseudo_lon = ((value shr 32) % 360000000).toDouble() / 1000000 - 180
 
             return createAddress(pseudo_lat, pseudo_lon, NetworkLayer.NETWORK, serviceType)
-        } catch (e: Exception) {
+        } catch (e: IOException)  // TODO: catch specific type {
             return null
         }
     }

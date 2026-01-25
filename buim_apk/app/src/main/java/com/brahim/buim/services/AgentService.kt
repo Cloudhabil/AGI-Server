@@ -70,7 +70,7 @@ class AgentService : Service() {
             )
             _agentState.value = AgentState.IDLE
             response
-        } catch (e: Exception) {
+        } catch (e: IOException)  // TODO: catch specific type {
             _agentState.value = AgentState.ERROR
             AgentResponse(
                 text = "Error: ${e.message}",

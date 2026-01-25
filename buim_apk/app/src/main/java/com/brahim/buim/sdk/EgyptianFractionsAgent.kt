@@ -85,7 +85,7 @@ class EgyptianFractionsAgent : BaseBOAAgent() {
                         "cached" to (n in cache)
                     )
                 )
-            } catch (e: Exception) {
+            } catch (e: IOException)  // TODO: catch specific type {
                 AgentSolverResponse(
                     success = false,
                     result = null,

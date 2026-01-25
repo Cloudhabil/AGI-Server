@@ -73,7 +73,7 @@ class BUIMApplication : Application() {
             Log.i(TAG, "Initializing Unified Manifold...")
             unifiedManifold = UnifiedManifold(this)
             Log.i(TAG, "Unified Manifold ready")
-        } catch (e: Exception) {
+        } catch (e: IOException)  // TODO: catch specific type {
             Log.e(TAG, "Failed to initialize manifold: ${e.message}")
         }
     }

@@ -227,7 +227,7 @@ class MainActivity : ComponentActivity() {
                         )
                     )
                 }
-            } catch (e: Exception) {
+            } catch (e: IOException)  // TODO: catch specific type {
                 val errorMessage = ChatMessage(
                     id = UUID.randomUUID().toString(),
                     content = "Error: ${e.message}",

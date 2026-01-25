@@ -231,14 +231,20 @@ class RelayModeService : Service() {
                             isUdp = true
                         )
                     }
-                } catch (e: Exception) {
+                } catch (e: java.net.SocketException) {
+                    if (isRelayActive) {
+                        droppedPackets.incrementAndGet()
+                    }
+                } catch (e: java.io.IOException) {
                     if (isRelayActive) {
                         droppedPackets.incrementAndGet()
                     }
                 }
             }
-        } catch (e: Exception) {
-            // Port binding failed
+        } catch (e: java.net.BindException) {
+            // Port binding failed - port already in use
+        } catch (e: java.net.SocketException) {
+            // Socket configuration failed
         }
     }
 
@@ -262,14 +268,22 @@ class RelayModeService : Service() {
                     launch {
                         handleTcpConnection(clientSocket)
                     }
-                } catch (e: Exception) {
+                } catch (e: java.net.SocketTimeoutException) {
+                    // Accept timeout, continue loop
+                } catch (e: java.net.SocketException) {
+                    if (isRelayActive) {
+                        droppedPackets.incrementAndGet()
+                    }
+                } catch (e: java.io.IOException) {
                     if (isRelayActive) {
                         droppedPackets.incrementAndGet()
                     }
                 }
             }
-        } catch (e: Exception) {
-            // Port binding failed
+        } catch (e: java.net.BindException) {
+            // Port binding failed - port already in use
+        } catch (e: java.net.SocketException) {
+            // Socket configuration failed
         }
     }
 
@@ -301,8 +315,10 @@ class RelayModeService : Service() {
                     responseSocket = socket
                 )
             }
-        } catch (e: Exception) {
-            // Connection closed
+        } catch (e: java.net.SocketException) {
+            // Connection reset or closed by peer
+        } catch (e: java.io.IOException) {
+            // Connection I/O error
         } finally {
             activePeers.remove(peerAddress)
             socket.close()
@@ -353,7 +369,14 @@ class RelayModeService : Service() {
             bytesRelayed.addAndGet(data.size.toLong())
             activePeers[sourceAddress] = System.currentTimeMillis()
 
-        } catch (e: Exception) {
+        } catch (e: IllegalArgumentException) {
+            // Invalid packet format
+            droppedPackets.incrementAndGet()
+        } catch (e: java.net.SocketException) {
+            // Network error during forwarding
+            droppedPackets.incrementAndGet()
+        } catch (e: java.io.IOException) {
+            // I/O error during packet processing
             droppedPackets.incrementAndGet()
         }
     }
@@ -460,7 +483,9 @@ class RelayModeService : Service() {
             val ipInt = bytesToInt(ipBytes) and mask
 
             networkInt == ipInt
-        } catch (e: Exception) {
+        } catch (e: java.net.UnknownHostException) {
+            false
+        } catch (e: NumberFormatException) {
             false
         }
     }
@@ -510,8 +535,14 @@ class RelayModeService : Service() {
 
                 if (bytesRead > 0) responseBuffer.copyOf(bytesRead) else null
             }
-        } catch (e: Exception) {
-            null
+        } catch (e: java.net.SocketTimeoutException) {
+            null  // Timeout waiting for response
+        } catch (e: java.net.UnknownHostException) {
+            null  // Could not resolve destination
+        } catch (e: java.net.SocketException) {
+            null  // Socket error
+        } catch (e: java.io.IOException) {
+            null  // I/O error
         }
     }
 
@@ -539,7 +570,11 @@ class RelayModeService : Service() {
             }
 
             bytesRelayed.addAndGet(wrappedResponse.size.toLong())
-        } catch (e: Exception) {
+        } catch (e: java.net.UnknownHostException) {
+            droppedPackets.incrementAndGet()
+        } catch (e: java.net.SocketException) {
+            droppedPackets.incrementAndGet()
+        } catch (e: java.io.IOException) {
             droppedPackets.incrementAndGet()
         }
     }

@@ -195,8 +195,10 @@ object NetworkDiagnostics {
                     error = "Request timeout"
                 )
             }
-        } catch (e: Exception) {
+        } catch (e: java.io.IOException) {
             // Fallback to Java InetAddress reachability test
+            pingJava(target, sequence, timeoutMs)
+        } catch (e: InterruptedException) {
             pingJava(target, sequence, timeoutMs)
         }
     }
@@ -220,7 +222,16 @@ object NetworkDiagnostics {
                 ttl = 64,  // Not available from isReachable
                 bytes = 64
             )
-        } catch (e: Exception) {
+        } catch (e: java.net.UnknownHostException) {
+            PingResult(
+                sequenceNumber = sequence,
+                success = false,
+                latencyMs = 0.0,
+                ttl = 0,
+                bytes = 0,
+                error = "Unknown host: ${e.message}"
+            )
+        } catch (e: java.io.IOException) {
             PingResult(
                 sequenceNumber = sequence,
                 success = false,
@@ -253,7 +264,25 @@ object NetworkDiagnostics {
                 ttl = 64,
                 bytes = 0  // No ICMP bytes for TCP
             )
-        } catch (e: Exception) {
+        } catch (e: java.net.SocketTimeoutException) {
+            PingResult(
+                sequenceNumber = sequence,
+                success = false,
+                latencyMs = 0.0,
+                ttl = 0,
+                bytes = 0,
+                error = "Connection timeout"
+            )
+        } catch (e: java.net.ConnectException) {
+            PingResult(
+                sequenceNumber = sequence,
+                success = false,
+                latencyMs = 0.0,
+                ttl = 0,
+                bytes = 0,
+                error = "Connection refused"
+            )
+        } catch (e: java.io.IOException) {
             PingResult(
                 sequenceNumber = sequence,
                 success = false,
@@ -312,7 +341,16 @@ object NetworkDiagnostics {
             result.copy(
                 bytes = 64 + (bnp.resonanceScore * 100).toInt()  // Encode resonance in bytes field
             )
-        } catch (e: Exception) {
+        } catch (e: NumberFormatException) {
+            PingResult(
+                sequenceNumber = sequence,
+                success = false,
+                latencyMs = 0.0,
+                ttl = 0,
+                bytes = 0,
+                error = "BNP resolution failed: Invalid number format"
+            )
+        } catch (e: IllegalArgumentException) {
             PingResult(
                 sequenceNumber = sequence,
                 success = false,
@@ -359,7 +397,7 @@ object NetworkDiagnostics {
             }
 
             process.waitFor()
-        } catch (e: Exception) {
+        } catch (e: java.io.IOException) {
             // Fallback: simulate traceroute with increasing TTL
             for (ttl in 1..maxHops) {
                 val hop = TracerouteHop(
@@ -498,7 +536,9 @@ object NetworkDiagnostics {
             // Try to resolve to BNP
             val bnpAddress = try {
                 LegacyNetworkConverter.ipToBnp(address)?.shortAddress
-            } catch (e: Exception) {
+            } catch (e: IllegalArgumentException) {
+                null
+            } catch (e: NumberFormatException) {
                 null
             }
 
@@ -533,7 +573,9 @@ object NetworkDiagnostics {
             try {
                 val result = pingJava(target, 1, 3000)
                 result.success
-            } catch (e: Exception) {
+            } catch (e: java.net.UnknownHostException) {
+                false
+            } catch (e: java.io.IOException) {
                 false
             }
         }

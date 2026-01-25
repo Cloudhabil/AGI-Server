@@ -121,7 +121,7 @@ object BrahimGeoIDFactory {
             val (numberPart, checkPart) = parseId(id)
             val expectedCheck = computeCheckDigit(numberPart)
             expectedCheck == checkPart
-        } catch (e: Exception) {
+        } catch (e: IOException)  // TODO: catch specific type {
             false
         }
     }

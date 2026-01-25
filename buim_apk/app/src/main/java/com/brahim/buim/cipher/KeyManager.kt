@@ -45,7 +45,7 @@ class KeyManager(private val context: Context) {
                 generateMasterKey()
             }
             true
-        } catch (e: Exception) {
+        } catch (e: IOException)  // TODO: catch specific type {
             false
         }
     }
