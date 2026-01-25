@@ -267,37 +267,71 @@ fun ToolsScreen(
                 }
             }
 
-            // Composite Apps Featured
+            // Featured: Symmetry Dashboard & Composite Apps
             item {
-                Card(
-                    modifier = Modifier
-                        .fillMaxWidth()
-                        .clickable { onToolSelected("composite_apps") },
-                    shape = RoundedCornerShape(12.dp)
+                Row(
+                    modifier = Modifier.fillMaxWidth(),
+                    horizontalArrangement = Arrangement.spacedBy(12.dp)
                 ) {
-                    Box(
+                    // Symmetry Dashboard
+                    Card(
                         modifier = Modifier
-                            .fillMaxWidth()
-                            .background(
-                                Brush.horizontalGradient(
-                                    listOf(Color(0xFF6366F1), Color(0xFFEC4899), Color(0xFFD4AF37))
-                                )
-                            )
-                            .padding(16.dp)
+                            .weight(1f)
+                            .clickable { onToolSelected("symmetry_dashboard") },
+                        shape = RoundedCornerShape(12.dp)
                     ) {
-                        Row(verticalAlignment = Alignment.CenterVertically) {
-                            Icon(Icons.Filled.AutoAwesome, null, tint = Color.White,
-                                modifier = Modifier.size(40.dp))
-                            Spacer(Modifier.width(16.dp))
-                            Column(modifier = Modifier.weight(1f)) {
-                                Text("Skill-Powered Composites",
-                                    style = MaterialTheme.typography.titleMedium,
+                        Box(
+                            modifier = Modifier
+                                .fillMaxWidth()
+                                .background(
+                                    Brush.verticalGradient(
+                                        listOf(Color(0xFF6366F1), Color(0xFFD4AF37))
+                                    )
+                                )
+                                .padding(16.dp)
+                        ) {
+                            Column {
+                                Icon(Icons.Filled.Balance, null, tint = Color.White,
+                                    modifier = Modifier.size(32.dp))
+                                Spacer(Modifier.height(8.dp))
+                                Text("Symmetry",
+                                    style = MaterialTheme.typography.titleSmall,
                                     color = Color.White, fontWeight = FontWeight.Bold)
-                                Text("21 apps fusing 60+ skills across 12 domains",
-                                    style = MaterialTheme.typography.bodySmall,
-                                    color = Color.White.copy(alpha = 0.9f))
+                                Text("Mirror pairs",
+                                    style = MaterialTheme.typography.labelSmall,
+                                    color = Color.White.copy(alpha = 0.8f))
                             }
-                            Icon(Icons.Filled.ChevronRight, null, tint = Color.White)
+                        }
+                    }
+
+                    // Composite Apps
+                    Card(
+                        modifier = Modifier
+                            .weight(1f)
+                            .clickable { onToolSelected("composite_apps") },
+                        shape = RoundedCornerShape(12.dp)
+                    ) {
+                        Box(
+                            modifier = Modifier
+                                .fillMaxWidth()
+                                .background(
+                                    Brush.verticalGradient(
+                                        listOf(Color(0xFFEC4899), Color(0xFF8B5CF6))
+                                    )
+                                )
+                                .padding(16.dp)
+                        ) {
+                            Column {
+                                Icon(Icons.Filled.AutoAwesome, null, tint = Color.White,
+                                    modifier = Modifier.size(32.dp))
+                                Spacer(Modifier.height(8.dp))
+                                Text("Composites",
+                                    style = MaterialTheme.typography.titleSmall,
+                                    color = Color.White, fontWeight = FontWeight.Bold)
+                                Text("21 fusion apps",
+                                    style = MaterialTheme.typography.labelSmall,
+                                    color = Color.White.copy(alpha = 0.8f))
+                            }
                         }
                     }
                 }

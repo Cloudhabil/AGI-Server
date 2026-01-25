@@ -73,6 +73,9 @@ sealed class Screen {
     data object VisualizationHub : Screen()
     data object UtilitiesHub : Screen()
 
+    // Symmetry Dashboard
+    data object SymmetryDashboard : Screen()
+
     // Composite Apps (21 skill-powered applications)
     data object CompositeAppsHub : Screen()
     data object UniverseSimulator : Screen()
@@ -166,7 +169,8 @@ class MainActivity : ComponentActivity() {
                             ToolsScreen(
                                 onToolSelected = { toolId ->
                                     when (toolId) {
-                                        // Composite Apps
+                                        // Symmetry & Composite Apps
+                                        "symmetry_dashboard" -> currentScreen = Screen.SymmetryDashboard
                                         "composite_apps" -> currentScreen = Screen.CompositeAppsHub
                                         // Hub Routes
                                         "physics_hub" -> currentScreen = Screen.PhysicsHub
@@ -411,6 +415,13 @@ class MainActivity : ComponentActivity() {
                                 onAppSelect = { appId ->
                                     currentScreen = Screen.ToolDetail(appId)
                                 },
+                                onBack = { currentScreen = Screen.Tools }
+                            )
+                        }
+
+                        // ===== SYMMETRY DASHBOARD =====
+                        is Screen.SymmetryDashboard -> {
+                            SymmetryDashboardScreen(
                                 onBack = { currentScreen = Screen.Tools }
                             )
                         }
