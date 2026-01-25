@@ -26,6 +26,7 @@ import com.brahim.buim.ui.components.ChatMessage
 import com.brahim.buim.ui.components.MessageSender
 import com.brahim.buim.ui.screens.*
 import com.brahim.buim.ui.screens.hubs.*
+import com.brahim.buim.ui.screens.composite.*
 import com.brahim.buim.ui.theme.BuimTheme
 import kotlinx.coroutines.launch
 import java.util.UUID
@@ -71,6 +72,30 @@ sealed class Screen {
     data object MLHub : Screen()
     data object VisualizationHub : Screen()
     data object UtilitiesHub : Screen()
+
+    // Composite Apps (21 skill-powered applications)
+    data object CompositeAppsHub : Screen()
+    data object UniverseSimulator : Screen()
+    data object SmartNavigator : Screen()
+    data object SecureBusiness : Screen()
+    data object PINNLab : Screen()
+    data object TitanColony : Screen()
+    data object QuantumFinance : Screen()
+    data object TrafficBrain : Screen()
+    data object AerospaceOptimizer : Screen()
+    data object CryptoObservatory : Screen()
+    data object FairDivisionAI : Screen()
+    data object CosmicCalculator : Screen()
+    data object MarsMission : Screen()
+    data object GoldenOptimizer : Screen()
+    data object EmergencyResponse : Screen()
+    data object ComplianceIntel : Screen()
+    data object ResonanceLab : Screen()
+    data object FleetManager : Screen()
+    data object SATMLHybrid : Screen()
+    data object DarkSector : Screen()
+    data object BrahimWorkspace : Screen()
+    data object KelimutuIntel : Screen()
 }
 
 /**
@@ -141,6 +166,8 @@ class MainActivity : ComponentActivity() {
                             ToolsScreen(
                                 onToolSelected = { toolId ->
                                     when (toolId) {
+                                        // Composite Apps
+                                        "composite_apps" -> currentScreen = Screen.CompositeAppsHub
                                         // Hub Routes
                                         "physics_hub" -> currentScreen = Screen.PhysicsHub
                                         "math_hub" -> currentScreen = Screen.MathHub
@@ -381,6 +408,80 @@ class MainActivity : ComponentActivity() {
 
                         is Screen.UtilitiesHub -> {
                             UtilitiesHubScreen(
+                                onAppSelect = { appId ->
+                                    currentScreen = Screen.ToolDetail(appId)
+                                },
+                                onBack = { currentScreen = Screen.Tools }
+                            )
+                        }
+
+                        // ===== COMPOSITE APPS (21 skill-powered applications) =====
+                        is Screen.CompositeAppsHub -> {
+                            CompositeAppsHubScreen(
+                                onAppSelect = { appId ->
+                                    currentScreen = when (appId) {
+                                        "universe_simulator" -> Screen.UniverseSimulator
+                                        "smart_navigator" -> Screen.SmartNavigator
+                                        "secure_business" -> Screen.SecureBusiness
+                                        "pinn_lab" -> Screen.PINNLab
+                                        "titan_colony" -> Screen.TitanColony
+                                        "quantum_finance" -> Screen.QuantumFinance
+                                        "traffic_brain" -> Screen.TrafficBrain
+                                        "aerospace_optimizer" -> Screen.AerospaceOptimizer
+                                        "crypto_observatory" -> Screen.CryptoObservatory
+                                        "fair_division_ai" -> Screen.FairDivisionAI
+                                        "cosmic_calculator" -> Screen.CosmicCalculator
+                                        "mars_mission" -> Screen.MarsMission
+                                        "golden_optimizer" -> Screen.GoldenOptimizer
+                                        "emergency_response" -> Screen.EmergencyResponse
+                                        "compliance_intel" -> Screen.ComplianceIntel
+                                        "resonance_lab" -> Screen.ResonanceLab
+                                        "fleet_manager" -> Screen.FleetManager
+                                        "sat_ml_hybrid" -> Screen.SATMLHybrid
+                                        "dark_sector" -> Screen.DarkSector
+                                        "brahim_workspace" -> Screen.BrahimWorkspace
+                                        "kelimutu_intel" -> Screen.KelimutuIntel
+                                        else -> Screen.ToolDetail(appId)
+                                    }
+                                },
+                                onBack = { currentScreen = Screen.Tools }
+                            )
+                        }
+
+                        is Screen.UniverseSimulator -> {
+                            UniverseSimulatorScreen(
+                                onBack = { currentScreen = Screen.CompositeAppsHub }
+                            )
+                        }
+
+                        is Screen.KelimutuIntel -> {
+                            KelimutuIntelligenceScreen(
+                                onBack = { currentScreen = Screen.CompositeAppsHub }
+                            )
+                        }
+
+                        // Placeholder screens for remaining composite apps
+                        is Screen.SmartNavigator,
+                        is Screen.SecureBusiness,
+                        is Screen.PINNLab,
+                        is Screen.TitanColony,
+                        is Screen.QuantumFinance,
+                        is Screen.TrafficBrain,
+                        is Screen.AerospaceOptimizer,
+                        is Screen.CryptoObservatory,
+                        is Screen.FairDivisionAI,
+                        is Screen.CosmicCalculator,
+                        is Screen.MarsMission,
+                        is Screen.GoldenOptimizer,
+                        is Screen.EmergencyResponse,
+                        is Screen.ComplianceIntel,
+                        is Screen.ResonanceLab,
+                        is Screen.FleetManager,
+                        is Screen.SATMLHybrid,
+                        is Screen.DarkSector,
+                        is Screen.BrahimWorkspace -> {
+                            // Placeholder - show composite hub for now
+                            CompositeAppsHubScreen(
                                 onAppSelect = { appId ->
                                     currentScreen = Screen.ToolDetail(appId)
                                 },

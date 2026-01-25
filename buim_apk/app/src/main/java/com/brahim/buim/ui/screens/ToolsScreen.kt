@@ -11,6 +11,7 @@
 package com.brahim.buim.ui.screens
 
 import androidx.compose.foundation.background
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.LazyRow
@@ -51,6 +52,12 @@ data class HubCategory(
     val icon: ImageVector,
     val color: Color,
     val description: String
+)
+
+// Composite Apps Entry
+private val compositeAppsEntry = HubCategory(
+    "composite_apps", "Composite Apps", 21, Icons.Filled.AutoAwesome, Color(0xFFEC4899),
+    "21 skill-powered fusion apps"
 )
 
 // Application Hubs (12 categories, 83 total apps)
@@ -255,6 +262,42 @@ fun ToolsScreen(
                             Text("B(11) = 214 Consciousness Integrated",
                                 style = MaterialTheme.typography.labelSmall,
                                 color = Color.White.copy(alpha = 0.7f))
+                        }
+                    }
+                }
+            }
+
+            // Composite Apps Featured
+            item {
+                Card(
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .clickable { onToolSelected("composite_apps") },
+                    shape = RoundedCornerShape(12.dp)
+                ) {
+                    Box(
+                        modifier = Modifier
+                            .fillMaxWidth()
+                            .background(
+                                Brush.horizontalGradient(
+                                    listOf(Color(0xFF6366F1), Color(0xFFEC4899), Color(0xFFD4AF37))
+                                )
+                            )
+                            .padding(16.dp)
+                    ) {
+                        Row(verticalAlignment = Alignment.CenterVertically) {
+                            Icon(Icons.Filled.AutoAwesome, null, tint = Color.White,
+                                modifier = Modifier.size(40.dp))
+                            Spacer(Modifier.width(16.dp))
+                            Column(modifier = Modifier.weight(1f)) {
+                                Text("Skill-Powered Composites",
+                                    style = MaterialTheme.typography.titleMedium,
+                                    color = Color.White, fontWeight = FontWeight.Bold)
+                                Text("21 apps fusing 60+ skills across 12 domains",
+                                    style = MaterialTheme.typography.bodySmall,
+                                    color = Color.White.copy(alpha = 0.9f))
+                            }
+                            Icon(Icons.Filled.ChevronRight, null, tint = Color.White)
                         }
                     }
                 }
