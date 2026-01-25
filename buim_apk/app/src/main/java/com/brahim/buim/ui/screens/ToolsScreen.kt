@@ -111,6 +111,19 @@ private val availableTools = listOf(
             "Kelimutu routing"
         ),
         icon = Icons.Filled.Hub
+    ),
+    ToolInfo(
+        id = "solar_map",
+        name = "Solar System Map",
+        domain = "Astronomy",
+        description = "Brahim Number geomap of the Solar System",
+        capabilities = listOf(
+            "Planetary Brahim IDs",
+            "Heliocentric coordinates",
+            "Sequence resonances",
+            "Exoplanet encoding"
+        ),
+        icon = Icons.Filled.Public
     )
 )
 

@@ -16,6 +16,7 @@ import com.brahim.buim.usecase.BrahimGeoID
 import com.brahim.buim.blockchain.BrahimBlockchain
 import com.brahim.buim.blockchain.BrahimMiningProtocol
 import com.brahim.buim.gematria.BrahimGematria
+import com.brahim.buim.solar.BrahimSolarMap
 import kotlinx.serialization.Serializable
 import kotlinx.serialization.json.*
 
@@ -207,6 +208,71 @@ object OpenAIAgentBridge {
                     add(JsonPrimitive("longitude"))
                 }
             }
+        ),
+
+        // Use Case 8: Solar System Coordinate
+        FunctionSchema(
+            name = "create_solar_id",
+            description = "Create a Brahim ID for a heliocentric Solar System position.",
+            parameters = buildJsonObject {
+                put("type", JsonPrimitive("object"))
+                putJsonObject("properties") {
+                    putJsonObject("distance_au") {
+                        put("type", JsonPrimitive("number"))
+                        put("description", JsonPrimitive("Distance from Sun in AU (1 AU = Earth orbit)"))
+                    }
+                    putJsonObject("ecliptic_longitude") {
+                        put("type", JsonPrimitive("number"))
+                        put("description", JsonPrimitive("Ecliptic longitude in degrees (0-360)"))
+                    }
+                    putJsonObject("ecliptic_latitude") {
+                        put("type", JsonPrimitive("number"))
+                        put("description", JsonPrimitive("Ecliptic latitude in degrees (-90 to +90)"))
+                    }
+                    putJsonObject("body_name") {
+                        put("type", JsonPrimitive("string"))
+                        put("description", JsonPrimitive("Optional name of celestial body"))
+                    }
+                }
+                putJsonArray("required") {
+                    add(JsonPrimitive("distance_au"))
+                    add(JsonPrimitive("ecliptic_longitude"))
+                }
+            }
+        ),
+
+        // Use Case 9: Get Solar System Map
+        FunctionSchema(
+            name = "get_solar_system_map",
+            description = "Get Brahim Numbers for all major Solar System bodies.",
+            parameters = buildJsonObject {
+                put("type", JsonPrimitive("object"))
+                putJsonObject("properties") {
+                    putJsonObject("include_moons") {
+                        put("type", JsonPrimitive("boolean"))
+                        put("description", JsonPrimitive("Include major moons in results"))
+                    }
+                }
+                putJsonArray("required") { }
+            }
+        ),
+
+        // Use Case 10: Decode Solar Brahim Number
+        FunctionSchema(
+            name = "decode_solar_brahim_number",
+            description = "Decode a 3D Solar Brahim Number back to heliocentric coordinates.",
+            parameters = buildJsonObject {
+                put("type", JsonPrimitive("object"))
+                putJsonObject("properties") {
+                    putJsonObject("brahim_number_3d") {
+                        put("type", JsonPrimitive("integer"))
+                        put("description", JsonPrimitive("3D Solar Brahim Number to decode"))
+                    }
+                }
+                putJsonArray("required") {
+                    add(JsonPrimitive("brahim_number_3d"))
+                }
+            }
         )
     )
 
@@ -223,6 +289,9 @@ object OpenAIAgentBridge {
                 "decode_brahim_number" -> executeDecodeBrahimNumber(arguments)
                 "analyze_gematria" -> executeAnalyzeGematria(arguments)
                 "verify_block_candidate" -> executeVerifyBlockCandidate(arguments)
+                "create_solar_id" -> executeCreateSolarId(arguments)
+                "get_solar_system_map" -> executeGetSolarSystemMap(arguments)
+                "decode_solar_brahim_number" -> executeDecodeSolarBrahimNumber(arguments)
                 else -> ToolResult(
                     success = false,
                     tool = name,
@@ -412,5 +481,121 @@ object OpenAIAgentBridge {
                 }
             }
         )
+    }
+
+    // =========================================================================
+    // Solar System Tools
+    // =========================================================================
+
+    private fun executeCreateSolarId(args: JsonObject): ToolResult {
+        val distanceAU = args["distance_au"]?.jsonPrimitive?.double
+            ?: throw IllegalArgumentException("distance_au required")
+        val eclipticLon = args["ecliptic_longitude"]?.jsonPrimitive?.double
+            ?: throw IllegalArgumentException("ecliptic_longitude required")
+        val eclipticLat = args["ecliptic_latitude"]?.jsonPrimitive?.doubleOrNull ?: 0.0
+        val bodyName = args["body_name"]?.jsonPrimitive?.contentOrNull
+
+        // Find body if name provided
+        val body = bodyName?.let { name ->
+            BrahimSolarMap.SOLAR_SYSTEM.find { it.name.equals(name, ignoreCase = true) }
+                ?: BrahimSolarMap.MOONS.find { it.name.equals(name, ignoreCase = true) }
+        }
+
+        val solarId = BrahimSolarMap.createSolarID(distanceAU, eclipticLon, eclipticLat, body)
+
+        return ToolResult(
+            success = true,
+            tool = "create_solar_id",
+            result = buildJsonObject {
+                put("human_id", JsonPrimitive(solarId.humanId))
+                put("brahim_number_2d", JsonPrimitive(solarId.brahimNumber))
+                put("brahim_number_3d", JsonPrimitive(solarId.brahimNumber3D))
+                put("digital_root", JsonPrimitive(solarId.digitalRoot))
+                put("mod_214", JsonPrimitive(solarId.mod214))
+                solarId.sequenceResonance?.let {
+                    put("sequence_resonance", JsonPrimitive(it))
+                }
+                put("distance_au", JsonPrimitive(distanceAU))
+                put("ecliptic_longitude", JsonPrimitive(eclipticLon))
+                put("ecliptic_latitude", JsonPrimitive(eclipticLat))
+            }
+        )
+    }
+
+    private fun executeGetSolarSystemMap(args: JsonObject): ToolResult {
+        val includeMoons = args["include_moons"]?.jsonPrimitive?.booleanOrNull ?: true
+
+        val map = BrahimSolarMap.generateSolarSystemMap()
+
+        return ToolResult(
+            success = true,
+            tool = "get_solar_system_map",
+            result = buildJsonObject {
+                putJsonArray("planets") {
+                    map.bodies.forEach { mapping ->
+                        addJsonObject {
+                            put("name", JsonPrimitive(mapping.body.name))
+                            put("type", JsonPrimitive(mapping.body.type.name))
+                            put("distance_au", JsonPrimitive(mapping.body.semiMajorAxisAU))
+                            put("brahim_number", JsonPrimitive(mapping.id.brahimNumber))
+                            put("digital_root", JsonPrimitive(mapping.id.digitalRoot))
+                            put("mod_214", JsonPrimitive(mapping.id.mod214))
+                        }
+                    }
+                }
+                if (includeMoons) {
+                    putJsonArray("moons") {
+                        map.moons.forEach { mapping ->
+                            addJsonObject {
+                                put("name", JsonPrimitive(mapping.body.name))
+                                put("distance_au", JsonPrimitive(mapping.body.semiMajorAxisAU))
+                                put("brahim_number", JsonPrimitive(mapping.id.brahimNumber))
+                                put("digital_root", JsonPrimitive(mapping.id.digitalRoot))
+                            }
+                        }
+                    }
+                }
+                putJsonArray("resonances") {
+                    map.resonances.take(5).forEach { (body, resonance) ->
+                        addJsonObject {
+                            put("body", JsonPrimitive(body.name))
+                            put("resonance", JsonPrimitive(resonance))
+                        }
+                    }
+                }
+                putJsonObject("statistics") {
+                    put("total_bodies", JsonPrimitive(map.statistics.totalBodies))
+                    put("max_brahim_number", JsonPrimitive(map.statistics.maxBrahimNumber))
+                    put("brahim_sequence_sum", JsonPrimitive(map.statistics.sequenceSum))
+                }
+            }
+        )
+    }
+
+    private fun executeDecodeSolarBrahimNumber(args: JsonObject): ToolResult {
+        val bn3D = args["brahim_number_3d"]?.jsonPrimitive?.long
+            ?: throw IllegalArgumentException("brahim_number_3d required")
+
+        val decoded = BrahimSolarMap.decodeSolarBN(bn3D)
+
+        return if (decoded != null) {
+            ToolResult(
+                success = true,
+                tool = "decode_solar_brahim_number",
+                result = buildJsonObject {
+                    put("brahim_number_3d", JsonPrimitive(bn3D))
+                    put("distance_au", JsonPrimitive(decoded.first))
+                    put("ecliptic_longitude", JsonPrimitive(decoded.second))
+                    put("ecliptic_latitude", JsonPrimitive(decoded.third))
+                }
+            )
+        } else {
+            ToolResult(
+                success = false,
+                tool = "decode_solar_brahim_number",
+                result = JsonPrimitive("Could not decode"),
+                error = "Invalid Solar Brahim Number"
+            )
+        }
     }
 }
