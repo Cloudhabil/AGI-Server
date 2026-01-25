@@ -33,9 +33,20 @@ import java.util.UUID
  * Navigation destinations.
  */
 sealed class Screen {
+    // Main Screens
+    data object Home : Screen()
     data object Chat : Screen()
     data object Tools : Screen()
     data object Settings : Screen()
+
+    // User-Friendly Screens
+    data object Onboarding : Screen()
+    data object ConsciousnessExplorer : Screen()
+    data object QuickCalculator : Screen()
+    data object About : Screen()
+    data object Help : Screen()
+
+    // Feature Screens
     data object Physics : Screen()
     data object Sudoku : Screen()
     data object KillerUseCases : Screen()
@@ -56,9 +67,16 @@ class MainActivity : ComponentActivity() {
         super.onCreate(savedInstanceState)
 
         setContent {
-            var currentScreen by remember { mutableStateOf<Screen>(Screen.Chat) }
+            var currentScreen by remember { mutableStateOf<Screen>(Screen.Home) }
+            var hasSeenOnboarding by remember { mutableStateOf(true) } // TODO: Load from DataStore
             var chatState by remember { mutableStateOf(ChatScreenState()) }
             var settingsState by remember { mutableStateOf(SettingsState()) }
+
+            // Show onboarding for first-time users
+            LaunchedEffect(Unit) {
+                // TODO: Check DataStore for onboarding status
+                // For now, skip onboarding by default
+            }
 
             BuimTheme(
                 darkTheme = settingsState.darkMode,
@@ -69,6 +87,26 @@ class MainActivity : ComponentActivity() {
                     color = MaterialTheme.colorScheme.background
                 ) {
                     when (val screen = currentScreen) {
+                        // ===== MAIN SCREENS =====
+                        is Screen.Home -> {
+                            HomeScreen(
+                                onNavigate = { destination ->
+                                    when (destination) {
+                                        "chat" -> currentScreen = Screen.Chat
+                                        "tools" -> currentScreen = Screen.Tools
+                                        "physics" -> currentScreen = Screen.Physics
+                                        "consciousness" -> currentScreen = Screen.ConsciousnessExplorer
+                                        "calculator" -> currentScreen = Screen.QuickCalculator
+                                        "sudoku" -> currentScreen = Screen.Sudoku
+                                        "secure_chat" -> currentScreen = Screen.Contacts
+                                        "settings" -> currentScreen = Screen.Settings
+                                        "help" -> currentScreen = Screen.Help
+                                        "about" -> currentScreen = Screen.About
+                                    }
+                                }
+                            )
+                        }
+
                         is Screen.Chat -> {
                             ChatScreen(
                                 state = chatState,
@@ -94,10 +132,12 @@ class MainActivity : ComponentActivity() {
                                         "solar_map" -> currentScreen = Screen.SolarMap
                                         "secure_chat" -> currentScreen = Screen.Contacts
                                         "network_diagnostics" -> currentScreen = Screen.NetworkDiagnostics
+                                        "consciousness_explorer" -> currentScreen = Screen.ConsciousnessExplorer
+                                        "quick_calculator" -> currentScreen = Screen.QuickCalculator
                                         else -> currentScreen = Screen.ToolDetail(toolId)
                                     }
                                 },
-                                onNavigateBack = { currentScreen = Screen.Chat }
+                                onNavigateBack = { currentScreen = Screen.Home }
                             )
                         }
 
@@ -105,19 +145,54 @@ class MainActivity : ComponentActivity() {
                             SettingsScreen(
                                 state = settingsState,
                                 onStateChange = { settingsState = it },
-                                onNavigateBack = { currentScreen = Screen.Chat }
+                                onNavigateBack = { currentScreen = Screen.Home }
                             )
                         }
 
+                        // ===== USER-FRIENDLY SCREENS =====
+                        is Screen.Onboarding -> {
+                            OnboardingScreen(
+                                onComplete = {
+                                    hasSeenOnboarding = true
+                                    currentScreen = Screen.Home
+                                }
+                            )
+                        }
+
+                        is Screen.ConsciousnessExplorer -> {
+                            ConsciousnessExplorerScreen(
+                                onBack = { currentScreen = Screen.Home }
+                            )
+                        }
+
+                        is Screen.QuickCalculator -> {
+                            QuickCalculatorScreen(
+                                onBack = { currentScreen = Screen.Home }
+                            )
+                        }
+
+                        is Screen.About -> {
+                            AboutScreen(
+                                onBack = { currentScreen = Screen.Home }
+                            )
+                        }
+
+                        is Screen.Help -> {
+                            HelpScreen(
+                                onBack = { currentScreen = Screen.Home }
+                            )
+                        }
+
+                        // ===== FEATURE SCREENS =====
                         is Screen.Physics -> {
                             PhysicsScreen(
-                                onNavigateBack = { currentScreen = Screen.Tools }
+                                onNavigateBack = { currentScreen = Screen.Home }
                             )
                         }
 
                         is Screen.Sudoku -> {
                             SudokuScreen(
-                                onNavigateBack = { currentScreen = Screen.Tools }
+                                onNavigateBack = { currentScreen = Screen.Home }
                             )
                         }
 
@@ -157,7 +232,7 @@ class MainActivity : ComponentActivity() {
                                     )
                                 },
                                 onNewChat = { /* Open new chat dialog */ },
-                                onBack = { currentScreen = Screen.Chat }
+                                onBack = { currentScreen = Screen.Home }
                             )
                         }
 
@@ -227,7 +302,8 @@ class MainActivity : ComponentActivity() {
                         )
                     )
                 }
-            } catch (e: IOException)  // TODO: catch specific type {
+            } catch (e: Exception) {
+                // Catch any exception
                 val errorMessage = ChatMessage(
                     id = UUID.randomUUID().toString(),
                     content = "Error: ${e.message}",
