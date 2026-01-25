@@ -1,0 +1,12 @@
+# BUIM Local Properties Template
+# Copy this file to local.properties and configure your paths
+
+# Android SDK location (required)
+sdk.dir=/path/to/android/sdk
+
+# Optional: NDK location if using native code
+# ndk.dir=/path/to/ndk
+
+# Optional: API keys for cloud services
+# OPENAI_API_KEY=your_openai_key_here
+# ANTHROPIC_API_KEY=your_anthropic_key_here

@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">BUIM</string>
+    <string name="app_description">Brahim Unified IAAS Manifold</string>
+
+    <!-- Navigation -->
+    <string name="nav_chat">Chat</string>
+    <string name="nav_tools">Tools</string>
+    <string name="nav_physics">Physics</string>
+    <string name="nav_settings">Settings</string>
+
+    <!-- Chat Screen -->
+    <string name="chat_hint">Type a message...</string>
+    <string name="chat_send">Send</string>
+    <string name="chat_clear">Clear</string>
+
+    <!-- Tools Screen -->
+    <string name="tools_calculator">Physics Calculator</string>
+    <string name="tools_egyptian">Egyptian Fractions</string>
+    <string name="tools_sat">SAT Solver</string>
+    <string name="tools_cfd">Fluid Dynamics</string>
+    <string name="tools_titan">Titan Explorer</string>
+
+    <!-- Physics Screen -->
+    <string name="physics_fine_structure">Fine Structure Constant</string>
+    <string name="physics_weinberg">Weinberg Angle</string>
+    <string name="physics_mass_ratios">Mass Ratios</string>
+    <string name="physics_cosmology">Cosmology Constants</string>
+
+    <!-- Settings Screen -->
+    <string name="settings_security">Security</string>
+    <string name="settings_biometric">Enable Biometric</string>
+    <string name="settings_cloud">Cloud Sync</string>
+    <string name="settings_about">About</string>
+
+    <!-- Safety -->
+    <string name="safety_safe">Safe</string>
+    <string name="safety_nominal">Nominal</string>
+    <string name="safety_caution">Caution</string>
+    <string name="safety_unsafe">Unsafe</string>
+    <string name="safety_blocked">Blocked</string>
+
+    <!-- Errors -->
+    <string name="error_network">Network error. Please check your connection.</string>
+    <string name="error_safety">Request blocked by safety filter.</string>
+    <string name="error_generic">An error occurred. Please try again.</string>
+</resources>

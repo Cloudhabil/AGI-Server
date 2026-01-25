@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- Primary Colors - Golden Ratio Inspired -->
+    <color name="primary">#C9A227</color>
+    <color name="primary_variant">#A68523</color>
+    <color name="on_primary">#FFFFFF</color>
+
+    <!-- Secondary Colors - Brahim Blue -->
+    <color name="secondary">#1E3A5F</color>
+    <color name="secondary_variant">#152B47</color>
+    <color name="on_secondary">#FFFFFF</color>
+
+    <!-- Background -->
+    <color name="background">#121212</color>
+    <color name="surface">#1E1E1E</color>
+    <color name="on_background">#FFFFFF</color>
+    <color name="on_surface">#FFFFFF</color>
+
+    <!-- Safety Colors -->
+    <color name="safety_safe">#4CAF50</color>
+    <color name="safety_nominal">#2196F3</color>
+    <color name="safety_caution">#FFC107</color>
+    <color name="safety_unsafe">#FF9800</color>
+    <color name="safety_blocked">#F44336</color>
+
+    <!-- Accent -->
+    <color name="accent">#FFD700</color>
+    <color name="error">#CF6679</color>
+
+    <!-- Manifold Visualization -->
+    <color name="manifold_node">#7C4DFF</color>
+    <color name="manifold_edge">#536DFE</color>
+    <color name="manifold_active">#00E676</color>
+
+    <!-- Kelimutu Lakes -->
+    <color name="lake_literal">#0D47A1</color>
+    <color name="lake_semantic">#1B5E20</color>
+    <color name="lake_structural">#4A148C</color>
+</resources>
