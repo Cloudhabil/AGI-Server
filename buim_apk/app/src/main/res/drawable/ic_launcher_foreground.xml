@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+    BUIM - Brahim Unified IAAS Manifold
+    Adaptive Icon Foreground
+
+    Design: Golden spiral representing φ (phi)
+    Colors: Gold (#FFD700) on transparent
+-->
+<vector xmlns:android="http://schemas.android.com/apk/res/android"
+    android:width="108dp"
+    android:height="108dp"
+    android:viewportWidth="108"
+    android:viewportHeight="108">
+
+    <!-- Background circle -->
+    <path
+        android:fillColor="#1A1A2E"
+        android:pathData="M54,54m-40,0a40,40 0,1 1,80 0a40,40 0,1 1,-80 0"/>
+
+    <!-- Golden spiral - representing φ -->
+    <path
+        android:strokeColor="#FFD700"
+        android:strokeWidth="3"
+        android:fillColor="#00000000"
+        android:pathData="M54,54
+                         C54,42 62,34 74,34
+                         C86,34 94,42 94,54
+                         C94,66 86,74 74,74
+                         C66,74 60,70 56,64
+                         C52,58 52,50 56,44
+                         C60,38 68,36 74,40
+                         C78,43 80,48 78,52
+                         C76,56 72,58 68,56
+                         C64,54 64,50 66,48"/>
+
+    <!-- Inner golden dot - representing center -->
+    <path
+        android:fillColor="#FFD700"
+        android:pathData="M54,54m-4,0a4,4 0,1 1,8 0a4,4 0,1 1,-8 0"/>
+
+    <!-- Sequence indicator: 10 small dots around perimeter -->
+    <!-- B[0]=27 -->
+    <path android:fillColor="#FFD700" android:pathData="M54,18m-2,0a2,2 0,1 1,4 0a2,2 0,1 1,-4 0"/>
+    <!-- B[1]=42 -->
+    <path android:fillColor="#FFD700" android:pathData="M76,22m-2,0a2,2 0,1 1,4 0a2,2 0,1 1,-4 0"/>
+    <!-- B[2]=60 -->
+    <path android:fillColor="#FFD700" android:pathData="M90,38m-2,0a2,2 0,1 1,4 0a2,2 0,1 1,-4 0"/>
+    <!-- B[3]=75 -->
+    <path android:fillColor="#FFD700" android:pathData="M90,54m-2,0a2,2 0,1 1,4 0a2,2 0,1 1,-4 0"/>
+    <!-- B[4]=97 -->
+    <path android:fillColor="#FFD700" android:pathData="M90,70m-2,0a2,2 0,1 1,4 0a2,2 0,1 1,-4 0"/>
+    <!-- B[5]=121 -->
+    <path android:fillColor="#FFD700" android:pathData="M76,86m-2,0a2,2 0,1 1,4 0a2,2 0,1 1,-4 0"/>
+    <!-- B[6]=136 -->
+    <path android:fillColor="#FFD700" android:pathData="M54,90m-2,0a2,2 0,1 1,4 0a2,2 0,1 1,-4 0"/>
+    <!-- B[7]=154 -->
+    <path android:fillColor="#FFD700" android:pathData="M32,86m-2,0a2,2 0,1 1,4 0a2,2 0,1 1,-4 0"/>
+    <!-- B[8]=172 -->
+    <path android:fillColor="#FFD700" android:pathData="M18,70m-2,0a2,2 0,1 1,4 0a2,2 0,1 1,-4 0"/>
+    <!-- B[9]=187 -->
+    <path android:fillColor="#FFD700" android:pathData="M18,38m-2,0a2,2 0,1 1,4 0a2,2 0,1 1,-4 0"/>
+
+</vector>

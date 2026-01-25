@@ -1,12 +1,16 @@
-# BUIM Local Properties Template
-# Copy this file to local.properties and configure your paths
+# BUIM - Brahim Unified IAAS Manifold
+# Local Properties Template
+#
+# Copy this file to local.properties and set your Android SDK path
 
-# Android SDK location (required)
-sdk.dir=/path/to/android/sdk
+# Windows example:
+# sdk.dir=C:\Users\YourUsername\AppData\Local\Android\Sdk
 
-# Optional: NDK location if using native code
-# ndk.dir=/path/to/ndk
+# macOS example:
+# sdk.dir=/Users/YourUsername/Library/Android/sdk
 
-# Optional: API keys for cloud services
-# OPENAI_API_KEY=your_openai_key_here
-# ANTHROPIC_API_KEY=your_anthropic_key_here
+# Linux example:
+# sdk.dir=/home/YourUsername/Android/Sdk
+
+# Set your SDK path here:
+sdk.dir=ANDROID_SDK_PATH_HERE
