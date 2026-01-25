@@ -1,13 +1,14 @@
 title: CLI AI Documentation
 description: Documentation hub for the GPIA cognitive ecosystem
-url: "https://cloudhabil.com"
-baseurl: ""
+url: "https://asios.github.io/"
+baseurl: "/<REPO>"
 # theme: jekyll-theme-slate # Disabled for custom Tailwind setup
-source: docs
 permalink: /:basename
 
+remote_theme: pages-themes/architect@v0.2.0
 plugins:
-  - jekyll-seo-tag
+- jekyll-remote-theme # add this line to the plugins list if you already have one
+- jekyll-seo-tag
 
 exclude:
   - Gemfile
