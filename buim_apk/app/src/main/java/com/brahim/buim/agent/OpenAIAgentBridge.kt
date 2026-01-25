@@ -17,6 +17,9 @@ import com.brahim.buim.blockchain.BrahimBlockchain
 import com.brahim.buim.blockchain.BrahimMiningProtocol
 import com.brahim.buim.gematria.BrahimGematria
 import com.brahim.buim.solar.BrahimSolarMap
+import com.brahim.buim.solar.BrahimMarsPlanner
+import com.brahim.buim.solar.MarsDate
+import com.brahim.buim.solar.MissionType
 import kotlinx.serialization.Serializable
 import kotlinx.serialization.json.*
 
@@ -273,6 +276,65 @@ object OpenAIAgentBridge {
                     add(JsonPrimitive("brahim_number_3d"))
                 }
             }
+        ),
+
+        // Use Case 11: Mars Launch Windows
+        FunctionSchema(
+            name = "find_mars_launch_windows",
+            description = "Find optimal Mars launch windows with Brahim resonances and Moon alignment scores.",
+            parameters = buildJsonObject {
+                put("type", JsonPrimitive("object"))
+                putJsonObject("properties") {
+                    putJsonObject("start_year") {
+                        put("type", JsonPrimitive("integer"))
+                        put("description", JsonPrimitive("Start year for search (e.g., 2026)"))
+                    }
+                    putJsonObject("end_year") {
+                        put("type", JsonPrimitive("integer"))
+                        put("description", JsonPrimitive("End year for search (e.g., 2035)"))
+                    }
+                    putJsonObject("mission_type") {
+                        put("type", JsonPrimitive("string"))
+                        put("description", JsonPrimitive("Mission type: DIRECT_HOHMANN, MOON_STAGING, FAST_CONJUNCTION, CONJUNCTION_CLASS"))
+                    }
+                }
+                putJsonArray("required") {
+                    add(JsonPrimitive("start_year"))
+                    add(JsonPrimitive("end_year"))
+                }
+            }
+        ),
+
+        // Use Case 12: Next Best Mars Window
+        FunctionSchema(
+            name = "find_next_mars_window",
+            description = "Find the next best Mars launch window from a given date, considering Moon alignment.",
+            parameters = buildJsonObject {
+                put("type", JsonPrimitive("object"))
+                putJsonObject("properties") {
+                    putJsonObject("year") {
+                        put("type", JsonPrimitive("integer"))
+                        put("description", JsonPrimitive("Current year"))
+                    }
+                    putJsonObject("month") {
+                        put("type", JsonPrimitive("integer"))
+                        put("description", JsonPrimitive("Current month (1-12)"))
+                    }
+                    putJsonObject("day") {
+                        put("type", JsonPrimitive("integer"))
+                        put("description", JsonPrimitive("Current day (1-31)"))
+                    }
+                    putJsonObject("require_moon_alignment") {
+                        put("type", JsonPrimitive("boolean"))
+                        put("description", JsonPrimitive("Whether to require good Moon alignment for staging"))
+                    }
+                }
+                putJsonArray("required") {
+                    add(JsonPrimitive("year"))
+                    add(JsonPrimitive("month"))
+                    add(JsonPrimitive("day"))
+                }
+            }
         )
     )
 
@@ -292,6 +354,8 @@ object OpenAIAgentBridge {
                 "create_solar_id" -> executeCreateSolarId(arguments)
                 "get_solar_system_map" -> executeGetSolarSystemMap(arguments)
                 "decode_solar_brahim_number" -> executeDecodeSolarBrahimNumber(arguments)
+                "find_mars_launch_windows" -> executeFindMarsLaunchWindows(arguments)
+                "find_next_mars_window" -> executeFindNextMarsWindow(arguments)
                 else -> ToolResult(
                     success = false,
                     tool = name,
@@ -597,5 +661,135 @@ object OpenAIAgentBridge {
                 error = "Invalid Solar Brahim Number"
             )
         }
+    }
+
+    // =========================================================================
+    // Mars Mission Planner Tools
+    // =========================================================================
+
+    private fun executeFindMarsLaunchWindows(args: JsonObject): ToolResult {
+        val startYear = args["start_year"]?.jsonPrimitive?.int
+            ?: throw IllegalArgumentException("start_year required")
+        val endYear = args["end_year"]?.jsonPrimitive?.int
+            ?: throw IllegalArgumentException("end_year required")
+        val missionTypeStr = args["mission_type"]?.jsonPrimitive?.contentOrNull ?: "DIRECT_HOHMANN"
+
+        val missionType = try {
+            MissionType.valueOf(missionTypeStr.uppercase())
+        } catch (e: Exception) {
+            MissionType.DIRECT_HOHMANN
+        }
+
+        val windows = BrahimMarsPlanner.findLaunchWindows(startYear, endYear, missionType)
+        val hohmann = BrahimMarsPlanner.calculateHohmannTransfer()
+
+        return ToolResult(
+            success = true,
+            tool = "find_mars_launch_windows",
+            result = buildJsonObject {
+                putJsonObject("hohmann_parameters") {
+                    put("transfer_time_days", JsonPrimitive(hohmann.transferTimeDays))
+                    put("delta_v_total", JsonPrimitive(hohmann.totalDeltaV))
+                    put("phase_angle", JsonPrimitive(hohmann.phaseAngle))
+                }
+                putJsonArray("windows") {
+                    windows.forEach { window ->
+                        addJsonObject {
+                            put("window_id", JsonPrimitive(window.windowId))
+                            put("optimal_launch", JsonPrimitive(window.optimalDate.toString()))
+                            put("window_open", JsonPrimitive(window.openDate.toString()))
+                            put("window_close", JsonPrimitive(window.closeDate.toString()))
+                            put("transfer_days", JsonPrimitive(window.transferTimeDays))
+                            put("stay_days", JsonPrimitive(window.stayTimeDays))
+                            put("total_mission_days", JsonPrimitive(window.totalMissionDays))
+                            put("delta_v_km_s", JsonPrimitive(window.deltaVTotal))
+                            put("moon_alignment_percent", JsonPrimitive(window.moonAlignmentScore * 100))
+                            window.brahimResonance?.let { resonance ->
+                                putJsonObject("brahim_resonance") {
+                                    put("description", JsonPrimitive(resonance.description))
+                                    put("error_percent", JsonPrimitive(resonance.errorPercent))
+                                    put("significance", JsonPrimitive(resonance.significance))
+                                }
+                            }
+                        }
+                    }
+                }
+                putJsonObject("brahim_formulas") {
+                    put("mars_period", JsonPrimitive("687 = 3×214 + 45 = 3S + 45 (EXACT)"))
+                    put("synodic_period", JsonPrimitive("779.9 ≈ 4×214 - 77 = 4S - 77 (0.1% error)"))
+                    put("transfer_time", JsonPrimitive("~259 = 214 + 45 = S + 45"))
+                }
+            }
+        )
+    }
+
+    private fun executeFindNextMarsWindow(args: JsonObject): ToolResult {
+        val year = args["year"]?.jsonPrimitive?.int
+            ?: throw IllegalArgumentException("year required")
+        val month = args["month"]?.jsonPrimitive?.int
+            ?: throw IllegalArgumentException("month required")
+        val day = args["day"]?.jsonPrimitive?.int
+            ?: throw IllegalArgumentException("day required")
+        val requireMoon = args["require_moon_alignment"]?.jsonPrimitive?.booleanOrNull ?: false
+
+        val fromDate = MarsDate(year, month, day)
+
+        // Get results for different mission types
+        val directResult = BrahimMarsPlanner.findNextBestWindow(fromDate, MissionType.DIRECT_HOHMANN, false)
+        val moonResult = BrahimMarsPlanner.findNextBestWindow(fromDate, MissionType.MOON_STAGING, requireMoon)
+
+        return ToolResult(
+            success = true,
+            tool = "find_next_mars_window",
+            result = buildJsonObject {
+                put("search_from", JsonPrimitive(fromDate.toString()))
+
+                putJsonObject("direct_hohmann") {
+                    put("found", JsonPrimitive(directResult.found))
+                    directResult.window?.let { window ->
+                        put("launch_date", JsonPrimitive(window.optimalDate.toString()))
+                        put("days_until_launch", JsonPrimitive(directResult.daysUntil))
+                        put("total_mission_days", JsonPrimitive(window.totalMissionDays))
+                        put("delta_v_km_s", JsonPrimitive(window.deltaVTotal))
+                        put("moon_alignment_percent", JsonPrimitive(window.moonAlignmentScore * 100))
+                    }
+                    put("recommendation", JsonPrimitive(directResult.recommendation))
+                }
+
+                putJsonObject("moon_staging") {
+                    put("found", JsonPrimitive(moonResult.found))
+                    moonResult.window?.let { window ->
+                        put("launch_date", JsonPrimitive(window.optimalDate.toString()))
+                        put("days_until_launch", JsonPrimitive(moonResult.daysUntil))
+                        put("total_mission_days", JsonPrimitive(window.totalMissionDays))
+                        put("delta_v_km_s", JsonPrimitive(window.deltaVTotal))
+                        put("moon_alignment_percent", JsonPrimitive(window.moonAlignmentScore * 100))
+
+                        // Add Moon departure windows
+                        val moonDepartures = BrahimMarsPlanner.findMoonDepartureWindows(window)
+                        putJsonArray("best_moon_departures") {
+                            moonDepartures.take(3).forEach { dep ->
+                                addJsonObject {
+                                    put("date", JsonPrimitive(dep.date.toString()))
+                                    put("alignment_percent", JsonPrimitive(dep.alignmentScore * 100))
+                                    put("delta_v_saving_km_s", JsonPrimitive(dep.deltaVSaving))
+                                }
+                            }
+                        }
+                    }
+                    put("recommendation", JsonPrimitive(moonResult.recommendation))
+                }
+
+                putJsonObject("comparison") {
+                    val directDeltaV = directResult.window?.deltaVTotal ?: 0.0
+                    val moonDeltaV = moonResult.window?.deltaVTotal ?: 0.0
+                    put("delta_v_savings_with_moon", JsonPrimitive(directDeltaV - moonDeltaV))
+                    put("recommended_approach", JsonPrimitive(
+                        if (moonResult.found && moonResult.window?.moonAlignmentScore ?: 0.0 > 0.7)
+                            "MOON_STAGING" else "DIRECT_HOHMANN"
+                    ))
+                }
+            }
+        )
     }
 }
