@@ -1,7 +1,3 @@
-/**
- * BUIM - Brahim Unified IAAS Manifold
- * Settings Configuration
- */
 pluginManagement {
     repositories {
         google()
@@ -15,8 +11,9 @@ dependencyResolutionManagement {
     repositories {
         google()
         mavenCentral()
+        maven { url = uri("https://jitpack.io") }
     }
 }
 
-rootProject.name = "BUIM"
+rootProject.name = "BrahimUnified"
 include(":app")

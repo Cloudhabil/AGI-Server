@@ -36,4 +36,17 @@
     <color name="lake_literal">#0D47A1</color>
     <color name="lake_semantic">#1B5E20</color>
     <color name="lake_structural">#4A148C</color>
+
+    <!-- Text Colors -->
+    <color name="textPrimary">#FFFFFF</color>
+    <color name="textSecondary">#B0B0B0</color>
+    <color name="textOnPrimary">#FFFFFF</color>
+
+    <!-- Aliases for compatibility -->
+    <color name="primaryDark">@color/primary_variant</color>
+    <color name="safe">@color/safety_safe</color>
+    <color name="nominal">@color/safety_nominal</color>
+    <color name="caution">@color/safety_caution</color>
+    <color name="unsafe">@color/safety_unsafe</color>
+    <color name="blocked">@color/safety_blocked</color>
 </resources>

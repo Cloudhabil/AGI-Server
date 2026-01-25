@@ -1,85 +1,73 @@
 <?xml version="1.0" encoding="utf-8"?>
-<!--
-    BUIM - Brahim Unified IAAS Manifold
-    Android Manifest
--->
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools">
 
-    <!-- Permissions -->
     <uses-permission android:name="android.permission.INTERNET" />
-    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
-    <uses-permission android:name="android.permission.USE_BIOMETRIC" />
-    <uses-permission android:name="android.permission.VIBRATE" />
-
-    <!-- Secure Chat Permissions -->
-    <uses-permission android:name="android.permission.RECORD_AUDIO" />
-    <uses-permission android:name="android.permission.MODIFY_AUDIO_SETTINGS" />
-    <uses-permission android:name="android.permission.CAMERA" />
-    <uses-permission android:name="android.permission.BLUETOOTH" />
-    <uses-permission android:name="android.permission.BLUETOOTH_CONNECT" />
-
-    <!-- Hardware features -->
-    <uses-feature
-        android:name="android.hardware.fingerprint"
-        android:required="false" />
-    <uses-feature
-        android:name="android.hardware.microphone"
-        android:required="false" />
-    <uses-feature
-        android:name="android.hardware.camera"
-        android:required="false" />
-    <uses-feature
-        android:name="android.hardware.bluetooth"
-        android:required="false" />
 
     <application
-        android:name=".BUIMApplication"
-        android:allowBackup="false"
-        android:dataExtractionRules="@xml/data_extraction_rules"
-        android:fullBackupContent="false"
+        android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
-        android:roundIcon="@mipmap/ic_launcher_round"
+        android:roundIcon="@mipmap/ic_launcher"
         android:supportsRtl="true"
-        android:theme="@style/Theme.BUIM"
+        android:theme="@style/Theme.BrahimUnified"
         tools:targetApi="34">
-
-        <!-- Main Activity -->
+        
         <activity
             android:name=".MainActivity"
             android:exported="true"
-            android:label="@string/app_name"
-            android:theme="@style/Theme.BUIM"
-            android:windowSoftInputMode="adjustResize">
+            android:theme="@style/Theme.BrahimUnified">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-
-        <!-- Background Services -->
-        <service
-            android:name=".services.ManifoldService"
-            android:enabled="true"
-            android:exported="false" />
-
-        <service
-            android:name=".services.AgentService"
-            android:enabled="true"
-            android:exported="false" />
-
-        <!-- Content Provider for shared data -->
-        <provider
-            android:name="androidx.startup.InitializationProvider"
-            android:authorities="${applicationId}.androidx-startup"
-            android:exported="false"
-            tools:node="merge">
-            <meta-data
-                android:name="androidx.lifecycle.ProcessLifecycleInitializer"
-                android:value="androidx.startup" />
-        </provider>
-
+        
+        <!-- Physics Activities -->
+        <activity android:name=".physics.PhysicsHubActivity" android:exported="false" />
+        <activity android:name=".physics.FineStructureActivity" android:exported="false" />
+        <activity android:name=".physics.WeinbergActivity" android:exported="false" />
+        <activity android:name=".physics.MassRatiosActivity" android:exported="false" />
+        <activity android:name=".physics.CosmologyActivity" android:exported="false" />
+        <activity android:name=".physics.YangMillsActivity" android:exported="false" />
+        
+        <!-- Math Activities -->
+        <activity android:name=".math.MathHubActivity" android:exported="false" />
+        <activity android:name=".math.SequenceActivity" android:exported="false" />
+        <activity android:name=".math.MirrorActivity" android:exported="false" />
+        <activity android:name=".math.EgyptianActivity" android:exported="false" />
+        
+        <!-- Aviation Activities -->
+        <activity android:name=".aviation.AviationHubActivity" android:exported="false" />
+        <activity android:name=".aviation.PathfinderActivity" android:exported="false" />
+        <activity android:name=".aviation.ConflictActivity" android:exported="false" />
+        
+        <!-- Traffic Activities -->
+        <activity android:name=".traffic.TrafficHubActivity" android:exported="false" />
+        <activity android:name=".traffic.SignalActivity" android:exported="false" />
+        <activity android:name=".traffic.CongestionActivity" android:exported="false" />
+        
+        <!-- Business Activities -->
+        <activity android:name=".business.BusinessHubActivity" android:exported="false" />
+        <activity android:name=".business.AllocatorActivity" android:exported="false" />
+        <activity android:name=".business.SynergyActivity" android:exported="false" />
+        
+        <!-- Solver Activities -->
+        <activity android:name=".solvers.SolversHubActivity" android:exported="false" />
+        <activity android:name=".solvers.SATActivity" android:exported="false" />
+        <activity android:name=".solvers.CFDActivity" android:exported="false" />
+        
+        <!-- Planetary Activities -->
+        <activity android:name=".planetary.PlanetaryHubActivity" android:exported="false" />
+        <activity android:name=".planetary.TitanActivity" android:exported="false" />
+        
+        <!-- Security Activities -->
+        <activity android:name=".security.SecurityHubActivity" android:exported="false" />
+        <activity android:name=".security.CipherActivity" android:exported="false" />
+        
+        <!-- ML Activities -->
+        <activity android:name=".ml.MLHubActivity" android:exported="false" />
+        <activity android:name=".ml.IntentActivity" android:exported="false" />
+        
     </application>
-
 </manifest>

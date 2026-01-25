@@ -16,12 +16,17 @@ import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.*
 import androidx.compose.material3.*
+import androidx.compose.material3.Divider
 import androidx.compose.runtime.*
+import androidx.compose.runtime.collectAsState
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.unit.dp
 import com.brahim.buim.core.BrahimConstants
+import com.brahim.buim.network.RelayModeManager
+import com.brahim.buim.network.RelayModeService
+import com.brahim.buim.network.RelayStats
 import com.brahim.buim.ui.theme.GoldenPrimary
 
 /**
@@ -34,7 +39,11 @@ data class SettingsState(
     val resonanceThreshold: Float = 0.95f,
     val cloudSyncEnabled: Boolean = false,
     val biometricEnabled: Boolean = false,
-    val apiKey: String = ""
+    val apiKey: String = "",
+    // Relay mode settings
+    val relayModeEnabled: Boolean = false,
+    val relayBandwidthKbps: Int = 1024,  // 1 Mbps default
+    val relayLogConnections: Boolean = false
 )
 
 /**
@@ -141,6 +150,24 @@ fun SettingsScreen(
                     icon = Icons.Filled.CloudSync,
                     checked = state.cloudSyncEnabled,
                     onCheckedChange = { onStateChange(state.copy(cloudSyncEnabled = it)) }
+                )
+            }
+
+            // Relay Mode section
+            item {
+                SettingsSection(title = "Network Relay")
+            }
+
+            item {
+                RelayModeCard(
+                    enabled = state.relayModeEnabled,
+                    bandwidthKbps = state.relayBandwidthKbps,
+                    onEnabledChange = { enabled ->
+                        onStateChange(state.copy(relayModeEnabled = enabled))
+                    },
+                    onBandwidthChange = { bandwidth ->
+                        onStateChange(state.copy(relayBandwidthKbps = bandwidth))
+                    }
                 )
             }
 
@@ -352,6 +379,187 @@ private fun TextInputSetting(
                 } else null
             )
         }
+    }
+}
+
+/**
+ * Relay mode card with toggle, bandwidth control, and live stats.
+ */
+@Composable
+private fun RelayModeCard(
+    enabled: Boolean,
+    bandwidthKbps: Int,
+    onEnabledChange: (Boolean) -> Unit,
+    onBandwidthChange: (Int) -> Unit,
+    modifier: Modifier = Modifier
+) {
+    val context = androidx.compose.ui.platform.LocalContext.current
+    val stats by RelayModeManager.getStats().collectAsState()
+
+    Card(
+        modifier = modifier.fillMaxWidth(),
+        shape = RoundedCornerShape(12.dp),
+        colors = CardDefaults.cardColors(
+            containerColor = if (enabled) {
+                MaterialTheme.colorScheme.primaryContainer.copy(alpha = 0.7f)
+            } else {
+                MaterialTheme.colorScheme.surfaceVariant
+            }
+        )
+    ) {
+        Column(
+            modifier = Modifier
+                .fillMaxWidth()
+                .padding(16.dp)
+        ) {
+            // Header with toggle
+            Row(
+                modifier = Modifier.fillMaxWidth(),
+                verticalAlignment = Alignment.CenterVertically,
+                horizontalArrangement = Arrangement.SpaceBetween
+            ) {
+                Row(
+                    verticalAlignment = Alignment.CenterVertically,
+                    horizontalArrangement = Arrangement.spacedBy(12.dp)
+                ) {
+                    Icon(
+                        imageVector = Icons.Filled.Router,
+                        contentDescription = null,
+                        tint = if (enabled) GoldenPrimary else MaterialTheme.colorScheme.onSurfaceVariant
+                    )
+                    Column {
+                        Text(
+                            text = "Relay Mode",
+                            style = MaterialTheme.typography.titleSmall
+                        )
+                        Text(
+                            text = if (enabled) "Active - Helping others" else "Disabled",
+                            style = MaterialTheme.typography.bodySmall,
+                            color = MaterialTheme.colorScheme.onSurfaceVariant
+                        )
+                    }
+                }
+
+                Switch(
+                    checked = enabled,
+                    onCheckedChange = { newEnabled ->
+                        onEnabledChange(newEnabled)
+                        if (newEnabled) {
+                            RelayModeManager.start(context)
+                        } else {
+                            RelayModeManager.stop(context)
+                        }
+                    }
+                )
+            }
+
+            // Description
+            Text(
+                text = "When enabled, your device helps relay traffic for users in restricted regions. " +
+                       "All traffic is encrypted end-to-end. You cannot read relayed data.",
+                style = MaterialTheme.typography.bodySmall,
+                color = MaterialTheme.colorScheme.onSurfaceVariant,
+                modifier = Modifier.padding(top = 8.dp)
+            )
+
+            // Bandwidth slider (only show when enabled)
+            if (enabled) {
+                Spacer(modifier = Modifier.height(16.dp))
+
+                Text(
+                    text = "Bandwidth Limit: ${bandwidthKbps} Kbps",
+                    style = MaterialTheme.typography.labelMedium
+                )
+
+                Slider(
+                    value = bandwidthKbps.toFloat(),
+                    onValueChange = { onBandwidthChange(it.toInt()) },
+                    valueRange = 256f..4096f,
+                    steps = 14,
+                    modifier = Modifier.padding(top = 4.dp)
+                )
+
+                // Live statistics
+                if (stats.isRunning) {
+                    Spacer(modifier = Modifier.height(12.dp))
+
+                    Divider(modifier = Modifier.padding(vertical = 8.dp))
+
+                    Text(
+                        text = "Live Statistics",
+                        style = MaterialTheme.typography.labelMedium,
+                        color = GoldenPrimary
+                    )
+
+                    Spacer(modifier = Modifier.height(8.dp))
+
+                    Row(
+                        modifier = Modifier.fillMaxWidth(),
+                        horizontalArrangement = Arrangement.SpaceEvenly
+                    ) {
+                        RelayStatItem(label = "Packets", value = formatNumber(stats.totalPacketsRelayed))
+                        RelayStatItem(label = "Data", value = formatBytes(stats.totalBytesRelayed))
+                        RelayStatItem(label = "Peers", value = stats.activeConnections.toString())
+                    }
+
+                    Spacer(modifier = Modifier.height(8.dp))
+
+                    Row(
+                        modifier = Modifier.fillMaxWidth(),
+                        horizontalArrangement = Arrangement.SpaceEvenly
+                    ) {
+                        RelayStatItem(label = "Dropped", value = formatNumber(stats.droppedPackets))
+                        RelayStatItem(label = "Bandwidth", value = "%.1f Kbps".format(stats.bandwidthUsedKbps))
+                        RelayStatItem(label = "Uptime", value = formatUptime(stats.startTime))
+                    }
+                }
+            }
+        }
+    }
+}
+
+@Composable
+private fun RelayStatItem(
+    label: String,
+    value: String
+) {
+    Column(horizontalAlignment = Alignment.CenterHorizontally) {
+        Text(
+            text = value,
+            style = MaterialTheme.typography.titleSmall
+        )
+        Text(
+            text = label,
+            style = MaterialTheme.typography.labelSmall,
+            color = MaterialTheme.colorScheme.onSurfaceVariant
+        )
+    }
+}
+
+private fun formatNumber(n: Long): String {
+    return when {
+        n < 1000 -> n.toString()
+        n < 1_000_000 -> "%.1fK".format(n / 1000.0)
+        else -> "%.1fM".format(n / 1_000_000.0)
+    }
+}
+
+private fun formatBytes(bytes: Long): String {
+    return when {
+        bytes < 1024 -> "$bytes B"
+        bytes < 1024 * 1024 -> "%.1f KB".format(bytes / 1024.0)
+        bytes < 1024 * 1024 * 1024 -> "%.1f MB".format(bytes / (1024.0 * 1024))
+        else -> "%.2f GB".format(bytes / (1024.0 * 1024 * 1024))
+    }
+}
+
+private fun formatUptime(startTime: Long): String {
+    if (startTime == 0L) return "0s"
+    val seconds = (System.currentTimeMillis() - startTime) / 1000
+    return when {
+        seconds < 60 -> "${seconds}s"
+        seconds < 3600 -> "${seconds / 60}m ${seconds % 60}s"
+        else -> "${seconds / 3600}h ${(seconds % 3600) / 60}m"
     }
 }
 
