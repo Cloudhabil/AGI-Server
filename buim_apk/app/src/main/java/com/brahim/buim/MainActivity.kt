@@ -25,6 +25,7 @@ import com.brahim.buim.safety.SafetyVerdict
 import com.brahim.buim.ui.components.ChatMessage
 import com.brahim.buim.ui.components.MessageSender
 import com.brahim.buim.ui.screens.*
+import com.brahim.buim.ui.screens.hubs.*
 import com.brahim.buim.ui.theme.BuimTheme
 import kotlinx.coroutines.launch
 import java.util.UUID
@@ -56,6 +57,20 @@ sealed class Screen {
     data class SecureChat(val peerName: String, val peerBnpAddress: String) : Screen()
     data object NetworkDiagnostics : Screen()
     data class ToolDetail(val toolId: String) : Screen()
+
+    // Hub Screens (83 applications in 12 categories)
+    data object PhysicsHub : Screen()
+    data object MathHub : Screen()
+    data object CosmologyHub : Screen()
+    data object AviationHub : Screen()
+    data object TrafficHub : Screen()
+    data object BusinessHub : Screen()
+    data object SolversHub : Screen()
+    data object PlanetaryHub : Screen()
+    data object SecurityHub : Screen()
+    data object MLHub : Screen()
+    data object VisualizationHub : Screen()
+    data object UtilitiesHub : Screen()
 }
 
 /**
@@ -126,6 +141,20 @@ class MainActivity : ComponentActivity() {
                             ToolsScreen(
                                 onToolSelected = { toolId ->
                                     when (toolId) {
+                                        // Hub Routes
+                                        "physics_hub" -> currentScreen = Screen.PhysicsHub
+                                        "math_hub" -> currentScreen = Screen.MathHub
+                                        "cosmology_hub" -> currentScreen = Screen.CosmologyHub
+                                        "aviation_hub" -> currentScreen = Screen.AviationHub
+                                        "traffic_hub" -> currentScreen = Screen.TrafficHub
+                                        "business_hub" -> currentScreen = Screen.BusinessHub
+                                        "solvers_hub" -> currentScreen = Screen.SolversHub
+                                        "planetary_hub" -> currentScreen = Screen.PlanetaryHub
+                                        "security_hub" -> currentScreen = Screen.SecurityHub
+                                        "ml_hub" -> currentScreen = Screen.MLHub
+                                        "visualization_hub" -> currentScreen = Screen.VisualizationHub
+                                        "utilities_hub" -> currentScreen = Screen.UtilitiesHub
+                                        // Individual Tools
                                         "physics_calculator" -> currentScreen = Screen.Physics
                                         "brahim_sudoku" -> currentScreen = Screen.Sudoku
                                         "killer_use_cases" -> currentScreen = Screen.KillerUseCases
@@ -246,6 +275,115 @@ class MainActivity : ComponentActivity() {
 
                         is Screen.NetworkDiagnostics -> {
                             NetworkDiagnosticsScreen(
+                                onBack = { currentScreen = Screen.Tools }
+                            )
+                        }
+
+                        // ===== HUB SCREENS (83 apps in 12 categories) =====
+                        is Screen.PhysicsHub -> {
+                            PhysicsHubScreen(
+                                onAppSelect = { appId ->
+                                    currentScreen = Screen.ToolDetail(appId)
+                                },
+                                onBack = { currentScreen = Screen.Tools }
+                            )
+                        }
+
+                        is Screen.MathHub -> {
+                            MathHubScreen(
+                                onAppSelect = { appId ->
+                                    currentScreen = Screen.ToolDetail(appId)
+                                },
+                                onBack = { currentScreen = Screen.Tools }
+                            )
+                        }
+
+                        is Screen.CosmologyHub -> {
+                            CosmologyHubScreen(
+                                onAppSelect = { appId ->
+                                    currentScreen = Screen.ToolDetail(appId)
+                                },
+                                onBack = { currentScreen = Screen.Tools }
+                            )
+                        }
+
+                        is Screen.AviationHub -> {
+                            AviationHubScreen(
+                                onAppSelect = { appId ->
+                                    currentScreen = Screen.ToolDetail(appId)
+                                },
+                                onBack = { currentScreen = Screen.Tools }
+                            )
+                        }
+
+                        is Screen.TrafficHub -> {
+                            TrafficHubScreen(
+                                onAppSelect = { appId ->
+                                    currentScreen = Screen.ToolDetail(appId)
+                                },
+                                onBack = { currentScreen = Screen.Tools }
+                            )
+                        }
+
+                        is Screen.BusinessHub -> {
+                            BusinessHubScreen(
+                                onAppSelect = { appId ->
+                                    currentScreen = Screen.ToolDetail(appId)
+                                },
+                                onBack = { currentScreen = Screen.Tools }
+                            )
+                        }
+
+                        is Screen.SolversHub -> {
+                            SolversHubScreen(
+                                onAppSelect = { appId ->
+                                    currentScreen = Screen.ToolDetail(appId)
+                                },
+                                onBack = { currentScreen = Screen.Tools }
+                            )
+                        }
+
+                        is Screen.PlanetaryHub -> {
+                            PlanetaryHubScreen(
+                                onAppSelect = { appId ->
+                                    currentScreen = Screen.ToolDetail(appId)
+                                },
+                                onBack = { currentScreen = Screen.Tools }
+                            )
+                        }
+
+                        is Screen.SecurityHub -> {
+                            SecurityHubScreen(
+                                onAppSelect = { appId ->
+                                    currentScreen = Screen.ToolDetail(appId)
+                                },
+                                onBack = { currentScreen = Screen.Tools }
+                            )
+                        }
+
+                        is Screen.MLHub -> {
+                            MLHubScreen(
+                                onAppSelect = { appId ->
+                                    currentScreen = Screen.ToolDetail(appId)
+                                },
+                                onBack = { currentScreen = Screen.Tools }
+                            )
+                        }
+
+                        is Screen.VisualizationHub -> {
+                            VisualizationHubScreen(
+                                onAppSelect = { appId ->
+                                    currentScreen = Screen.ToolDetail(appId)
+                                },
+                                onBack = { currentScreen = Screen.Tools }
+                            )
+                        }
+
+                        is Screen.UtilitiesHub -> {
+                            UtilitiesHubScreen(
+                                onAppSelect = { appId ->
+                                    currentScreen = Screen.ToolDetail(appId)
+                                },
                                 onBack = { currentScreen = Screen.Tools }
                             )
                         }
