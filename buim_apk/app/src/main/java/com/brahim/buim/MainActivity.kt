@@ -38,6 +38,8 @@ sealed class Screen {
     data object Settings : Screen()
     data object Physics : Screen()
     data object Sudoku : Screen()
+    data object KillerUseCases : Screen()
+    data object Blockchain : Screen()
     data class ToolDetail(val toolId: String) : Screen()
 }
 
@@ -84,6 +86,7 @@ class MainActivity : ComponentActivity() {
                                     when (toolId) {
                                         "physics_calculator" -> currentScreen = Screen.Physics
                                         "brahim_sudoku" -> currentScreen = Screen.Sudoku
+                                        "killer_use_cases" -> currentScreen = Screen.KillerUseCases
                                         else -> currentScreen = Screen.ToolDetail(toolId)
                                     }
                                 },
@@ -107,6 +110,19 @@ class MainActivity : ComponentActivity() {
 
                         is Screen.Sudoku -> {
                             SudokuScreen(
+                                onNavigateBack = { currentScreen = Screen.Tools }
+                            )
+                        }
+
+                        is Screen.KillerUseCases -> {
+                            KillerUseCasesScreen(
+                                onNavigateBack = { currentScreen = Screen.Tools }
+                            )
+                        }
+
+                        is Screen.Blockchain -> {
+                            // Blockchain explorer - can be expanded
+                            KillerUseCasesScreen(
                                 onNavigateBack = { currentScreen = Screen.Tools }
                             )
                         }

@@ -16,7 +16,6 @@ import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.*
-import androidx.compose.material.icons.filled.GridOn
 import androidx.compose.material3.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
@@ -39,6 +38,19 @@ data class ToolInfo(
 
 // Available tools
 private val availableTools = listOf(
+    ToolInfo(
+        id = "killer_use_cases",
+        name = "Brahim Tools (BNv1)",
+        domain = "Utility",
+        description = "Killer use cases: Geo IDs, Routes, Fingerprints, Provenance",
+        capabilities = listOf(
+            "Geospatial Product IDs",
+            "Route Tracking & Checksums",
+            "Dataset Fingerprinting",
+            "OpenAI SDK Integration"
+        ),
+        icon = Icons.Filled.Build
+    ),
     ToolInfo(
         id = "brahim_sudoku",
         name = "Brahim Sudoku",
