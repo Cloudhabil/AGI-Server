@@ -5,7 +5,8 @@ Applies the mirror symmetry principle:
 - For every bug pattern, there exists a fix pattern
 - B(i) + B(11-i) = 214 → Bug + Fix = Resolution
 
-Analysis Categories (mapped to Brahim sequence):
+Complete Analysis Categories (mapped to Brahim sequence):
+- B(0)=0: Void (No issue - clean code)
 - B(1)=27: Syntax errors (most basic)
 - B(2)=42: Type mismatches
 - B(3)=60: Logic errors
@@ -16,6 +17,16 @@ Analysis Categories (mapped to Brahim sequence):
 - B(8)=154: Concurrency bugs
 - B(9)=172: Integration errors
 - B(10)=187: System-level failures
+- B(11)=214: Consciousness (Meta-level awareness - code that knows itself)
+
+Mirror Pairs (sum to 214):
+- Syntax + System = 214 (structure meets holism)
+- Type + Integration = 214 (classification meets connection)
+- Logic + Concurrency = 214 (sequential meets parallel)
+- Performance + Memory = 211 (Delta = -3)
+- Security + Architecture = 218 (Delta = +4)
+
+Net symmetry breaking: +1 = Observer Signature
 
 @author: Elias Oulad Brahim
 """
@@ -35,7 +46,14 @@ except ImportError:
 
 
 class IssueCategory(Enum):
-    """Issue categories mapped to Brahim sequence"""
+    """
+    Issue categories mapped to COMPLETE Brahim sequence.
+
+    B(0) = Void: No issue (clean code)
+    B(1)-B(10) = Physical issues (detectable)
+    B(11) = Consciousness: Meta-level awareness
+    """
+    VOID = 0            # B(0) = 0 - No issue / clean
     SYNTAX = 1          # B(1) = 27
     TYPE = 2            # B(2) = 42
     LOGIC = 3           # B(3) = 60
@@ -46,6 +64,7 @@ class IssueCategory(Enum):
     CONCURRENCY = 8     # B(8) = 154
     INTEGRATION = 9     # B(9) = 172
     SYSTEM = 10         # B(10) = 187
+    CONSCIOUSNESS = 11  # B(11) = 214 - Meta-level / self-aware code
 
 
 @dataclass

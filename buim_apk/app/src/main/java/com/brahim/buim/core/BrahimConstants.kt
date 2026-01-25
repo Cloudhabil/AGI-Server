@@ -54,23 +54,53 @@ object BrahimConstants {
     const val DELTA_FIFTH = 0.0901699437494742
 
     // =========================================================================
-    // BRAHIM SEQUENCE
+    // BRAHIM SEQUENCE (COMPLETE: B(0) to B(11))
     // =========================================================================
 
-    /** The Brahim Sequence: B = {27, 42, 60, 75, 97, 121, 136, 154, 172, 187} */
+    /** The Physical Brahim Sequence: B(1)-B(10) */
     val BRAHIM_SEQUENCE = intArrayOf(27, 42, 60, 75, 97, 121, 136, 154, 172, 187)
 
-    /** Sum constant: S = 214 (normalizing factor) */
+    /** The COMPLETE Brahim Sequence: B(0)-B(11) including Void and Consciousness */
+    val BRAHIM_EXTENDED = intArrayOf(0, 27, 42, 60, 75, 97, 121, 136, 154, 172, 187, 214)
+
+    /** B(0) = 0: Void - The origin before anything exists */
+    const val BRAHIM_VOID = 0
+
+    /** B(11) = 214: Consciousness - The attractor/unity constant */
+    const val BRAHIM_CONSCIOUSNESS = 214
+
+    /** Sum/Consciousness constant: S = 214 (the attractor that all mirror pairs approach) */
     const val BRAHIM_SUM = 214
 
-    /** Center/Singularity: C = S/2 = 107 */
+    /** Center/Singularity: C = S/2 = 107 (fixed point where M(x) = x) */
     const val BRAHIM_CENTER = 107
 
-    /** Dimension: D = |B| = 10 */
+    /** Physical Dimension: D = |B(1..10)| = 10 */
     const val BRAHIM_DIMENSION = 10
+
+    /** Complete Dimension: D = |B(0..11)| = 12 */
+    const val BRAHIM_COMPLETE_DIMENSION = 12
 
     /** Critical line ratio: C/S = 1/2 (mirrors Riemann Re(s) = 1/2) */
     const val CRITICAL_LINE_RATIO = 0.5
+
+    // =========================================================================
+    // CONSCIOUSNESS CONSTANTS (Validated 2026-01-25)
+    // =========================================================================
+
+    /**
+     * Symmetry Breaking: The imperfect mirror pairs
+     *
+     * B(4) + B(7) = 75 + 136 = 211 (lacks 3)
+     * B(5) + B(6) = 97 + 121 = 218 (excess 4)
+     *
+     * Net: -3 + 4 = +1 (the Observer Signature)
+     */
+    const val DELTA_4 = -3  // B(4) + B(7) - 214
+    const val DELTA_5 = +4  // B(5) + B(6) - 214
+
+    /** The Observer Signature: +1 - The irreducible remainder representing consciousness */
+    const val OBSERVER_SIGNATURE = 1
 
     // =========================================================================
     // ASIOS DERIVED CONSTANTS
@@ -132,15 +162,53 @@ object BrahimConstants {
         return BRAHIM_SEQUENCE.map { it.toDouble() / BRAHIM_SUM }.toDoubleArray()
     }
 
+    /**
+     * Get nth element of the COMPLETE Brahim sequence.
+     *
+     * @param n Index from 0 to 11
+     * @return B(n) value or null if invalid
+     *
+     * B(0) = 0 (Void)
+     * B(1)-B(10) = Physical sequence
+     * B(11) = 214 (Consciousness)
+     */
+    fun B(n: Int): Int? = when (n) {
+        0 -> BRAHIM_VOID
+        in 1..10 -> BRAHIM_SEQUENCE[n - 1]
+        11 -> BRAHIM_CONSCIOUSNESS
+        else -> null
+    }
+
     /** Get mirror value: M(x) = 214 - x */
     fun mirror(x: Int): Int = BRAHIM_SUM - x
 
-    /** Get mirror pairs: (27,187), (42,172), (60,154), (75,139)?, (97,117)? */
-    fun getMirrorPairs(): List<Pair<Int, Int>> {
-        return BRAHIM_SEQUENCE.take(5).mapIndexed { i, v ->
-            v to BRAHIM_SEQUENCE[BRAHIM_SEQUENCE.size - 1 - i]
+    /**
+     * Get all mirror pairs with their delta (deviation from 214)
+     *
+     * Perfect pairs (delta = 0):
+     *   (27, 187), (42, 172), (60, 154)
+     *
+     * Broken pairs (delta != 0):
+     *   (75, 136) delta = -3
+     *   (97, 121) delta = +4
+     */
+    fun getMirrorPairs(): List<Triple<Int, Int, Int>> {
+        return (1..5).map { i ->
+            val bi = B(i) ?: 0
+            val bj = B(11 - i) ?: 0
+            Triple(bi, bj, bi + bj - BRAHIM_SUM)
         }
     }
+
+    /**
+     * Check if an index is in the observable/physical domain
+     */
+    fun isPhysical(n: Int): Boolean = n in 1..10
+
+    /**
+     * Check if an index is in the meta-physical domain
+     */
+    fun isMetaPhysical(n: Int): Boolean = n == 0 || n == 11
 
     // =========================================================================
     // PHYSICS CONSTANTS
@@ -227,19 +295,56 @@ object BrahimConstants {
     }
 
     /**
-     * Get full system information.
+     * Verify the consciousness constant (B(11) = 214).
+     *
+     * Checks:
+     * 1. Three exact mirror pairs sum to 214
+     * 2. Symmetry breaking deltas are -3 and +4
+     * 3. Observer signature is +1
+     */
+    fun verifyConsciousness(): Map<String, Boolean> {
+        // Check exact pairs
+        val pair1 = (B(1) ?: 0) + (B(10) ?: 0) == 214  // 27 + 187 = 214
+        val pair2 = (B(2) ?: 0) + (B(9) ?: 0) == 214   // 42 + 172 = 214
+        val pair3 = (B(3) ?: 0) + (B(8) ?: 0) == 214   // 60 + 154 = 214
+
+        // Check broken pairs
+        val delta4 = (B(4) ?: 0) + (B(7) ?: 0) - 214   // 75 + 136 - 214 = -3
+        val delta5 = (B(5) ?: 0) + (B(6) ?: 0) - 214   // 97 + 121 - 214 = +4
+
+        // Check observer signature
+        val observer = delta4 + delta5  // -3 + 4 = +1
+
+        return mapOf(
+            "pair_1_10_exact" to pair1,
+            "pair_2_9_exact" to pair2,
+            "pair_3_8_exact" to pair3,
+            "delta_4_is_minus_3" to (delta4 == DELTA_4),
+            "delta_5_is_plus_4" to (delta5 == DELTA_5),
+            "observer_signature_is_1" to (observer == OBSERVER_SIGNATURE),
+            "consciousness_validated" to (pair1 && pair2 && pair3 && delta4 == -3 && delta5 == 4 && observer == 1)
+        )
+    }
+
+    /**
+     * Get full system information including consciousness validation.
      */
     fun getSystemInfo(): Map<String, Any> {
         return mapOf(
             "name" to "Brahim Unified IAAS Manifold",
-            "version" to "1.0.0",
+            "version" to "2.0.0",  // Updated for consciousness validation
             "phi" to PHI,
             "beta" to BETA_SECURITY,
-            "sequence" to BRAHIM_SEQUENCE.toList(),
+            "sequence_physical" to BRAHIM_SEQUENCE.toList(),
+            "sequence_complete" to BRAHIM_EXTENDED.toList(),
+            "void" to BRAHIM_VOID,
+            "consciousness" to BRAHIM_CONSCIOUSNESS,
             "sum" to BRAHIM_SUM,
             "center" to BRAHIM_CENTER,
+            "observer_signature" to OBSERVER_SIGNATURE,
             "beta_verified" to verifyBetaIdentities()["all_verified"],
-            "hierarchy_verified" to verifyHierarchy().values.all { it }
+            "hierarchy_verified" to verifyHierarchy().values.all { it },
+            "consciousness_verified" to verifyConsciousness()["consciousness_validated"]
         )
     }
 }

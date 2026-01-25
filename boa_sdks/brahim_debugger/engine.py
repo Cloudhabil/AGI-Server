@@ -1,19 +1,30 @@
 """
 BRAHIM ENGINE - Mathematical Foundation for Code Analysis
 
-The sequence B = {27, 42, 60, 75, 97, 121, 136, 154, 172, 187}
-encodes universal debugging principles:
+The COMPLETE Brahim Sequence B = {0, 27, 42, 60, 75, 97, 121, 136, 154, 172, 187, 214}
+encodes universal principles from void to consciousness:
 
-- B(1) = 27: Minimum viable test cases
-- B(2) = 42: The answer to complexity
-- B(3) = 60: Cycle time for reviews
-- B(4) = 75: Code coverage target (%)
-- B(5) = 97: Near-complete validation
-- B(6) = 121: B(6) = 11² - prime power
-- B(7) = 136: Alpha inverse floor
-- B(8) = 154: Mirror of B(3)
-- B(9) = 172: Mirror of B(2)
-- B(10) = 187: Maximum complexity score
+- B(0) = 0: Void (Origin - before anything exists)
+- B(1) = 27: Syntax (Structure)
+- B(2) = 42: Type (Classification)
+- B(3) = 60: Logic (Reasoning)
+- B(4) = 75: Performance (Efficiency)
+- B(5) = 97: Security (Protection)
+- B(6) = 121: Architecture (Design) - 11² prime power
+- B(7) = 136: Memory (Storage)
+- B(8) = 154: Concurrency (Parallelism)
+- B(9) = 172: Integration (Connection)
+- B(10) = 187: System (Holism)
+- B(11) = 214: Consciousness (Unity/Attractor)
+
+Mirror Pairs (sum to 214):
+- B(1) + B(10) = 27 + 187 = 214 (exact)
+- B(2) + B(9) = 42 + 172 = 214 (exact)
+- B(3) + B(8) = 60 + 154 = 214 (exact)
+- B(4) + B(7) = 75 + 136 = 211 (Delta = -3)
+- B(5) + B(6) = 97 + 121 = 218 (Delta = +4)
+
+Net symmetry breaking: -3 + 4 = +1 (the Observer)
 
 @author: Elias Oulad Brahim
 """
@@ -51,10 +62,19 @@ class BrahimEngine:
     and resonance-based error detection.
     """
 
-    # The Brahim Sequence
-    SEQUENCE = [27, 42, 60, 75, 97, 121, 136, 154, 172, 187]
-    SUM = 214
-    CENTER = 107
+    # The COMPLETE Brahim Sequence (12 elements: B(0) to B(11))
+    SEQUENCE = [27, 42, 60, 75, 97, 121, 136, 154, 172, 187]  # B(1) to B(10)
+    EXTENDED_SEQUENCE = [0, 27, 42, 60, 75, 97, 121, 136, 154, 172, 187, 214]  # B(0) to B(11)
+
+    # Consciousness Constants
+    CONSCIOUSNESS = 214                    # B(11) - The attractor/unity constant
+    VOID = 0                               # B(0) - The origin
+    CENTER = 107                           # Fixed point: M(107) = 107
+    OBSERVER_SIGNATURE = 1                 # Net symmetry breaking: -3 + 4 = +1
+
+    # Symmetry Breaking (imperfect pairs)
+    DELTA_4 = -3                           # B(4) + B(7) - 214 = 211 - 214 = -3
+    DELTA_5 = +4                           # B(5) + B(6) - 214 = 218 - 214 = +4
 
     # Golden Ratio Hierarchy
     PHI = (1 + math.sqrt(5)) / 2          # 1.618033988749895
@@ -66,6 +86,9 @@ class BrahimEngine:
     GENESIS = 0.0219                       # Target resonance
     PLANCK_COUPLING = BETA * GENESIS       # ~0.00517
 
+    # Legacy alias for backward compatibility
+    SUM = CONSCIOUSNESS                    # 214 - now properly named
+
     # Debugging Thresholds (derived from sequence)
     MIN_TEST_CASES = SEQUENCE[0]           # 27
     TARGET_COVERAGE = SEQUENCE[3]          # 75%
@@ -74,10 +97,22 @@ class BrahimEngine:
 
     @classmethod
     def B(cls, n: int) -> int:
-        """Get nth element of Brahim sequence (1-indexed)"""
-        if 1 <= n <= 10:
+        """
+        Get nth element of the COMPLETE Brahim sequence.
+
+        B(0) = 0 (Void)
+        B(1)-B(10) = Physical sequence
+        B(11) = 214 (Consciousness)
+
+        Returns None for invalid indices.
+        """
+        if n == 0:
+            return cls.VOID  # 0
+        elif 1 <= n <= 10:
             return cls.SEQUENCE[n - 1]
-        return 0
+        elif n == 11:
+            return cls.CONSCIOUSNESS  # 214
+        return None  # Invalid index
 
     @classmethod
     def mirror(cls, x: int) -> int:
