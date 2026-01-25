@@ -43,6 +43,7 @@ sealed class Screen {
     data object SolarMap : Screen()
     data object Contacts : Screen()
     data class SecureChat(val peerName: String, val peerBnpAddress: String) : Screen()
+    data object NetworkDiagnostics : Screen()
     data class ToolDetail(val toolId: String) : Screen()
 }
 
@@ -92,6 +93,7 @@ class MainActivity : ComponentActivity() {
                                         "killer_use_cases" -> currentScreen = Screen.KillerUseCases
                                         "solar_map" -> currentScreen = Screen.SolarMap
                                         "secure_chat" -> currentScreen = Screen.Contacts
+                                        "network_diagnostics" -> currentScreen = Screen.NetworkDiagnostics
                                         else -> currentScreen = Screen.ToolDetail(toolId)
                                     }
                                 },
@@ -164,6 +166,12 @@ class MainActivity : ComponentActivity() {
                                 peerName = screen.peerName,
                                 peerBnpAddress = screen.peerBnpAddress,
                                 onBack = { currentScreen = Screen.Contacts }
+                            )
+                        }
+
+                        is Screen.NetworkDiagnostics -> {
+                            NetworkDiagnosticsScreen(
+                                onBack = { currentScreen = Screen.Tools }
                             )
                         }
                     }

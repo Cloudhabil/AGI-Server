@@ -137,6 +137,19 @@ private val availableTools = listOf(
             "BNP address routing"
         ),
         icon = Icons.Filled.Lock
+    ),
+    ToolInfo(
+        id = "network_diagnostics",
+        name = "Network Diagnostics",
+        domain = "Network",
+        description = "Ping, traceroute, and connectivity testing",
+        capabilities = listOf(
+            "ICMP/TCP ping",
+            "BNP address testing",
+            "Packet statistics",
+            "Relay connectivity"
+        ),
+        icon = Icons.Filled.NetworkCheck
     )
 )
 
