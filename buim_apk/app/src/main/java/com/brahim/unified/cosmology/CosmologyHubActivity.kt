@@ -1,4 +1,4 @@
-package com.brahim.unified.security
+package com.brahim.unified.cosmology
 
 import android.content.Intent
 import android.os.Bundle
@@ -11,18 +11,20 @@ import android.view.ViewGroup
 import android.widget.TextView
 import com.brahim.unified.R
 
-class SecurityHubActivity : AppCompatActivity() {
+class CosmologyHubActivity : AppCompatActivity() {
 
     private val apps = listOf(
-        AppItem("Wormhole Cipher", "β-based encryption/decryption", CipherActivity::class.java),
-        AppItem("ASIOS Guard", "Berry-Keating safety assessment", ASIOSActivity::class.java),
-        AppItem("Key Generator", "φ-based key derivation", KeyGenActivity::class.java)
+        AppItem("Dark Energy", "Λ-CDM dark energy from φ", DarkEnergyActivity::class.java),
+        AppItem("Dark Matter", "Cold dark matter density", DarkMatterActivity::class.java),
+        AppItem("Hubble Flow", "Universe expansion rate", HubbleActivity::class.java),
+        AppItem("CMB Analysis", "Cosmic microwave background", CMBActivity::class.java),
+        AppItem("Big Bang Timeline", "Cosmological epochs", TimelineActivity::class.java)
     )
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_hub)
-        title = "Security"
+        title = "Cosmology"
 
         val recyclerView = findViewById<RecyclerView>(R.id.hubRecyclerView)
         recyclerView.layoutManager = LinearLayoutManager(this)

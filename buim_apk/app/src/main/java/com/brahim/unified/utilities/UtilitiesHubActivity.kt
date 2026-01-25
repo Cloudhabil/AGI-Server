@@ -1,4 +1,4 @@
-package com.brahim.unified.security
+package com.brahim.unified.utilities
 
 import android.content.Intent
 import android.os.Bundle
@@ -11,18 +11,20 @@ import android.view.ViewGroup
 import android.widget.TextView
 import com.brahim.unified.R
 
-class SecurityHubActivity : AppCompatActivity() {
+class UtilitiesHubActivity : AppCompatActivity() {
 
     private val apps = listOf(
-        AppItem("Wormhole Cipher", "β-based encryption/decryption", CipherActivity::class.java),
-        AppItem("ASIOS Guard", "Berry-Keating safety assessment", ASIOSActivity::class.java),
-        AppItem("Key Generator", "φ-based key derivation", KeyGenActivity::class.java)
+        AppItem("Unit Converter", "φ-based unit transformations", UnitConverterActivity::class.java),
+        AppItem("Constant Reference", "Complete Brahim constant library", ConstantReferenceActivity::class.java),
+        AppItem("Formula Calculator", "Live Brahim formula evaluation", FormulaActivity::class.java),
+        AppItem("Precision Analyzer", "Numerical accuracy assessment", PrecisionActivity::class.java),
+        AppItem("Export Tools", "Data export in multiple formats", ExportActivity::class.java)
     )
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_hub)
-        title = "Security"
+        title = "Utilities"
 
         val recyclerView = findViewById<RecyclerView>(R.id.hubRecyclerView)
         recyclerView.layoutManager = LinearLayoutManager(this)

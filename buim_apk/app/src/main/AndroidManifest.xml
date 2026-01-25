@@ -12,7 +12,7 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.BrahimUnified"
         tools:targetApi="34">
-        
+
         <activity
             android:name=".MainActivity"
             android:exported="true"
@@ -22,7 +22,10 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        
+
+        <!-- Engine Activities -->
+        <activity android:name=".engine.EngineDashboardActivity" android:exported="false" />
+
         <!-- Physics Activities -->
         <activity android:name=".physics.PhysicsHubActivity" android:exported="false" />
         <activity android:name=".physics.FineStructureActivity" android:exported="false" />
@@ -30,44 +33,99 @@
         <activity android:name=".physics.MassRatiosActivity" android:exported="false" />
         <activity android:name=".physics.CosmologyActivity" android:exported="false" />
         <activity android:name=".physics.YangMillsActivity" android:exported="false" />
-        
+        <activity android:name=".physics.CouplingActivity" android:exported="false" />
+        <activity android:name=".physics.HierarchyActivity" android:exported="false" />
+        <activity android:name=".physics.QuantumActivity" android:exported="false" />
+
         <!-- Math Activities -->
         <activity android:name=".math.MathHubActivity" android:exported="false" />
         <activity android:name=".math.SequenceActivity" android:exported="false" />
         <activity android:name=".math.MirrorActivity" android:exported="false" />
         <activity android:name=".math.EgyptianActivity" android:exported="false" />
-        
+        <activity android:name=".math.ResonanceActivity" android:exported="false" />
+        <activity android:name=".math.GoldenActivity" android:exported="false" />
+        <activity android:name=".math.PrimeActivity" android:exported="false" />
+        <activity android:name=".math.ContinuedFractionActivity" android:exported="false" />
+
         <!-- Aviation Activities -->
         <activity android:name=".aviation.AviationHubActivity" android:exported="false" />
         <activity android:name=".aviation.PathfinderActivity" android:exported="false" />
         <activity android:name=".aviation.ConflictActivity" android:exported="false" />
-        
+        <activity android:name=".aviation.FuelActivity" android:exported="false" />
+        <activity android:name=".aviation.WeatherActivity" android:exported="false" />
+        <activity android:name=".aviation.AltitudeActivity" android:exported="false" />
+        <activity android:name=".aviation.MaintenanceActivity" android:exported="false" />
+        <activity android:name=".aviation.RunwayActivity" android:exported="false" />
+
         <!-- Traffic Activities -->
         <activity android:name=".traffic.TrafficHubActivity" android:exported="false" />
         <activity android:name=".traffic.SignalActivity" android:exported="false" />
         <activity android:name=".traffic.CongestionActivity" android:exported="false" />
-        
+        <activity android:name=".traffic.RouteActivity" android:exported="false" />
+        <activity android:name=".traffic.ParkingActivity" android:exported="false" />
+        <activity android:name=".traffic.EmergencyActivity" android:exported="false" />
+        <activity android:name=".traffic.WavesActivity" android:exported="false" />
+        <activity android:name=".traffic.IntersectionActivity" android:exported="false" />
+
         <!-- Business Activities -->
         <activity android:name=".business.BusinessHubActivity" android:exported="false" />
         <activity android:name=".business.AllocatorActivity" android:exported="false" />
         <activity android:name=".business.SynergyActivity" android:exported="false" />
-        
+        <activity android:name=".business.SalaryActivity" android:exported="false" />
+        <activity android:name=".business.SchedulerActivity" android:exported="false" />
+        <activity android:name=".business.RiskActivity" android:exported="false" />
+        <activity android:name=".business.ComplianceActivity" android:exported="false" />
+        <activity android:name=".business.KPIActivity" android:exported="false" />
+
         <!-- Solver Activities -->
         <activity android:name=".solvers.SolversHubActivity" android:exported="false" />
         <activity android:name=".solvers.SATActivity" android:exported="false" />
         <activity android:name=".solvers.CFDActivity" android:exported="false" />
-        
+        <activity android:name=".solvers.PDEActivity" android:exported="false" />
+        <activity android:name=".solvers.OptimizationActivity" android:exported="false" />
+        <activity android:name=".solvers.ConstraintActivity" android:exported="false" />
+        <activity android:name=".solvers.LinearAlgebraActivity" android:exported="false" />
+
         <!-- Planetary Activities -->
         <activity android:name=".planetary.PlanetaryHubActivity" android:exported="false" />
         <activity android:name=".planetary.TitanActivity" android:exported="false" />
-        
+        <activity android:name=".planetary.MarsActivity" android:exported="false" />
+        <activity android:name=".planetary.OrbitalActivity" android:exported="false" />
+
         <!-- Security Activities -->
         <activity android:name=".security.SecurityHubActivity" android:exported="false" />
         <activity android:name=".security.CipherActivity" android:exported="false" />
-        
+        <activity android:name=".security.ASIOSActivity" android:exported="false" />
+        <activity android:name=".security.KeyGenActivity" android:exported="false" />
+
         <!-- ML Activities -->
         <activity android:name=".ml.MLHubActivity" android:exported="false" />
         <activity android:name=".ml.IntentActivity" android:exported="false" />
-        
+        <activity android:name=".ml.WavelengthActivity" android:exported="false" />
+        <activity android:name=".ml.PhaseActivity" android:exported="false" />
+
+        <!-- Visualization Activities -->
+        <activity android:name=".visualization.VisualizationHubActivity" android:exported="false" />
+        <activity android:name=".visualization.SequencePlotActivity" android:exported="false" />
+        <activity android:name=".visualization.ResonanceMonitorActivity" android:exported="false" />
+        <activity android:name=".visualization.PhasePortraitActivity" android:exported="false" />
+        <activity android:name=".visualization.SymmetryActivity" android:exported="false" />
+
+        <!-- Utilities Activities -->
+        <activity android:name=".utilities.UtilitiesHubActivity" android:exported="false" />
+        <activity android:name=".utilities.UnitConverterActivity" android:exported="false" />
+        <activity android:name=".utilities.ConstantReferenceActivity" android:exported="false" />
+        <activity android:name=".utilities.FormulaActivity" android:exported="false" />
+        <activity android:name=".utilities.PrecisionActivity" android:exported="false" />
+        <activity android:name=".utilities.ExportActivity" android:exported="false" />
+
+        <!-- Cosmology Activities -->
+        <activity android:name=".cosmology.CosmologyHubActivity" android:exported="false" />
+        <activity android:name=".cosmology.DarkEnergyActivity" android:exported="false" />
+        <activity android:name=".cosmology.DarkMatterActivity" android:exported="false" />
+        <activity android:name=".cosmology.HubbleActivity" android:exported="false" />
+        <activity android:name=".cosmology.CMBActivity" android:exported="false" />
+        <activity android:name=".cosmology.TimelineActivity" android:exported="false" />
+
     </application>
 </manifest>

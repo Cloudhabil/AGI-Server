@@ -16,19 +16,17 @@ class AviationHubActivity : AppCompatActivity() {
     private val apps = listOf(
         AppItem("Pathfinder", "Golden-ratio optimized flight paths", PathfinderActivity::class.java),
         AppItem("Conflict Detection", "Brahim-based separation analysis", ConflictActivity::class.java),
-        AppItem("Fuel Optimizer", "Resonance-weighted fuel consumption", PathfinderActivity::class.java),
-        AppItem("Weather Router", "Method of characteristics routing", PathfinderActivity::class.java),
-        AppItem("Separation Minima", "Calculate safe separation distances", ConflictActivity::class.java),
-        AppItem("Altitude Bands", "Optimal cruise altitude selection", PathfinderActivity::class.java),
-        AppItem("Maintenance Scheduler", "Brahim interval maintenance", ConflictActivity::class.java),
-        AppItem("Runway Allocator", "Capacity optimization", PathfinderActivity::class.java)
+        AppItem("Fuel Optimizer", "Resonance-weighted fuel calculation", FuelActivity::class.java),
+        AppItem("Weather Router", "Method of characteristics routing", WeatherActivity::class.java),
+        AppItem("Altitude Manager", "φ-ratio step climb profiles", AltitudeActivity::class.java),
+        AppItem("Maintenance Scheduler", "B(n)×100 hour intervals", MaintenanceActivity::class.java),
+        AppItem("Runway Allocator", "φ-based capacity optimization", RunwayActivity::class.java)
     )
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_hub)
-
-        title = "Aviation Applications"
+        title = "Aviation"
 
         val recyclerView = findViewById<RecyclerView>(R.id.hubRecyclerView)
         recyclerView.layoutManager = LinearLayoutManager(this)
@@ -39,28 +37,22 @@ class AviationHubActivity : AppCompatActivity() {
 
     data class AppItem(val name: String, val description: String, val activityClass: Class<*>)
 
-    class AppAdapter(
-        private val apps: List<AppItem>,
-        private val onClick: (AppItem) -> Unit
-    ) : RecyclerView.Adapter<AppAdapter.ViewHolder>() {
-
+    class AppAdapter(private val apps: List<AppItem>, private val onClick: (AppItem) -> Unit) :
+        RecyclerView.Adapter<AppAdapter.ViewHolder>() {
         class ViewHolder(view: View) : RecyclerView.ViewHolder(view) {
             val nameText: TextView = view.findViewById(R.id.appName)
             val descText: TextView = view.findViewById(R.id.appDescription)
         }
-
         override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
             val view = LayoutInflater.from(parent.context).inflate(R.layout.item_app, parent, false)
             return ViewHolder(view)
         }
-
         override fun onBindViewHolder(holder: ViewHolder, position: Int) {
             val app = apps[position]
             holder.nameText.text = app.name
             holder.descText.text = app.description
             holder.itemView.setOnClickListener { onClick(app) }
         }
-
         override fun getItemCount() = apps.size
     }
 }

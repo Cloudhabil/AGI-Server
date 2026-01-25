@@ -14,19 +14,15 @@ import com.brahim.unified.R
 class MLHubActivity : AppCompatActivity() {
 
     private val apps = listOf(
-        AppItem("Intent Classifier", "Kelimutu-based query routing", IntentActivity::class.java),
-        AppItem("Wavelength Analyzer", "12-wavelength signal processing", IntentActivity::class.java),
-        AppItem("Phase Classifier", "Time-series phase detection", IntentActivity::class.java),
-        AppItem("Resonance Predictor", "Pattern learning via V-NAND", IntentActivity::class.java),
-        AppItem("Feature Extractor", "Brahim-weighted features", IntentActivity::class.java),
-        AppItem("Anomaly Detector", "Axiological deviation detection", IntentActivity::class.java)
+        AppItem("Intent Classifier", "Kelimutu 3-lake routing", IntentActivity::class.java),
+        AppItem("Wavelength Analyzer", "12-wavelength BOA pipeline", WavelengthActivity::class.java),
+        AppItem("Phase Classifier", "Time-series phase detection", PhaseActivity::class.java)
     )
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_hub)
-
-        title = "ML/AI Applications"
+        title = "ML/AI"
 
         val recyclerView = findViewById<RecyclerView>(R.id.hubRecyclerView)
         recyclerView.layoutManager = LinearLayoutManager(this)
@@ -37,28 +33,22 @@ class MLHubActivity : AppCompatActivity() {
 
     data class AppItem(val name: String, val description: String, val activityClass: Class<*>)
 
-    class AppAdapter(
-        private val apps: List<AppItem>,
-        private val onClick: (AppItem) -> Unit
-    ) : RecyclerView.Adapter<AppAdapter.ViewHolder>() {
-
+    class AppAdapter(private val apps: List<AppItem>, private val onClick: (AppItem) -> Unit) :
+        RecyclerView.Adapter<AppAdapter.ViewHolder>() {
         class ViewHolder(view: View) : RecyclerView.ViewHolder(view) {
             val nameText: TextView = view.findViewById(R.id.appName)
             val descText: TextView = view.findViewById(R.id.appDescription)
         }
-
         override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
             val view = LayoutInflater.from(parent.context).inflate(R.layout.item_app, parent, false)
             return ViewHolder(view)
         }
-
         override fun onBindViewHolder(holder: ViewHolder, position: Int) {
             val app = apps[position]
             holder.nameText.text = app.name
             holder.descText.text = app.description
             holder.itemView.setOnClickListener { onClick(app) }
         }
-
         override fun getItemCount() = apps.size
     }
 }

@@ -15,20 +15,18 @@ class MathHubActivity : AppCompatActivity() {
 
     private val apps = listOf(
         AppItem("Brahim Sequence", "B = {27, 42, 60, 75, 97, 121, 136, 154, 172, 187}", SequenceActivity::class.java),
-        AppItem("Mirror Operator", "M(x) = 214 - x symmetry exploration", MirrorActivity::class.java),
-        AppItem("Egyptian Fractions", "Decompose fractions using greedy algorithm", EgyptianActivity::class.java),
-        AppItem("Resonance Calculator", "R(t) = sum(1/(d^2+eps)) * exp(-lambda*t)", SequenceActivity::class.java),
-        AppItem("Axiological Alignment", "Distance from Genesis constant 0.0219", SequenceActivity::class.java),
-        AppItem("Golden Ratio Hierarchy", "phi -> alpha -> beta -> gamma chain", SequenceActivity::class.java),
-        AppItem("Continued Fractions", "Infinite expansions of Brahim constants", SequenceActivity::class.java),
-        AppItem("Prime Factorization", "Factorize Brahim sequence elements", SequenceActivity::class.java)
+        AppItem("Mirror Operator", "M(x) = 214 - x symmetry", MirrorActivity::class.java),
+        AppItem("Egyptian Fractions", "Greedy fraction decomposition", EgyptianActivity::class.java),
+        AppItem("Resonance Calculator", "R(t) = Σ(1/(d²+ε)) × e^(-λt)", ResonanceActivity::class.java),
+        AppItem("Golden Hierarchy", "φ → α → β → γ chain", GoldenActivity::class.java),
+        AppItem("Prime Factorization", "Factor Brahim sequence elements", PrimeActivity::class.java),
+        AppItem("Continued Fractions", "Infinite expansions of constants", ContinuedFractionActivity::class.java)
     )
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_hub)
-
-        title = "Mathematics Applications"
+        title = "Mathematics"
 
         val recyclerView = findViewById<RecyclerView>(R.id.hubRecyclerView)
         recyclerView.layoutManager = LinearLayoutManager(this)
@@ -39,28 +37,22 @@ class MathHubActivity : AppCompatActivity() {
 
     data class AppItem(val name: String, val description: String, val activityClass: Class<*>)
 
-    class AppAdapter(
-        private val apps: List<AppItem>,
-        private val onClick: (AppItem) -> Unit
-    ) : RecyclerView.Adapter<AppAdapter.ViewHolder>() {
-
+    class AppAdapter(private val apps: List<AppItem>, private val onClick: (AppItem) -> Unit) :
+        RecyclerView.Adapter<AppAdapter.ViewHolder>() {
         class ViewHolder(view: View) : RecyclerView.ViewHolder(view) {
             val nameText: TextView = view.findViewById(R.id.appName)
             val descText: TextView = view.findViewById(R.id.appDescription)
         }
-
         override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
             val view = LayoutInflater.from(parent.context).inflate(R.layout.item_app, parent, false)
             return ViewHolder(view)
         }
-
         override fun onBindViewHolder(holder: ViewHolder, position: Int) {
             val app = apps[position]
             holder.nameText.text = app.name
             holder.descText.text = app.description
             holder.itemView.setOnClickListener { onClick(app) }
         }
-
         override fun getItemCount() = apps.size
     }
 }

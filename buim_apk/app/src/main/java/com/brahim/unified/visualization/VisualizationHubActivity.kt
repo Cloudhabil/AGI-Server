@@ -1,4 +1,4 @@
-package com.brahim.unified.security
+package com.brahim.unified.visualization
 
 import android.content.Intent
 import android.os.Bundle
@@ -11,18 +11,19 @@ import android.view.ViewGroup
 import android.widget.TextView
 import com.brahim.unified.R
 
-class SecurityHubActivity : AppCompatActivity() {
+class VisualizationHubActivity : AppCompatActivity() {
 
     private val apps = listOf(
-        AppItem("Wormhole Cipher", "β-based encryption/decryption", CipherActivity::class.java),
-        AppItem("ASIOS Guard", "Berry-Keating safety assessment", ASIOSActivity::class.java),
-        AppItem("Key Generator", "φ-based key derivation", KeyGenActivity::class.java)
+        AppItem("Sequence Visualizer", "Interactive Brahim sequence plot", SequencePlotActivity::class.java),
+        AppItem("Resonance Monitor", "Real-time resonance gauge", ResonanceMonitorActivity::class.java),
+        AppItem("Phase Portrait", "FitzHugh-Nagumo dynamics", PhasePortraitActivity::class.java),
+        AppItem("Symmetry Explorer", "Mirror symmetry visualization", SymmetryActivity::class.java)
     )
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_hub)
-        title = "Security"
+        title = "Visualization"
 
         val recyclerView = findViewById<RecyclerView>(R.id.hubRecyclerView)
         recyclerView.layoutManager = LinearLayoutManager(this)
