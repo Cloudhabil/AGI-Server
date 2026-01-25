@@ -41,6 +41,8 @@ sealed class Screen {
     data object KillerUseCases : Screen()
     data object Blockchain : Screen()
     data object SolarMap : Screen()
+    data object Contacts : Screen()
+    data class SecureChat(val peerName: String, val peerBnpAddress: String) : Screen()
     data class ToolDetail(val toolId: String) : Screen()
 }
 
@@ -89,6 +91,7 @@ class MainActivity : ComponentActivity() {
                                         "brahim_sudoku" -> currentScreen = Screen.Sudoku
                                         "killer_use_cases" -> currentScreen = Screen.KillerUseCases
                                         "solar_map" -> currentScreen = Screen.SolarMap
+                                        "secure_chat" -> currentScreen = Screen.Contacts
                                         else -> currentScreen = Screen.ToolDetail(toolId)
                                     }
                                 },
@@ -140,6 +143,27 @@ class MainActivity : ComponentActivity() {
                             ToolsScreen(
                                 onToolSelected = { },
                                 onNavigateBack = { currentScreen = Screen.Tools }
+                            )
+                        }
+
+                        is Screen.Contacts -> {
+                            ContactsScreen(
+                                onContactClick = { contact ->
+                                    currentScreen = Screen.SecureChat(
+                                        peerName = contact.name,
+                                        peerBnpAddress = contact.bnpAddress
+                                    )
+                                },
+                                onNewChat = { /* Open new chat dialog */ },
+                                onBack = { currentScreen = Screen.Chat }
+                            )
+                        }
+
+                        is Screen.SecureChat -> {
+                            SecureChatScreen(
+                                peerName = screen.peerName,
+                                peerBnpAddress = screen.peerBnpAddress,
+                                onBack = { currentScreen = Screen.Contacts }
                             )
                         }
                     }

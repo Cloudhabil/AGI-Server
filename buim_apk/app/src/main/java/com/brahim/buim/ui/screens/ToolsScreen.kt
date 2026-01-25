@@ -124,6 +124,19 @@ private val availableTools = listOf(
             "Exoplanet encoding"
         ),
         icon = Icons.Filled.Public
+    ),
+    ToolInfo(
+        id = "secure_chat",
+        name = "Secure Chat",
+        domain = "Communication",
+        description = "Signal-like encrypted messaging with walkie-talkie",
+        capabilities = listOf(
+            "End-to-end encryption",
+            "Wormhole Cipher (β = 0.236)",
+            "Push-to-Talk voice",
+            "BNP address routing"
+        ),
+        icon = Icons.Filled.Lock
     )
 )
 
