@@ -37,9 +37,11 @@ import java.util.UUID
 sealed class Screen {
     // Main Screens
     data object Home : Screen()
+    data object IntelligentHome : Screen()  // New adaptive home
     data object Chat : Screen()
     data object Tools : Screen()
     data object Settings : Screen()
+    data object Roadmap : Screen()          // Growth roadmap to 214
 
     // User-Friendly Screens
     data object Onboarding : Screen()
@@ -145,7 +147,31 @@ class MainActivity : ComponentActivity() {
                                         "settings" -> currentScreen = Screen.Settings
                                         "help" -> currentScreen = Screen.Help
                                         "about" -> currentScreen = Screen.About
+                                        "intelligent_home" -> currentScreen = Screen.IntelligentHome
+                                        "roadmap" -> currentScreen = Screen.Roadmap
                                     }
+                                }
+                            )
+                        }
+
+                        // ===== INTELLIGENT HOME (Adaptive Discovery) =====
+                        is Screen.IntelligentHome -> {
+                            IntelligentHomeScreen(
+                                onNavigateToApp = { appId ->
+                                    currentScreen = navigateToApp(appId)
+                                },
+                                onNavigateToRoadmap = { currentScreen = Screen.Roadmap },
+                                onNavigateToChat = { currentScreen = Screen.Chat },
+                                onNavigateToTools = { currentScreen = Screen.Tools }
+                            )
+                        }
+
+                        // ===== GROWTH ROADMAP =====
+                        is Screen.Roadmap -> {
+                            RoadmapScreen(
+                                onBack = { currentScreen = Screen.IntelligentHome },
+                                onNavigateToApp = { appId ->
+                                    currentScreen = navigateToApp(appId)
                                 }
                             )
                         }
@@ -161,7 +187,11 @@ class MainActivity : ComponentActivity() {
                                     )
                                 },
                                 onNavigateToTools = { currentScreen = Screen.Tools },
-                                onNavigateToSettings = { currentScreen = Screen.Settings }
+                                onNavigateToSettings = { currentScreen = Screen.Settings },
+                                onNavigateToApp = { appId ->
+                                    currentScreen = navigateToApp(appId)
+                                },
+                                onNavigateToHome = { currentScreen = Screen.IntelligentHome }
                             )
                         }
 
@@ -599,5 +629,62 @@ class MainActivity : ComponentActivity() {
                 currentResonance = response.resonance
             )
         )
+    }
+
+    /**
+     * Navigate to app by ID - helper for discovery engine recommendations.
+     */
+    private fun navigateToApp(appId: String): Screen {
+        return when {
+            // Hub categories
+            appId.startsWith("hub_") -> when (appId) {
+                "hub_physics" -> Screen.PhysicsHub
+                "hub_math" -> Screen.MathHub
+                "hub_cosmology" -> Screen.CosmologyHub
+                "hub_aviation" -> Screen.AviationHub
+                "hub_traffic" -> Screen.TrafficHub
+                "hub_business" -> Screen.BusinessHub
+                "hub_solvers" -> Screen.SolversHub
+                "hub_planetary" -> Screen.PlanetaryHub
+                "hub_security" -> Screen.SecurityHub
+                "hub_ml" -> Screen.MLHub
+                "hub_visualization" -> Screen.VisualizationHub
+                "hub_utilities" -> Screen.UtilitiesHub
+                else -> Screen.Tools
+            }
+
+            // Composite apps
+            appId == "universe_simulator" -> Screen.UniverseSimulator
+            appId == "kelimutu_intel" -> Screen.KelimutuIntel
+            appId == "smart_navigator" -> Screen.SmartNavigator
+            appId == "secure_business" -> Screen.SecureBusiness
+            appId == "pinn_lab" -> Screen.PINNLab
+            appId == "titan_colony" -> Screen.TitanColony
+            appId == "quantum_finance" -> Screen.QuantumFinance
+            appId == "traffic_brain" -> Screen.TrafficBrain
+            appId == "aerospace_optimizer" -> Screen.AerospaceOptimizer
+            appId == "crypto_observatory" -> Screen.CryptoObservatory
+            appId == "fair_division_ai" -> Screen.FairDivisionAI
+            appId == "cosmic_calculator" -> Screen.CosmicCalculator
+            appId == "mars_mission" -> Screen.MarsMission
+            appId == "golden_optimizer" -> Screen.GoldenOptimizer
+            appId == "emergency_response" -> Screen.EmergencyResponse
+            appId == "compliance_intel" -> Screen.ComplianceIntel
+            appId == "resonance_lab" -> Screen.ResonanceLab
+            appId == "fleet_manager" -> Screen.FleetManager
+            appId == "sat_ml_hybrid" -> Screen.SATMLHybrid
+            appId == "dark_sector" -> Screen.DarkSector
+            appId == "brahim_workspace" -> Screen.BrahimWorkspace
+
+            // Direct tools
+            appId == "physics_calculator" -> Screen.Physics
+            appId == "brahim_sudoku" -> Screen.Sudoku
+            appId == "solar_map" -> Screen.SolarMap
+            appId == "consciousness_explorer" -> Screen.ConsciousnessExplorer
+            appId == "quick_calculator" -> Screen.QuickCalculator
+
+            // Default to tool detail
+            else -> Screen.ToolDetail(appId)
+        }
     }
 }
