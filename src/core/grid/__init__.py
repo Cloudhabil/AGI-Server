@@ -79,6 +79,41 @@ from .spain import (
     get_spain_optimizer,
 )
 
+# Germany-specific module (Brahim Calculator integrated)
+from .germany import (
+    # Config
+    GermanyTSO,
+    GermanySeason,
+    GERMANY_TSO_DATA,
+    GERMANY_CO2_PROFILES,
+    DUNKELFLAUTE_CO2_PROFILE,
+    BrahimGermanCalculator,
+    get_renewable_window,
+    is_dunkelflaute_risk,
+    calculate_merit_order_price,
+    # SMARD
+    SMARDFilter,
+    SMARDResolution,
+    GenerationMix,
+    GridStatus,
+    PriceData,
+    SMARDAdapter,
+    get_smard_adapter,
+    # Smart Meters
+    GermanSmartMeterAdapter,
+    EONAdapter,
+    RWEAdapter,
+    EnBWAdapter,
+    VattenfallAdapter,
+    get_german_meter_adapter,
+    # Optimizer
+    WindSurplusEvent,
+    DunkelflaunteWarning,
+    HeatPumpSchedule,
+    GermanyWindOptimizer,
+    get_germany_optimizer,
+)
+
 __all__ = [
     # Core
     "GridNode",
@@ -117,6 +152,34 @@ __all__ = [
     "SolarSurplusEvent",
     "EVChargingSchedule",
     "get_spain_optimizer",
+    # Germany Module (Brahim Calculator)
+    "GermanyTSO",
+    "GermanySeason",
+    "GERMANY_TSO_DATA",
+    "GERMANY_CO2_PROFILES",
+    "DUNKELFLAUTE_CO2_PROFILE",
+    "BrahimGermanCalculator",
+    "get_renewable_window",
+    "is_dunkelflaute_risk",
+    "calculate_merit_order_price",
+    "SMARDFilter",
+    "SMARDResolution",
+    "GenerationMix",
+    "GridStatus",
+    "PriceData",
+    "SMARDAdapter",
+    "get_smard_adapter",
+    "GermanSmartMeterAdapter",
+    "EONAdapter",
+    "RWEAdapter",
+    "EnBWAdapter",
+    "VattenfallAdapter",
+    "get_german_meter_adapter",
+    "WindSurplusEvent",
+    "DunkelflaunteWarning",
+    "HeatPumpSchedule",
+    "GermanyWindOptimizer",
+    "get_germany_optimizer",
 ]
 
 __version__ = "1.0.0"
