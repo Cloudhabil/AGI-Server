@@ -96,6 +96,52 @@ The `src/core/kernel/substrate.py` holds all 31 major system components across 2
 - **SafetyGovernor**: Hardware protection (VRAM, thermal, disk monitoring)
 - **PassOrchestrator**: Cooperative agent dependency resolution protocol
 
+### Adaptive Security Layer (New - 2026-01)
+The `src/core/immune_system.py` implements the **Adaptive Threat Detection and Response System (ATDRS)**:
+
+| Component | Function | Reference |
+|-----------|----------|-----------|
+| `SignatureBasedDetector` | Pattern matching against known threats | Denning (1987) |
+| `AnomalyBasedDetector` | Statistical baseline deviation analysis | Iglewicz & Hoaglin (1993) |
+| `AdaptivePatternLearner` | Online clustering for signature extraction | Aggarwal et al. (2003) |
+| `AdaptiveSecurityPerimeter` | Dynamic boundary adjustment via feedback | Portnoy et al. (2001) |
+| `FaultToleranceManager` | Multi-level graceful degradation (L0-L5) | Gray & Reuter (1993) |
+
+**Usage:**
+```python
+from core.immune_system import get_threat_detection_system, evaluate_intent
+
+# Full system access
+system = get_threat_detection_system()
+is_safe, event = system.evaluate(feature_vector, {"source": "external"})
+
+# Legacy compatibility (drop-in replacement for GeometricFirewall)
+is_safe, error_msg = evaluate_intent(intent_vector)
+```
+
+### Health Telemetry System (New - 2026-01)
+The `src/core/vital_signs.py` implements **System Health Metrics Collection** per IEEE 1451 standards:
+
+| Metric | Unit | Healthy Range | Description |
+|--------|------|---------------|-------------|
+| `memory_fragmentation` | ratio | 0.0 - 0.3 | Sparse segment ratio |
+| `routing_efficiency` | ratio | 0.6 - 1.0 | Success rate |
+| `violation_rate` | events/min | 0.0 - 0.5 | Security incidents |
+| `cpu_utilization` | ratio | 0.0 - 0.8 | Resource usage |
+
+**Usage:**
+```python
+from core.vital_signs import get_health_monitor, take_health_snapshot
+
+# Establish baseline during healthy operation
+monitor = get_health_monitor()
+monitor.establish_baseline(sample_count=10)
+
+# Take snapshot
+snapshot = take_health_snapshot()
+print(f"Health: {snapshot['health_score']:.2%}")
+```
+
 ## Skills Framework
 
 The system possesses a growing library of skills found in the `src/skills/` directory, organized into subdirectories like `synthesized`, `auto_learned`, and `conscience`. The `SkillRegistry` handles lazy-loading them.
