@@ -207,7 +207,7 @@ object BrahimSolarMap {
             val eclipticLat = latScaled.toDouble() / ANGLE_SCALE - 90.0
 
             Triple(distanceAU, eclipticLong, eclipticLat)
-        } catch (e: IOException)  // TODO: catch specific type {
+        } catch (e: Exception) {
             null
         }
     }

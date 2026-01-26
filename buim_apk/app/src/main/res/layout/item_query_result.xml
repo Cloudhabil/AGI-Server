@@ -1,0 +1,165 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+  Query Result Item Layout
+  ========================
+
+  Card layout for displaying query results with BIL tracking.
+
+  Author: Elias Oulad Brahim
+  Date: 2026-01-26
+-->
+<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    app:cardCornerRadius="8dp"
+    app:cardElevation="4dp"
+    android:layout_marginBottom="8dp">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:padding="16dp">
+
+        <!-- Deterministic Badge -->
+        <TextView
+            android:id="@+id/deterministicBadge"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="✓ DETERMINISTIC"
+            android:textColor="#FFFFFF"
+            android:textSize="10sp"
+            android:textStyle="bold"
+            android:background="#4CAF50"
+            android:paddingHorizontal="8dp"
+            android:paddingVertical="2dp"
+            android:layout_marginBottom="8dp" />
+
+        <!-- Answer -->
+        <TextView
+            android:id="@+id/answerText"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Answer text here"
+            android:textSize="16sp"
+            android:textColor="#212121"
+            android:lineSpacingMultiplier="1.2" />
+
+        <!-- Confidence -->
+        <TextView
+            android:id="@+id/confidenceText"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Confidence: 100%"
+            android:textSize="14sp"
+            android:textStyle="bold"
+            android:layout_marginTop="8dp" />
+
+        <!-- Source -->
+        <TextView
+            android:id="@+id/sourceText"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Source: IEC Standard"
+            android:textSize="12sp"
+            android:textColor="#666666"
+            android:layout_marginTop="4dp" />
+
+        <!-- BIL Label -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:layout_marginTop="8dp"
+            android:background="#F5F5F5"
+            android:padding="8dp">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="BIL:"
+                android:textSize="11sp"
+                android:textStyle="bold"
+                android:textColor="#1976D2" />
+
+            <TextView
+                android:id="@+id/bilText"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="BIL:27:1:100:60617-X"
+                android:textSize="11sp"
+                android:fontFamily="monospace"
+                android:textColor="#333333"
+                android:layout_marginStart="4dp" />
+
+        </LinearLayout>
+
+        <!-- Citation -->
+        <TextView
+            android:id="@+id/citationText"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Citation: IEC 60617 - Graphical symbols"
+            android:textSize="11sp"
+            android:textColor="#888888"
+            android:textStyle="italic"
+            android:layout_marginTop="8dp" />
+
+        <!-- Warning Container (for ML results) -->
+        <LinearLayout
+            android:id="@+id/warningContainer"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:background="#FFF3E0"
+            android:padding="12dp"
+            android:layout_marginTop="12dp"
+            android:visibility="gone">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="⚠️"
+                    android:textSize="16sp" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="ML Prediction Warning"
+                    android:textSize="12sp"
+                    android:textStyle="bold"
+                    android:textColor="#E65100"
+                    android:layout_marginStart="8dp" />
+
+            </LinearLayout>
+
+            <TextView
+                android:id="@+id/warningText"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Warning message"
+                android:textSize="11sp"
+                android:textColor="#BF360C"
+                android:layout_marginTop="4dp" />
+
+            <Button
+                android:id="@+id/verifyButton"
+                android:layout_width="wrap_content"
+                android:layout_height="36dp"
+                android:text="Verify This Result"
+                android:textSize="11sp"
+                android:layout_marginTop="8dp"
+                style="@style/Widget.MaterialComponents.Button.OutlinedButton" />
+
+        </LinearLayout>
+
+    </LinearLayout>
+
+</androidx.cardview.widget.CardView>
