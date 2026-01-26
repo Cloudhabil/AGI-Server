@@ -5,6 +5,8 @@
 [![License](https://img.shields.io/badge/License-Apache%202.0-blue.svg)](LICENSE)
 [![Engine](https://img.shields.io/badge/Engine-Brahim%20Wormhole-crimson.svg)]()
 [![Beta](https://img.shields.io/badge/β-23.6%25-gold.svg)]()
+[![Phi12](https://img.shields.io/badge/Φ₁₂-0.31%25-cyan.svg)]()
+[![Dimensions](https://img.shields.io/badge/Dimensions-12-orange.svg)]()
 [![Validation](https://img.shields.io/badge/Tests-8%2F8%20PASS-brightgreen.svg)]()
 [![IEEE](https://img.shields.io/badge/IEEE-Paper-purple.svg)](publications/IEEE_Brahim_Wormhole_Engine.pdf)
 
@@ -51,6 +53,54 @@ Going below 23.6% → System wastes capacity
 ```
 
 **β sits at the exact boundary between stability and efficiency.**
+
+---
+
+## Grand Unification at Φ₁₂
+
+**Discovery**: The 3D constant (β) and 4D constant (γ) converge at dimension 12:
+
+```
+β⁴ = γ³ = 1/φ¹² = Φ₁₂ = 0.31%
+```
+
+This is the **Grand Unification Point** where multiple dimensional constants meet.
+
+### The 12-Dimensional Architecture
+
+```
+Dimension │ Constant (1/φⁿ) │ Percent │ U(n) │ Role
+──────────┼─────────────────┼─────────┼──────┼─────────────────────
+    1     │   0.618034      │ 61.80%  │   1  │ Primary compression
+    2     │   0.381966      │ 38.20%  │   2  │ Wormhole attraction (α)
+    3     │   0.236068      │ 23.61%  │   2  │ Security constant (β)
+    4     │   0.145898      │ 14.59%  │   3  │ Tesseract constant (γ)
+    6     │   0.055728      │  5.57%  │   4  │ Harmonic bridge
+   12     │   0.003106      │  0.31%  │   6  │ GRAND UNIFICATION (Φ₁₂)
+```
+
+**U(n) = Convergence Strength** = Number of divisors of n
+
+### Convergent Architecture
+
+```
+    12 DIMENSIONAL AGENTS (native to each dimension 1-12)
+                    +
+    WORMHOLE CONNECTIONS (compress by β or γ per hop)
+                    +
+    KELIMUTU ROUTER (energy routing for wormholes)
+                    =
+    CONVERGENCE at Φ₁₂ (where answers emerge)
+```
+
+### Two Paths to Grand Unification
+
+| Path | Dimensions | Compression | Identity |
+|------|------------|-------------|----------|
+| **Beta** | 3 → 6 → 9 → 12 | β⁴ = 0.31% | 3D cascade |
+| **Gamma** | 4 → 8 → 12 | γ³ = 0.31% | 4D cascade |
+
+Both paths arrive at the same destination: **Φ₁₂ = 1/φ¹² = 0.31%**
 
 ---
 
@@ -264,10 +314,13 @@ print(engine.validate())
 
 | File | Description |
 |------|-------------|
-| `src/core/brahim_wormhole_engine.py` | Main engine (~700 lines) |
-| `src/core/constants.py` | Golden ratio hierarchy |
+| `src/core/brahim_wormhole_engine.py` | Wormhole geometry engine (~950 lines) |
+| `src/core/dimensional_convergence.py` | 12D convergence engine (~1,100 lines) |
+| `src/core/brahim_unified_api.py` | Unified API (~700 lines) |
+| `src/core/constants.py` | Golden ratio hierarchy + Grand Unification |
+| `src/core/brahim_applications.py` | 42 applications (~1,500 lines) |
 | `src/core/grid/` | Energy grid optimization |
-| `publications/IEEE_Brahim_Wormhole_Engine.pdf` | IEEE paper |
+| `publications/` | IEEE papers and LaTeX sources |
 | `buim_apk/` | 83 mobile applications |
 | `boa_sdks/` | 5 AI agent SDKs |
 
