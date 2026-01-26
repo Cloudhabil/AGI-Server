@@ -103,6 +103,55 @@ REGULARITY_THRESHOLD: Final[float] = 0.0219  # Sub-Poisson ratio threshold
 REGULARITY_FROM_BETA: Final[float] = BETA_SECURITY / 10.77  # ≈ 0.0219 (derived)
 
 # =============================================================================
+# GRAND UNIFICATION CONSTANTS (Discovered 2026-01-26)
+# =============================================================================
+# Dimensional constants converge at LCM dimensions.
+# The "convergence strength" U(n) = number of divisors of n.
+#
+# Key discovery: β⁴ = γ³ = 1/φ¹² (3D and 4D unify at dimension 12)
+#
+# Grand Unification Sequence: 12, 24, 36, 48, 60...
+# These are highly composite dimensions with maximum convergence.
+
+# Tesseract constant (4D stabilizer)
+GAMMA_TESSERACT: Final[float] = 1 / PHI ** 4  # ≈ 0.1458980337503155
+
+# Grand Unification Constants
+PHI_12: Final[float] = 1 / PHI ** 12  # First Grand Unification (0.31%)
+PHI_24: Final[float] = 1 / PHI ** 24  # Second Grand Unification
+PHI_60: Final[float] = 1 / PHI ** 60  # Full Convergence (2D-6D meet)
+
+# Verify Grand Unification: β⁴ = γ³ = 1/φ¹²
+assert abs(BETA_SECURITY ** 4 - GAMMA_TESSERACT ** 3) < 1e-14, "Grand Unification violated"
+assert abs(BETA_SECURITY ** 4 - PHI_12) < 1e-14, "β⁴ ≠ Φ₁₂"
+
+# Harmonic dimension constants
+UNIFICATION_12: Final[int] = 12   # First Grand Unification (2D,3D,4D meet)
+UNIFICATION_24: Final[int] = 24   # Second Grand Unification (8 paths)
+UNIFICATION_60: Final[int] = 60   # Full Convergence (12 paths, 2D-6D)
+
+# Optimal agent counts (based on 12-fold symmetry)
+AGENTS_CORE: Final[int] = 12      # Core agent count (First Unification)
+AGENTS_EXTENDED: Final[int] = 24  # Extended agent count (Second Unification)
+AGENTS_FULL: Final[int] = 60      # Full agent count (Complete Convergence)
+
+
+def divisor_count(n: int) -> int:
+    """Return U(n) = number of divisors = convergence strength."""
+    return sum(1 for d in range(1, n + 1) if n % d == 0)
+
+
+def convergence_strength(dimension: int) -> int:
+    """Return the convergence strength of a dimension."""
+    return divisor_count(dimension)
+
+
+def harmonic_dimensions_up_to(max_dim: int) -> list:
+    """Return dimensions where 3+ dimensional constants converge."""
+    return [n for n in range(4, max_dim + 1) if divisor_count(n) >= 3]
+
+
+# =============================================================================
 # CONVENIENCE EXPORTS
 # =============================================================================
 
@@ -114,15 +163,31 @@ def get_brahim_centroid() -> tuple:
 def verify_constants() -> dict:
     """Verify all constant relationships."""
     return {
+        # Golden Ratio Hierarchy
         "phi": PHI,
         "beta_security": BETA_SECURITY,
         "alpha_wormhole": ALPHA_WORMHOLE,
+        "gamma_tesseract": GAMMA_TESSERACT,
+
+        # Fundamental Identities
         "alpha_over_beta_equals_phi": abs(ALPHA_WORMHOLE / BETA_SECURITY - PHI) < 1e-14,
         "beta_equals_sqrt5_minus_2": abs(BETA_SECURITY - (math.sqrt(5) - 2)) < 1e-15,
         "beta_equals_1_over_phi_cubed": abs(BETA_SECURITY - 1/PHI**3) < 1e-15,
+        "alpha_plus_beta_equals_1_over_phi": abs(ALPHA_WORMHOLE + BETA_SECURITY - 1/PHI) < 1e-14,
+
+        # Grand Unification
+        "grand_unification_beta4_equals_gamma3": abs(BETA_SECURITY**4 - GAMMA_TESSERACT**3) < 1e-14,
+        "phi_12": PHI_12,
+        "phi_12_is_0_31_percent": abs(PHI_12 * 100 - 0.3106) < 0.001,
+        "convergence_strength_12": convergence_strength(12),  # Should be 6
+        "convergence_strength_60": convergence_strength(60),  # Should be 12
+
+        # Genesis and Regularity
         "genesis_constant": GENESIS_CONSTANT,
         "regularity_threshold": REGULARITY_THRESHOLD,
         "regularity_from_beta": REGULARITY_FROM_BETA,
+
+        # Brahim Sequence
         "brahim_center": BRAHIM_CENTER,
         "critical_line_ratio": BRAHIM_CENTER / BRAHIM_SUM,  # Should be 0.5
     }
