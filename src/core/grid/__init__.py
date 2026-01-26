@@ -54,6 +54,31 @@ from .demand_response import (
     get_demand_response_orchestrator,
 )
 
+# Spain-specific module
+from .spain import (
+    # Config
+    SpainGridZone,
+    SpainSeason,
+    SPAIN_CO2_PROFILES,
+    SpainCO2Calculator,
+    get_current_season,
+    get_solar_window,
+    # REE
+    REEIndicator,
+    REEAdapter,
+    get_ree_adapter,
+    # Smart Meters
+    IberdrolaAdapter,
+    EndesaAdapter,
+    SpanishSmartMeterAdapter,
+    get_spanish_meter_adapter,
+    # Optimizer
+    SpainSolarOptimizer,
+    SolarSurplusEvent,
+    EVChargingSchedule,
+    get_spain_optimizer,
+)
+
 __all__ = [
     # Core
     "GridNode",
@@ -74,6 +99,24 @@ __all__ = [
     "DemandResponseOrchestrator",
     "CO2Calculator",
     "get_demand_response_orchestrator",
+    # Spain Module
+    "SpainGridZone",
+    "SpainSeason",
+    "SPAIN_CO2_PROFILES",
+    "SpainCO2Calculator",
+    "get_current_season",
+    "get_solar_window",
+    "REEIndicator",
+    "REEAdapter",
+    "get_ree_adapter",
+    "IberdrolaAdapter",
+    "EndesaAdapter",
+    "SpanishSmartMeterAdapter",
+    "get_spanish_meter_adapter",
+    "SpainSolarOptimizer",
+    "SolarSurplusEvent",
+    "EVChargingSchedule",
+    "get_spain_optimizer",
 ]
 
 __version__ = "1.0.0"
