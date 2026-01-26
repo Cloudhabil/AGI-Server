@@ -3,18 +3,49 @@ Hermes Trismegistos Biomedizin Module
 =====================================
 
 Applies Hermetic principles to biomedical optimization:
+- Advanced Protein Folding: Structure prediction and hypothesis generation
 - Beneficial Pharmacy: Drug discovery via protein folding
 - Better Diets: Nutritional optimization using metabolic pathways
 
 Core Principle: "As above, so below"
+- Sequence patterns -> Structural features -> Biological function
 - Molecular structure -> Biological effects -> Health outcomes
 
 Author: GPIA Cognitive Ecosystem / Hermes Trismegistos Engine
 Date: 2026-01-26
-Version: 1.0.0
+Version: 2.0.0
 
 GOVERNANCE: Research use only. NOT for clinical decisions.
 """
+
+from .folding_engine import (
+    # Constants
+    GENESIS_BIO as FOLDING_GENESIS,
+    PHI_BIO as FOLDING_PHI,
+    HYDROPHOBICITY,
+    HELIX_PROPENSITY,
+    SHEET_PROPENSITY,
+    DISORDER_PROPENSITY,
+    FUNCTIONAL_MOTIFS,
+
+    # Enums
+    FoldingState,
+    SecondaryStructure,
+    ProteinClass,
+    DrugTargetPotential,
+
+    # Data Classes
+    AminoAcidProperties,
+    SequenceRegion,
+    FoldingHypothesis,
+    StructurePrediction,
+    DrugTargetAssessment,
+    FoldingAnalysisResult,
+
+    # Core Engine
+    LiteratureCorpus,
+    HermesAdvancedFoldingEngine,
+)
 
 from .hermes_pharma_diet import (
     # Constants
@@ -47,33 +78,59 @@ from .hermes_pharma_diet import (
 )
 
 __all__ = [
+    # ==================== FOLDING ENGINE ====================
+    # Constants
+    "FOLDING_GENESIS",
+    "FOLDING_PHI",
+    "HYDROPHOBICITY",
+    "HELIX_PROPENSITY",
+    "SHEET_PROPENSITY",
+    "DISORDER_PROPENSITY",
+    "FUNCTIONAL_MOTIFS",
+
+    # Enums (Folding)
+    "FoldingState",
+    "SecondaryStructure",
+    "ProteinClass",
+    "DrugTargetPotential",
+
+    # Data Classes (Folding)
+    "AminoAcidProperties",
+    "SequenceRegion",
+    "FoldingHypothesis",
+    "StructurePrediction",
+    "DrugTargetAssessment",
+    "FoldingAnalysisResult",
+
+    # Core (Folding)
+    "LiteratureCorpus",
+    "HermesAdvancedFoldingEngine",
+
+    # ==================== PHARMA-DIET ENGINE ====================
     # Constants
     "GENESIS_BIO",
     "PHI_BIO",
     "BETA_HOMEOSTASIS",
     "LAMBDA_METABOLIC",
-    "HYDROPHOBICITY",
     "ESSENTIAL_NUTRIENTS",
     "DRUG_TARGETS",
 
-    # Enums
-    "FoldingState",
+    # Enums (Pharma-Diet)
     "TherapeuticCategory",
     "DietGoal",
 
-    # Data Classes
+    # Data Classes (Pharma-Diet)
     "AminoAcidSequence",
-    "FoldingHypothesis",
     "Compound",
     "TherapeuticProfile",
     "NutrientIntake",
     "DietPlan",
 
-    # Engines
+    # Engines (Pharma-Diet)
     "HermesFoldingEngine",
     "BeneficialPharmacyEngine",
     "DietOptimizationEngine",
     "HermesPharmaeDietSystem",
 ]
 
-__version__ = "1.0.0"
+__version__ = "2.0.0"

@@ -50,16 +50,23 @@ object BrahimConstants {
     const val GAMMA_DAMPING = 0.1458980337503154
 
     // =========================================================================
-    // BRAHIM SEQUENCE
+    // BRAHIM SEQUENCE (Corrected 2026-01-26 - full mirror symmetry)
+    // Mirror pairs: 27↔187, 42↔172, 60↔154, 75↔139, 97↔117
     // =========================================================================
 
-    /** The Brahim Sequence: B = {27, 42, 60, 75, 97, 121, 136, 154, 172, 187} */
-    val BRAHIM_SEQUENCE = intArrayOf(27, 42, 60, 75, 97, 121, 136, 154, 172, 187)
+    /** The Brahim Sequence (symmetric): B = {27, 42, 60, 75, 97, 117, 139, 154, 172, 187} */
+    val BRAHIM_SEQUENCE = intArrayOf(27, 42, 60, 75, 97, 117, 139, 154, 172, 187)
 
-    /** Sum constant: S = 214 (normalizing factor) */
+    /** Original sequence (with singularity): B = {27, 42, 60, 75, 97, 121, 136, 154, 172, 187} */
+    val BRAHIM_SEQUENCE_ORIGINAL = intArrayOf(27, 42, 60, 75, 97, 121, 136, 154, 172, 187)
+
+    /** Pair sum constant: S = 214 (each mirror pair sums to this) */
+    const val BRAHIM_PAIR_SUM = 214
+
+    /** Legacy alias for backwards compatibility */
     const val BRAHIM_SUM = 214
 
-    /** Center/Singularity: C = S/2 = 107 */
+    /** Center: C = S/2 = 107 (exactly mean of symmetric sequence) */
     const val BRAHIM_CENTER = 107
 
     /** Dimension: D = |B| = 10 */

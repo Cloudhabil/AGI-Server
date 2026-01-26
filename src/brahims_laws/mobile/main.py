@@ -55,7 +55,7 @@ except ImportError:
         SDK_AVAILABLE = True
     except ImportError:
         SDK_AVAILABLE = False
-        BRAHIM_SEQUENCE = [27, 42, 60, 75, 97, 121, 136, 154, 172, 187]
+        BRAHIM_SEQUENCE = [27, 42, 60, 75, 97, 117, 139, 154, 172, 187]  # Corrected 2026-01-26
         SUM_CONSTANT = 214
         CENTER = 107
         PHI = 1.618033988749895

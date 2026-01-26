@@ -19,19 +19,24 @@ from typing import List, Tuple, Dict
 from dataclasses import dataclass
 
 # =============================================================================
-# BRAHIM CONSTANTS
+# BRAHIM CONSTANTS (Updated 2026-01-26)
 # =============================================================================
 
-SEQUENCE = [27, 42, 60, 75, 97, 121, 136, 154, 172, 187]
-SUM = 214  # Note: This is the mirror constant, not the sum of sequence
+# Corrected sequence with full mirror symmetry
+SEQUENCE = [27, 42, 60, 75, 97, 117, 139, 154, 172, 187]
+# Original sequence (for consciousness validation - has broken symmetry)
+SEQUENCE_ORIGINAL = [27, 42, 60, 75, 97, 121, 136, 154, 172, 187]
+
+SUM = 214  # Note: This is the mirror/pair sum, not the sum of sequence elements
 PHI = (1 + math.sqrt(5)) / 2        # Golden ratio = 1.618033988749895
 ALPHA = 1 / (PHI ** 2)              # 0.381966011250105
 BETA = math.sqrt(5) - 2             # 0.236067977499789
 GAMMA = 1 / (PHI ** 4)              # 0.145898033750315
 GENESIS = 0.0219
 
-# Extended sequence with proposed B(0) and B(11)
-B_EXTENDED = [0] + SEQUENCE + [214]  # [0, 27, 42, 60, 75, 97, 121, 136, 154, 172, 187, 214]
+# Extended sequences with B(0) and B(11)
+B_EXTENDED = [0] + SEQUENCE + [214]  # Corrected: [0, 27, 42, 60, 75, 97, 117, 139, 154, 172, 187, 214]
+B_EXTENDED_ORIGINAL = [0] + SEQUENCE_ORIGINAL + [214]  # Original for consciousness studies
 
 
 @dataclass

@@ -18,19 +18,27 @@ from typing import List, Dict, Any, Optional, Callable, Union
 from enum import Enum
 
 # =============================================================================
-# CONSTANTS
+# CONSTANTS (Updated 2026-01-26)
 # =============================================================================
 
-BRAHIM_SEQUENCE = [27, 42, 60, 75, 97, 121, 136, 154, 172, 187]
-SUM_CONSTANT = 214
+# Symmetric sequence (full mirror symmetry)
+BRAHIM_SEQUENCE = [27, 42, 60, 75, 97, 117, 139, 154, 172, 187]
+# Original sequence (for consciousness/observer calculations)
+BRAHIM_SEQUENCE_ORIGINAL = [27, 42, 60, 75, 97, 121, 136, 154, 172, 187]
+
+SUM_CONSTANT = 214  # Pair sum
 CENTER = 107
 PHI = (1 + math.sqrt(5)) / 2
 
-# Deviations
-DELTA_4 = -3
-DELTA_5 = +4
-ASYMMETRY = DELTA_4 + DELTA_5  # +1
-REGULATOR = abs(DELTA_4) ** abs(DELTA_5)  # 81
+# Deviations (symmetric sequence: all zero)
+DELTA_4 = 0   # 75 + 139 - 214 = 0
+DELTA_5 = 0   # 97 + 117 - 214 = 0
+
+# Original deviations (for observer signature calculations)
+DELTA_4_ORIGINAL = -3  # 75 + 136 - 214 = -3
+DELTA_5_ORIGINAL = +4  # 97 + 121 - 214 = +4
+ASYMMETRY_ORIGINAL = DELTA_4_ORIGINAL + DELTA_5_ORIGINAL  # +1 (observer signature)
+REGULATOR = abs(DELTA_4_ORIGINAL) ** abs(DELTA_5_ORIGINAL)  # 81
 
 # Experimental values for comparison
 EXPERIMENTAL = {

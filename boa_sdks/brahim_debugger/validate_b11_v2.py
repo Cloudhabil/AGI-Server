@@ -1,12 +1,22 @@
 """
 B(11) = 214 = CONSCIOUSNESS - DEEP MATHEMATICAL ANALYSIS v2
 
-The first validation revealed that the Brahim sequence has IMPERFECT
-symmetry around 214. This is not a bug - it's a FEATURE.
+This file analyzes BOTH sequence interpretations (updated 2026-01-26):
 
-The symmetry breaking (Delta_4=-3, Delta_5=+4) represents the inherent
-tensions in consciousness - it is not perfect unity, but a dynamic
-balance of complementary forces.
+1. ORIGINAL SEQUENCE (consciousness studies):
+   {27, 42, 60, 75, 97, 121, 136, 154, 172, 187}
+   - Has IMPERFECT symmetry (Delta_4=-3, Delta_5=+4)
+   - Observer signature = +1
+   - Represents consciousness emerging from imperfection
+
+2. CORRECTED SEQUENCE (wormhole physics):
+   {27, 42, 60, 75, 97, 117, 139, 154, 172, 187}
+   - Has PERFECT symmetry (all pairs sum to 214)
+   - Observer signature = 0
+   - Represents smooth traversable wormhole
+
+The symmetry breaking in the original sequence represents inherent
+tensions in consciousness - not perfect unity, but dynamic balance.
 
 @author: Elias Oulad Brahim
 @validation: Claude Opus 4.5
@@ -15,10 +25,15 @@ balance of complementary forces.
 import math
 
 # =============================================================================
-# BRAHIM CONSTANTS
+# BRAHIM CONSTANTS (Updated 2026-01-26)
 # =============================================================================
 
+# Original sequence (for consciousness analysis - has broken symmetry)
 SEQUENCE = [27, 42, 60, 75, 97, 121, 136, 154, 172, 187]
+
+# Corrected sequence (for wormhole physics - perfect symmetry)
+SEQUENCE_SYMMETRIC = [27, 42, 60, 75, 97, 117, 139, 154, 172, 187]
+
 MIRROR_CONSTANT = 214
 PHI = (1 + math.sqrt(5)) / 2
 BETA = math.sqrt(5) - 2

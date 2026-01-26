@@ -22,8 +22,10 @@ import json
 # BRAHIM CONSTANTS (The Magma Composition)
 # =============================================================================
 
-BRAHIM_SEQUENCE = [27, 42, 60, 75, 97, 121, 136, 154, 172, 187]
-SUM_CONSTANT = 214
+# Corrected 2026-01-26: Full mirror symmetry
+BRAHIM_SEQUENCE = [27, 42, 60, 75, 97, 117, 139, 154, 172, 187]
+BRAHIM_SEQUENCE_ORIGINAL = [27, 42, 60, 75, 97, 121, 136, 154, 172, 187]  # Historical
+SUM_CONSTANT = 214  # Pair sum (each mirror pair sums to 214)
 CENTER = 107
 PHI = (1 + np.sqrt(5)) / 2
 BETA_SEC = np.sqrt(5) - 2  # Security constant

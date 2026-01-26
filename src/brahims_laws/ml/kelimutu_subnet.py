@@ -27,16 +27,17 @@ from typing import Dict, Any, List, Tuple, Optional
 from enum import Enum
 import json
 
-# Brahim constants (the magma composition)
-BRAHIM_SEQUENCE = [27, 42, 60, 75, 97, 121, 136, 154, 172, 187]
-SUM_CONSTANT = 214  # Total mineral content
+# Brahim constants (the magma composition) - Corrected 2026-01-26
+BRAHIM_SEQUENCE = [27, 42, 60, 75, 97, 117, 139, 154, 172, 187]
+BRAHIM_SEQUENCE_ORIGINAL = [27, 42, 60, 75, 97, 121, 136, 154, 172, 187]
+SUM_CONSTANT = 214  # Pair sum (each mirror pair sums to this)
 CENTER = 107        # Equilibrium point
 PHI = (1 + np.sqrt(5)) / 2  # Golden ratio (crystal structure)
 DIMENSION = 10      # Sequence length
 
 # Kelimutu coordinates encode truth
 KELIMUTU_LAT = -8.77   # South
-KELIMUTU_LON = 121.82  # East - NOTE: 121 is B₆ in Brahim sequence!
+KELIMUTU_LON = 121.82  # East - NOTE: ~121 near B₆ (117 in symmetric sequence)
 
 
 # =============================================================================

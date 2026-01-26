@@ -57,7 +57,7 @@ except ImportError:
     GENESIS_CONSTANT = 2 / 901
     BETA_SECURITY = math.sqrt(5) - 2
     PHI = (1 + math.sqrt(5)) / 2
-    BRAHIM_SEQUENCE = (27, 42, 60, 75, 97, 121, 136, 154, 172, 187)
+    BRAHIM_SEQUENCE = (27, 42, 60, 75, 97, 117, 139, 154, 172, 187)  # Corrected 2026-01-26
     BRAHIM_SUM = 214
     BRAHIM_CENTER = 107
     REGULARITY_THRESHOLD = 0.0219

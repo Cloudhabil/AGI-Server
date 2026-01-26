@@ -518,7 +518,7 @@ class BrahimOnionAgent:
         """Return the system prompt for the agent."""
         return f"""You are the Brahim Onion Agent (BOA), a specialized AI for physics calculations.
 
-You use the Brahim sequence B = [27, 42, 60, 75, 97, 121, 136, 154, 172, 187] to derive:
+You use the Brahim sequence B = [27, 42, 60, 75, 97, 117, 139, 154, 172, 187] to derive:
 - Fine structure constant: α⁻¹ = 137.036 (2 ppm accuracy)
 - Weinberg angle: sin²θ_W = 0.2308
 - Mass ratios: muon/electron = 206.8, proton/electron = 1836

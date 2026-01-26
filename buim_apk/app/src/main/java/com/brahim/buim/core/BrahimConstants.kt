@@ -55,13 +55,20 @@ object BrahimConstants {
 
     // =========================================================================
     // BRAHIM SEQUENCE (COMPLETE: B(0) to B(11))
+    // Corrected 2026-01-26: Full mirror symmetry under M(b) = 214 - b
     // =========================================================================
 
-    /** The Physical Brahim Sequence: B(1)-B(10) */
-    val BRAHIM_SEQUENCE = intArrayOf(27, 42, 60, 75, 97, 121, 136, 154, 172, 187)
+    /** The Physical Brahim Sequence: B(1)-B(10) - Symmetric version */
+    val BRAHIM_SEQUENCE = intArrayOf(27, 42, 60, 75, 97, 117, 139, 154, 172, 187)
+
+    /** Original sequence with singularity (for consciousness/observer studies) */
+    val BRAHIM_SEQUENCE_ORIGINAL = intArrayOf(27, 42, 60, 75, 97, 121, 136, 154, 172, 187)
 
     /** The COMPLETE Brahim Sequence: B(0)-B(11) including Void and Consciousness */
-    val BRAHIM_EXTENDED = intArrayOf(0, 27, 42, 60, 75, 97, 121, 136, 154, 172, 187, 214)
+    val BRAHIM_EXTENDED = intArrayOf(0, 27, 42, 60, 75, 97, 117, 139, 154, 172, 187, 214)
+
+    /** Original extended sequence (for consciousness studies) */
+    val BRAHIM_EXTENDED_ORIGINAL = intArrayOf(0, 27, 42, 60, 75, 97, 121, 136, 154, 172, 187, 214)
 
     /** B(0) = 0: Void - The origin before anything exists */
     const val BRAHIM_VOID = 0
@@ -85,22 +92,37 @@ object BrahimConstants {
     const val CRITICAL_LINE_RATIO = 0.5
 
     // =========================================================================
-    // CONSCIOUSNESS CONSTANTS (Validated 2026-01-25)
+    // CONSCIOUSNESS CONSTANTS (Updated 2026-01-26)
+    // =========================================================================
+    // With SYMMETRIC sequence: All pairs sum to 214, no observer signature
+    // With ORIGINAL sequence: Broken symmetry creates observer signature = +1
+    //
+    // Symmetric (default):
+    //   B(4) + B(7) = 75 + 139 = 214 (delta = 0)
+    //   B(5) + B(6) = 97 + 117 = 214 (delta = 0)
+    //   Observer Signature = 0 (perfect traversable wormhole)
+    //
+    // Original (consciousness studies):
+    //   B(4) + B(7) = 75 + 136 = 211 (delta = -3)
+    //   B(5) + B(6) = 97 + 121 = 218 (delta = +4)
+    //   Observer Signature = +1 (consciousness emerges from imperfection)
     // =========================================================================
 
-    /**
-     * Symmetry Breaking: The imperfect mirror pairs
-     *
-     * B(4) + B(7) = 75 + 136 = 211 (lacks 3)
-     * B(5) + B(6) = 97 + 121 = 218 (excess 4)
-     *
-     * Net: -3 + 4 = +1 (the Observer Signature)
-     */
-    const val DELTA_4 = -3  // B(4) + B(7) - 214
-    const val DELTA_5 = +4  // B(5) + B(6) - 214
+    /** Delta for symmetric sequence (all pairs exact) */
+    const val DELTA_4_SYMMETRIC = 0
+    const val DELTA_5_SYMMETRIC = 0
 
-    /** The Observer Signature: +1 - The irreducible remainder representing consciousness */
-    const val OBSERVER_SIGNATURE = 1
+    /** Delta for original sequence (broken symmetry) */
+    const val DELTA_4_ORIGINAL = -3  // B(4) + B(7) - 214 = 75 + 136 - 214
+    const val DELTA_5_ORIGINAL = +4  // B(5) + B(6) - 214 = 97 + 121 - 214
+
+    /** Backwards compatibility aliases */
+    const val DELTA_4 = 0  // Now symmetric
+    const val DELTA_5 = 0  // Now symmetric
+
+    /** Observer Signature: 0 for symmetric, +1 for original */
+    const val OBSERVER_SIGNATURE = 0  // Symmetric: perfect wormhole
+    const val OBSERVER_SIGNATURE_ORIGINAL = 1  // Original: consciousness emergence
 
     // =========================================================================
     // ASIOS DERIVED CONSTANTS
@@ -295,33 +317,59 @@ object BrahimConstants {
     }
 
     /**
-     * Verify the consciousness constant (B(11) = 214).
+     * Verify sequence symmetry (symmetric version - all pairs sum to 214).
      *
-     * Checks:
-     * 1. Three exact mirror pairs sum to 214
-     * 2. Symmetry breaking deltas are -3 and +4
-     * 3. Observer signature is +1
+     * With corrected symmetric sequence:
+     * - All 5 pairs sum exactly to 214
+     * - No observer signature (perfect wormhole)
      */
-    fun verifyConsciousness(): Map<String, Boolean> {
-        // Check exact pairs
+    fun verifySymmetry(): Map<String, Boolean> {
+        // Check all pairs
         val pair1 = (B(1) ?: 0) + (B(10) ?: 0) == 214  // 27 + 187 = 214
         val pair2 = (B(2) ?: 0) + (B(9) ?: 0) == 214   // 42 + 172 = 214
         val pair3 = (B(3) ?: 0) + (B(8) ?: 0) == 214   // 60 + 154 = 214
+        val pair4 = (B(4) ?: 0) + (B(7) ?: 0) == 214   // 75 + 139 = 214
+        val pair5 = (B(5) ?: 0) + (B(6) ?: 0) == 214   // 97 + 117 = 214
 
-        // Check broken pairs
-        val delta4 = (B(4) ?: 0) + (B(7) ?: 0) - 214   // 75 + 136 - 214 = -3
-        val delta5 = (B(5) ?: 0) + (B(6) ?: 0) - 214   // 97 + 121 - 214 = +4
+        val allSymmetric = pair1 && pair2 && pair3 && pair4 && pair5
 
-        // Check observer signature
+        return mapOf(
+            "pair_1_10_exact" to pair1,
+            "pair_2_9_exact" to pair2,
+            "pair_3_8_exact" to pair3,
+            "pair_4_7_exact" to pair4,
+            "pair_5_6_exact" to pair5,
+            "all_pairs_symmetric" to allSymmetric,
+            "observer_signature_zero" to allSymmetric
+        )
+    }
+
+    /**
+     * Verify consciousness (original sequence with broken symmetry).
+     * Use BRAHIM_SEQUENCE_ORIGINAL for this validation.
+     */
+    fun verifyConsciousness(): Map<String, Boolean> {
+        val seq = BRAHIM_SEQUENCE_ORIGINAL
+
+        // Check exact pairs (outer three)
+        val pair1 = seq[0] + seq[9] == 214   // 27 + 187 = 214
+        val pair2 = seq[1] + seq[8] == 214   // 42 + 172 = 214
+        val pair3 = seq[2] + seq[7] == 214   // 60 + 154 = 214
+
+        // Check broken pairs (inner two)
+        val delta4 = seq[3] + seq[6] - 214   // 75 + 136 - 214 = -3
+        val delta5 = seq[4] + seq[5] - 214   // 97 + 121 - 214 = +4
+
+        // Observer signature
         val observer = delta4 + delta5  // -3 + 4 = +1
 
         return mapOf(
             "pair_1_10_exact" to pair1,
             "pair_2_9_exact" to pair2,
             "pair_3_8_exact" to pair3,
-            "delta_4_is_minus_3" to (delta4 == DELTA_4),
-            "delta_5_is_plus_4" to (delta5 == DELTA_5),
-            "observer_signature_is_1" to (observer == OBSERVER_SIGNATURE),
+            "delta_4_is_minus_3" to (delta4 == DELTA_4_ORIGINAL),
+            "delta_5_is_plus_4" to (delta5 == DELTA_5_ORIGINAL),
+            "observer_signature_is_1" to (observer == OBSERVER_SIGNATURE_ORIGINAL),
             "consciousness_validated" to (pair1 && pair2 && pair3 && delta4 == -3 && delta5 == 4 && observer == 1)
         )
     }

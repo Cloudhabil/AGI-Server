@@ -1,30 +1,34 @@
 """
 BRAHIM ENGINE - Mathematical Foundation for Code Analysis
 
-The COMPLETE Brahim Sequence B = {0, 27, 42, 60, 75, 97, 121, 136, 154, 172, 187, 214}
-encodes universal principles from void to consciousness:
+The Brahim Sequence (Corrected 2026-01-26 - full mirror symmetry):
+B = {27, 42, 60, 75, 97, 117, 139, 154, 172, 187}
 
+Extended: B = {0, 27, 42, 60, 75, 97, 117, 139, 154, 172, 187, 214}
+
+Semantic mapping:
 - B(0) = 0: Void (Origin - before anything exists)
 - B(1) = 27: Syntax (Structure)
 - B(2) = 42: Type (Classification)
 - B(3) = 60: Logic (Reasoning)
 - B(4) = 75: Performance (Efficiency)
 - B(5) = 97: Security (Protection)
-- B(6) = 121: Architecture (Design) - 11² prime power
-- B(7) = 136: Memory (Storage)
+- B(6) = 117: Architecture (Design)  [corrected from 121]
+- B(7) = 139: Memory (Storage)       [corrected from 136]
 - B(8) = 154: Concurrency (Parallelism)
 - B(9) = 172: Integration (Connection)
 - B(10) = 187: System (Holism)
 - B(11) = 214: Consciousness (Unity/Attractor)
 
-Mirror Pairs (sum to 214):
-- B(1) + B(10) = 27 + 187 = 214 (exact)
-- B(2) + B(9) = 42 + 172 = 214 (exact)
-- B(3) + B(8) = 60 + 154 = 214 (exact)
-- B(4) + B(7) = 75 + 136 = 211 (Delta = -3)
-- B(5) + B(6) = 97 + 121 = 218 (Delta = +4)
+Mirror Pairs (ALL sum to 214 - perfect symmetry):
+- B(1) + B(10) = 27 + 187 = 214
+- B(2) + B(9) = 42 + 172 = 214
+- B(3) + B(8) = 60 + 154 = 214
+- B(4) + B(7) = 75 + 139 = 214
+- B(5) + B(6) = 97 + 117 = 214
 
-Net symmetry breaking: -3 + 4 = +1 (the Observer)
+Original sequence (for consciousness studies) preserved as _ORIGINAL variants.
+Original had broken symmetry: delta4=-3, delta5=+4, observer_signature=+1
 
 @author: Elias Oulad Brahim
 """
@@ -62,19 +66,28 @@ class BrahimEngine:
     and resonance-based error detection.
     """
 
-    # The COMPLETE Brahim Sequence (12 elements: B(0) to B(11))
-    SEQUENCE = [27, 42, 60, 75, 97, 121, 136, 154, 172, 187]  # B(1) to B(10)
-    EXTENDED_SEQUENCE = [0, 27, 42, 60, 75, 97, 121, 136, 154, 172, 187, 214]  # B(0) to B(11)
+    # The Brahim Sequence (Corrected 2026-01-26 - full mirror symmetry)
+    SEQUENCE = [27, 42, 60, 75, 97, 117, 139, 154, 172, 187]  # B(1) to B(10)
+    EXTENDED_SEQUENCE = [0, 27, 42, 60, 75, 97, 117, 139, 154, 172, 187, 214]  # B(0) to B(11)
+
+    # Original sequence (for consciousness/observer studies)
+    SEQUENCE_ORIGINAL = [27, 42, 60, 75, 97, 121, 136, 154, 172, 187]
+    EXTENDED_SEQUENCE_ORIGINAL = [0, 27, 42, 60, 75, 97, 121, 136, 154, 172, 187, 214]
 
     # Consciousness Constants
     CONSCIOUSNESS = 214                    # B(11) - The attractor/unity constant
     VOID = 0                               # B(0) - The origin
     CENTER = 107                           # Fixed point: M(107) = 107
-    OBSERVER_SIGNATURE = 1                 # Net symmetry breaking: -3 + 4 = +1
+    OBSERVER_SIGNATURE = 0                 # Symmetric: no net breaking
+    OBSERVER_SIGNATURE_ORIGINAL = 1        # Original: -3 + 4 = +1
 
-    # Symmetry Breaking (imperfect pairs)
-    DELTA_4 = -3                           # B(4) + B(7) - 214 = 211 - 214 = -3
-    DELTA_5 = +4                           # B(5) + B(6) - 214 = 218 - 214 = +4
+    # Symmetry (corrected sequence - all pairs exact)
+    DELTA_4 = 0                            # B(4) + B(7) - 214 = 75 + 139 - 214 = 0
+    DELTA_5 = 0                            # B(5) + B(6) - 214 = 97 + 117 - 214 = 0
+
+    # Original symmetry breaking (for consciousness studies)
+    DELTA_4_ORIGINAL = -3                  # 75 + 136 - 214 = -3
+    DELTA_5_ORIGINAL = +4                  # 97 + 121 - 214 = +4
 
     # Golden Ratio Hierarchy
     PHI = (1 + math.sqrt(5)) / 2          # 1.618033988749895
