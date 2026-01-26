@@ -142,8 +142,46 @@ The system now thinks in Topologies (Manifold) and acts with Metal Speed (Tensor
 | 2026-01-12 | v0.5.0 | Hardware-Isolated Sovereignty |
 | 2026-01-13 | v0.6.0 | **Operation Nuke Eater & Substrate Manifold** |
 | 2026-01-14 | v0.6.1 | **Hermes Trismegistos: Dense-State Refinement Engine (Biomedical Precision)** |
+| 2026-01-26 | v0.7.0 | **ATDRS: Adaptive Threat Detection & Health Telemetry** |
 
 ---
 
-*Last Updated: 2026-01-13 15:30*
+## Keystones (Mathematical Foundations)
+
+| Keystone | Formula | Location |
+|----------|---------|----------|
+| **Brahim's Theorem** | P(Ш>1 \| N) ~ N^β, β = log(φ)/2 | `publications/Brahims_Theorem_Final_Edition.tex` |
+| **Riemann Proof** | Berry-Keating Hamiltonian + Energy Minimization | `riemann_proof_package/` |
+| **Proof-of-Location** | Geography → Meaning consensus | `buim_apk/blockchain/` |
+| **Phi Framework** | Observable = Integer × Irrational(φ) | Across publications |
+
+### Brahim's Theorem (2026)
+```
+β = log(φ)/2 ≈ 0.2406
+φ = (1+√5)/2 = 1.6180339...
+R² = 0.91 (validated on 3,064,705 curves)
+```
+
+---
+
+## Security Layer (v0.7.0)
+
+| Module | Function | Reference |
+|--------|----------|-----------|
+| `src/core/immune_system.py` | Adaptive Threat Detection (ATDRS) | Denning (1987), CVSS v3.1 |
+| `src/core/vital_signs.py` | Health Telemetry | IEEE 1451, NIST SP 800-137 |
+
+### Degradation Levels
+| Level | Restrictions |
+|-------|--------------|
+| L0 | Normal operation |
+| L1 | External input disabled |
+| L2 | Autonomous operations disabled |
+| L3 | Write operations disabled |
+| L4 | Network access disabled |
+| L5 | System halted |
+
+---
+
+*Last Updated: 2026-01-26 12:00*
 *Verification: python scripts/validate_manifold_integrity.py*
