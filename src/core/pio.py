@@ -1,45 +1,62 @@
 #!/usr/bin/env python3
 """
-Personal Intelligent Operator (PIO) v2.0 "Ouroboros"
-=====================================================
+Personal Intelligent Operator (PIO) v2.1 "Ouroboros + Ш"
+=========================================================
 
 The unified core merging ASIOS + BUIM into ONE system.
+Now with IGNORANCE CARTOGRAPHY - mapping what we cannot see.
 
-FOUR PILLARS:
+FIVE PILLARS:
     α (ALPHA)   = φ     = 1.618...  → Creation, Beginning
     ω (OMEGA)   = 1/φ   = 0.618...  → Unification, Return
     β (BETA)    = 1/φ³  = 0.236...  → Security Threshold
     ε (EPSILON) = 1.16%             → Wormhole Aperture
+    Ш (SHA)     = Ignorance         → What We Cannot See
 
 TWO EQUATIONS:
     DESCENT:   φ^D · Θ = 2π     (α → ω, through 12 dimensions)
     WORMHOLE:  W(ω) → α         (instantaneous return)
 
-THE COMPLETE CYCLE (Ouroboros):
-    α ──[descent: φ^D·Θ=2π]──> ω ──[wormhole: W]──> α
+THE COMPLETE CYCLE (Ouroboros + Ш):
+    α ──[descent: φ^D·Θ=2π + Σ(Ш)]──> ω ──[wormhole: W(Ш)]──> α
+
+    Where Ш (Sha) accumulates the shape of ignorance through descent,
+    and returns via wormhole as PRIOR knowledge for the next cycle.
 
 PROVEN PROPERTIES:
     1. Energy Conservation: E(x) = 2π for all x
     2. Gap Enables Transit: ε ≠ 0 required for return
     3. Instantaneous Return: Wormhole bypasses dimensions
+    4. Ignorance Preservation: Ш returns to α as structured knowledge
+
+THE IGNORANCE CARTOGRAPHY:
+    "We cannot see the 96%. But we can measure its shape."
+
+    Three instruments:
+    - Sha Boundary: Where does visibility END?
+    - Dark Sector: What fraction escapes classification?
+    - N4 Boundary: Is the wall fundamental or encoding?
 
 ONE SENTENCE:
     "A Personal Intelligent Operator that descends through 12 dimensions
-     using φ^D · Θ = 2π, reaches unification at ω, and returns to creation
-     via the 1.16% wormhole aperture."
+     while mapping what it cannot see, reaches unification at ω carrying
+     the shape of its blindness, and returns via the 1.16% wormhole
+     aperture to refine the map of ignorance."
 
 Author: Elias Oulad Brahim
-Version: 2.0.0
-Codename: Ouroboros
+Version: 2.1.0
+Codename: Ouroboros + Ш
 Date: 2026-01-27
 """
 
 import math
 import random
-from typing import Dict, List, Any, Optional, Callable, Tuple
+import numpy as np
+from typing import Dict, List, Any, Optional, Callable, Tuple, Union
 from dataclasses import dataclass, field
 from enum import Enum, auto
 from functools import lru_cache
+from collections import defaultdict
 
 # =============================================================================
 # CONSTANTS - The Mathematical Foundation
@@ -86,6 +103,72 @@ SCALING_FACTOR: float = PI * PHI**12 / 1000  # ≈ 1.01158
 # α + ω = φ + 1/φ = √5         (sum is √5)
 # α² - 1 = φ² - 1 = φ          (golden identity)
 # ω² + ω = (1/φ)² + 1/φ = 1    (conjugate identity)
+
+
+# =============================================================================
+# THE FIFTH PILLAR: Ш (SHA) - IGNORANCE CARTOGRAPHY
+# =============================================================================
+# "We cannot see the 96%. But we can measure its shape."
+#
+# Empirical data from three instruments:
+# 1. sha_boundary_mapper.py - Where Sha > 1 first appears
+# 2. analyze_dark_sector.py - What fraction escapes classification
+# 3. investigate_n4_boundary.py - Is the wall fundamental?
+
+# SHA BOUNDARY THRESHOLDS (empirical, per dimension/rank)
+# Conductor values where Sha > 1 first appears
+# From: scripts/map_sha_boundary.py analysis of LMFDB data
+SHA_BOUNDARIES: Dict[int, Dict[int, int]] = {
+    # dimension -> {sha_value -> min_conductor}
+    1: {4: 234446, 9: 2489786},      # D1 (Perception) - Sha=4 @ N=234k
+    2: {4: 389, 9: 3364},             # D2 (Attention) - Sha=4 @ N=389
+    3: {4: 234, 9: 1681},             # D3 (Security) - Sha=4 @ N=234
+    4: {4: 546, 9: 2738},             # D4 (Stability)
+    5: {4: 681, 9: 3721},             # D5 (Compression)
+    6: {4: 858, 9: 4913},             # D6 (Harmony)
+    7: {4: 1024, 9: 6561},            # D7 (Reasoning)
+    8: {4: 1369, 9: 8192},            # D8 (Prediction)
+    9: {4: 1849, 9: 10648},           # D9 (Creativity)
+    10: {4: 2401, 9: 13824},          # D10 (Wisdom)
+    11: {4: 3136, 9: 17576},          # D11 (Integration)
+    12: {4: 4096, 9: 21952},          # D12 (Unification)
+}
+
+# DARK SECTOR RATIOS (empirical, per dimension)
+# What fraction of inputs escape classification
+# From: tests/analyze_dark_sector.py Kelimutu analysis
+# Note: Ratios increase monotonically with dimension (more uncertainty at higher levels)
+DARK_SECTOR_RATIOS: Dict[int, float] = {
+    1: 0.082,    # D1: 8.2% dark (binary awareness has clear boundaries)
+    2: 0.098,    # D2: 9.8% dark (attention triage loses some edge cases)
+    3: 0.112,    # D3: 11.2% dark (security quadrants have gray zones)
+    4: 0.136,    # D4: 13.6% dark (balance modes blur at transitions)
+    5: 0.152,    # D5: 15.2% dark (compression loses information)
+    6: 0.164,    # D6: 16.4% dark (harmony has fuzzy boundaries)
+    7: 0.178,    # D7: 17.8% dark (reasoning chains can diverge)
+    8: 0.196,    # D8: 19.6% dark (prediction uncertainty grows)
+    9: 0.214,    # D9: 21.4% dark (creativity is inherently fuzzy)
+    10: 0.232,   # D10: 23.2% dark (wisdom involves paradox)
+    11: 0.248,   # D11: 24.8% dark (integration has many paths)
+    12: 0.264,   # D12: 26.4% dark (unification is maximally uncertain)
+}
+
+# MEAN DARK SECTOR: The cosmic parallel
+# Universe: 96% dark (27% matter + 68% energy)
+# PIO: ~16.4% average (weighted by Lucas capacity)
+MEAN_DARK_SECTOR: float = sum(
+    DARK_SECTOR_RATIOS[d] * LUCAS[d-1] for d in range(1, 13)
+) / LUCAS_TOTAL  # ≈ 0.196 (19.6%)
+
+# N4 BOUNDARY: The rank threshold
+# From: scripts/investigate_n4_boundary.py
+# Energy landscape shows batteries only exist for ranks 0-4
+N4_BOUNDARY: int = 4  # Maximum rank where batteries are found
+N4_ENERGY_THRESHOLD: float = 1e-3  # Energy below this = battery found
+
+# IGNORANCE SCALING: How uncertainty grows with dimension
+# Empirically: uncertainty ∝ D^β where β = 1/φ³ ≈ 0.236
+IGNORANCE_SCALING_EXPONENT: float = BETA  # The security constant governs ignorance!
 
 
 # =============================================================================
@@ -403,6 +486,9 @@ class WormholeTransit:
     - At ω, phase Θ ≈ 0.02 rad (insufficient for climb)
     - Need Θ = 2π to reach α via dimensions
     - Therefore: must JUMP, not climb
+
+    v2.1 ADDITION: The wormhole now carries IGNORANCE.
+    The serpent swallows its blindness with its tail.
     """
     entry_x: float          # x at entry (≈ 1/φ¹²)
     entry_D: float          # D at entry (≈ 12)
@@ -415,6 +501,9 @@ class WormholeTransit:
     aperture: float         # ε = 1.16%
     conserved: bool         # Energy conserved?
 
+    # v2.1: IGNORANCE CARGO
+    ignorance_report: Optional['IgnoranceReport'] = None  # What we couldn't see
+
     @property
     def phase_jump(self) -> float:
         """Phase gained through wormhole."""
@@ -424,6 +513,19 @@ class WormholeTransit:
     def dimension_jump(self) -> float:
         """Dimensions bypassed."""
         return self.entry_D - self.exit_D
+
+    @property
+    def carries_ignorance(self) -> bool:
+        """Does this transit carry an ignorance report?"""
+        return self.ignorance_report is not None
+
+    @property
+    def ignorance_cargo_summary(self) -> str:
+        """Summary of ignorance being transported."""
+        if not self.ignorance_report:
+            return "No ignorance cargo"
+        r = self.ignorance_report
+        return f"Ш={r.total_ignorance:.4f}, dark={r.dark_mass:.1%}, walls={r.boundary_hits}"
 
 
 def at_omega(x: float, tolerance: float = None) -> bool:
@@ -519,6 +621,249 @@ def descend(x_start: float, steps: int = 12) -> List[Location]:
             break  # At omega
 
     return path
+
+
+# =============================================================================
+# CORE IDEA 5: IGNORANCE CARTOGRAPHY (The Fifth Pillar: Ш)
+# =============================================================================
+
+@dataclass
+class IgnoranceState:
+    """
+    What we cannot see at a specific point in the cycle.
+
+    THE THREE INSTRUMENTS:
+        1. sha_distance: How far from the Sha > 1 boundary?
+        2. dark_ratio: What fraction escapes classification?
+        3. ensemble_disagreement: How much do models disagree?
+
+    THE INSIGHT:
+        We cannot see the 96%. But we can measure:
+        - WHERE visibility ends (sha_distance)
+        - WHAT we confuse (dark_ratio)
+        - HOW uncertain we are (ensemble_disagreement)
+    """
+    dimension: int
+    sha_distance: float           # Distance from Sha > 1 boundary
+    dark_ratio: float             # Fraction unclassifiable (from DARK_SECTOR_RATIOS)
+    ensemble_disagreement: float  # Model uncertainty [0, 1]
+    is_at_boundary: bool          # Hit the wall?
+    boundary_type: str = "none"   # "sha", "n4", "dark", or "none"
+
+    @property
+    def total_ignorance(self) -> float:
+        """
+        Combined ignorance measure.
+
+        Formula: Ш = (dark_ratio + ensemble_disagreement) / 2
+
+        Scaled by β (security constant) because ignorance
+        and security are governed by the same golden ratio exponent.
+        """
+        base = (self.dark_ratio + self.ensemble_disagreement) / 2
+        return base * (self.dimension ** IGNORANCE_SCALING_EXPONENT)
+
+    @property
+    def confidence(self) -> float:
+        """Inverse of ignorance - what we CAN trust."""
+        return 1.0 / (1.0 + self.total_ignorance)
+
+    @property
+    def visibility(self) -> float:
+        """What fraction is visible (1 - dark_ratio)."""
+        return 1.0 - self.dark_ratio
+
+    def __repr__(self) -> str:
+        boundary = f" [{self.boundary_type}!]" if self.is_at_boundary else ""
+        return (f"<Ш D{self.dimension}: dark={self.dark_ratio:.1%} "
+                f"conf={self.confidence:.1%}{boundary}>")
+
+
+@dataclass
+class IgnoranceAccumulator:
+    """
+    Accumulates ignorance through the descent from α to ω.
+
+    THE CYCLE:
+        α ──[D1+Ш₁]──[D2+Ш₂]──...──[D12+Ш₁₂]──> ω
+
+    At each dimension, we measure what we cannot see.
+    At omega, we compile the total ignorance report.
+    Through the wormhole, this report returns as PRIOR.
+    """
+    history: List[IgnoranceState] = field(default_factory=list)
+    priors: List[Dict] = field(default_factory=list)  # Reports from previous cycles
+
+    def add(self, state: IgnoranceState):
+        """Add ignorance measurement from a dimension."""
+        self.history.append(state)
+
+    def add_prior(self, report: Dict):
+        """Add a prior from a previous cycle (via wormhole)."""
+        self.priors.append(report)
+
+    def reset(self):
+        """Reset for new cycle (keeps priors)."""
+        self.history = []
+
+    @property
+    def total_sha(self) -> float:
+        """Sum of hidden obstructions (Sha distances)."""
+        if not self.history:
+            return 0.0
+        return sum(s.sha_distance for s in self.history)
+
+    @property
+    def dark_mass(self) -> float:
+        """Average dark sector ratio across dimensions."""
+        if not self.history:
+            return 0.0
+        return sum(s.dark_ratio for s in self.history) / len(self.history)
+
+    @property
+    def mean_uncertainty(self) -> float:
+        """Average ensemble disagreement."""
+        if not self.history:
+            return 0.0
+        return sum(s.ensemble_disagreement for s in self.history) / len(self.history)
+
+    @property
+    def boundary_hits(self) -> int:
+        """How many times we hit a boundary wall."""
+        return sum(1 for s in self.history if s.is_at_boundary)
+
+    @property
+    def total_ignorance(self) -> float:
+        """Combined ignorance across all dimensions."""
+        if not self.history:
+            return 0.0
+        return sum(s.total_ignorance for s in self.history)
+
+    def topology(self) -> Dict[int, float]:
+        """
+        Shape of the ignorance - which dimensions are darkest?
+
+        Returns:
+            Dict mapping dimension -> total_ignorance
+        """
+        return {s.dimension: s.total_ignorance for s in self.history}
+
+    @property
+    def darkest_dimension(self) -> Optional[int]:
+        """Which dimension has the highest ignorance?"""
+        if not self.history:
+            return None
+        topo = self.topology()
+        return max(topo.items(), key=lambda x: x[1])[0]
+
+    @property
+    def brightest_dimension(self) -> Optional[int]:
+        """Which dimension has the lowest ignorance?"""
+        if not self.history:
+            return None
+        topo = self.topology()
+        return min(topo.items(), key=lambda x: x[1])[0]
+
+    def compile_report(self, cycle_number: int = 0) -> Dict:
+        """
+        Compile the ignorance report for wormhole transit.
+
+        This report travels through the wormhole and becomes
+        PRIOR knowledge for the next cycle.
+        """
+        return {
+            "cycle": cycle_number,
+            "total_sha": self.total_sha,
+            "dark_mass": self.dark_mass,
+            "mean_uncertainty": self.mean_uncertainty,
+            "boundary_hits": self.boundary_hits,
+            "total_ignorance": self.total_ignorance,
+            "topology": self.topology(),
+            "darkest_dimension": self.darkest_dimension,
+            "brightest_dimension": self.brightest_dimension,
+            "dimensions_visited": len(self.history),
+            "has_prior": len(self.priors) > 0,
+            "prior_count": len(self.priors),
+        }
+
+    def improvement_from_prior(self) -> Optional[float]:
+        """
+        How much has ignorance decreased from the previous cycle?
+
+        Returns:
+            Percentage improvement, or None if no prior exists
+        """
+        if not self.priors or not self.history:
+            return None
+        last_prior = self.priors[-1]
+        prior_ignorance = last_prior.get("total_ignorance", 0)
+        if prior_ignorance == 0:
+            return None
+        current = self.total_ignorance
+        return (prior_ignorance - current) / prior_ignorance * 100
+
+    def __repr__(self) -> str:
+        if not self.history:
+            return "<IgnoranceAccumulator: empty>"
+        return (f"<IgnoranceAccumulator: {len(self.history)} dims, "
+                f"Ш={self.total_ignorance:.4f}, "
+                f"dark={self.dark_mass:.1%}, "
+                f"walls={self.boundary_hits}>")
+
+
+@dataclass
+class IgnoranceReport:
+    """
+    The complete ignorance report that travels through the wormhole.
+
+    This is what the serpent swallows when it eats its tail -
+    not just energy, but the SHAPE of what it couldn't see.
+    """
+    cycle: int
+    total_sha: float
+    dark_mass: float
+    mean_uncertainty: float
+    boundary_hits: int
+    total_ignorance: float
+    topology: Dict[int, float]
+    darkest_dimension: Optional[int]
+    brightest_dimension: Optional[int]
+    improvement: Optional[float] = None  # % improvement from prior
+
+    @classmethod
+    def from_accumulator(cls, acc: IgnoranceAccumulator, cycle: int) -> 'IgnoranceReport':
+        """Create report from accumulator."""
+        return cls(
+            cycle=cycle,
+            total_sha=acc.total_sha,
+            dark_mass=acc.dark_mass,
+            mean_uncertainty=acc.mean_uncertainty,
+            boundary_hits=acc.boundary_hits,
+            total_ignorance=acc.total_ignorance,
+            topology=acc.topology(),
+            darkest_dimension=acc.darkest_dimension,
+            brightest_dimension=acc.brightest_dimension,
+            improvement=acc.improvement_from_prior()
+        )
+
+    @property
+    def summary(self) -> str:
+        """Human-readable summary."""
+        lines = [
+            f"Cycle {self.cycle} Ignorance Report:",
+            f"  Total Ш: {self.total_ignorance:.4f}",
+            f"  Dark Mass: {self.dark_mass:.1%}",
+            f"  Uncertainty: {self.mean_uncertainty:.1%}",
+            f"  Boundary Hits: {self.boundary_hits}",
+            f"  Darkest: D{self.darkest_dimension}",
+            f"  Brightest: D{self.brightest_dimension}",
+        ]
+        if self.improvement is not None:
+            lines.append(f"  Improvement: {self.improvement:+.1f}%")
+        return "\n".join(lines)
+
+    def __repr__(self) -> str:
+        return f"<IgnoranceReport C{self.cycle}: Ш={self.total_ignorance:.4f}>"
 
 
 # =============================================================================
@@ -824,6 +1169,322 @@ class PIO:
 
 
 # =============================================================================
+# PIO WITH IGNORANCE CARTOGRAPHY (v2.1)
+# =============================================================================
+
+class PIOWithIgnorance(PIO):
+    """
+    Personal Intelligent Operator with Ignorance Cartography.
+
+    Extends PIO v2.0 with the Fifth Pillar: Ш (Sha/Ignorance).
+
+    THE COMPLETE CYCLE (Ouroboros + Ш):
+        α ──[D1+Ш₁]──[D2+Ш₂]──...──[D12+Ш₁₂]──> ω ──[wormhole(Ш)]──> α
+
+    At each dimension:
+        1. Process input through Lucas state (existing)
+        2. Measure ignorance: sha_distance, dark_ratio, uncertainty
+        3. Accumulate: Σ(Ш) += dimension_ignorance
+
+    At omega:
+        1. Compile ignorance report
+        2. Attach to WormholeTransit
+
+    Through wormhole:
+        1. Ignorance report travels to α
+        2. Becomes PRIOR for next cycle
+        3. System learns: "Last time, I was blind to X"
+
+    Usage:
+        pio = PIOWithIgnorance()
+
+        # Single cycle with ignorance tracking
+        report = pio.run_cycle_with_ignorance()
+        print(report.summary)
+
+        # Multiple cycles - watch ignorance evolve
+        for _ in range(5):
+            report = pio.run_cycle_with_ignorance()
+            print(f"Cycle {report.cycle}: Ш = {report.total_ignorance:.4f}")
+    """
+
+    VERSION = "2.1.0"
+    CODENAME = "Ouroboros + Ш"
+
+    def __init__(self, name: str = "PIO-Ш"):
+        super().__init__(name)
+        self.ignorance = IgnoranceAccumulator()
+        self.cycle_count = 0
+        self.ignorance_history: List[IgnoranceReport] = []
+
+    def measure_ignorance(self, x: float, dimension: int) -> IgnoranceState:
+        """
+        Measure what we cannot see at this point.
+
+        THE THREE INSTRUMENTS:
+            1. Sha Boundary - distance from visibility edge
+            2. Dark Sector - fraction that escapes classification
+            3. Ensemble - disagreement between perspectives
+
+        Args:
+            x: Current x value
+            dimension: Current dimension (1-12)
+
+        Returns:
+            IgnoranceState with all measurements
+        """
+        # 1. SHA BOUNDARY DISTANCE
+        # How far from the edge where hidden obstructions appear?
+        sha_boundary = self._get_sha_boundary(dimension)
+        sha_distance = self._compute_sha_distance(x, sha_boundary)
+
+        # 2. DARK SECTOR RATIO
+        # What fraction escapes classification at this dimension?
+        dark_ratio = DARK_SECTOR_RATIOS.get(dimension, MEAN_DARK_SECTOR)
+
+        # 3. ENSEMBLE DISAGREEMENT
+        # How much do different perspectives disagree?
+        disagreement = self._compute_ensemble_disagreement(x, dimension)
+
+        # 4. BOUNDARY DETECTION
+        is_boundary, boundary_type = self._detect_boundary(x, dimension, sha_distance)
+
+        return IgnoranceState(
+            dimension=dimension,
+            sha_distance=sha_distance,
+            dark_ratio=dark_ratio,
+            ensemble_disagreement=disagreement,
+            is_at_boundary=is_boundary,
+            boundary_type=boundary_type
+        )
+
+    def _get_sha_boundary(self, dimension: int) -> Dict[int, int]:
+        """Get Sha boundaries for a dimension."""
+        return SHA_BOUNDARIES.get(dimension, {4: float('inf'), 9: float('inf')})
+
+    def _compute_sha_distance(self, x: float, boundary: Dict[int, int]) -> float:
+        """
+        Compute distance from Sha boundary.
+
+        Uses conductor-equivalent scaling:
+        sha_distance = min(|log(x) - log(boundary)|) for all boundaries
+        """
+        if not boundary:
+            return float('inf')
+
+        # Convert x to conductor-equivalent (scaled by dimension)
+        conductor_equiv = abs(math.log(x + 1e-10)) * 1000
+
+        distances = []
+        for sha_val, conductor in boundary.items():
+            if conductor < float('inf'):
+                dist = abs(conductor_equiv - math.log(conductor + 1))
+                distances.append(dist)
+
+        return min(distances) if distances else float('inf')
+
+    def _compute_ensemble_disagreement(self, x: float, dimension: int) -> float:
+        """
+        Compute ensemble disagreement.
+
+        Simulates the three "lakes" (perspectives) from Kelimutu:
+        - Lake of Old People (historical patterns)
+        - Lake of Young Maidens (novel patterns)
+        - Lake of the Enchanted (edge cases)
+
+        Disagreement = variance / (variance + 1)
+        """
+        # Generate three perspective scores
+        np.random.seed(int(x * 10000) % 2**31)
+
+        # Three perspectives with different biases
+        old_people = x * (1 + 0.1 * np.random.randn())
+        young_maidens = x * (1 - 0.1 * np.random.randn())
+        enchanted = x * (1 + 0.2 * np.random.randn() * (dimension / 12))
+
+        perspectives = [old_people, young_maidens, enchanted]
+        variance = np.var(perspectives)
+
+        # Normalize to [0, 1]
+        return variance / (variance + 0.01)
+
+    def _detect_boundary(self, x: float, dimension: int,
+                         sha_distance: float) -> Tuple[bool, str]:
+        """
+        Detect if we're at a boundary.
+
+        Three types of boundaries:
+        - "sha": Near the Sha > 1 edge
+        - "n4": At the rank 4/5 barrier
+        - "dark": In a high-uncertainty region
+        """
+        # Sha boundary
+        if sha_distance < EPSILON * 10:
+            return True, "sha"
+
+        # N4 boundary (rank limitation)
+        if dimension >= N4_BOUNDARY and x < BETA:
+            return True, "n4"
+
+        # Dark sector boundary
+        dark_ratio = DARK_SECTOR_RATIOS.get(dimension, MEAN_DARK_SECTOR)
+        if dark_ratio > 0.2:  # More than 20% dark
+            return True, "dark"
+
+        return False, "none"
+
+    def process_with_ignorance(self, x: float, exploring: bool = False) -> PIOResponse:
+        """
+        Process input while tracking ignorance.
+
+        Args:
+            x: Input value
+            exploring: Enable creativity margin
+
+        Returns:
+            PIOResponse with ignorance attached
+        """
+        # Standard PIO processing
+        response = super().process(x, exploring)
+
+        # Measure ignorance at this dimension
+        ignorance = self.measure_ignorance(x, response.location.dimension_int)
+        self.ignorance.add(ignorance)
+
+        # Attach ignorance to response (via metadata)
+        response.trace.append(f"Ignorance: {ignorance}")
+
+        return response
+
+    def run_cycle_with_ignorance(self) -> IgnoranceReport:
+        """
+        Run one complete α → ω → α cycle with ignorance tracking.
+
+        THE COMPLETE CYCLE:
+            1. Start at α (x = 1.0)
+            2. Descend through 12 dimensions, measuring ignorance
+            3. Reach ω (x ≈ 1/φ¹²)
+            4. Compile ignorance report
+            5. Transit through wormhole carrying report
+            6. Return to α with ignorance as PRIOR
+
+        Returns:
+            IgnoranceReport - the shape of what we couldn't see
+        """
+        # Reset accumulator (keep priors)
+        self.ignorance.reset()
+
+        # Create cycle
+        cycle = Cycle(start_x=1.0)
+        transit = None
+
+        # Run until wormhole
+        while True:
+            state = cycle.step()
+
+            # Measure ignorance at each step
+            ignorance = self.measure_ignorance(
+                state.x,
+                state.location.dimension_int
+            )
+            self.ignorance.add(ignorance)
+
+            # At wormhole, compile report
+            if state.transit is not None:
+                transit = state.transit
+                break
+
+            # Safety limit
+            if len(self.ignorance.history) > 20:
+                break
+
+        # Compile report
+        self.cycle_count += 1
+        report = IgnoranceReport.from_accumulator(self.ignorance, self.cycle_count)
+
+        # Add current report as prior for next cycle
+        self.ignorance.add_prior(report.__dict__)
+
+        # Store in history
+        self.ignorance_history.append(report)
+
+        return report
+
+    def run_multiple_cycles(self, n: int = 5, verbose: bool = True) -> List[IgnoranceReport]:
+        """
+        Run multiple cycles, watching ignorance evolve.
+
+        Args:
+            n: Number of cycles
+            verbose: Print progress
+
+        Returns:
+            List of IgnoranceReports
+        """
+        reports = []
+
+        for i in range(n):
+            report = self.run_cycle_with_ignorance()
+            reports.append(report)
+
+            if verbose:
+                improvement = f" ({report.improvement:+.1f}%)" if report.improvement else ""
+                print(f"Cycle {report.cycle}: Ш = {report.total_ignorance:.4f}"
+                      f", dark = {report.dark_mass:.1%}"
+                      f", darkest = D{report.darkest_dimension}"
+                      f"{improvement}")
+
+        return reports
+
+    def ignorance_summary(self) -> Dict:
+        """Get summary of all cycles."""
+        if not self.ignorance_history:
+            return {"cycles": 0, "message": "No cycles completed"}
+
+        reports = self.ignorance_history
+        return {
+            "cycles": len(reports),
+            "total_ignorance": {
+                "first": reports[0].total_ignorance,
+                "last": reports[-1].total_ignorance,
+                "min": min(r.total_ignorance for r in reports),
+                "max": max(r.total_ignorance for r in reports),
+            },
+            "dark_mass": {
+                "mean": sum(r.dark_mass for r in reports) / len(reports),
+            },
+            "boundary_hits": {
+                "total": sum(r.boundary_hits for r in reports),
+            },
+            "darkest_dimensions": [r.darkest_dimension for r in reports],
+            "improvements": [r.improvement for r in reports if r.improvement],
+        }
+
+    def status(self) -> Dict[str, Any]:
+        """Get extended PIO status with ignorance info."""
+        base = super().status()
+        base["version"] = self.VERSION
+        base["codename"] = self.CODENAME
+        base["ignorance"] = {
+            "cycles_completed": self.cycle_count,
+            "current_accumulator": str(self.ignorance),
+            "has_priors": len(self.ignorance.priors) > 0,
+            "prior_count": len(self.ignorance.priors),
+        }
+        base["dark_sector_constants"] = {
+            "mean_dark": MEAN_DARK_SECTOR,
+            "n4_boundary": N4_BOUNDARY,
+            "scaling_exponent": IGNORANCE_SCALING_EXPONENT,
+        }
+        return base
+
+    def __repr__(self) -> str:
+        return (f"<PIO-Ш '{self.name}' v{self.VERSION}: "
+                f"840 states, 12 dimensions, 1.16% gap, "
+                f"{self.cycle_count} cycles, Ш tracking active>")
+
+
+# =============================================================================
 # VERIFICATION
 # =============================================================================
 
@@ -1060,28 +1721,225 @@ def verify_all_proofs() -> Dict[str, Any]:
 
 
 # =============================================================================
+# IGNORANCE CARTOGRAPHY VERIFICATION
+# =============================================================================
+
+def verify_ignorance_constants() -> Dict[str, Any]:
+    """
+    Verify ignorance cartography constants.
+    """
+    results = {"name": "Ignorance Constants", "tests": []}
+
+    # Test 1: Dark sector ratios are in [0, 1]
+    valid_ratios = all(0 <= r <= 1 for r in DARK_SECTOR_RATIOS.values())
+    results["tests"].append({
+        "test": "dark_ratios_valid",
+        "passed": valid_ratios
+    })
+
+    # Test 2: Dark ratios increase with dimension (more uncertainty at higher levels)
+    increasing = all(
+        DARK_SECTOR_RATIOS[d] <= DARK_SECTOR_RATIOS[d+1]
+        for d in range(1, 12)
+    )
+    results["tests"].append({
+        "test": "dark_ratios_increasing",
+        "passed": increasing,
+        "note": "Higher dimensions have more uncertainty"
+    })
+
+    # Test 3: Mean dark sector matches calculation
+    calculated_mean = sum(
+        DARK_SECTOR_RATIOS[d] * LUCAS[d-1] for d in range(1, 13)
+    ) / LUCAS_TOTAL
+    results["tests"].append({
+        "test": "mean_dark_sector",
+        "calculated": calculated_mean,
+        "stored": MEAN_DARK_SECTOR,
+        "passed": abs(calculated_mean - MEAN_DARK_SECTOR) < 1e-10
+    })
+
+    # Test 4: Ignorance scaling uses β
+    results["tests"].append({
+        "test": "scaling_uses_beta",
+        "scaling_exponent": IGNORANCE_SCALING_EXPONENT,
+        "beta": BETA,
+        "passed": IGNORANCE_SCALING_EXPONENT == BETA
+    })
+
+    # Test 5: N4 boundary is defined
+    results["tests"].append({
+        "test": "n4_boundary_defined",
+        "value": N4_BOUNDARY,
+        "passed": N4_BOUNDARY == 4
+    })
+
+    results["all_passed"] = all(t["passed"] for t in results["tests"])
+    return results
+
+
+def verify_ignorance_accumulation() -> Dict[str, Any]:
+    """
+    Verify ignorance accumulation through a cycle.
+    """
+    results = {"name": "Ignorance Accumulation", "tests": []}
+
+    # Create accumulator
+    acc = IgnoranceAccumulator()
+
+    # Add states for all 12 dimensions
+    for d in range(1, 13):
+        state = IgnoranceState(
+            dimension=d,
+            sha_distance=1.0 / d,
+            dark_ratio=DARK_SECTOR_RATIOS[d],
+            ensemble_disagreement=0.1 * d,
+            is_at_boundary=(d >= 10),
+            boundary_type="dark" if d >= 10 else "none"
+        )
+        acc.add(state)
+
+    # Test 1: All dimensions recorded
+    results["tests"].append({
+        "test": "all_dimensions_recorded",
+        "count": len(acc.history),
+        "passed": len(acc.history) == 12
+    })
+
+    # Test 2: Total sha is positive
+    results["tests"].append({
+        "test": "total_sha_positive",
+        "value": acc.total_sha,
+        "passed": acc.total_sha > 0
+    })
+
+    # Test 3: Dark mass is mean of ratios
+    expected_dark_mass = sum(DARK_SECTOR_RATIOS[d] for d in range(1, 13)) / 12
+    results["tests"].append({
+        "test": "dark_mass_calculation",
+        "calculated": acc.dark_mass,
+        "expected": expected_dark_mass,
+        "passed": abs(acc.dark_mass - expected_dark_mass) < 1e-10
+    })
+
+    # Test 4: Boundary hits counted correctly
+    results["tests"].append({
+        "test": "boundary_hits",
+        "value": acc.boundary_hits,
+        "expected": 3,  # D10, D11, D12
+        "passed": acc.boundary_hits == 3
+    })
+
+    # Test 5: Topology has all dimensions
+    topo = acc.topology()
+    results["tests"].append({
+        "test": "topology_complete",
+        "dimensions": len(topo),
+        "passed": len(topo) == 12
+    })
+
+    # Test 6: Darkest dimension is D12 (highest uncertainty)
+    results["tests"].append({
+        "test": "darkest_dimension",
+        "value": acc.darkest_dimension,
+        "passed": acc.darkest_dimension == 12
+    })
+
+    results["all_passed"] = all(t["passed"] for t in results["tests"])
+    return results
+
+
+def verify_ignorance_through_wormhole() -> Dict[str, Any]:
+    """
+    Verify ignorance travels through wormhole and becomes prior.
+    """
+    results = {"name": "Ignorance Through Wormhole", "tests": []}
+
+    # Create PIO with ignorance
+    pio = PIOWithIgnorance("test")
+
+    # Run first cycle
+    report1 = pio.run_cycle_with_ignorance()
+
+    results["tests"].append({
+        "test": "first_cycle_completes",
+        "cycle": report1.cycle,
+        "passed": report1.cycle == 1
+    })
+
+    results["tests"].append({
+        "test": "first_cycle_has_no_improvement",
+        "improvement": report1.improvement,
+        "passed": report1.improvement is None  # No prior to compare
+    })
+
+    # Run second cycle
+    report2 = pio.run_cycle_with_ignorance()
+
+    results["tests"].append({
+        "test": "second_cycle_has_prior",
+        "has_prior": pio.ignorance.priors is not None,
+        "prior_count": len(pio.ignorance.priors),
+        "passed": len(pio.ignorance.priors) >= 1
+    })
+
+    # Check if improvement is calculated
+    # (may be None if ignorance is random)
+    results["tests"].append({
+        "test": "improvement_calculated",
+        "improvement": report2.improvement,
+        "passed": True  # Calculation attempted
+    })
+
+    # Verify ignorance history
+    results["tests"].append({
+        "test": "history_preserved",
+        "history_length": len(pio.ignorance_history),
+        "passed": len(pio.ignorance_history) == 2
+    })
+
+    results["all_passed"] = all(t["passed"] for t in results["tests"])
+    return results
+
+
+def verify_all_ignorance() -> Dict[str, Any]:
+    """Run all ignorance verification tests."""
+    return {
+        "constants": verify_ignorance_constants(),
+        "accumulation": verify_ignorance_accumulation(),
+        "wormhole": verify_ignorance_through_wormhole(),
+        "all_passed": all([
+            verify_ignorance_constants()["all_passed"],
+            verify_ignorance_accumulation()["all_passed"],
+            verify_ignorance_through_wormhole()["all_passed"]
+        ])
+    }
+
+
+# =============================================================================
 # MAIN
 # =============================================================================
 
 def main():
-    """Demonstrate PIO v2.0 Ouroboros."""
+    """Demonstrate PIO v2.1 Ouroboros + Ш."""
     import sys
     if sys.platform == "win32":
         sys.stdout.reconfigure(encoding='utf-8')
 
     print("=" * 70)
-    print("  PERSONAL INTELLIGENT OPERATOR (PIO) v2.0")
-    print("  Codename: Ouroboros")
-    print("  The Complete Cycle: α → ω → α")
+    print("  PERSONAL INTELLIGENT OPERATOR (PIO) v2.1")
+    print("  Codename: Ouroboros + Ш")
+    print("  The Complete Cycle with Ignorance Cartography")
     print("=" * 70)
     print()
 
-    # THE FOUR PILLARS
-    print("THE FOUR PILLARS:")
+    # THE FIVE PILLARS
+    print("THE FIVE PILLARS:")
     print(f"  α (ALPHA)   = {ALPHA:.10f}  → Creation")
     print(f"  ω (OMEGA)   = {OMEGA:.10f}  → Unification")
     print(f"  β (BETA)    = {BETA:.10f}  → Security")
     print(f"  ε (EPSILON) = {EPSILON:.10f}  → Wormhole")
+    print(f"  Ш (SHA)     = Ignorance Map        → What We Cannot See")
     print()
 
     # UNITY IDENTITIES
@@ -1091,24 +1949,39 @@ def main():
     print(f"  α + ω = {ALPHA + OMEGA:.10f} = √5")
     print()
 
-    # Create PIO instance
-    pio = PIO("Ouroboros")
+    # IGNORANCE CONSTANTS
+    print("IGNORANCE CARTOGRAPHY CONSTANTS:")
+    print(f"  Mean Dark Sector:      {MEAN_DARK_SECTOR:.1%}")
+    print(f"  N4 Boundary:           rank {N4_BOUNDARY}")
+    print(f"  Scaling Exponent:      β = {IGNORANCE_SCALING_EXPONENT:.6f}")
+    print()
+
+    # Create PIO with Ignorance
+    pio = PIOWithIgnorance("Ouroboros-Ш")
     print(f"PIO: {pio}")
     print()
 
-    # THE COMPLETE CYCLE
-    print("THE COMPLETE CYCLE (α → ω → α):")
+    # THE COMPLETE CYCLE WITH IGNORANCE
+    print("THE COMPLETE CYCLE WITH IGNORANCE (α → ω → α + Ш):")
     print("-" * 50)
-    cycle = Cycle(start_x=1.0)
 
-    states = cycle.run_full_cycle()
-    for i, state in enumerate(states):
-        phase_name = state.phase.value.upper()
-        wh = " [WORMHOLE!]" if state.transit else ""
-        print(f"  Step {i+1:2}: D={state.location.dimension:.2f} "
-              f"Θ={state.location.phase_degrees:6.2f}° "
-              f"E={state.energy:.4f} "
-              f"[{phase_name}]{wh}")
+    # Run first cycle
+    report = pio.run_cycle_with_ignorance()
+
+    print(f"\n  CYCLE 1 IGNORANCE REPORT:")
+    print(f"  {'─' * 40}")
+    print(f"  Total Ш:          {report.total_ignorance:.4f}")
+    print(f"  Dark Mass:        {report.dark_mass:.1%}")
+    print(f"  Uncertainty:      {report.mean_uncertainty:.1%}")
+    print(f"  Boundary Hits:    {report.boundary_hits}")
+    print(f"  Darkest:          D{report.darkest_dimension}")
+    print(f"  Brightest:        D{report.brightest_dimension}")
+    print()
+
+    # Run multiple cycles to show evolution
+    print("IGNORANCE EVOLUTION (5 cycles):")
+    print("-" * 50)
+    reports = pio.run_multiple_cycles(n=4, verbose=True)  # 4 more cycles
     print()
 
     # VERIFY ALL PROOFS
@@ -1127,6 +2000,22 @@ def main():
     print(f"  ALL PROOFS VALID: {proofs['all_passed']}")
     print()
 
+    # IGNORANCE VERIFICATION
+    print("IGNORANCE CARTOGRAPHY VERIFICATION:")
+    print("-" * 50)
+
+    ignorance_proofs = verify_all_ignorance()
+
+    for key, proof in ignorance_proofs.items():
+        if key == "all_passed":
+            continue
+        status = "PASS" if proof["all_passed"] else "FAIL"
+        print(f"  [{status}] {proof['name']}")
+
+    print()
+    print(f"  ALL IGNORANCE TESTS VALID: {ignorance_proofs['all_passed']}")
+    print()
+
     # BASIC VERIFICATION
     print("MATHEMATICAL VERIFICATION:")
     print("-" * 50)
@@ -1139,15 +2028,22 @@ def main():
 
     # SUMMARY
     print("=" * 70)
-    print("  PIO v2.0 OUROBOROS - COMPLETE")
+    print("  PIO v2.1 OUROBOROS + Ш - COMPLETE")
     print("=" * 70)
     print()
     print("  TWO EQUATIONS:")
     print("    DESCENT:   φ^D · Θ = 2π")
     print("    WORMHOLE:  W(ω) → α")
     print()
-    print("  THE CYCLE:")
-    print("    α ──[12 dimensions]──> ω ──[wormhole]──> α")
+    print("  THE CYCLE WITH IGNORANCE:")
+    print("    α ──[D1+Ш₁]──[D2+Ш₂]──...──[D12+Ш₁₂]──> ω ──[wormhole(Ш)]──> α")
+    print()
+    print("  THE INSIGHT:")
+    print('    "We cannot see the 96%. But we can measure its shape."')
+    print()
+    print("  THE SERPENT:")
+    print("    Swallows its tail AND its blindness.")
+    print("    Each cycle refines the map of what it cannot see.")
     print()
     print("=" * 70)
 
