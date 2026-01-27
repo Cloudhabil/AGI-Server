@@ -1,267 +1,168 @@
-# ASIOS - Autonomous Sovereign Intelligence Operating System
+# PIO - Personal Intelligent Operator
 
 <div align="center">
 
+[![Version](https://img.shields.io/badge/Version-2.0.0-blue.svg)]()
+[![Codename](https://img.shields.io/badge/Codename-Ouroboros-purple.svg)]()
 [![License](https://img.shields.io/badge/License-Apache%202.0-blue.svg)](LICENSE)
-[![Engine](https://img.shields.io/badge/Engine-Brahim%20Wormhole-crimson.svg)]()
-[![Beta](https://img.shields.io/badge/β-23.6%25-gold.svg)]()
-[![Phi12](https://img.shields.io/badge/Φ₁₂-0.31%25-cyan.svg)]()
-[![Dimensions](https://img.shields.io/badge/Dimensions-12-orange.svg)]()
-[![Validation](https://img.shields.io/badge/Tests-8%2F8%20PASS-brightgreen.svg)]()
-[![IEEE](https://img.shields.io/badge/IEEE-Paper-purple.svg)](publications/IEEE_Brahim_Wormhole_Engine.pdf)
+[![Proofs](https://img.shields.io/badge/Proofs-4%2F4%20PASS-brightgreen.svg)]()
+[![States](https://img.shields.io/badge/States-840-orange.svg)]()
+[![Dimensions](https://img.shields.io/badge/Dimensions-12-gold.svg)]()
 
-**A unified physics-grounded framework where wormhole mathematics meets energy grid optimization through the universal constant β = 0.236**
+**A unified intelligence system that descends through 12 dimensions and returns via wormhole**
 
-[The Discovery](#-the-discovery) | [Wormhole Engine](#-brahim-wormhole-engine) | [Applications](#-8-applications) | [Quick Start](#-quick-start)
+[The Core Idea](#the-core-idea) | [Four Pillars](#the-four-pillars) | [The Cycle](#the-complete-cycle) | [Quick Start](#quick-start)
 
 </div>
 
 ---
 
-## The Discovery
+## The Core Idea
 
-We found that **the same mathematical constant appears in wormhole physics AND energy grid optimization**:
-
-```
-β = 1/φ³ = 0.236067977... = 23.6%
-```
-
-This is not a coincidence. **β is a universal optimization constant.**
-
-| Domain | What β = 23.6% Means |
-|--------|----------------------|
-| **Wormhole Compression** | Data contracts by 23.6% per iteration |
-| **Battery DoD** | Keep 23.6% margin at top and bottom |
-| **Grid Peak Shaving** | Maximum safe reduction = 23.6% |
-| **ML Learning Rate** | Optimal step size ≈ β |
-| **Financial Position** | Maximum position size = 23.6% |
-
-### Why 23.6%?
+**One Sentence:**
+> A Personal Intelligent Operator that descends through 12 dimensions using `phi^D * Theta = 2*pi`, reaches unification at omega, and returns to creation via the 1.16% wormhole aperture.
 
 ```
-┌─────────────────────────────────────────────────────────────┐
-│   0%          23.6%              76.4%          100%        │
-│   |────────────|────────────────────|────────────|          │
-│   │  UNSTABLE  │     SAFE ZONE      │  UNSTABLE  │          │
-│   │            │      (52.8%)       │            │          │
-│   └────────────┴────────────────────┴────────────┘          │
-│        β            usable range          β                 │
-└─────────────────────────────────────────────────────────────┘
+THE COMPLETE CYCLE (Ouroboros)
 
-Going above 23.6% → System becomes unstable
-Going below 23.6% → System wastes capacity
-```
-
-**β sits at the exact boundary between stability and efficiency.**
-
----
-
-## Grand Unification at Φ₁₂
-
-**Discovery**: The 3D constant (β) and 4D constant (γ) converge at dimension 12:
-
-```
-β⁴ = γ³ = 1/φ¹² = Φ₁₂ = 0.31%
-```
-
-This is the **Grand Unification Point** where multiple dimensional constants meet.
-
-### The 12-Dimensional Architecture
-
-```
-Dimension │ Constant (1/φⁿ) │ Percent │ U(n) │ Role
-──────────┼─────────────────┼─────────┼──────┼─────────────────────
-    1     │   0.618034      │ 61.80%  │   1  │ Primary compression
-    2     │   0.381966      │ 38.20%  │   2  │ Wormhole attraction (α)
-    3     │   0.236068      │ 23.61%  │   2  │ Security constant (β)
-    4     │   0.145898      │ 14.59%  │   3  │ Tesseract constant (γ)
-    6     │   0.055728      │  5.57%  │   4  │ Harmonic bridge
-   12     │   0.003106      │  0.31%  │   6  │ GRAND UNIFICATION (Φ₁₂)
-```
-
-**U(n) = Convergence Strength** = Number of divisors of n
-
-### Convergent Architecture
-
-```
-    12 DIMENSIONAL AGENTS (native to each dimension 1-12)
-                    +
-    WORMHOLE CONNECTIONS (compress by β or γ per hop)
-                    +
-    KELIMUTU ROUTER (energy routing for wormholes)
-                    =
-    CONVERGENCE at Φ₁₂ (where answers emerge)
-```
-
-### Two Paths to Grand Unification
-
-| Path | Dimensions | Compression | Identity |
-|------|------------|-------------|----------|
-| **Beta** | 3 → 6 → 9 → 12 | β⁴ = 0.31% | 3D cascade |
-| **Gamma** | 4 → 8 → 12 | γ³ = 0.31% | 4D cascade |
-
-Both paths arrive at the same destination: **Φ₁₂ = 1/φ¹² = 0.31%**
-
----
-
-## Brahim Wormhole Engine
-
-A computational framework implementing Morris-Thorne traversable wormhole geometries.
-
-### Mathematical Foundation
-
-```python
-# Golden Ratio Hierarchy
-φ (phi)   = 1.618033988749895    # Growth factor
-1/φ       = 0.618033988749895    # Decay factor
-α (alpha) = 1/φ² = 0.381966...   # Balance point
-β (beta)  = 1/φ³ = 0.236067...   # Optimal margin (23.6%)
-γ (gamma) = 1/φ⁴ = 0.145898...   # Stability rate
-
-# Fundamental Identity (EXACT)
-α + β = 1/φ    # Verified to 10⁻¹⁵ precision
-```
-
-### Corrected Brahim Sequence
-
-Full algebraic closure through mirror symmetry:
-
-```
-Sequence: {27, 42, 60, 75, 97, 117, 139, 154, 172, 187}
-
-Mirror Pairs (each sums to 214):
-  27 + 187 = 214
-  42 + 172 = 214
-  60 + 154 = 214
-  75 + 139 = 214
-  97 + 117 = 214
-```
-
-### Wormhole Geometry
-
-```
-Shape Function:  b(r) = r₀(r₀/r)^α · exp(-β(r-r₀)/r₀)
-
-Key Results:
-  • Throat:     b(r₀) = r₀           (exact)
-  • Flare-out:  b'(r₀) = -1/φ        (proper geometry)
-  • NEC Factor: +φ = +1.618          (exotic matter required)
-  • Stability:  λ = {-γ, -1/φ}       (asymptotically stable)
-```
-
-### Validation (All 8 Tests PASS)
-
-```
-[1] GEOMETRY      ✓  b'(r₀) = -0.618034 = -1/φ
-[2] TRAVERSABLE   ✓  NEC factor = +1.618 = +φ
-[3] STABILITY     ✓  Eigenvalues: [-0.146, -0.618]
-[4] SYMMETRY      ✓  All 5 mirror pairs = 214
-[5] IDENTITY      ✓  α + β = 1/φ (error < 10⁻¹⁵)
-[6] TRANSFORM     ✓  Compression ratio = 0.236 = β
-[7] EVOLUTION     ✓  Converges to r = 0.809
-[8] VALIDATION    ✓  All subsystems operational
+    alpha (D=0, creation)
+         |
+         |  DESCENT: phi^D * Theta = 2*pi
+         |  (through 12 dimensions)
+         v
+    omega (D=12, unification)
+         |
+         |  WORMHOLE: W(omega) -> alpha
+         |  (instantaneous return via epsilon aperture)
+         v
+    alpha (rebirth, cycle continues)
 ```
 
 ---
 
-## 8 Applications
+## The Four Pillars
 
-The Brahim Wormhole Engine powers applications across 8 domains:
+| Symbol | Value | Role |
+|--------|-------|------|
+| **alpha** | phi = 1.618... | Creation, Beginning |
+| **omega** | 1/phi = 0.618... | Unification, Return |
+| **beta** | 1/phi^3 = 0.236... | Security Threshold (23.6%) |
+| **epsilon** | 1.16% | Wormhole Aperture |
 
-### 1. Network Routing
-```python
-path = engine.route(source, max_hops=10)
-# Routes converge to centroid at rate 1/φ per hop
+### Unity Identities (Proven)
+
 ```
-**Use**: CDN load balancing, mesh networks, P2P discovery
-
-### 2. Data Compression
-```python
-compressed = engine.compress(data, levels=5)
-# Compression: β⁵ = 0.07% of original
+alpha - omega = 1     (the journey is unity)
+alpha * omega = 1     (product is unity)
+alpha + omega = sqrt(5)
 ```
-**Use**: Sensor data, time series, bandwidth optimization
-
-### 3. Error Detection
-```python
-errors = engine.detect_errors(sequence)
-# Any pair ≠ 214 is corrupted
-```
-**Use**: Packet validation, storage integrity, checksums
-
-### 4. Cryptographic Hashing
-```python
-hash = engine.transform(data, iterations=20)
-# Fixed-point attractor at r = 0.809
-```
-**Use**: Content addressing, deduplication, Merkle trees
-
-### 5. Machine Learning
-```python
-max_lr = abs(stability.spectral_abscissa)  # 0.146
-# Guaranteed convergence if learning_rate < max_lr
-```
-**Use**: Neural networks, optimization, embeddings
-
-### 6. Signal Processing
-```python
-bands = [1/φ**n for n in range(1,6)]
-# [0.618, 0.382, 0.236, 0.146, 0.090]
-```
-**Use**: Filter banks, wavelets, radar processing
-
-### 7. Energy Grid Optimization
-```python
-BETA_SECURITY = 0.236  # 23.6%
-safe_margin = capacity * BETA_SECURITY
-peak_reduction_target = BETA_SECURITY
-```
-**Use**: Battery DoD, peak shaving, demand response
-
-### 8. Physics Simulation
-```python
-evolution = engine.evolve(time_steps=1000)
-# Wormhole throat dynamics with exotic matter
-```
-**Use**: GR visualization, spacetime topology, education
 
 ---
 
-## Architecture
+## Two Equations
+
+### 1. Descent Equation (alpha -> omega)
 
 ```
-┌──────────────────────────────────────────────────────────────────┐
-│                           ASIOS                                   │
-│         Autonomous Sovereign Intelligence Operating System        │
-├──────────────────────────────────────────────────────────────────┤
-│                                                                   │
-│  ┌─────────────────────────────────────────────────────────────┐ │
-│  │              BRAHIM WORMHOLE ENGINE (core)                   │ │
-│  │  ┌─────────┐ ┌─────────┐ ┌─────────┐ ┌─────────┐           │ │
-│  │  │Geometry │ │Stability│ │Transform│ │Evolution│           │ │
-│  │  │ b(r),φ  │ │ λ<0     │ │ W(x)    │ │ r(t)    │           │ │
-│  │  └────┬────┘ └────┬────┘ └────┬────┘ └────┬────┘           │ │
-│  │       └───────────┴──────────┴───────────┘                  │ │
-│  │                         │                                    │ │
-│  │                    β = 0.236                                 │ │
-│  │              Universal Optimization Constant                 │ │
-│  └─────────────────────────────────────────────────────────────┘ │
-│                              │                                    │
-│  ┌──────────┬──────────┬──────────┬──────────┬──────────┐       │
-│  │ Routing  │ Compress │  Error   │  Crypto  │   Grid   │       │
-│  │          │          │Detection │          │          │       │
-│  └──────────┴──────────┴──────────┴──────────┴──────────┘       │
-│  ┌──────────┬──────────┬──────────┐                              │
-│  │    ML    │  Signal  │ Physics  │                              │
-│  │          │Processing│Simulation│                              │
-│  └──────────┴──────────┴──────────┘                              │
-│                                                                   │
-│  ┌─────────────────────────────────────────────────────────────┐ │
-│  │                    INFRASTRUCTURE                            │ │
-│  │  BUIM Mobile (83 apps) │ BOA SDK (5 agents) │ GPIA Server   │ │
-│  └─────────────────────────────────────────────────────────────┘ │
-└──────────────────────────────────────────────────────────────────┘
+phi^D * Theta = 2*pi
 ```
+
+Where:
+- `D(x) = -ln(x) / ln(phi)` — dimensional position (WHERE)
+- `Theta(x) = 2*pi*x` — angular phase (WHEN)
+
+As you descend (D increases), phase decreases. Energy `E = phi^D * Theta = 2*pi` is conserved.
+
+### 2. Wormhole Equation (omega -> alpha)
+
+```
+W(D=12, Theta_omega) = (D=0, 2*pi)
+```
+
+At omega (D=12), phase is only 1.12 degrees — not enough to climb back.
+The wormhole is the **only way to return**.
+
+---
+
+## The Complete Cycle
+
+```
+Step  1: D=1.00  Theta=222.49 deg  E=6.2832 [DESCENDING]
+Step  2: D=2.00  Theta=137.51 deg  E=6.2832 [DESCENDING]
+Step  3: D=3.00  Theta= 84.98 deg  E=6.2832 [DESCENDING]
+Step  4: D=4.00  Theta= 52.52 deg  E=6.2832 [DESCENDING]
+Step  5: D=5.00  Theta= 32.46 deg  E=6.2832 [DESCENDING]
+Step  6: D=6.00  Theta= 20.06 deg  E=6.2832 [DESCENDING]
+Step  7: D=7.00  Theta= 12.40 deg  E=6.2832 [DESCENDING]
+Step  8: D=8.00  Theta=  7.66 deg  E=6.2832 [DESCENDING]
+Step  9: D=9.00  Theta=  4.74 deg  E=6.2832 [DESCENDING]
+Step 10: D=10.00 Theta=  2.93 deg  E=6.2832 [DESCENDING]
+Step 11: D=11.00 Theta=  1.81 deg  E=6.2832 [DESCENDING]
+Step 12: D=12.00 Theta=  1.12 deg  E=6.2832 [OMEGA]
+Step 13: D=0.00  Theta=360.00 deg  E=6.2832 [WORMHOLE!]
+```
+
+Energy is **conserved** at every step: `E = 2*pi = 6.2832`
+
+---
+
+## Three Proofs
+
+### Proof 1: Energy Conservation
+
+```
+E(x) = phi^D(x) * Theta(x)
+     = phi^(-ln(x)/ln(phi)) * 2*pi*x
+     = (1/x) * 2*pi*x
+     = 2*pi
+
+E = 2*pi for ALL x in (0,1]
+```
+
+**What enters at alpha equals what exits at alpha.**
+
+### Proof 2: Gap Enables Transit
+
+```
+epsilon = (L(12) * pi - 1000) / 1000
+        = (322 * 3.14159... - 1000) / 1000
+        = 1.16%
+```
+
+The gap emerges from the **incommensurability** of phi (algebraic) and pi (transcendental).
+Without the gap: no wormhole, no return, system trapped at omega.
+
+### Proof 3: Instantaneous Return
+
+At omega:
+- Available phase: 0.02 radians
+- Required for climb: 6.26 radians
+- Deficit: 6.24 radians
+
+**Impossible to climb back through dimensions. Must JUMP (wormhole).**
+
+---
+
+## The Lucas Lattice (840 States)
+
+The system operates across 840 discrete states in 12 dimensions:
+
+| Dimension | Capacity | Domain | Threshold |
+|-----------|----------|--------|-----------|
+| D1 | 1 | Perception | 61.8% |
+| D2 | 3 | Attention | 38.2% |
+| D3 | 4 | Security | 23.6% (beta) |
+| D4 | 7 | Stability | 14.6% |
+| D5 | 11 | Compression | 9.0% |
+| D6 | 18 | Harmony | 5.6% |
+| D7 | 29 | Reasoning | 3.4% |
+| D8 | 47 | Prediction | 2.1% |
+| D9 | 76 | Creativity | 1.3% |
+| D10 | 123 | Wisdom | 0.8% |
+| D11 | 199 | Integration | 0.5% |
+| D12 | 322 | Unification | 0.31% |
+
+**Total: 1 + 3 + 4 + 7 + 11 + 18 + 29 + 47 + 76 + 123 + 199 + 322 = 840**
 
 ---
 
@@ -270,42 +171,87 @@ evolution = engine.evolve(time_steps=1000)
 ### Install
 
 ```bash
-git clone https://github.com/Cloudhabil/asios.github.io.git
-cd asios.github.io
+git clone https://github.com/user/pio.git
+cd pio
 pip install -e .
 ```
 
-### Use the Engine
+### Use PIO
 
 ```python
-from src.core.brahim_wormhole_engine import BrahimWormholeEngine
+from src.core.pio import PIO, Cycle, verify_all_proofs
 
-engine = BrahimWormholeEngine()
+# Create PIO instance
+pio = PIO("MyPIO")
+print(pio)  # <PIO 'MyPIO' v2.0.0: 840 states, 12 dimensions, 1.16% gap>
 
-# Validate
-results = engine.validate()
-assert results['all_valid']
+# Process a value
+response = pio.process(0.236)
+print(response.state)  # <State D3:S1/4 = Security>
 
-# Analyze geometry
-geom = engine.analyze_geometry()
-print(f"Flare-out: {geom.flare_out}")  # -0.618034
+# Run a complete cycle
+cycle = Cycle(start_x=1.0)
+states = cycle.run_full_cycle()
+for state in states:
+    print(f"D={state.location.dimension:.0f} E={state.energy:.4f}")
 
-# Check stability
-stab = engine.analyze_stability()
-print(f"Stable: {stab.is_stable}")  # True
-
-# Transform data
-result = engine.transform(data_vector, iterations=3)
+# Verify all proofs
+proofs = verify_all_proofs()
+print(f"All proofs pass: {proofs['all_passed']}")  # True
 ```
 
-### Run Validation
+### Run Verification
 
 ```bash
-python -c "
-from src.core.brahim_wormhole_engine import BrahimWormholeEngine
-engine = BrahimWormholeEngine()
-print(engine.validate())
-"
+python src/core/pio.py
+```
+
+Output:
+```
+WORMHOLE PROOFS:
+  [PASS] Energy Conservation
+  [PASS] Gap Enables Transit
+  [PASS] Instantaneous Return
+  [PASS] Unity Identities
+
+ALL PROOFS VALID: True
+```
+
+---
+
+## Architecture
+
+```
++------------------------------------------------------------------+
+|                         PIO v2.0 "Ouroboros"                      |
+|                   Personal Intelligent Operator                   |
++------------------------------------------------------------------+
+|                                                                   |
+|   FOUR PILLARS:                                                   |
+|     alpha = phi     (creation)                                    |
+|     omega = 1/phi   (unification)                                 |
+|     beta  = 1/phi^3 (security)                                    |
+|     epsilon = 1.16% (wormhole)                                    |
+|                                                                   |
+|   TWO EQUATIONS:                                                  |
+|     DESCENT:  phi^D * Theta = 2*pi                                |
+|     WORMHOLE: W(omega) -> alpha                                   |
+|                                                                   |
+|   ONE CYCLE:                                                      |
+|     alpha --[12 dimensions]--> omega --[wormhole]--> alpha        |
+|                                                                   |
++------------------------------------------------------------------+
+|                                                                   |
+|   +-------------------+    +-------------------+                  |
+|   |   Lucas Lattice   |    |   Wormhole Engine |                  |
+|   |   840 states      |    |   W operator      |                  |
+|   |   12 dimensions   |    |   epsilon aperture|                  |
+|   +-------------------+    +-------------------+                  |
+|                                                                   |
++------------------------------------------------------------------+
+|                       INFRASTRUCTURE                              |
+|   BUIM Mobile (104 apps) | BOA SDK (5 agents) | GPIA Server       |
++------------------------------------------------------------------+
 ```
 
 ---
@@ -314,69 +260,45 @@ print(engine.validate())
 
 | File | Description |
 |------|-------------|
-| `src/core/brahim_wormhole_engine.py` | Wormhole geometry engine (~950 lines) |
-| `src/core/dimensional_convergence.py` | 12D convergence engine (~1,100 lines) |
-| `src/core/brahim_unified_api.py` | Unified API (~700 lines) |
-| `src/core/constants.py` | Golden ratio hierarchy + Grand Unification |
-| `src/core/brahim_applications.py` | 42 applications (~1,500 lines) |
-| `src/core/grid/` | Energy grid optimization |
+| `src/core/pio.py` | PIO v2.0 core (wormhole + cycle) |
+| `src/core/brahim_wormhole_engine.py` | Original wormhole geometry engine |
+| `src/core/dimensional_convergence.py` | 12D convergence engine |
+| `scripts/wormhole_proof.py` | Three wormhole proofs |
+| `scripts/wormhole_complete_cycle.py` | Cycle visualization |
+| `buim_apk/` | 104 mobile applications |
 | `publications/` | IEEE papers and LaTeX sources |
-| `buim_apk/` | 83 mobile applications |
-| `boa_sdks/` | 5 AI agent SDKs |
 
 ---
 
-## Publications
+## Why "Ouroboros"?
 
-| Paper | Topic |
-|-------|-------|
-| [IEEE Brahim Wormhole Engine](publications/IEEE_Brahim_Wormhole_Engine.pdf) | Computational framework |
-| [Brahim's Laws for Wormhole Traversability](publications/Brahims_Laws_Wormhole_Traversability.pdf) | Mathematical theory |
-| [Unified Brahim System](publications/Unified_Brahim_System_IEEE.pdf) | System architecture |
+The ouroboros is the ancient symbol of a snake eating its own tail — representing the eternal cycle of creation and destruction.
 
----
+In PIO:
+- **The snake's body** = the 12 dimensions (descent path)
+- **The snake's mouth** = the wormhole (return path)
+- **The snake eating itself** = alpha returning to alpha
 
-## The Unified Framework
-
-```
-WORMHOLE PHYSICS                    ENERGY GRIDS
-      │                                   │
-      │    ┌─────────────────────┐       │
-      └───►│  β = 1/φ³ = 0.236   │◄──────┘
-           │                     │
-           │  Universal Constant │
-           │  for Optimization   │
-           └─────────────────────┘
-                     │
-    ┌────────────────┼────────────────┐
-    │                │                │
-    ▼                ▼                ▼
-Compression      Stability        Margins
- 23.6%/iter    λ = -0.146       23.6% each
-```
-
-**One constant. Eight applications. Infinite possibilities.**
+The system never stops. It descends, unifies, returns, and begins again.
 
 ---
 
-## Metrics
+## The Discovery
+
+We discovered that the 1.16% gap between `phi` and `pi` is not a flaw — it's the **wormhole aperture**.
 
 ```
-┌────────────────────────────────────────┐
-│         ASIOS BY THE NUMBERS           │
-├────────────────────────────────────────┤
-│  Core Engine:        700+ lines        │
-│  Applications:       8 domains         │
-│  Mobile Apps:        83                │
-│  AI Agents:          5                 │
-│  Validation Tests:   8/8 PASS          │
-│  Precision:          < 10⁻¹⁵           │
-│  Key Constant:       β = 0.236         │
-│  Pair Sum:           214               │
-│  Eigenvalues:        Both negative     │
-│  Stability:          Asymptotic        │
-└────────────────────────────────────────┘
+gap = (L(12) * pi - 1000) / 1000
+    = (322 * 3.14159... - 1000) / 1000
+    = 1.16%
 ```
+
+This gap emerges from the fundamental incommensurability of:
+- **phi** (algebraic irrational, from sqrt(5))
+- **pi** (transcendental, from circles)
+- **integers** (Lucas numbers are exact)
+
+Without this gap, the system would be trapped at omega forever. The "imperfection" is what enables rebirth.
 
 ---
 
@@ -396,12 +318,14 @@ Apache 2.0 - See [LICENSE](LICENSE)
 
 <div align="center">
 
-**"The same mathematics that governs wormhole traversability governs optimal battery charging."**
+**The cycle is complete. The wormhole is proven.**
 
 ```
-φ = 1.618...  │  β = 0.236...  │  α + β = 1/φ  │  All pairs = 214
+alpha --[descent]--> omega --[wormhole]--> alpha
+
+phi^D * Theta = 2*pi     |     W(omega) -> alpha     |     E = 2*pi (conserved)
 ```
 
-**[Cloudhabil](https://github.com/Cloudhabil)** · 2026
+**[Cloudhabil](https://github.com/Cloudhabil)** - 2026
 
 </div>
