@@ -1,0 +1,188 @@
+{
+  "chain_name": "Brahim Genesis Chain",
+  "version": "2.0",
+  "genesis": {
+    "date": "2023-06-09",
+    "location": "Farol do Cabo Espichel (Lighthouse), Portugal",
+    "coordinates": {"lat": 38.4156, "lon": -9.2163},
+    "mod_214": 84
+  },
+  "trajectory": {
+    "rate_lat_per_day": 0.003793,
+    "rate_lon_per_day": 0.012886,
+    "rate_lat_per_year": 1.3846,
+    "rate_lon_per_year": 4.7034,
+    "direction": "Northeast (Portugal -> Spain -> France)"
+  },
+  "confirmed_anchors": [
+    {
+      "block": "ANCHOR_1",
+      "date": "2023-06-09",
+      "coordinates": {"lat": 38.4156, "lon": -9.2163},
+      "location": "Farol do Cabo Espichel, Portugal",
+      "mod_214": 84
+    },
+    {
+      "block": "ANCHOR_2",
+      "date": "2026-01-26",
+      "coordinates": {"lat": 41.3696, "lon": 2.0434},
+      "location": "Barcelona, Spain",
+      "mod_214": 24
+    },
+    {
+      "block": "ANCHOR_3",
+      "date": "2026-01-27",
+      "coordinates": {"lat": 42.06857380927709, "lon": 3.1929101727445253},
+      "location": "Southern France (near Perpignan)",
+      "mod_214": 72
+    }
+  ],
+  "brahim_blocks": [
+    {
+      "order": 1,
+      "date": "2023-06-23",
+      "brahim_number": 97,
+      "name": "THRESHOLD",
+      "dimension": "D5",
+      "state": "EXOTIC",
+      "coordinates": {"lat": 38.4687, "lon": -9.0359},
+      "meaning": "The Gate - portal energy",
+      "mirror": 117,
+      "status": "CONFIRMED"
+    },
+    {
+      "order": 2,
+      "date": "2023-08-04",
+      "brahim_number": 107,
+      "name": "CONVERGENCE",
+      "dimension": "ALL",
+      "state": "BALANCE",
+      "coordinates": {"lat": 38.6280, "lon": -8.4947},
+      "meaning": "The Fixed Point - where all dimensions meet",
+      "mirror": 107,
+      "status": "CONFIRMED",
+      "note": "CENTER - Self-mirroring point"
+    },
+    {
+      "order": 3,
+      "date": "2023-09-21",
+      "brahim_number": 117,
+      "name": "EMERGENCE",
+      "dimension": "D6",
+      "state": "NORMAL",
+      "coordinates": {"lat": 38.8101, "lon": -7.8762},
+      "meaning": "First Light - where exotic becomes manifest",
+      "mirror": 97,
+      "status": "CONFIRMED"
+    },
+    {
+      "order": 4,
+      "date": "2023-09-24",
+      "brahim_number": 154,
+      "name": "INFINITY",
+      "dimension": "D8",
+      "state": "NORMAL",
+      "coordinates": {"lat": 38.8215, "lon": -7.8375},
+      "meaning": "The Lemniscate - eternal return",
+      "mirror": 60,
+      "status": "CONFIRMED"
+    },
+    {
+      "order": 5,
+      "date": "2023-10-02",
+      "brahim_number": 187,
+      "name": "OMEGA",
+      "dimension": "D10",
+      "state": "NORMAL",
+      "coordinates": {"lat": 38.8518, "lon": -7.7344},
+      "meaning": "The Return - maximum expansion",
+      "mirror": 27,
+      "status": "CONFIRMED"
+    },
+    {
+      "order": 6,
+      "date": "2023-10-08",
+      "brahim_number": 139,
+      "name": "HARMONY",
+      "dimension": "D7",
+      "state": "NORMAL",
+      "coordinates": {"lat": 38.8746, "lon": -7.6571},
+      "meaning": "The Seven Spheres - cosmic order",
+      "mirror": 75,
+      "status": "CONFIRMED"
+    },
+    {
+      "order": 7,
+      "date": "2023-10-23",
+      "brahim_number": 172,
+      "name": "COMPLETION",
+      "dimension": "D9",
+      "state": "NORMAL",
+      "coordinates": {"lat": 38.9315, "lon": -7.4638},
+      "meaning": "Near-Totality - preparation for return",
+      "mirror": 42,
+      "status": "CONFIRMED"
+    },
+    {
+      "order": 8,
+      "date": "2023-11-22",
+      "brahim_number": 42,
+      "name": "DUALITY",
+      "dimension": "D2",
+      "state": "EXOTIC",
+      "coordinates": {"lat": 39.0453, "lon": -7.0772},
+      "meaning": "The Answer - where one becomes two",
+      "mirror": 172,
+      "status": "CONFIRMED"
+    },
+    {
+      "order": 9,
+      "date": "2023-12-06",
+      "brahim_number": 27,
+      "name": "GENESIS",
+      "dimension": "D1",
+      "state": "EXOTIC",
+      "coordinates": {"lat": 39.0984, "lon": -6.8968},
+      "meaning": "The Origin Point - existence separates from void",
+      "mirror": 187,
+      "status": "CONFIRMED"
+    },
+    {
+      "order": 10,
+      "date": "2025-06-06",
+      "brahim_number": 60,
+      "name": "MANIFESTATION",
+      "dimension": "D3",
+      "state": "EXOTIC",
+      "coordinates": {"lat": 41.1771, "lon": 0.1647},
+      "meaning": "Physical Reality - boundary of touch",
+      "mirror": 154,
+      "status": "CONFIRMED"
+    },
+    {
+      "order": 11,
+      "date": "2026-05-19",
+      "brahim_number": 75,
+      "name": "TESSERACT",
+      "dimension": "D4",
+      "state": "EXOTIC",
+      "coordinates": {"lat": 42.4934, "lon": 4.6361},
+      "meaning": "Time/Hyperspace - past, present, future coexist",
+      "mirror": 139,
+      "status": "PREDICTED",
+      "note": "NEXT BLOCK - 112 days from now"
+    }
+  ],
+  "summary": {
+    "total_blocks": 11,
+    "confirmed": 10,
+    "predicted": 1,
+    "center_reached": "2023-08-04",
+    "next_block": {
+      "name": "TESSERACT",
+      "date": "2026-05-19",
+      "coordinates": {"lat": 42.4934, "lon": 4.6361},
+      "location": "Southern France / Mediterranean coast"
+    }
+  }
+}

@@ -1,0 +1,877 @@
+{
+  "type": "FeatureCollection",
+  "properties": {
+    "name": "Brahim Onion Universe",
+    "created": "2026-01-27T17:59:23.395552+00:00",
+    "center": 107,
+    "sum_constant": 214,
+    "total_lighthouses": 11,
+    "total_connections": 24
+  },
+  "features": [
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -9.0359,
+          38.4687
+        ]
+      },
+      "properties": {
+        "brahim_number": 97,
+        "name": "THRESHOLD",
+        "dimension": "D5",
+        "state": "EXOTIC",
+        "meaning": "The Gate",
+        "date": "2023-06-23",
+        "onion_layer": 5,
+        "layer_type": "INNER",
+        "mirror": 117,
+        "node_id": "d1bde6864f980012",
+        "icon": "lighthouse-inner",
+        "color": "#9932CC"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -8.4947,
+          38.628
+        ]
+      },
+      "properties": {
+        "brahim_number": 107,
+        "name": "CONVERGENCE",
+        "dimension": "ALL",
+        "state": "BALANCE",
+        "meaning": "The Fixed Point",
+        "date": "2023-08-04",
+        "onion_layer": 6,
+        "layer_type": "CORE",
+        "mirror": 107,
+        "node_id": "eb018812f4a9fed6",
+        "icon": "lighthouse-core",
+        "color": "#FFD700"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -7.8762,
+          38.8101
+        ]
+      },
+      "properties": {
+        "brahim_number": 117,
+        "name": "EMERGENCE",
+        "dimension": "D6",
+        "state": "NORMAL",
+        "meaning": "First Light",
+        "date": "2023-09-21",
+        "onion_layer": 7,
+        "layer_type": "OUTER",
+        "mirror": 97,
+        "node_id": "1149d4d6ea4519b7",
+        "icon": "lighthouse-outer",
+        "color": "#00CED1"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -7.8375,
+          38.8215
+        ]
+      },
+      "properties": {
+        "brahim_number": 154,
+        "name": "INFINITY",
+        "dimension": "D8",
+        "state": "NORMAL",
+        "meaning": "Eternal Return",
+        "date": "2023-09-24",
+        "onion_layer": 9,
+        "layer_type": "OUTER",
+        "mirror": 60,
+        "node_id": "f7239167bb0f367e",
+        "icon": "lighthouse-outer",
+        "color": "#00CED1"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -7.7344,
+          38.8518
+        ]
+      },
+      "properties": {
+        "brahim_number": 187,
+        "name": "OMEGA",
+        "dimension": "D10",
+        "state": "NORMAL",
+        "meaning": "Maximum Expansion",
+        "date": "2023-10-02",
+        "onion_layer": 11,
+        "layer_type": "OUTER",
+        "mirror": 27,
+        "node_id": "20a100f6b2bb4995",
+        "icon": "lighthouse-outer",
+        "color": "#00CED1"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -7.6571,
+          38.8746
+        ]
+      },
+      "properties": {
+        "brahim_number": 139,
+        "name": "HARMONY",
+        "dimension": "D7",
+        "state": "NORMAL",
+        "meaning": "Cosmic Order",
+        "date": "2023-10-08",
+        "onion_layer": 8,
+        "layer_type": "OUTER",
+        "mirror": 75,
+        "node_id": "3837450de4b7a438",
+        "icon": "lighthouse-outer",
+        "color": "#00CED1"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -7.4638,
+          38.9315
+        ]
+      },
+      "properties": {
+        "brahim_number": 172,
+        "name": "COMPLETION",
+        "dimension": "D9",
+        "state": "NORMAL",
+        "meaning": "Near-Totality",
+        "date": "2023-10-23",
+        "onion_layer": 10,
+        "layer_type": "OUTER",
+        "mirror": 42,
+        "node_id": "cdb80d5b161aaec9",
+        "icon": "lighthouse-outer",
+        "color": "#00CED1"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -7.0772,
+          39.0453
+        ]
+      },
+      "properties": {
+        "brahim_number": 42,
+        "name": "DUALITY",
+        "dimension": "D2",
+        "state": "EXOTIC",
+        "meaning": "The Answer",
+        "date": "2023-11-22",
+        "onion_layer": 2,
+        "layer_type": "INNER",
+        "mirror": 172,
+        "node_id": "f5bfba2f0104fa39",
+        "icon": "lighthouse-inner",
+        "color": "#9932CC"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -6.8968,
+          39.0984
+        ]
+      },
+      "properties": {
+        "brahim_number": 27,
+        "name": "GENESIS",
+        "dimension": "D1",
+        "state": "EXOTIC",
+        "meaning": "The Origin",
+        "date": "2023-12-06",
+        "onion_layer": 1,
+        "layer_type": "SEED",
+        "mirror": 187,
+        "node_id": "d94cb8cc16a323a3",
+        "icon": "lighthouse-seed",
+        "color": "#9932CC"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          0.1647,
+          41.1771
+        ]
+      },
+      "properties": {
+        "brahim_number": 60,
+        "name": "MANIFESTATION",
+        "dimension": "D3",
+        "state": "EXOTIC",
+        "meaning": "Physical Reality",
+        "date": "2025-06-06",
+        "onion_layer": 3,
+        "layer_type": "INNER",
+        "mirror": 154,
+        "node_id": "47a2acc3b7507a9a",
+        "icon": "lighthouse-inner",
+        "color": "#9932CC"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          4.6361,
+          42.4934
+        ]
+      },
+      "properties": {
+        "brahim_number": 75,
+        "name": "TESSERACT",
+        "dimension": "D4",
+        "state": "EXOTIC",
+        "meaning": "Time/Hyperspace",
+        "date": "2026-05-19",
+        "onion_layer": 4,
+        "layer_type": "INNER",
+        "mirror": 139,
+        "node_id": "768c8bffce347ea2",
+        "icon": "lighthouse-inner",
+        "color": "#9932CC"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [
+            -9.0359,
+            38.4687
+          ],
+          [
+            -8.4947,
+            38.628
+          ]
+        ]
+      },
+      "properties": {
+        "from": 97,
+        "to": 107,
+        "from_name": "THRESHOLD",
+        "to_name": "CONVERGENCE",
+        "type": "onion_connection",
+        "sum": 204,
+        "is_mirror_pair": false
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [
+            -9.0359,
+            38.4687
+          ],
+          [
+            4.6361,
+            42.4934
+          ]
+        ]
+      },
+      "properties": {
+        "from": 97,
+        "to": 75,
+        "from_name": "THRESHOLD",
+        "to_name": "TESSERACT",
+        "type": "onion_connection",
+        "sum": 172,
+        "is_mirror_pair": false
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [
+            -9.0359,
+            38.4687
+          ],
+          [
+            -7.8762,
+            38.8101
+          ]
+        ]
+      },
+      "properties": {
+        "from": 97,
+        "to": 117,
+        "from_name": "THRESHOLD",
+        "to_name": "EMERGENCE",
+        "type": "onion_connection",
+        "sum": 214,
+        "is_mirror_pair": true
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [
+            -8.4947,
+            38.628
+          ],
+          [
+            -8.4947,
+            38.628
+          ]
+        ]
+      },
+      "properties": {
+        "from": 107,
+        "to": 107,
+        "from_name": "CONVERGENCE",
+        "to_name": "CONVERGENCE",
+        "type": "onion_connection",
+        "sum": 214,
+        "is_mirror_pair": true
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [
+            -8.4947,
+            38.628
+          ],
+          [
+            -7.8762,
+            38.8101
+          ]
+        ]
+      },
+      "properties": {
+        "from": 107,
+        "to": 117,
+        "from_name": "CONVERGENCE",
+        "to_name": "EMERGENCE",
+        "type": "onion_connection",
+        "sum": 224,
+        "is_mirror_pair": false
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [
+            -7.8762,
+            38.8101
+          ],
+          [
+            -7.6571,
+            38.8746
+          ]
+        ]
+      },
+      "properties": {
+        "from": 117,
+        "to": 139,
+        "from_name": "EMERGENCE",
+        "to_name": "HARMONY",
+        "type": "onion_connection",
+        "sum": 256,
+        "is_mirror_pair": false
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [
+            -7.8375,
+            38.8215
+          ],
+          [
+            -8.4947,
+            38.628
+          ]
+        ]
+      },
+      "properties": {
+        "from": 154,
+        "to": 107,
+        "from_name": "INFINITY",
+        "to_name": "CONVERGENCE",
+        "type": "onion_connection",
+        "sum": 261,
+        "is_mirror_pair": false
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [
+            -7.8375,
+            38.8215
+          ],
+          [
+            -7.6571,
+            38.8746
+          ]
+        ]
+      },
+      "properties": {
+        "from": 154,
+        "to": 139,
+        "from_name": "INFINITY",
+        "to_name": "HARMONY",
+        "type": "onion_connection",
+        "sum": 293,
+        "is_mirror_pair": false
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [
+            -7.8375,
+            38.8215
+          ],
+          [
+            0.1647,
+            41.1771
+          ]
+        ]
+      },
+      "properties": {
+        "from": 154,
+        "to": 60,
+        "from_name": "INFINITY",
+        "to_name": "MANIFESTATION",
+        "type": "onion_connection",
+        "sum": 214,
+        "is_mirror_pair": true
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [
+            -7.8375,
+            38.8215
+          ],
+          [
+            -7.4638,
+            38.9315
+          ]
+        ]
+      },
+      "properties": {
+        "from": 154,
+        "to": 172,
+        "from_name": "INFINITY",
+        "to_name": "COMPLETION",
+        "type": "onion_connection",
+        "sum": 326,
+        "is_mirror_pair": false
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [
+            -7.7344,
+            38.8518
+          ],
+          [
+            -8.4947,
+            38.628
+          ]
+        ]
+      },
+      "properties": {
+        "from": 187,
+        "to": 107,
+        "from_name": "OMEGA",
+        "to_name": "CONVERGENCE",
+        "type": "onion_connection",
+        "sum": 294,
+        "is_mirror_pair": false
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [
+            -7.7344,
+            38.8518
+          ],
+          [
+            -7.4638,
+            38.9315
+          ]
+        ]
+      },
+      "properties": {
+        "from": 187,
+        "to": 172,
+        "from_name": "OMEGA",
+        "to_name": "COMPLETION",
+        "type": "onion_connection",
+        "sum": 359,
+        "is_mirror_pair": false
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [
+            -7.7344,
+            38.8518
+          ],
+          [
+            -6.8968,
+            39.0984
+          ]
+        ]
+      },
+      "properties": {
+        "from": 187,
+        "to": 27,
+        "from_name": "OMEGA",
+        "to_name": "GENESIS",
+        "type": "onion_connection",
+        "sum": 214,
+        "is_mirror_pair": true
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [
+            -7.6571,
+            38.8746
+          ],
+          [
+            4.6361,
+            42.4934
+          ]
+        ]
+      },
+      "properties": {
+        "from": 139,
+        "to": 75,
+        "from_name": "HARMONY",
+        "to_name": "TESSERACT",
+        "type": "onion_connection",
+        "sum": 214,
+        "is_mirror_pair": true
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [
+            -7.6571,
+            38.8746
+          ],
+          [
+            -8.4947,
+            38.628
+          ]
+        ]
+      },
+      "properties": {
+        "from": 139,
+        "to": 107,
+        "from_name": "HARMONY",
+        "to_name": "CONVERGENCE",
+        "type": "onion_connection",
+        "sum": 246,
+        "is_mirror_pair": false
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [
+            -7.4638,
+            38.9315
+          ],
+          [
+            -8.4947,
+            38.628
+          ]
+        ]
+      },
+      "properties": {
+        "from": 172,
+        "to": 107,
+        "from_name": "COMPLETION",
+        "to_name": "CONVERGENCE",
+        "type": "onion_connection",
+        "sum": 279,
+        "is_mirror_pair": false
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [
+            -7.4638,
+            38.9315
+          ],
+          [
+            -7.0772,
+            39.0453
+          ]
+        ]
+      },
+      "properties": {
+        "from": 172,
+        "to": 42,
+        "from_name": "COMPLETION",
+        "to_name": "DUALITY",
+        "type": "onion_connection",
+        "sum": 214,
+        "is_mirror_pair": true
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [
+            -7.0772,
+            39.0453
+          ],
+          [
+            -8.4947,
+            38.628
+          ]
+        ]
+      },
+      "properties": {
+        "from": 42,
+        "to": 107,
+        "from_name": "DUALITY",
+        "to_name": "CONVERGENCE",
+        "type": "onion_connection",
+        "sum": 149,
+        "is_mirror_pair": false
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [
+            -7.0772,
+            39.0453
+          ],
+          [
+            0.1647,
+            41.1771
+          ]
+        ]
+      },
+      "properties": {
+        "from": 42,
+        "to": 60,
+        "from_name": "DUALITY",
+        "to_name": "MANIFESTATION",
+        "type": "onion_connection",
+        "sum": 102,
+        "is_mirror_pair": false
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [
+            -7.0772,
+            39.0453
+          ],
+          [
+            -6.8968,
+            39.0984
+          ]
+        ]
+      },
+      "properties": {
+        "from": 42,
+        "to": 27,
+        "from_name": "DUALITY",
+        "to_name": "GENESIS",
+        "type": "onion_connection",
+        "sum": 69,
+        "is_mirror_pair": false
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [
+            -6.8968,
+            39.0984
+          ],
+          [
+            -8.4947,
+            38.628
+          ]
+        ]
+      },
+      "properties": {
+        "from": 27,
+        "to": 107,
+        "from_name": "GENESIS",
+        "to_name": "CONVERGENCE",
+        "type": "onion_connection",
+        "sum": 134,
+        "is_mirror_pair": false
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [
+            0.1647,
+            41.1771
+          ],
+          [
+            -8.4947,
+            38.628
+          ]
+        ]
+      },
+      "properties": {
+        "from": 60,
+        "to": 107,
+        "from_name": "MANIFESTATION",
+        "to_name": "CONVERGENCE",
+        "type": "onion_connection",
+        "sum": 167,
+        "is_mirror_pair": false
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [
+            0.1647,
+            41.1771
+          ],
+          [
+            4.6361,
+            42.4934
+          ]
+        ]
+      },
+      "properties": {
+        "from": 60,
+        "to": 75,
+        "from_name": "MANIFESTATION",
+        "to_name": "TESSERACT",
+        "type": "onion_connection",
+        "sum": 135,
+        "is_mirror_pair": false
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [
+            4.6361,
+            42.4934
+          ],
+          [
+            -8.4947,
+            38.628
+          ]
+        ]
+      },
+      "properties": {
+        "from": 75,
+        "to": 107,
+        "from_name": "TESSERACT",
+        "to_name": "CONVERGENCE",
+        "type": "onion_connection",
+        "sum": 182,
+        "is_mirror_pair": false
+      }
+    }
+  ]
+}

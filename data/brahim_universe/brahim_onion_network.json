@@ -1,0 +1,244 @@
+{
+  "name": "Brahim Onion Internet Online",
+  "created": "2026-01-27T17:59:23.395552+00:00",
+  "structure": {
+    "layers": 11,
+    "center": 107,
+    "sum_constant": 214
+  },
+  "lighthouses": [
+    {
+      "brahim_number": 97,
+      "name": "THRESHOLD",
+      "node_id": "d1bde6864f980012",
+      "coordinates": {
+        "lat": 38.4687,
+        "lon": -9.0359
+      },
+      "onion_layer": 5,
+      "layer_type": "INNER",
+      "connections": [
+        "eb018812f4a9fed6",
+        "768c8bffce347ea2",
+        "1149d4d6ea4519b7"
+      ],
+      "mirror": 117
+    },
+    {
+      "brahim_number": 107,
+      "name": "CONVERGENCE",
+      "node_id": "eb018812f4a9fed6",
+      "coordinates": {
+        "lat": 38.628,
+        "lon": -8.4947
+      },
+      "onion_layer": 6,
+      "layer_type": "CORE",
+      "connections": [
+        "eb018812f4a9fed6",
+        "1149d4d6ea4519b7",
+        "d1bde6864f980012"
+      ],
+      "mirror": 107
+    },
+    {
+      "brahim_number": 117,
+      "name": "EMERGENCE",
+      "node_id": "1149d4d6ea4519b7",
+      "coordinates": {
+        "lat": 38.8101,
+        "lon": -7.8762
+      },
+      "onion_layer": 7,
+      "layer_type": "OUTER",
+      "connections": [
+        "eb018812f4a9fed6",
+        "3837450de4b7a438",
+        "d1bde6864f980012"
+      ],
+      "mirror": 97
+    },
+    {
+      "brahim_number": 154,
+      "name": "INFINITY",
+      "node_id": "f7239167bb0f367e",
+      "coordinates": {
+        "lat": 38.8215,
+        "lon": -7.8375
+      },
+      "onion_layer": 9,
+      "layer_type": "OUTER",
+      "connections": [
+        "eb018812f4a9fed6",
+        "3837450de4b7a438",
+        "47a2acc3b7507a9a",
+        "cdb80d5b161aaec9"
+      ],
+      "mirror": 60
+    },
+    {
+      "brahim_number": 187,
+      "name": "OMEGA",
+      "node_id": "20a100f6b2bb4995",
+      "coordinates": {
+        "lat": 38.8518,
+        "lon": -7.7344
+      },
+      "onion_layer": 11,
+      "layer_type": "OUTER",
+      "connections": [
+        "eb018812f4a9fed6",
+        "cdb80d5b161aaec9",
+        "d94cb8cc16a323a3"
+      ],
+      "mirror": 27
+    },
+    {
+      "brahim_number": 139,
+      "name": "HARMONY",
+      "node_id": "3837450de4b7a438",
+      "coordinates": {
+        "lat": 38.8746,
+        "lon": -7.6571
+      },
+      "onion_layer": 8,
+      "layer_type": "OUTER",
+      "connections": [
+        "768c8bffce347ea2",
+        "eb018812f4a9fed6",
+        "1149d4d6ea4519b7",
+        "f7239167bb0f367e"
+      ],
+      "mirror": 75
+    },
+    {
+      "brahim_number": 172,
+      "name": "COMPLETION",
+      "node_id": "cdb80d5b161aaec9",
+      "coordinates": {
+        "lat": 38.9315,
+        "lon": -7.4638
+      },
+      "onion_layer": 10,
+      "layer_type": "OUTER",
+      "connections": [
+        "eb018812f4a9fed6",
+        "20a100f6b2bb4995",
+        "f5bfba2f0104fa39",
+        "f7239167bb0f367e"
+      ],
+      "mirror": 42
+    },
+    {
+      "brahim_number": 42,
+      "name": "DUALITY",
+      "node_id": "f5bfba2f0104fa39",
+      "coordinates": {
+        "lat": 39.0453,
+        "lon": -7.0772
+      },
+      "onion_layer": 2,
+      "layer_type": "INNER",
+      "connections": [
+        "eb018812f4a9fed6",
+        "47a2acc3b7507a9a",
+        "cdb80d5b161aaec9",
+        "d94cb8cc16a323a3"
+      ],
+      "mirror": 172
+    },
+    {
+      "brahim_number": 27,
+      "name": "GENESIS",
+      "node_id": "d94cb8cc16a323a3",
+      "coordinates": {
+        "lat": 39.0984,
+        "lon": -6.8968
+      },
+      "onion_layer": 1,
+      "layer_type": "SEED",
+      "connections": [
+        "eb018812f4a9fed6",
+        "20a100f6b2bb4995",
+        "f5bfba2f0104fa39"
+      ],
+      "mirror": 187
+    },
+    {
+      "brahim_number": 60,
+      "name": "MANIFESTATION",
+      "node_id": "47a2acc3b7507a9a",
+      "coordinates": {
+        "lat": 41.1771,
+        "lon": 0.1647
+      },
+      "onion_layer": 3,
+      "layer_type": "INNER",
+      "connections": [
+        "eb018812f4a9fed6",
+        "f5bfba2f0104fa39",
+        "768c8bffce347ea2",
+        "f7239167bb0f367e"
+      ],
+      "mirror": 154
+    },
+    {
+      "brahim_number": 75,
+      "name": "TESSERACT",
+      "node_id": "768c8bffce347ea2",
+      "coordinates": {
+        "lat": 42.4934,
+        "lon": 4.6361
+      },
+      "onion_layer": 4,
+      "layer_type": "INNER",
+      "connections": [
+        "eb018812f4a9fed6",
+        "47a2acc3b7507a9a",
+        "3837450de4b7a438",
+        "d1bde6864f980012"
+      ],
+      "mirror": 139
+    }
+  ],
+  "routing": {
+    "principle": "All routes pass through CENTER (107)",
+    "mirror_pairs": [
+      {
+        "pair": [
+          27,
+          187
+        ],
+        "sum": 214
+      },
+      {
+        "pair": [
+          42,
+          172
+        ],
+        "sum": 214
+      },
+      {
+        "pair": [
+          60,
+          154
+        ],
+        "sum": 214
+      },
+      {
+        "pair": [
+          75,
+          139
+        ],
+        "sum": 214
+      },
+      {
+        "pair": [
+          97,
+          117
+        ],
+        "sum": 214
+      }
+    ]
+  }
+}
