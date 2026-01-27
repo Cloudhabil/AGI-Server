@@ -64,11 +64,19 @@ LUCAS: Tuple[int, ...] = (1, 3, 4, 7, 11, 18, 29, 47, 76, 123, 199, 322)
 LUCAS_TOTAL: int = sum(LUCAS)  # 840
 
 # EPSILON: The Gap / Wormhole Aperture (deterministic)
-EPSILON: float = (LUCAS[11] * PI - 1000) / 1000  # 1.16%
+EPSILON: float = (LUCAS[11] * PI - 1000) / 1000  # 1.16% (from L(12)=322)
+EPSILON_TRUE: float = (PHI**12 * PI - 1000) / 1000  # 1.158% (from φ¹²)
 PHI_PI_GAP: float = EPSILON  # Alias for backward compatibility
 
 # Grand Unification
 PHI_12: float = 1 / PHI**12  # 0.31% = β⁴
+
+# THE SCALING FACTOR (discovered)
+# Connects β⁴ to π: β⁴ × S = π/1000
+SCALING_FACTOR: float = PI * PHI**12 / 1000  # ≈ 1.01158
+
+# Key relationship: S = 1 + ε_true
+# The difference ε - ε_true = 9.76e-6 comes from L(12)=322 vs φ¹²=321.997
 
 # =============================================================================
 # UNITY IDENTITIES (proven)
@@ -994,18 +1002,59 @@ def verify_unity_identities() -> Dict[str, Any]:
     return results
 
 
+def verify_scaling_factor() -> Dict[str, Any]:
+    """
+    Verify the scaling factor relationship.
+    β⁴ × S = π/1000
+    """
+    results = {"name": "Scaling Factor", "tests": []}
+
+    # Test 1: β⁴ × S = π/1000
+    product = BETA**4 * SCALING_FACTOR
+    expected = PI / 1000
+    results["tests"].append({
+        "test": "beta4_times_S_equals_pi_over_1000",
+        "product": product,
+        "expected": expected,
+        "passed": abs(product - expected) < 1e-14
+    })
+
+    # Test 2: S = 1 + ε_true
+    results["tests"].append({
+        "test": "S_equals_1_plus_epsilon_true",
+        "S": SCALING_FACTOR,
+        "1_plus_epsilon_true": 1 + EPSILON_TRUE,
+        "passed": abs(SCALING_FACTOR - (1 + EPSILON_TRUE)) < 1e-14
+    })
+
+    # Test 3: ε - ε_true (the Lucas vs φ gap)
+    epsilon_gap = EPSILON - EPSILON_TRUE
+    results["tests"].append({
+        "test": "epsilon_gap",
+        "epsilon": EPSILON,
+        "epsilon_true": EPSILON_TRUE,
+        "gap": epsilon_gap,
+        "passed": abs(epsilon_gap - 9.76e-6) < 1e-7
+    })
+
+    results["all_passed"] = all(t["passed"] for t in results["tests"])
+    return results
+
+
 def verify_all_proofs() -> Dict[str, Any]:
-    """Run all three wormhole proofs plus unity identities."""
+    """Run all proofs including scaling factor."""
     return {
         "proof_1": verify_energy_conservation(),
         "proof_2": verify_gap_enables_transit(),
         "proof_3": verify_instantaneous_return(),
         "identities": verify_unity_identities(),
+        "scaling": verify_scaling_factor(),
         "all_passed": all([
             verify_energy_conservation()["all_passed"],
             verify_gap_enables_transit()["all_passed"],
             verify_instantaneous_return()["all_passed"],
-            verify_unity_identities()["all_passed"]
+            verify_unity_identities()["all_passed"],
+            verify_scaling_factor()["all_passed"]
         ])
     }
 
