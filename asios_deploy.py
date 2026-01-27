@@ -4,12 +4,19 @@ ASIOS Deployment Entry Point
 ============================
 
 Autonomous Sovereign Intelligence Operating System
-Version: 1.0.0 - Grand Unification Release
+Version: 2.0.0 - Phi-Pi Synthesis Release
 
 This is the main deployment entry point that initializes
 all ASIOS subsystems and verifies system integrity.
 
-Core Equation: D(x) = -ln(x) / ln(φ)
+Core Equations:
+    D(x) = -ln(x) / ln(phi)   [dimensional position - WHERE]
+    Theta(x) = 2*pi*x         [angular phase - WHEN]
+
+Key Discovery (2026-01-27):
+    The Phi-Pi Gap = 1.16% is the CREATIVITY MARGIN
+    gap = (L(12) * pi - 1000) / 1000 where L(12) = 322 (Lucas number)
+    This gap enables adaptation, exploration, and emergence.
 
 Subsystems:
     - Brahim Wormhole Engine (geometry, stability, transforms)
@@ -20,7 +27,7 @@ Subsystems:
     - 42 Applications
 
 Author: Elias Oulad Brahim
-Date: 2026-01-26
+Date: 2026-01-27
 License: Apache 2.0
 """
 
@@ -31,8 +38,8 @@ from typing import Dict, Any, Optional
 from dataclasses import dataclass
 
 # Version
-__version__ = "1.0.0"
-__codename__ = "Grand Unification"
+__version__ = "2.0.0"
+__codename__ = "Phi-Pi Synthesis"
 
 # Fix Windows encoding
 if sys.platform == "win32":
@@ -43,9 +50,17 @@ if sys.platform == "win32":
 # CONSTANTS
 # =============================================================================
 
+# Structure (phi-based)
 PHI = (1 + math.sqrt(5)) / 2
 BETA = 1 / PHI**3
 PHI_12 = 1 / PHI**12
+
+# Form (pi-based)
+PI = math.pi
+LUCAS_12 = 322  # L(12) = phi^12 + phi^-12
+
+# The Creativity Margin (phi-pi gap)
+PHI_PI_GAP = (LUCAS_12 * PI - 1000) / 1000  # ~1.16%
 
 
 # =============================================================================
@@ -238,23 +253,33 @@ class ASIOSDeployment:
         from src.core.brahim_wormhole_engine import BrahimWormholeEngine
         return BrahimWormholeEngine()
 
-    def transponder(self, x: float) -> Dict[str, Any]:
+    def transponder(self, x: float, exploring: bool = False) -> Dict[str, Any]:
         """
-        The core transponder equation.
+        The unified transponder equation (phi + pi).
 
-        D(x) = -ln(x) / ln(φ)
+        D(x) = -ln(x) / ln(phi)   [WHERE - dimensional position]
+        Theta(x) = 2*pi*x         [WHEN - angular phase]
 
         Args:
             x: Value to locate (0 < x <= 1)
+            exploring: If True, apply creativity margin (1.16%)
 
         Returns:
-            Dimensional info and recommended agent
+            Dimensional info, phase, and recommended agent
         """
         if x <= 0 or x > 1:
             raise ValueError(f"x must be in (0, 1], got {x}")
 
-        d = -math.log(x) / math.log(PHI)
+        # Core equations
+        d = -math.log(x) / math.log(PHI)  # Dimension (phi-based)
+        theta = 2 * PI * x                 # Phase (pi-based)
         dim = min(12, max(1, round(d)))
+
+        # Apply creativity margin if exploring
+        if exploring:
+            import random
+            d = d * (1 + random.uniform(-PHI_PI_GAP, PHI_PI_GAP))
+            dim = min(12, max(1, round(d)))
 
         agents = {
             1: "PerceptionAgent",
@@ -275,8 +300,12 @@ class ASIOSDeployment:
             "x": x,
             "D(x)": d,
             "dimension": dim,
+            "Theta(x)": theta,
+            "phase_degrees": theta * 180 / PI,
             "agent": agents[dim],
             "threshold": 1 / PHI**dim,
+            "exploring": exploring,
+            "in_gap": abs(d - round(d)) < PHI_PI_GAP,
         }
 
     def status(self) -> Dict[str, Any]:
@@ -291,10 +320,19 @@ class ASIOSDeployment:
                 name: {"status": s.status, "components": s.components}
                 for name, s in self.subsystems.items()
             },
-            "equation": "D(x) = -ln(x) / ln(phi)",
+            # Equations
+            "equation_position": "D(x) = -ln(x) / ln(phi)",
+            "equation_phase": "Theta(x) = 2*pi*x",
+            # Structure constants (phi-based)
             "phi": PHI,
             "beta": BETA,
             "phi_12": PHI_12,
+            # Form constants (pi-based)
+            "pi": PI,
+            "lucas_12": LUCAS_12,
+            # Creativity margin (the gap)
+            "phi_pi_gap": PHI_PI_GAP,
+            "creativity_margin_percent": PHI_PI_GAP * 100,
         }
 
 
@@ -336,7 +374,8 @@ def main():
 
     if result["initialized"]:
         print("=" * 60)
-        print("    ASIOS DEPLOYED SUCCESSFULLY")
+        print("    ASIOS 2.0 DEPLOYED SUCCESSFULLY")
+        print("    Phi-Pi Synthesis Release")
         print("=" * 60)
         print()
         print("  Quick Start:")
@@ -348,16 +387,27 @@ def main():
         print("    suite = asios.get_suite()")
         print("    calc = asios.get_calculator()")
         print()
-        print("    # Use transponder")
-        print("    info = asios.transponder(0.236)  # -> Dimension 3")
+        print("    # Use unified transponder (phi + pi)")
+        print("    info = asios.transponder(0.236)  # -> D3, phase 85 deg")
+        print("    info = asios.transponder(0.236, exploring=True)  # +/- 1.16%")
         print()
-        print("  Core Equation:")
-        print("    D(x) = -ln(x) / ln(phi)")
+        print("  Core Equations:")
+        print("    D(x) = -ln(x) / ln(phi)   [WHERE - dimension]")
+        print("    Theta(x) = 2*pi*x         [WHEN - phase]")
         print()
-        print("  Constants:")
-        print(f"    phi   = {PHI}")
-        print(f"    beta  = {BETA} (23.6%)")
-        print(f"    phi_12 = {PHI_12} (0.31%)")
+        print("  Structure Constants (phi-based):")
+        print(f"    phi    = {PHI:.10f}")
+        print(f"    beta   = {BETA:.10f} (23.6%)")
+        print(f"    phi_12 = {PHI_12:.10f} (0.31%)")
+        print()
+        print("  Form Constants (pi-based):")
+        print(f"    pi     = {PI:.10f}")
+        print(f"    L(12)  = {LUCAS_12}")
+        print()
+        print("  Creativity Margin (the gap):")
+        print(f"    gap    = {PHI_PI_GAP:.10f} ({PHI_PI_GAP*100:.2f}%)")
+        print("    Where phi and pi almost meet but don't.")
+        print("    This is the space for adaptation and emergence.")
         print()
         print("=" * 60)
         return 0
