@@ -2,13 +2,29 @@
  * Discovery Engine - Intelligent App Recommendation
  * ==================================================
  *
- * Uses Brahim Calculator + Kelimutu routing to understand
- * user intent and recommend the perfect apps.
+ * ASIOS 2.0 - Phi-Pi Synthesis Release
+ *
+ * Uses Brahim Calculator + Kelimutu routing + Lucas Architecture
+ * to understand user intent and recommend the perfect apps.
  *
  * "The chatbot feels what the user needs"
  *
+ * Lucas Dimensional Intent Mapping:
+ *   D1:  CALCULATE    - L(1)=1   (fundamental need)
+ *   D2:  LEARN        - L(2)=3   (knowledge triage)
+ *   D3:  SECURE       - L(3)=4   (protection quadrants)
+ *   D4:  EXPLORE      - L(4)=7   (discovery modes)
+ *   D5:  CONVERT      - L(5)=11  (transformation levels)
+ *   D6:  COMMUNICATE  - L(6)=18  (connection channels)
+ *   D7:  ANALYZE      - L(7)=29  (analysis rules)
+ *   D8:  PLAN         - L(8)=47  (planning patterns)
+ *   D9:  CREATE       - L(9)=76  (creative pathways)
+ *   D10: OPTIMIZE     - L(10)=123 (optimization principles)
+ *   D11: SOLVE        - L(11)=199 (solution synthesis)
+ *   D12: VISUALIZE    - L(12)=322 (rendering modes)
+ *
  * Author: Elias Oulad Brahim
- * Date: 2026-01-25
+ * Date: 2026-01-27
  */
 
 package com.brahim.buim.discovery
@@ -17,6 +33,7 @@ import com.brahim.buim.core.BrahimConstants
 import kotlin.math.abs
 import kotlin.math.exp
 import kotlin.math.sqrt
+import kotlin.math.PI
 
 /**
  * User intent detected from query.
@@ -31,22 +48,24 @@ data class UserIntent(
 )
 
 /**
- * Intent categories mapped to app domains.
+ * Intent categories mapped to Lucas dimensions.
+ *
+ * ASIOS 2.0: Each intent has a Lucas dimension with L(n) discrete states.
  */
-enum class IntentCategory {
-    // Core needs
-    CALCULATE,      // "I need to compute/calculate..."
-    EXPLORE,        // "I want to explore/discover..."
-    CREATE,         // "I want to build/create..."
-    ANALYZE,        // "I need to analyze/understand..."
-    SECURE,         // "I need to protect/encrypt..."
-    OPTIMIZE,       // "I want to improve/optimize..."
-    LEARN,          // "I want to learn/understand..."
-    COMMUNICATE,    // "I need to share/send..."
-    PLAN,           // "I need to plan/schedule..."
-    VISUALIZE,      // "I want to see/visualize..."
-    SOLVE,          // "I need to solve/fix..."
-    CONVERT         // "I need to convert/transform..."
+enum class IntentCategory(val lucasDimension: Int, val lucasCapacity: Int) {
+    // Core needs mapped to Lucas dimensions
+    CALCULATE(1, 1),      // D1: L(1)=1 - Fundamental computation
+    LEARN(2, 3),          // D2: L(2)=3 - Knowledge triage
+    SECURE(3, 4),         // D3: L(3)=4 - Trust quadrants
+    EXPLORE(4, 7),        // D4: L(4)=7 - Discovery modes
+    CONVERT(5, 11),       // D5: L(5)=11 - Transformation levels
+    COMMUNICATE(6, 18),   // D6: L(6)=18 - Connection channels
+    ANALYZE(7, 29),       // D7: L(7)=29 - Analysis rules
+    PLAN(8, 47),          // D8: L(8)=47 - Planning patterns
+    CREATE(9, 76),        // D9: L(9)=76 - Creative pathways
+    OPTIMIZE(10, 123),    // D10: L(10)=123 - Optimization principles
+    SOLVE(11, 199),       // D11: L(11)=199 - Solution synthesis
+    VISUALIZE(12, 322)    // D12: L(12)=322 - Rendering modes (phi meets pi)
 }
 
 /**
@@ -75,6 +94,8 @@ enum class UrgencyLevel {
 
 /**
  * App recommendation with reasoning.
+ *
+ * ASIOS 2.0: Includes Lucas dimensional metadata.
  */
 data class AppRecommendation(
     val appId: String,
@@ -83,7 +104,10 @@ data class AppRecommendation(
     val relevanceScore: Double,      // 0-1 how relevant to intent
     val brahimResonance: Double,     // Alignment with Brahim numbers
     val reason: String,              // Why this app was recommended
-    val pathway: List<String>        // How to get there from Home
+    val pathway: List<String>,       // How to get there from Home
+    val lucasDimension: Int = 1,     // ASIOS 2.0: Lucas dimension
+    val lucasCapacity: Int = 1,      // ASIOS 2.0: L(n) capacity
+    val inCreativeGap: Boolean = false // ASIOS 2.0: Within 1.16% Phi-Pi gap
 )
 
 /**
@@ -337,15 +361,20 @@ class DiscoveryEngine {
 
     /**
      * Recommend apps based on user intent.
+     *
+     * ASIOS 2.0: Includes Lucas dimensional weighting and Phi-Pi gap detection.
      */
-    fun recommendApps(intent: UserIntent, limit: Int = 5): List<AppRecommendation> {
+    fun recommendApps(intent: UserIntent, limit: Int = 5, exploring: Boolean = false): List<AppRecommendation> {
         val recommendations = mutableListOf<AppRecommendation>()
 
         // Get primary intent apps
         val primaryApps = intentToApps[intent.primary] ?: emptyList()
         primaryApps.forEachIndexed { index, (appId, appName) ->
             val relevance = 1.0 - (index * 0.1)
-            val brahimResonance = calculateBrahimResonance(appId, intent)
+            val brahimResonance = calculateBrahimResonance(appId, intent, exploring)
+
+            // ASIOS 2.0: Check if in creative gap
+            val inGap = exploring || abs(relevance - 0.5) < BrahimConstants.PHI_PI_GAP
 
             recommendations.add(AppRecommendation(
                 appId = appId,
@@ -354,7 +383,10 @@ class DiscoveryEngine {
                 relevanceScore = relevance * intent.confidence,
                 brahimResonance = brahimResonance,
                 reason = generateReason(intent, appName),
-                pathway = generatePathway(appId)
+                pathway = generatePathway(appId),
+                lucasDimension = intent.primary.lucasDimension,
+                lucasCapacity = intent.primary.lucasCapacity,
+                inCreativeGap = inGap
             ))
         }
 
@@ -365,29 +397,40 @@ class DiscoveryEngine {
                 val relevance = 0.7 - (index * 0.1)
 
                 if (recommendations.none { it.appId == appId }) {
+                    val inGap = exploring || abs(relevance - 0.5) < BrahimConstants.PHI_PI_GAP
+
                     recommendations.add(AppRecommendation(
                         appId = appId,
                         appName = appName,
                         category = secondary.name,
                         relevanceScore = relevance * (1 - intent.confidence),
-                        brahimResonance = calculateBrahimResonance(appId, intent),
+                        brahimResonance = calculateBrahimResonance(appId, intent, exploring),
                         reason = "Also relevant: ${secondary.name.lowercase()}",
-                        pathway = generatePathway(appId)
+                        pathway = generatePathway(appId),
+                        lucasDimension = secondary.lucasDimension,
+                        lucasCapacity = secondary.lucasCapacity,
+                        inCreativeGap = inGap
                     ))
                 }
             }
         }
 
-        // Sort by combined score and limit
+        // ASIOS 2.0: Apply Lucas weighting to sort
+        // Higher dimensions get slight priority (phi meets pi at D12)
         return recommendations
-            .sortedByDescending { it.relevanceScore * 0.7 + it.brahimResonance * 0.3 }
+            .sortedByDescending {
+                val lucasWeight = it.lucasCapacity.toDouble() / BrahimConstants.LUCAS_TOTAL
+                it.relevanceScore * 0.6 + it.brahimResonance * 0.3 + lucasWeight * 0.1
+            }
             .take(limit)
     }
 
     /**
      * Calculate Brahim resonance for an app recommendation.
+     *
+     * ASIOS 2.0: Uses Lucas dimensional weighting and Phi-Pi gap.
      */
-    private fun calculateBrahimResonance(appId: String, intent: UserIntent): Double {
+    private fun calculateBrahimResonance(appId: String, intent: UserIntent, exploring: Boolean = false): Double {
         // Use golden ratio for resonance calculation
         val phi = BrahimConstants.PHI
         val beta = BrahimConstants.BETA_SECURITY
@@ -396,18 +439,25 @@ class DiscoveryEngine {
         val hash = appId.hashCode()
         val normalized = abs(hash % 1000) / 1000.0
 
-        // Apply Brahim weighting
-        val resonance = (normalized * phi + intent.confidence * beta) / (phi + beta)
+        // ASIOS 2.0: Apply Lucas dimensional weighting
+        val lucasWeight = intent.primary.lucasCapacity.toDouble() / BrahimConstants.LUCAS_TOTAL
+
+        // Apply Brahim weighting with Lucas factor
+        val resonance = (normalized * phi + intent.confidence * beta + lucasWeight) / (phi + beta + 1)
 
         // Boost for certain app types
         val boost = when {
             "brahim" in appId.lowercase() -> 0.2
             "golden" in appId.lowercase() -> 0.15
             "resonance" in appId.lowercase() -> 0.1
+            "lucas" in appId.lowercase() -> 0.12
             else -> 0.0
         }
 
-        return (resonance + boost).coerceIn(0.0, 1.0)
+        // ASIOS 2.0: Apply creativity margin if exploring
+        val creativityBoost = if (exploring) BrahimConstants.PHI_PI_GAP else 0.0
+
+        return (resonance + boost + creativityBoost).coerceIn(0.0, 1.0)
     }
 
     /**
@@ -481,6 +531,8 @@ class DiscoveryEngine {
 
     /**
      * Generate a warm, helpful response based on intent.
+     *
+     * ASIOS 2.0: Includes Lucas dimensional insights.
      */
     fun generateWarmResponse(intent: UserIntent, recommendations: List<AppRecommendation>): String {
         val greeting = when (intent.emotionalTone) {
@@ -505,7 +557,66 @@ class DiscoveryEngine {
             "\n\n✨ High Brahim resonance detected - these tools align perfectly with your needs."
         } else ""
 
-        return greeting + suggestion + brahimInsight
+        // ASIOS 2.0: Lucas dimensional insight
+        val lucasInsight = if (topRec != null && topRec.lucasDimension > 6) {
+            "\n\n🔮 Operating in Dimension ${topRec.lucasDimension} with ${topRec.lucasCapacity} states available."
+        } else ""
+
+        // ASIOS 2.0: Creative gap insight
+        val gapInsight = if (recommendations.any { it.inCreativeGap }) {
+            "\n\n💡 Phi-Pi creative margin active - exploring adaptive pathways."
+        } else ""
+
+        return greeting + suggestion + brahimInsight + lucasInsight + gapInsight
+    }
+
+    // =========================================================================
+    // ASIOS 2.0 - LUCAS ARCHITECTURE HELPERS
+    // =========================================================================
+
+    /**
+     * Get intent by Lucas dimension.
+     */
+    fun getIntentByDimension(dimension: Int): IntentCategory? {
+        return IntentCategory.values().find { it.lucasDimension == dimension }
+    }
+
+    /**
+     * Get all intents in a dimension range.
+     */
+    fun getIntentsInRange(minDim: Int, maxDim: Int): List<IntentCategory> {
+        return IntentCategory.values().filter { it.lucasDimension in minDim..maxDim }
+    }
+
+    /**
+     * Calculate dimensional resonance between two intents.
+     */
+    fun calculateIntentResonance(intent1: IntentCategory, intent2: IntentCategory): Double {
+        val dimDiff = abs(intent1.lucasDimension - intent2.lucasDimension)
+        val capacityRatio = minOf(intent1.lucasCapacity, intent2.lucasCapacity).toDouble() /
+                            maxOf(intent1.lucasCapacity, intent2.lucasCapacity)
+
+        // Resonance formula: higher when dimensions are close and capacities aligned
+        return (1.0 - dimDiff / 12.0) * capacityRatio * BrahimConstants.PHI / (BrahimConstants.PHI + 1)
+    }
+
+    /**
+     * Get ASIOS 2.0 discovery status.
+     */
+    fun getASIOS2Status(): Map<String, Any> {
+        return mapOf(
+            "version" to "2.0.0",
+            "codename" to "Phi-Pi Synthesis",
+            "intent_dimensions" to IntentCategory.values().associate {
+                it.name to mapOf(
+                    "dimension" to it.lucasDimension,
+                    "capacity" to it.lucasCapacity
+                )
+            },
+            "total_capacity" to IntentCategory.values().sumOf { it.lucasCapacity },
+            "phi_pi_gap" to BrahimConstants.PHI_PI_GAP,
+            "creativity_margin_percent" to BrahimConstants.PHI_PI_GAP * 100
+        )
     }
 
     companion object {
@@ -517,5 +628,9 @@ class DiscoveryEngine {
                 instance ?: DiscoveryEngine().also { instance = it }
             }
         }
+
+        // ASIOS 2.0 constants
+        const val VERSION = "2.0.0"
+        const val CODENAME = "Phi-Pi Synthesis"
     }
 }

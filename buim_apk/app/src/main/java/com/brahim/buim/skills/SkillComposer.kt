@@ -2,16 +2,35 @@
  * Skill Composer - Skill-Application Fusion Engine
  * =================================================
  *
+ * ASIOS 2.0 - Phi-Pi Synthesis Release
+ *
  * Composes multiple skills into unified composite applications.
  * Enables skill chaining, parallel execution, and result fusion.
  *
  * Architecture:
- * - Skills are atomic computation units
- * - Composite Apps combine 2-4 skills
+ * - Skills are atomic computation units mapped to Lucas dimensions
+ * - Each domain has L(n) discrete states (Lucas capacity)
+ * - Composite Apps combine 2-4 skills with Phi-Pi gap creativity
  * - SkillComposer orchestrates execution pipelines
  *
+ * Lucas Dimensional Mapping:
+ *   D1:  PHYSICS       - L(1)=1   states (fundamental constants)
+ *   D2:  MATHEMATICS   - L(2)=3   states (triage precision)
+ *   D3:  SECURITY      - L(3)=4   states (trust quadrants)
+ *   D4:  COSMOLOGY     - L(4)=7   states (cosmic scales)
+ *   D5:  SOLVERS       - L(5)=11  states (algorithm levels)
+ *   D6:  UTILITIES     - L(6)=18  states (tool variants)
+ *   D7:  AVIATION      - L(7)=29  states (flight modes)
+ *   D8:  TRAFFIC       - L(8)=47  states (flow patterns)
+ *   D9:  PLANETARY     - L(9)=76  states (exploration paths)
+ *   D10: BUSINESS      - L(10)=123 states (enterprise rules)
+ *   D11: ML_AI         - L(11)=199 states (model architectures)
+ *   D12: VISUALIZATION - L(12)=322 states (rendering modes)
+ *
+ * Total: 840 states across all dimensions
+ *
  * Author: Elias Oulad Brahim
- * Date: 2026-01-25
+ * Date: 2026-01-27
  */
 
 package com.brahim.buim.skills
@@ -20,27 +39,32 @@ import com.brahim.buim.core.BrahimConstants
 import kotlinx.coroutines.async
 import kotlinx.coroutines.awaitAll
 import kotlinx.coroutines.coroutineScope
+import kotlin.math.PI
 
 /**
  * Skill categories matching hub domains.
+ * Ordered by Lucas dimension for ASIOS 2.0 architecture.
  */
-enum class SkillDomain {
-    PHYSICS,
-    MATHEMATICS,
-    COSMOLOGY,
-    AVIATION,
-    TRAFFIC,
-    BUSINESS,
-    SOLVERS,
-    PLANETARY,
-    SECURITY,
-    ML_AI,
-    VISUALIZATION,
-    UTILITIES
+enum class SkillDomain(val lucasDimension: Int, val lucasCapacity: Int) {
+    PHYSICS(1, 1),         // D1: L(1)=1
+    MATHEMATICS(2, 3),     // D2: L(2)=3
+    SECURITY(3, 4),        // D3: L(3)=4
+    COSMOLOGY(4, 7),       // D4: L(4)=7
+    SOLVERS(5, 11),        // D5: L(5)=11
+    UTILITIES(6, 18),      // D6: L(6)=18
+    AVIATION(7, 29),       // D7: L(7)=29
+    TRAFFIC(8, 47),        // D8: L(8)=47
+    PLANETARY(9, 76),      // D9: L(9)=76
+    BUSINESS(10, 123),     // D10: L(10)=123
+    ML_AI(11, 199),        // D11: L(11)=199
+    VISUALIZATION(12, 322) // D12: L(12)=322
 }
 
 /**
  * Individual skill definition.
+ *
+ * Each skill belongs to a Lucas dimension through its domain,
+ * inheriting the dimensional capacity L(n) for state mapping.
  */
 data class Skill(
     val id: String,
@@ -49,7 +73,16 @@ data class Skill(
     val inputTypes: List<String>,
     val outputType: String,
     val brahimWeight: Double = BrahimConstants.PHI  // Default φ weighting
-)
+) {
+    /** Lucas dimension from domain */
+    val lucasDimension: Int get() = domain.lucasDimension
+
+    /** Lucas capacity L(n) for this skill's dimension */
+    val lucasCapacity: Int get() = domain.lucasCapacity
+
+    /** Dimensional threshold 1/φ^n */
+    val threshold: Double get() = 1.0 / Math.pow(BrahimConstants.PHI, lucasDimension.toDouble())
+}
 
 /**
  * Composite application definition.
@@ -97,13 +130,18 @@ data class SkillResult(
 
 /**
  * Result from composite app execution.
+ *
+ * ASIOS 2.0: Includes Lucas dimensional metadata and Phi-Pi gap status.
  */
 data class CompositeResult(
     val appId: String,
     val skillResults: List<SkillResult>,
     val fusedOutput: Any?,
     val totalResonance: Double,
-    val brahimSignature: String
+    val brahimSignature: String,
+    val lucasDimensions: List<Int> = emptyList(),
+    val totalCapacity: Int = 0,
+    val inCreativeGap: Boolean = false
 )
 
 /**
@@ -612,45 +650,59 @@ class SkillComposer {
 
     /**
      * Execute a composite application.
+     *
+     * ASIOS 2.0: Includes Lucas dimensional tracking and Phi-Pi gap detection.
      */
-    suspend fun executeComposite(appId: String, inputs: Map<String, Any>): CompositeResult {
+    suspend fun executeComposite(appId: String, inputs: Map<String, Any>, exploring: Boolean = false): CompositeResult {
         val app = compositeRegistry[appId]
             ?: throw IllegalArgumentException("Unknown composite app: $appId")
 
         val skillResults = when (app.executionMode) {
-            ExecutionMode.SEQUENTIAL -> executeSequential(app.skills, inputs)
-            ExecutionMode.PARALLEL -> executeParallel(app.skills, inputs)
-            ExecutionMode.BRANCHING -> executeBranching(app.skills, inputs)
-            ExecutionMode.FUSION -> executeFusion(app.skills, inputs)
+            ExecutionMode.SEQUENTIAL -> executeSequential(app.skills, inputs, exploring)
+            ExecutionMode.PARALLEL -> executeParallel(app.skills, inputs, exploring)
+            ExecutionMode.BRANCHING -> executeBranching(app.skills, inputs, exploring)
+            ExecutionMode.FUSION -> executeFusion(app.skills, inputs, exploring)
         }
 
         val totalResonance = calculateTotalResonance(skillResults)
         val fusedOutput = fuseResults(skillResults, app.executionMode)
         val signature = generateBrahimSignature(app, skillResults)
 
+        // ASIOS 2.0: Lucas dimensional data
+        val lucasDimensions = app.skills.map { it.lucasDimension }
+        val totalCapacity = app.skills.sumOf { it.lucasCapacity }
+        val inCreativeGap = exploring || skillResults.any { it.resonance < BrahimConstants.PHI_PI_GAP }
+
         return CompositeResult(
             appId = appId,
             skillResults = skillResults,
             fusedOutput = fusedOutput,
             totalResonance = totalResonance,
-            brahimSignature = signature
+            brahimSignature = signature,
+            lucasDimensions = lucasDimensions,
+            totalCapacity = totalCapacity,
+            inCreativeGap = inCreativeGap
         )
     }
 
-    private suspend fun executeSequential(skills: List<Skill>, inputs: Map<String, Any>): List<SkillResult> {
+    private suspend fun executeSequential(skills: List<Skill>, inputs: Map<String, Any>, exploring: Boolean = false): List<SkillResult> {
         val results = mutableListOf<SkillResult>()
         var currentInputs = inputs
 
         for (skill in skills) {
             val startTime = System.currentTimeMillis()
-            val output = executeSkill(skill, currentInputs)
+            val output = executeSkill(skill, currentInputs, exploring)
             val endTime = System.currentTimeMillis()
+
+            // ASIOS 2.0: Apply Lucas-weighted resonance
+            val lucasWeight = skill.lucasCapacity.toDouble() / BrahimConstants.LUCAS_TOTAL
+            val resonance = skill.brahimWeight * BrahimConstants.GENESIS_CONSTANT * (1 + lucasWeight)
 
             val result = SkillResult(
                 skillId = skill.id,
                 success = output != null,
                 output = output,
-                resonance = skill.brahimWeight * BrahimConstants.GENESIS_CONSTANT,
+                resonance = resonance,
                 executionTimeMs = endTime - startTime
             )
             results.add(result)
@@ -664,28 +716,32 @@ class SkillComposer {
         return results
     }
 
-    private suspend fun executeParallel(skills: List<Skill>, inputs: Map<String, Any>): List<SkillResult> =
+    private suspend fun executeParallel(skills: List<Skill>, inputs: Map<String, Any>, exploring: Boolean = false): List<SkillResult> =
         coroutineScope {
             skills.map { skill ->
                 async {
                     val startTime = System.currentTimeMillis()
-                    val output = executeSkill(skill, inputs)
+                    val output = executeSkill(skill, inputs, exploring)
                     val endTime = System.currentTimeMillis()
+
+                    // ASIOS 2.0: Apply Lucas-weighted resonance
+                    val lucasWeight = skill.lucasCapacity.toDouble() / BrahimConstants.LUCAS_TOTAL
+                    val resonance = skill.brahimWeight * BrahimConstants.GENESIS_CONSTANT * (1 + lucasWeight)
 
                     SkillResult(
                         skillId = skill.id,
                         success = output != null,
                         output = output,
-                        resonance = skill.brahimWeight * BrahimConstants.GENESIS_CONSTANT,
+                        resonance = resonance,
                         executionTimeMs = endTime - startTime
                     )
                 }
             }.awaitAll()
         }
 
-    private suspend fun executeBranching(skills: List<Skill>, inputs: Map<String, Any>): List<SkillResult> {
+    private suspend fun executeBranching(skills: List<Skill>, inputs: Map<String, Any>, exploring: Boolean = false): List<SkillResult> {
         // Execute first skill to determine branch
-        val firstResult = executeSequential(listOf(skills.first()), inputs).first()
+        val firstResult = executeSequential(listOf(skills.first()), inputs, exploring).first()
 
         // Branch based on result
         val branchSkills = if (firstResult.success) {
@@ -694,30 +750,41 @@ class SkillComposer {
             skills.drop(2).take(1)  // Failure branch
         }
 
-        return listOf(firstResult) + executeSequential(branchSkills, inputs)
+        return listOf(firstResult) + executeSequential(branchSkills, inputs, exploring)
     }
 
-    private suspend fun executeFusion(skills: List<Skill>, inputs: Map<String, Any>): List<SkillResult> {
+    private suspend fun executeFusion(skills: List<Skill>, inputs: Map<String, Any>, exploring: Boolean = false): List<SkillResult> {
         // Execute all in parallel
-        val parallelResults = executeParallel(skills, inputs)
+        val parallelResults = executeParallel(skills, inputs, exploring)
 
-        // Apply V-NAND resonance fusion
+        // ASIOS 2.0: Apply V-NAND resonance fusion with Phi-Pi gap
         val fusedResonance = parallelResults.sumOf { it.resonance } / parallelResults.size
         val resonanceGate = fusedResonance >= 0.95 * BrahimConstants.GENESIS_CONSTANT
 
+        // Apply creativity margin if exploring
+        val creativityBoost = if (exploring) 1.0 + BrahimConstants.PHI_PI_GAP else 1.0
+
         return parallelResults.map { result ->
             result.copy(
-                resonance = if (resonanceGate) result.resonance * BrahimConstants.PHI else result.resonance
+                resonance = if (resonanceGate) {
+                    result.resonance * BrahimConstants.PHI * creativityBoost
+                } else {
+                    result.resonance * creativityBoost
+                }
             )
         }
     }
 
-    private fun executeSkill(skill: Skill, inputs: Map<String, Any>): Any? {
-        // Placeholder - actual skill execution would call the real implementation
+    private fun executeSkill(skill: Skill, inputs: Map<String, Any>, exploring: Boolean = false): Any? {
+        // ASIOS 2.0: Include Lucas dimensional metadata
         return mapOf(
             "skill" to skill.name,
             "domain" to skill.domain.name,
             "brahimWeight" to skill.brahimWeight,
+            "lucasDimension" to skill.lucasDimension,
+            "lucasCapacity" to skill.lucasCapacity,
+            "threshold" to skill.threshold,
+            "exploring" to exploring,
             "inputs" to inputs.keys.toList()
         )
     }
@@ -738,11 +805,88 @@ class SkillComposer {
     }
 
     private fun generateBrahimSignature(app: CompositeApp, results: List<SkillResult>): String {
-        val domainCodes = app.skills.map { it.domain.ordinal }
+        // ASIOS 2.0: Include Lucas dimensional info in signature
+        val lucasDimensions = app.skills.map { it.lucasDimension }
+        val totalCapacity = app.skills.sumOf { it.lucasCapacity }
         val resonanceSum = results.sumOf { it.resonance }
-        val hash = (domainCodes.sum() * 1000 + (resonanceSum * 100).toInt()) % 10000
+        val hash = (lucasDimensions.sum() * 100 + totalCapacity + (resonanceSum * 100).toInt()) % 10000
 
-        return "B-${app.id.take(4).uppercase()}-${hash.toString().padStart(4, '0')}-${BrahimConstants.B11_CONSCIOUSNESS}"
+        return "B2-${app.id.take(4).uppercase()}-${hash.toString().padStart(4, '0')}-L${totalCapacity}"
+    }
+
+    // =========================================================================
+    // ASIOS 2.0 - LUCAS ARCHITECTURE HELPERS
+    // =========================================================================
+
+    /**
+     * Get skills for a specific Lucas dimension.
+     */
+    fun getSkillsForDimension(dimension: Int): List<Skill> {
+        require(dimension in 1..12) { "Dimension must be 1-12, got $dimension" }
+        return skillRegistry.values.filter { it.lucasDimension == dimension }
+    }
+
+    /**
+     * Get total Lucas capacity for a list of skills.
+     */
+    fun getTotalCapacity(skills: List<Skill>): Int = skills.sumOf { it.lucasCapacity }
+
+    /**
+     * Get ASIOS 2.0 architecture summary.
+     */
+    fun getASIOS2Summary(): Map<String, Any> {
+        val skillsByDimension = (1..12).associate { dim ->
+            dim to skillRegistry.values.filter { it.lucasDimension == dim }.map { it.name }
+        }
+
+        return mapOf(
+            "version" to "2.0.0",
+            "codename" to "Phi-Pi Synthesis",
+            "total_skills" to skillRegistry.size,
+            "total_composite_apps" to compositeRegistry.size,
+            "total_lucas_capacity" to BrahimConstants.LUCAS_TOTAL,
+            "phi_pi_gap" to BrahimConstants.PHI_PI_GAP,
+            "domains_by_dimension" to SkillDomain.values().associate {
+                "D${it.lucasDimension}" to mapOf(
+                    "domain" to it.name,
+                    "capacity" to it.lucasCapacity,
+                    "skills" to skillsByDimension[it.lucasDimension]
+                )
+            },
+            "execution_modes" to ExecutionMode.values().map { it.name },
+            "composite_categories" to CompositeCategory.values().map { it.name }
+        )
+    }
+
+    /**
+     * Find apps that span multiple Lucas dimensions.
+     */
+    fun getMultiDimensionalApps(): List<CompositeApp> {
+        return compositeRegistry.values.filter { app ->
+            app.skills.map { it.lucasDimension }.distinct().size > 1
+        }
+    }
+
+    /**
+     * Get apps by Lucas dimension range.
+     */
+    fun getAppsByDimensionRange(minDim: Int, maxDim: Int): List<CompositeApp> {
+        return compositeRegistry.values.filter { app ->
+            app.skills.any { it.lucasDimension in minDim..maxDim }
+        }
+    }
+
+    /**
+     * Calculate dimensional resonance for an app.
+     * Higher resonance when skills span complementary dimensions.
+     */
+    fun calculateDimensionalResonance(app: CompositeApp): Double {
+        val dimensions = app.skills.map { it.lucasDimension }
+        val span = dimensions.maxOrNull()!! - dimensions.minOrNull()!!
+        val capacitySum = app.skills.sumOf { it.lucasCapacity }
+
+        // Resonance formula: (span/12) * (capacity/840) * phi
+        return (span.toDouble() / 12) * (capacitySum.toDouble() / BrahimConstants.LUCAS_TOTAL) * BrahimConstants.PHI
     }
 
     companion object {
@@ -755,5 +899,10 @@ class SkillComposer {
                 instance ?: SkillComposer().also { instance = it }
             }
         }
+
+        // ASIOS 2.0 constants
+        const val VERSION = "2.0.0"
+        const val CODENAME = "Phi-Pi Synthesis"
+        val TOTAL_LUCAS_CAPACITY = BrahimConstants.LUCAS_TOTAL
     }
 }
