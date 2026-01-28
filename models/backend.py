@@ -112,7 +112,7 @@ class AnthropicChat(BaseChatClient):
             if role == "system":
                 system_content = (system_content + "\n" if system_content else "") + content
                 continue
-            converted.append({"role": role, "content": [{"type": "text", "text": content}]}
+            converted.append({"role": role, "content": [{"type": "text", "text": content}]})
         
         headers = {
             "x-api-key": self.api_key,

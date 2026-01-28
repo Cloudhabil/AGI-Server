@@ -10,7 +10,7 @@ import json
 import logging
 import traceback
 import re
-from typing import Any, Dict
+from typing import Any, AsyncIterator, Dict
 
 from fastapi import FastAPI, Depends, HTTPException, Request, status
 from contextlib import asynccontextmanager
@@ -25,7 +25,7 @@ from core import error_summary
 from integrations import social_hooks
 
 @asynccontextmanager
-async def lifespan(app: FastAPI):
+async def lifespan(app: FastAPI) -> AsyncIterator[None]:
     try:
         yield
     finally:
