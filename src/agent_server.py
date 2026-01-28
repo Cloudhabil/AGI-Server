@@ -312,7 +312,7 @@ async def health_check() -> Dict[str, str]:
 @app.post("/wake")
 async def wake_up() -> Dict[str, str]:
     if bus is not None:
-        bus.subscribe(role, lambda msg: logger.info("[%s] received: %s", role, msg))  # type: ignore[attr-defined]
+        logger.info("Bus client active for role %s", role)
         init_cron()
     return {"status": "awake", "role": role}
 

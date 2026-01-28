@@ -16,10 +16,10 @@ ui-mindmap:
 >cd ui/cli-ia-mindmap && npm install && npm run dev
 
 lint:
->flake8 .
+>python -m flake8 .
 
 typecheck:
->mypy bus_server.py kb.py agent_server.py server tests
+>python -m mypy src/bus_server.py src/core/kb.py src/agent_server.py src/server
 
 test:
 >python -m pytest -q

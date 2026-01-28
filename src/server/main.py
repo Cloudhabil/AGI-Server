@@ -6,7 +6,7 @@ import asyncio
 import json
 import os
 from pathlib import Path
-from typing import Any, Dict
+from typing import Any, AsyncIterator, Dict
 import logging
 import traceback
 import redis
@@ -49,7 +49,7 @@ REDIS_READYZ_FAILURES = Counter(
 
 
 @asynccontextmanager
-async def lifespan(app: FastAPI):
+async def lifespan(app: FastAPI) -> AsyncIterator[None]:
     await init_db()
     try:
         yield
@@ -81,7 +81,11 @@ async def healthz() -> Dict[str, bool]:
 async def readyz() -> Dict[str, bool]:
     db_ok = await ping_db()
     try:
-        redis_ok = bool(await get_redis().ping())
+        ping_result = get_redis().ping()
+        if asyncio.iscoroutine(ping_result):
+            redis_ok = bool(await ping_result)
+        else:
+            redis_ok = bool(ping_result)
     except redis.exceptions.ConnectionError as exc:
         logger.error("Redis connection error during readyz: %s", exc)
         REDIS_READYZ_FAILURES.labels(reason="connection_error").inc()
