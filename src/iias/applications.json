@@ -5,71 +5,296 @@
     "foundation": {
       "count": 5,
       "apps": [
-        {"id": 1, "name": "dimension_router", "status": "done", "badge": "core"},
-        {"id": 2, "name": "genesis_controller", "status": "done", "badge": "core"},
-        {"id": 3, "name": "mirror_balancer", "status": "pending", "badge": "core"},
-        {"id": 4, "name": "phi_saturator", "status": "done", "badge": "core"},
-        {"id": 5, "name": "lucas_allocator", "status": "pending", "badge": "core"}
+        {
+          "id": 1,
+          "name": "dimension_router",
+          "status": "done",
+          "badge": "core"
+        },
+        {
+          "id": 2,
+          "name": "genesis_controller",
+          "status": "done",
+          "badge": "core"
+        },
+        {
+          "id": 3,
+          "name": "mirror_balancer",
+          "status": "done",
+          "badge": "core"
+        },
+        {
+          "id": 4,
+          "name": "phi_saturator",
+          "status": "done",
+          "badge": "core"
+        },
+        {
+          "id": 5,
+          "name": "lucas_allocator",
+          "status": "done",
+          "badge": "core"
+        }
       ]
     },
     "infrastructure": {
       "count": 10,
       "apps": [
-        {"id": 6, "name": "auto_scaler", "status": "pending", "badge": "cloud"},
-        {"id": 7, "name": "load_balancer", "status": "pending", "badge": "cloud"},
-        {"id": 8, "name": "cost_optimizer", "status": "pending", "badge": "cloud"},
-        {"id": 9, "name": "api_gateway", "status": "pending", "badge": "cloud"},
-        {"id": 10, "name": "training_scheduler", "status": "pending", "badge": "cloud"},
-        {"id": 11, "name": "cold_start_predictor", "status": "pending", "badge": "cloud"},
-        {"id": 12, "name": "container_orchestrator", "status": "pending", "badge": "cloud"},
-        {"id": 13, "name": "database_sharding", "status": "pending", "badge": "cloud"},
-        {"id": 14, "name": "cdn_router", "status": "pending", "badge": "cloud"},
-        {"id": 15, "name": "queue_manager", "status": "pending", "badge": "cloud"}
+        {
+          "id": 6,
+          "name": "auto_scaler",
+          "status": "done",
+          "badge": "cloud"
+        },
+        {
+          "id": 7,
+          "name": "load_balancer",
+          "status": "done",
+          "badge": "cloud"
+        },
+        {
+          "id": 8,
+          "name": "cost_optimizer",
+          "status": "done",
+          "badge": "cloud"
+        },
+        {
+          "id": 9,
+          "name": "api_gateway",
+          "status": "pending",
+          "badge": "cloud"
+        },
+        {
+          "id": 10,
+          "name": "training_scheduler",
+          "status": "pending",
+          "badge": "cloud"
+        },
+        {
+          "id": 11,
+          "name": "cold_start_predictor",
+          "status": "pending",
+          "badge": "cloud"
+        },
+        {
+          "id": 12,
+          "name": "container_orchestrator",
+          "status": "pending",
+          "badge": "cloud"
+        },
+        {
+          "id": 13,
+          "name": "database_sharding",
+          "status": "pending",
+          "badge": "cloud"
+        },
+        {
+          "id": 14,
+          "name": "cdn_router",
+          "status": "pending",
+          "badge": "cloud"
+        },
+        {
+          "id": 15,
+          "name": "queue_manager",
+          "status": "pending",
+          "badge": "cloud"
+        }
       ]
     },
     "edge": {
       "count": 10,
       "apps": [
-        {"id": 16, "name": "edge_ai_router", "status": "pending", "badge": "edge"},
-        {"id": 17, "name": "hybrid_orchestrator", "status": "pending", "badge": "edge"},
-        {"id": 18, "name": "battery_manager", "status": "pending", "badge": "edge"},
-        {"id": 19, "name": "offline_cache", "status": "pending", "badge": "edge"},
-        {"id": 20, "name": "realtime_pipeline", "status": "pending", "badge": "edge"},
-        {"id": 21, "name": "privacy_isolator", "status": "pending", "badge": "edge"},
-        {"id": 22, "name": "thermal_manager", "status": "pending", "badge": "edge"},
-        {"id": 23, "name": "wake_controller", "status": "pending", "badge": "edge"},
-        {"id": 24, "name": "sensor_fusion", "status": "pending", "badge": "edge"},
-        {"id": 25, "name": "local_model_selector", "status": "pending", "badge": "edge"}
+        {
+          "id": 16,
+          "name": "edge_ai_router",
+          "status": "pending",
+          "badge": "edge"
+        },
+        {
+          "id": 17,
+          "name": "hybrid_orchestrator",
+          "status": "pending",
+          "badge": "edge"
+        },
+        {
+          "id": 18,
+          "name": "battery_manager",
+          "status": "done",
+          "badge": "edge"
+        },
+        {
+          "id": 19,
+          "name": "offline_cache",
+          "status": "done",
+          "badge": "edge"
+        },
+        {
+          "id": 20,
+          "name": "realtime_pipeline",
+          "status": "done",
+          "badge": "edge"
+        },
+        {
+          "id": 21,
+          "name": "privacy_isolator",
+          "status": "pending",
+          "badge": "edge"
+        },
+        {
+          "id": 22,
+          "name": "thermal_manager",
+          "status": "done",
+          "badge": "edge"
+        },
+        {
+          "id": 23,
+          "name": "wake_controller",
+          "status": "pending",
+          "badge": "edge"
+        },
+        {
+          "id": 24,
+          "name": "sensor_fusion",
+          "status": "pending",
+          "badge": "edge"
+        },
+        {
+          "id": 25,
+          "name": "local_model_selector",
+          "status": "pending",
+          "badge": "edge"
+        }
       ]
     },
     "ai_ml": {
       "count": 10,
       "apps": [
-        {"id": 26, "name": "inference_router", "status": "pending", "badge": "ai"},
-        {"id": 27, "name": "model_quantizer", "status": "pending", "badge": "ai"},
-        {"id": 28, "name": "attention_allocator", "status": "pending", "badge": "ai"},
-        {"id": 29, "name": "context_manager", "status": "pending", "badge": "ai"},
-        {"id": 30, "name": "embedding_router", "status": "pending", "badge": "ai"},
-        {"id": 31, "name": "finetune_scheduler", "status": "pending", "badge": "ai"},
-        {"id": 32, "name": "prompt_optimizer", "status": "pending", "badge": "ai"},
-        {"id": 33, "name": "multi_model_mixer", "status": "pending", "badge": "ai"},
-        {"id": 34, "name": "rag_router", "status": "pending", "badge": "ai"},
-        {"id": 35, "name": "agent_coordinator", "status": "pending", "badge": "ai"}
+        {
+          "id": 26,
+          "name": "inference_router",
+          "status": "done",
+          "badge": "ai"
+        },
+        {
+          "id": 27,
+          "name": "model_quantizer",
+          "status": "pending",
+          "badge": "ai"
+        },
+        {
+          "id": 28,
+          "name": "attention_allocator",
+          "status": "done",
+          "badge": "ai"
+        },
+        {
+          "id": 29,
+          "name": "context_manager",
+          "status": "done",
+          "badge": "ai"
+        },
+        {
+          "id": 30,
+          "name": "embedding_router",
+          "status": "pending",
+          "badge": "ai"
+        },
+        {
+          "id": 31,
+          "name": "finetune_scheduler",
+          "status": "pending",
+          "badge": "ai"
+        },
+        {
+          "id": 32,
+          "name": "prompt_optimizer",
+          "status": "pending",
+          "badge": "ai"
+        },
+        {
+          "id": 33,
+          "name": "multi_model_mixer",
+          "status": "pending",
+          "badge": "ai"
+        },
+        {
+          "id": 34,
+          "name": "rag_router",
+          "status": "pending",
+          "badge": "ai"
+        },
+        {
+          "id": 35,
+          "name": "agent_coordinator",
+          "status": "done",
+          "badge": "ai"
+        }
       ]
     },
     "security": {
       "count": 10,
       "apps": [
-        {"id": 36, "name": "threat_classifier", "status": "pending", "badge": "security"},
-        {"id": 37, "name": "access_controller", "status": "pending", "badge": "security"},
-        {"id": 38, "name": "encryption_router", "status": "pending", "badge": "security"},
-        {"id": 39, "name": "anomaly_detector", "status": "pending", "badge": "security"},
-        {"id": 40, "name": "audit_logger", "status": "pending", "badge": "security"},
-        {"id": 41, "name": "zero_trust_gateway", "status": "pending", "badge": "security"},
-        {"id": 42, "name": "rate_limiter", "status": "pending", "badge": "security"},
-        {"id": 43, "name": "firewall_router", "status": "pending", "badge": "security"},
-        {"id": 44, "name": "secret_manager", "status": "pending", "badge": "security"},
-        {"id": 45, "name": "compliance_checker", "status": "pending", "badge": "security"}
+        {
+          "id": 36,
+          "name": "threat_classifier",
+          "status": "done",
+          "badge": "security"
+        },
+        {
+          "id": 37,
+          "name": "access_controller",
+          "status": "done",
+          "badge": "security"
+        },
+        {
+          "id": 38,
+          "name": "encryption_router",
+          "status": "pending",
+          "badge": "security"
+        },
+        {
+          "id": 39,
+          "name": "anomaly_detector",
+          "status": "done",
+          "badge": "security"
+        },
+        {
+          "id": 40,
+          "name": "audit_logger",
+          "status": "pending",
+          "badge": "security"
+        },
+        {
+          "id": 41,
+          "name": "zero_trust_gateway",
+          "status": "pending",
+          "badge": "security"
+        },
+        {
+          "id": 42,
+          "name": "rate_limiter",
+          "status": "done",
+          "badge": "security"
+        },
+        {
+          "id": 43,
+          "name": "firewall_router",
+          "status": "pending",
+          "badge": "security"
+        },
+        {
+          "id": 44,
+          "name": "secret_manager",
+          "status": "pending",
+          "badge": "security"
+        },
+        {
+          "id": 45,
+          "name": "compliance_checker",
+          "status": "pending",
+          "badge": "security"
+        }
       ]
     }
   }
